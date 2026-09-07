@@ -1191,7 +1191,10 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #1A1A1A; }
 
 /* v0.6 - skript na jeden slide: tri sloupce, cas pod nazvem beatu (dvouradek),
    Visual mensi (--text-body), repliky vetsi (--text-body-lg) - dle Jakuba 7. 9. */
-.cols3 { grid-template-columns: repeat(3, 1fr); }
+/* skript slidy: sloupce zarovnat SHORA (kotva dolu na .cols2 delala schodiste,
+   protoze beaty maji ruznou vysku). Mrizka zustava kotvena ke spodni hrane,
+   jen se ridi nejvyssim sloupcem -> horni hrany sedi na jedne lince. */
+.cols3 { grid-template-columns: repeat(3, 1fr); align-items: start; }
 .cols3 .dl b i { float: none; display: block; margin-top: 2px; font-size: var(--text-body);
                  letter-spacing: var(--tracking-label); text-transform: uppercase; }
 .cols3 .dl span { font-size: var(--text-body); line-height: var(--leading-body); }
