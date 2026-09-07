@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Tabulka směn — koncept v4.4</title>
+<title>Tabulka směn</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700&display=swap" rel="stylesheet">
 <style>
@@ -281,115 +281,41 @@ tr.me .c-ok,.c-ok.me{background:var(--ok-me)}
 .sheet .req>span:last-child{white-space:nowrap}
 @media (max-width:480px){.sheet .req{flex-direction:column;align-items:flex-start}}
 .chips .btn.p{background:var(--gold);border-color:var(--gold)}
+/* ── v4.7: dvě vrstvy — Návod (viditelný) a Pro tým (sbalené bloky) ── */
+button.btn{font:inherit;font-size:13px;font-weight:600;cursor:pointer;line-height:1.3}
+.tymbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:4px 0 8px;font-size:13.5px;color:var(--muted)}
+.tymbar small{font-size:13px;max-width:60ch}
+details.tym{margin:18px 0 6px;border:1px dashed var(--line2);border-radius:12px;padding:0 14px;font-size:14px;color:var(--fg);background:color-mix(in srgb,var(--card) 60%,transparent)}
+details.tym>summary{cursor:pointer;padding:9px 0;font-size:13.5px;font-weight:600;color:var(--muted);list-style:none;display:flex;align-items:center;gap:8px}
+details.tym>summary::-webkit-details-marker{display:none}
+details.tym>summary::before{content:"";width:7px;height:7px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:rotate(-45deg);flex:none;transition:transform .15s}
+details.tym[open]>summary::before{transform:rotate(45deg)}
+details.tym[open]>summary{border-bottom:1px dashed var(--line);margin-bottom:10px}
+.tym-in{padding:0 0 12px}
+details.tym h2{font-size:17px;margin:14px 0 8px;padding:0;border:0}
+details.tym h3{font-size:15px;margin:16px 0 6px}
+details.tym p,details.tym li{font-size:14px}
+details.tym table.doc{font-size:13.5px}
+details.tym .q .card,details.tym .stages .card{padding:12px 14px;font-size:14px}
+details.tym .note{font-size:13.5px}
+details.tym .cap{font-size:13px}
+.tymzone{margin-top:56px;padding-top:16px;border-top:1px solid var(--line)}
+.tymzone h2{margin-top:0;border:0;padding:0}
+main>h2 .n{color:var(--gold-ink);margin-right:8px;font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
 <main>
 
-<div class="tag">KNS hub · modul Směny · UX koncept v4.6 · 7. 9. 2026 · Eliška</div>
+<div class="tag">KNS hub · modul Směny · jak to funguje · 7. 9. 2026 · Eliška</div>
 <h1>Tabulka směn</h1>
-<p class="meta">Jak budou v hubu fungovat směny: jedna tabulka jako náš Excel, lidi si v ní naklikají, kdy můžou, a Aneta z toho poskládá rozpis. Popis + klikací náčrty. Nic tu není ostré, všechna jména a čísla jsou smyšlená.</p>
+<p class="meta">Jak budou v hubu fungovat směny: jedna tabulka jako náš Excel, lidi si v ní naklikají, kdy můžou, a Aneta z toho poskládá rozpis. Návod s klikacími náčrty: co uvidíš, na co ťukneš a co se stane. Nic tu není ostré, všechna jména a čísla jsou smyšlená.</p>
 
 <p class="lead">Jedna tabulka, kterou všichni znají z Excelu: lidi v řádcích, dny ve sloupcích. Brigádník v ní jen naklikává <b>kdy může</b> (a kdy ne) — ťuk = můžu celý den, další ťuk = nemůžu, třetí = prázdno (kruh tří stavů); podržení jen upřesní tutéž buňku (půlden, vlastní čas, důvod); půl měsíce za půl minuty. Aneta z toho skládá rozpis a přiděluje pozici. Barva říká jediné: <b>žlutý obrys = můžu, plná červená = nemůžu (řekl to dopředu), plná zelená = směna, řádek „Chybí" = kde Aneta ještě někoho hledá, červený obrys = díra v hotovém rozpisu, kterou si můžeš vzít</b>; Aneta navíc vidí tečkovanou světlou zelenou = návrh, který ještě nepotvrdila. Po hotovém rozpisu přibývají dva stavy pro změny: <b>půl zelená / půl žlutá „čeká"</b> = požádal jsem o uvolnění a Aneta to ještě neschválila (směna je pořád moje), <b>růžová „uvolněn"</b> = schváleno, místo se hledá. A nad tabulkou je vždy jeden <b>pruh</b>, který říká, v jakém stavu měsíc je: žlutý <i>hlásíme</i> · šedý <i>Aneta skládá</i> · zelený <i>rozdaný</i>. Kalendář odchází, vše ostatní (Moje směny, Správa) zůstává jako doplněk.</p>
+<div class="tymbar"><button type="button" class="btn" id="tym-toggle" aria-expanded="false">Zobrazit poznámky pro tým</button><small>Bloky „Pro tým: …" (historie verzí, rozhodnutí, rizika, otázky, rollout) jsou sbalené — návod je bez nich celý.</small></div>
 
-<h3>Co se změnilo ve v4.6 (Jakub 7. 9. 1:42 — tabulka vždy v celých týdnech)</h3>
-<div class="wrap"><table class="doc"><thead><tr><th style="width:24%">Bod</th><th style="width:24%">Kde v dokumentu</th><th>Co to znamená</th></tr></thead><tbody>
-<tr><td><b>Celé týdny po–ne, dny sousedního měsíce šrafované</b></td><td>anatomie (nový řádek „Dny sousedního měsíce", řádek „Konec tabulky"), náčrty <b>B3</b>, <b>B4</b>, <b>D3</b>, 5, 6b, copy v 8, 11b (slide 1), předpoklad J</td><td>Tabulka ukazuje vždy celé týdny: říjen 2026 začíná po 28. 9. a končí ne 1. 11. (35 dnů). Dny sousedního měsíce jsou vidět, sloupec má jemnou šikmou šrafuru, v hlavičce je datum i s měsícem („28. 9.", „1. 11."), první den měsíce má silnější levou linku a v buňkách jsou reálné směny a dostupnost, pokud tam jsou (Kubova zelená út 29. 9.). Ťukání v nich funguje normálně a zapisuje se do jejich měsíce. Pruh nad tabulkou zůstává pruhem otevřeného měsíce; šrafovaný den se řídí fází <i>svého</i> měsíce a v hlavičce má malý štítek („hlásíme" · „skládá" · „rozdaný" · „od 1. 10."), jen když se ta fáze liší.</td></tr>
-<tr><td><b>Karta měsíce až za celým týdnem</b></td><td>náčrty B3, B4, D3, anatomie, 5, 6b</td><td>„Listopad →" stojí až za celým posledním týdnem (za šrafovanou nedělí 1. 11.), „← Září" před celým prvním (před po 28. 9.) — ne za posledním / před prvním dnem měsíce jako ve v4.5. Na telefonu poslední týden ukáže i neděli.</td></tr>
-<tr><td><b>Nový náčrt B4 (začátek měsíce)</b></td><td>3</td><td>Říjen ve fázi hlášení, telefon na začátku tabulky: karta „← Září", po–st 28.–30. 9. šrafované se štítkem „rozdaný" a Kubovou zelenou směnou, čt 1. 10. hned za nimi. Vpravo neděle 1. 11. jen k vidění (listopad se otevře 1. 10.).</td></tr>
-<tr><td><b>Data doplněných týdnů</b></td><td>skript v HTML (<code>wholeWeeks</code>, <code>fillDone</code>, <code>fillMiss</code>, <code>jasne</code>)</td><td>Týdny 5.–11. (náčrt C) a 19.–31. (v4.5) zůstávají opsané 1:1, ostatní dny rozdaného měsíce doplňuje deterministický <code>fillDone()</code> (napřed tomu, kdo řekl „můžu", pak střídavě), řádky Chybí, řádek závazků, „zbývá N děr" i „Potvrdit jasné (N)" se počítají z řádků — kontrolní skript to přepočítává z DOM.</td></tr>
-</tbody></table></div>
 
-<h3>Co se změnilo ve v4.5 (Jakub 7. 9. 0:50 upřesnění ťukání, 0:54 věta k červené, 1:11 navigace měsíců)</h3>
-<div class="wrap"><table class="doc"><thead><tr><th style="width:24%">Bod</th><th style="width:24%">Kde v dokumentu</th><th>Co to znamená</th></tr></thead><tbody>
-<tr><td><b>Ťukání = kruh tří stavů</b></td><td>5 (karty gest, sekvence, rozhodnutí), náčrty B, B2, stavy 1–3, anatomie, 6b, copy v 8, 11b</td><td>Ťukání zůstává hlavní ovládání a jede <b>v kruhu: prázdno → můžu (žlutý obrys, celý den) → nemůžu (červená „pryč") → prázdno</b>. Každý ťuk = další stav, oprava nejvýš dva ťuky a vždy přes „nevyjádřil se". <b>Podržení = jen rozšíření téže buňky</b> (dopoledne · odpoledne · od – do… · nemůžu — proč? · zrušit): co tam nastavíš, buňka ukáže textem (cd, 1/2, 2/2, od 16, pryč) a ťukání jede dál od aktuálního stavu (z „1/2" ťuk → pryč → prázdno). Nahrazuje v4.4 „ťuk · ťuk zpět · podržení" (Harryho verze) i čtyřstavový cyklus z v4.</td></tr>
-<tr><td><b>Věta k červené</b></td><td>hint pod tabulkou (náčrt B), slide 3 (11b), copy v 8, sekce 5 a 6</td><td>Červená je <b>bonus, ne povinnost</b> — lidé budou klikat hlavně „můžu". Onboarding i hint proto říkají: <b>„Klikni dny, kdy můžeš. A když víš, že některý den opravdu nemůžeš, ťukni ho do červena, ať s tím Aneta počítá."</b> Aneta vidí tři skupiny: může · nemůže · neřekl — a uhání jen třetí.</td></tr>
-<tr><td><b>Karta sousedního měsíce na konci tabulky</b></td><td>anatomie (řádek „Konec tabulky"), náčrty <b>B3</b> (telefon) a <b>D3</b> (iPad), 6b, copy v 8</td><td>Po doscrollování doprava je poslední „sloupec" karta <b>„Listopad →"</b> s pruhem stavu listopadu (barva + slovo, např. žlutý „nahlaš, kdy můžeš"; neotevřený měsíc čárkovaně „otevře se 1. 10."), vlevo před prvním týdnem <b>„← Září"</b> s pruhem „rozdaný". Ťuk = přepne měsíc na jeho začátek, bez horizontální animace (prosté přepnutí, ne nekonečný pás). Šipky u názvu měsíce zůstávají. Na telefonu karta až po posledním týdnu měsíce. <b>Ve v4.6 upřesněno:</b> karta stojí až za celým posledním týdnem (neděle 1. 11. je v tabulce, šrafovaná), ne za posledním dnem.</td></tr>
-</tbody></table></div>
-
-<h3>Co se změnilo ve v4.4 (Jakub 7. 9. 0:44)</h3>
-<div class="wrap"><table class="doc"><thead><tr><th style="width:24%">Bod</th><th style="width:24%">Kde v dokumentu</th><th>Co to znamená</th></tr></thead><tbody>
-<tr><td class="old">Ťukání: ťuk · ťuk zpět · podržení</td><td class="old">5, náčrty B, B2, 11b</td><td class="old">Harryho verze z 0:44 (ťuk na cokoli svého = zpět, nemůžu jen z nabídky). <b>Ve v4.5 nahrazena Jakubovým kruhem tří stavů</b> (0:50) — viz tabulka výše. Zůstává z ní: náčrt B2 (nabídka u buňky), stav „pryč", vlastní čas „od 16".</td></tr>
-<tr><td><b>Nový stav „pryč"</b></td><td>4 (stav 3 — 11 stavů), legenda, náčrty B–H (Karel st 7., Tereza pá 9., Kuba ne 11.), 6 (Aneta)</td><td>Červená <b>plná</b> buňka se slovem „pryč" (nebo krátkým důvodem) = ten člověk řekl dopředu, že nemůže. Do „N můžou" se nepočítá, ťuk = zpět na prázdno, nic se neschvaluje. Pro Anetu dva druhy ticha: prázdná buňka = <b>nevyjádřil se</b> (může uhánět — „Připomenout"), červená = <b>vyjádřil se, nemůže</b>. Odlišení od „hoří": to je červený <i>obrys</i> s plamínkem v řádku Chybí (otevřená díra), tohle plná výplň v řádku člověka (hotová odpověď).</td></tr>
-<tr><td><b>Vlastní čas</b></td><td>5, náčrt B (pá „od 16"), B2, panel D (Pá 9. — „může od 16:00"), předpoklad G, otázka 10</td><td>Z nabídky „od – do…": dvě políčka předvyplněná otevírací dobou, změníš jedno. V buňce žlutý obrys „od 16" / „do 14" / „11–15"; v Anetině panelu „může od 16:00". Do „N můžou" se počítá v části dne, kterou svým časem pokrývá. Kaskáda v náčrtu D: pá 9. barista už není „jasný" (odpoledne můžou dva) → 13 děr, <b>5 jasných, 7 směn</b> (přepočítal skript).</td></tr>
-<tr><td><b>Onboarding copy</b></td><td>11b (texty slidů brigádníka 1:1 pro Tomášovo 3. kolo), tabulka v3.2 → v4, náčrty C a F, sekce 5, soupis pro 0 směn</td><td>Dvě věty z dema nahrazeny: u zelené <b>„Že můžeš, zůstane zapsané. Kdyby někdo vypadl, Aneta ví, koho oslovit."</b>, u Beru <b>„Tady neříkáš, kdy můžeš, ale bereš konkrétní díru v hotovém rozpisu. Kdo klikne dřív, ten ji má."</b> Stejná myšlenka byla v dokumentu ještě na šesti místech — sjednoceno.</td></tr>
-</tbody></table></div>
-
-<h3>Co přibylo ve v4.2 (Jakub 6. 9. 23:56 + 7. 9. 0:05)</h3>
-<div class="wrap"><table class="doc"><thead><tr><th style="width:24%">Doplněk</th><th style="width:24%">Kde v dokumentu</th><th>Co to znamená</th></tr></thead><tbody>
-<tr><td><b>Měsíc má tři stavy</b></td><td>6b (pruh ve 3 stavech, obě role, telefon i iPad), pruh ve všech náčrtech</td><td>Každý měsíc je právě v jednom stavu a nad tabulkou to říká barevný pruh se slovem: žlutý <b>„Říjen: hlásíme, kdy můžeme · do 10. 9."</b> → šedý <b>„Aneta skládá rozpis · dozvíš se obvykle do týdne"</b> → zelený <b>„Říjen je rozdaný"</b>. Ve druhém stavu tým rozpracovaný rozpis nevidí (<code>published = false</code>); zelené se všem ukážou naráz s tlačítkem Anety „Rozpis hotový". Nový měsíc se otevře sám 1., listuje se šipkami.</td></tr>
-<tr><td><b>Změny po „Rozpis hotový"</b></td><td>6c, náčrty G a H, stavy 7 a 8, zprávy v 6b, copy v 8</td><td>Ťuk na svou zelenou = <b>Vyměnit · Nemůžu · Nemocný</b>, u všech povinný důvod. Nemůžu / Nemocný je <b>žádost</b>, ne odhlášení: buňka <b>„čeká"</b> (půl zelená / půl žlutá, drží kapacitu), Aneta má v pruhu „2 žádosti"; po schválení <b>„uvolněn"</b> (růžová) a místo → Chybí / hoří. Nemocný navíc: od–do, nahoře u Anety, push hned, evidence nemoc — neschvaluje se samo.</td></tr>
-<tr><td><b>Uzavřená sada barev</b></td><td>4 (stavový model), legenda</td><td>10 stavů, každý s textem: naklikej · můžu · směna (tmavší = tvoje) · chybí · hoří · čeká · uvolněn · návrh · dovolená/nemoc · zavřeno. Minulý den není stav, jen vybledne. Kontrast light/dark ověřen skriptem (≥ 4,5 : 1 pro text v buňce).</td></tr>
-<tr><td><b>Nastavení → Směny</b></td><td>6d</td><td>Uzávěrka dostupnosti (den), „rozpis hotový do" (text), „hoří od N dnů", týdenní šablona kapacit + výjimky — provozní; admin navíc lidi / pozice / závazky / zámek měsíce.</td></tr>
-<tr><td><b>Ikony</b></td><td>7, všechny náčrty</td><td>V tabulce vektor (provozní = rozpis s fajfkou, ne klíč; plácák = tác se dvěma sklenkami; kuchyň = hrnec), malované obrázky z DS jen v hlavičkách skupin (26 px) a v onboardingu.</td></tr>
-<tr><td>Otázky 8–9</td><td>10</td><td>Zamítnutí žádosti — má jít důvod zpět? Nemoc u DPP a doklad — Tereza.</td></tr>
-</tbody></table></div>
-
-<h3>Co přibylo ve v4.1 (Jakub 6. 9. 23:32)</h3>
-<div class="wrap"><table class="doc"><thead><tr><th style="width:24%">Doplněk</th><th style="width:24%">Kde v dokumentu</th><th>Co to znamená</th></tr></thead><tbody>
-<tr><td><b>Soupis po „Rozpis hotový"</b></td><td>6b (tabulka zpráv + dva náhledy), náčrt C, sekce 5, 6, 8</td><td>Každý, kdo v měsíci řekl „můžu", dostane jednu zprávu: své směny a „z tvých 10 dnů, kdy můžeš, máš 3 směny". Kdo má 0 směn, dostane totéž věcně — žádné „nevybrán".</td></tr>
-<tr><td><b>Počítadlo férovosti</b></td><td>anatomie (řádek závazků), náčrty D / D2 / E, panel D</td><td>Nad Anetinou tabulkou řádek „Karel 1/5 · 0/3" (má / závazek, všední · víkend, půlden = ½). V panelu u kandidáta „1 z 5 všedních", řazení od nejvíc pod závazkem. Nad závazkem svítí vždy, pod závazkem až od hotového rozpisu.</td></tr>
-<tr><td><b>„Navrhnout rozpis"</b></td><td>náčrt D2 + rizika, stav 9, sekce 6, 6b, rollout 2b</td><td>Tlačítko vedle „Potvrdit jasné": tabulka se předvyplní návrhem (9. stav buňky: světlejší zelená, tečkovaný obrys), Aneta ťuká (zrušit / potvrdit jinak) a „Potvrdit návrh (N směn)". Čtyři viditelná pravidla, žádná skrytá preference.</td></tr>
-<tr><td>Onboarding v appce</td><td>11b</td><td>Tenhle dokument je scénář onboardingu per role, znovu vyvolatelný z tabu, drobně animovaný; etapa 2.</td></tr>
-<tr><td>Hodiny</td><td>11</td><td>Z Tomášova feasibility v3: 20–25 + 32–40 + 20–25 (nová etapa 2b) + 9–12 = 81–102 h.</td></tr>
-</tbody></table></div>
-
-<h3>Co se změnilo v3.2 → v4</h3>
-<div class="wrap"><table class="doc"><thead><tr><th style="width:44%">v3.2 (přihláška na slot)</th><th>v4 (dostupnost, Aneta skládá)</th></tr></thead><tbody>
-<tr><td class="old">Brigádník se hlásí na konkrétní pozici a část dne, Aneta potvrzuje.</td><td>Brigádník říká jen <b>kdy může</b> (celý den / dopo / odpo). Pozici a den vybírá Aneta.</td></tr>
-<tr><td class="old">Žlutý obrys = přihláška.</td><td>Žlutý obrys = <b>můžu</b>. Nevyužité „můžu" zůstává žluté i po rozpisu — je to informace pro Anetu, s kým počítat u děr.</td></tr>
-<tr><td class="old">Zelená „potvrzeno" + tmavší zelená „moje potvrzená" (2 stavy).</td><td>Jedna zelená = <b>směna</b>. Čí je, říká řádek.</td></tr>
-<tr><td class="old">„plno", „tentokrát ne", zamítnuté přihlášky, lavička.</td><td><b>Zrušeno.</b> Nikdo není zamítnut. Že můžeš, zůstane zapsané — kdyby někdo vypadl, Aneta ví, koho oslovit.</td></tr>
-<tr><td class="old">Chybí: „chybí 1 · dopo · 2 zájemci".</td><td>Chybí: „chybí 1 · dopo · <b>2 můžou</b>" — kdo ten den může, pozici umí a ještě nemá směnu.</td></tr>
-<tr><td class="old">Panel F: výběr pozice a části dne v buňce.</td><td><b>Zrušen.</b> Nic se nevybírá — ťuk = můžu celý den → další ťuk = nemůžu → další = prázdno (kruh tří stavů, v4.5), podržení = rozšíření téže buňky (do v4.3 cyklus cd → 1/2 → 2/2 → prázdno, ve v4.4 ťuk zpět).</td></tr>
-<tr><td class="old">„Potvrdit jasné (N)" = sloty, kde přihlášek je tolik, kolik chybí.</td><td>„<b>Potvrdit jasné (N)</b>" = díry, kde vhodných lidí je přesně tolik, kolik chybí.</td></tr>
-<tr><td class="old">Hoří = díra bez přihlášky do 2 dnů; brigádník ťuk = přihláška.</td><td>Hoří = <b>každá díra po „Rozpis hotový"</b>; brigádník ťuk = <b>Beru</b> — tady neříká, kdy může, ale bere konkrétní díru v hotovém rozpisu; kdo klikne dřív, ten ji má, a je to hned směna.</td></tr>
-<tr><td class="old">Po zamčení měsíce se v řádku „Ty" neťuká.</td><td>Řádek „Ty" jde měnit celý měsíc (po rozpisu to směny nemění). Zámek se týká jen směn, jako dnes.</td></tr>
-<tr><td class="old">10 stavů buňky.</td><td><b>8 stavů</b> buňky (v4.1: 9 — přibyl „návrh", vidí ho jen Aneta; v4.2: <b>10</b> — „čeká" a „uvolněn" pro změny po hotovém rozpisu, „minulý den" už není stav; v4.4: <b>11</b> — „pryč").</td></tr>
-</tbody></table></div>
-
-<h3>Sedm bodů zadání → řešeno takto</h3>
-<table class="doc"><tbody>
-<tr><td>1. Základní pohled = tabulka</td><td>Tabulka je první tab a otevírá se jako výchozí. Kalendář zmizí z tabů (sekce 1).</td></tr>
-<tr><td>2. Přejmenovat na „Tabulka směn"</td><td>Tab „Matice" → „Tabulka směn". Domů karta „Potřebujeme obsadit" vede do tabulky (sekce 8, copy).</td></tr>
-<tr><td>3. Směny přímo zaklikat</td><td>Ve svém připnutém řádku naklikáš, <b>kdy můžeš</b> (ťuk = můžu celý den, další ťuk = nemůžu, další = prázdno; podržení = dopoledne / odpoledne / od–do / důvod). Směnu z toho složí Aneta a ty ji uvidíš zeleně (sekce 5). <i>Jakub 23:19: brigádník nevybírá pozici ani slot.</i></td></tr>
-<tr><td>4. Barvy volné × obsazené, obsazené až po Anetě</td><td>Žlutý obrys = můžu, zelená = směna (přidělila Aneta). Na sloty se nikdo nehlásí, takže „obsazené — už se nehlásí" neexistuje; po hotovém rozpisu se dá jediné: vzít si hořící díru „Beru" (sekce 4, stav 6).</td></tr>
-<tr><td>5. Plácák není koště</td><td>Ikona podnosu se dvěma sklenkami (obsluha nápojů). 4 varianty + doporučení (sekce 7).</td></tr>
-<tr><td>6. Naprosto jednoduché a logické</td><td>Brigádník nemá žádný panel, žádný výběr, žádné „odeslat". 11 stavů (uzavřená sada), každý text v buňce čitelný bez legendy; nad tabulkou pruh, který řekne, co se teď dělá. Potvrzovací dialog jen u nevratného (žádost o uvolnění, hromadné potvrzení, „Rozpis hotový").</td></tr>
-<tr><td>7. Nejdřív popsat, pak stavět</td><td>Tenhle dokument. Po odsouhlasení staví Tomáš; model dostupnosti sedí na dnešní tabulku <code>availability_rules</code> (Tomáš ověřuje), rollout ve 3 etapách (sekce 11).</td></tr>
-</tbody></table>
-
-<h2>1. Informační architektura modulu po změně</h2>
-<div class="two">
-<div class="card"><div class="tag">Dnes (ověřeno v <code>ShiftsPage.tsx</code>)</div>
-<ul><li>Taby: <b>Kalendář</b> (výchozí) · Matice · Moje směny</li>
-<li>Přihlášení: karta „Potřebujeme obsadit" na Domů nebo detail dne z kalendáře → „Beru" = <b>hned schváleno</b> (kdo dřív přijde)</li>
-<li>Dostupnost: samostatná stránka „Moje dostupnost" (<code>AvailabilityManager</code>) — pravidla „každé úterý 9–14" a výjimky na datum; Aneta ji nikde v rozpisu nevidí</li>
-<li>Menu Správa (provozní): Žádosti · Generovat · Plnění závazků · Nastavení</li>
-<li>Matice je jen ke čtení; provozní z ní klikem skáče do kalendáře</li></ul></div>
-<div class="card"><div class="tag">Nově</div>
-<ul><li>Taby: <b>Tabulka směn</b> (výchozí) · Moje směny</li>
-<li><b>Dostupnost se hlásí přímo v tabulce</b> (řádek „Ty"). Stránka „Moje dostupnost" splyne s tabulkou — tabulka je její nový formulář.</li>
-<li><b>Aneta skládá rozpis v tabulce</b>: řádek „Chybí" → panel s lidmi, kteří ten den mohou → jeden ťuk = potvrdit. Nebo <b>„Navrhnout rozpis"</b>: tabulka se předvyplní podle čtyř viditelných pravidel, Aneta návrh upraví a jedním klikem potvrdí (náčrt D2).</li>
-<li>Nad tabulkou má Aneta <b>řádek závazků</b> („Karel 1/5 · 0/3") — plnění závazků je vidět při skládání, ne na zvláštní stránce.</li>
-<li>Karta na Domů zůstává jako zkratka a vede do tabulky na daný den.</li>
-<li>Menu Správa zůstává, ale zúží se: Žádosti (Nemůžu · Nemocný · Vyměnit — totéž, co Aneta vidí z pruhu „2 žádosti") · Generovat · Závazky (jen nastavení cílů; plnění je nad tabulkou) · Nastavení → Směny (6d). Záložka „Čekající" není potřeba — během skládání nic nečeká na potvrzení.</li>
-<li>Kalendář se z tabů odstraní až po 2 týdnech souběhu (sekce 11); kód zůstane měsíc v repu.</li></ul></div>
-</div>
-<h3>Co zůstává a proč</h3>
-<ul>
-<li><b>Moje směny</b> — jediné místo, kde má brigádník seznam „co mě čeká" i s časy, ICS, výměnou a zrušením. Tabulka ukazuje měsíc, seznam ukazuje mě. Dvě různé otázky.</li>
-<li><b>Správa → Žádosti</b> — zůstane pro věci, které do buňky nepatří: žádosti o zrušení, výměny.</li>
-<li><b>Dovolené a nemoc</b> — beze změny (Domů / Moje směny), v tabulce se jen zobrazují.</li>
-</ul>
-<table class="doc"><thead><tr><th>Riziko</th><th>Cesta</th></tr></thead><tbody>
-<tr><td>Někdo si zvykl na kalendář (detail dne se seznamem lidí a časů).</td><td>Ťuk na hlavičku dne v tabulce otevře stejný „detail dne" (dnešní <code>ShiftDaySheet</code>) — kalendář jako mřížka není potřeba, jeho detail ano.</td></tr>
-<tr><td>Tabulka na telefonu = moc informací.</td><td>Vlastní řádek připnutý nahoře + týdenní krok posunu. Brigádník nemusí nic hledat; zbytek týmu je pod ním jen pro orientaci (kdo se mnou bude, kdo ještě může).</td></tr>
-<tr><td>Lidi naklikají „můžu" a čekají, jestli „prošli".</td><td>Není co procházet — nic se neschvaluje. Hláška nad tabulkou říká, v jaké fázi měsíc je (hlášení → Aneta skládá → hotový), a zpráva přijde jen jednou: až je rozpis hotový (sekce 6b).</td></tr>
-<tr><td>Aneta chce vidět „všechno k vyřízení" na jednom místě, ne hledat po buňkách.</td><td>Řádek „Chybí" pod každou pozicí + „Potvrdit jasné (N)" nad tabulkou vyřídí díry s jedinou možností naráz. Zvoneček zůstává.</td></tr>
-</tbody></table>
-
-<h2>2. Anatomie tabulky</h2>
+<h2><span class="n">1</span>Jak tabulka vypadá</h2>
 <div class="grid">
 <div>
 <div class="phone">
@@ -399,34 +325,61 @@ tr.me .c-ok,.c-ok.me{background:var(--ok-me)}
 <div id="t-anat" class="sh scroll"></div>
 <div class="legend" id="leg-1"></div>
 </div>
-<div class="cap">Telefon 390 px: sloupec jmen 88 px připnutý vlevo, 7 dnů × 42 px, buňka 44 px vysoká (palec). Posun doprava skáče po týdnech (scroll-snap), měsíc se listuje šipkami. Hlavička dnů i řádek „Ty" jsou připnuté (<code>position: sticky</code>) — tenhle náčrt se dá posouvat svisle, ověř si to. Týden po rozpisu: tři díry hoří, Kuba mohl v neděli dopoledne a ve čtvrtek odpoledne — obě si může vzít ťuknutím.</div>
+<div class="cap">Telefon 390 px: sloupec jmen 88 px připnutý vlevo, 7 dnů × 42 px, buňka 44 px vysoká (palec). Posun doprava skáče po týdnech (scroll-snap), měsíc se listuje šipkami. Hlavička dnů i řádek „Ty" jsou připnuté — tenhle náčrt se dá posouvat svisle, ověř si to. Týden po rozpisu: tři díry hoří, Kuba mohl v neděli dopoledne a ve čtvrtek odpoledne — obě si může vzít ťuknutím.</div>
 </div>
 <div style="flex:1;min-width:280px">
 <table class="doc"><tbody>
-<tr><th>Pruh nad tabulkou</th><td>Vždy jeden, u obou rolí, na telefonu i iPadu: <b>barva + slovo</b> říkají stav měsíce — žlutý „Říjen: hlásíme, kdy můžeme · do 10. 9." / šedý „Aneta skládá rozpis · dozvíš se obvykle do týdne" / zelený „Říjen je rozdaný" (+ „1 hoří", u Anety „2 žádosti"). Každý měsíc má svůj; šipkami u názvu listuješ (zůstávají) a pruh se mění s měsícem (6b); druhá cesta je karta sousedního měsíce na konci tabulky (řádek „Konec tabulky").</td></tr>
+<tr><th>Pruh nad tabulkou</th><td>Vždy jeden, u obou rolí, na telefonu i iPadu: <b>barva + slovo</b> říkají stav měsíce — žlutý „Říjen: hlásíme, kdy můžeme · do 10. 9." / šedý „Aneta skládá rozpis · dozvíš se obvykle do týdne" / zelený „Říjen je rozdaný" (+ „1 hoří", u Anety „2 žádosti"). Každý měsíc má svůj; šipkami u názvu listuješ (zůstávají) a pruh se mění s měsícem (kapitola 3); druhá cesta je karta sousedního měsíce na konci tabulky (řádek „Konec tabulky").</td></tr>
 <tr><th>Hlavička dne</th><td>Zkratka dne + číslo. Pondělí a mimořádně zavřené dny šedě s „zavřeno", svátek s otevřeno žlutě „svátek", dnešek zvýrazněný. Ťuk na hlavičku (obě role) = detail dne se seznamem lidí a časů.</td></tr>
-<tr><th>Řádek „Ty"</th><td>Brigádníkův vlastní řádek připnutý hned pod hlavičkou (sticky, na telefonu i iPadu), žlutě podbarvený. <b>Jediný řádek, ve kterém ťuká</b> — ťuk jede v kruhu: prázdno → můžu celý den (žlutý obrys) → nemůžu (červené „pryč") → prázdno; podržení jen upřesní tutéž buňku (dopoledne / odpoledne / od–do / důvod k nemůžu); po hotovém rozpisu ťuk na svou zelenou = Vyměnit · Nemůžu · Nemocný (6c). Moje směny jsou <b>tmavší zelená</b> než cizí. Kdo má dvě pozice, má je v jednom řádku; směna na vedlejší pozici nese v buňce její ikonu.</td></tr>
+<tr><th>Řádek „Ty"</th><td>Brigádníkův vlastní řádek připnutý hned pod hlavičkou (na telefonu i iPadu), žlutě podbarvený. <b>Jediný řádek, ve kterém ťuká</b> — ťuk jede v kruhu: prázdno → můžu celý den (žlutý obrys) → nemůžu (červené „pryč") → prázdno; podržení jen upřesní tutéž buňku (dopoledne / odpoledne / od–do / důvod k nemůžu); po hotovém rozpisu ťuk na svou zelenou = Vyměnit · Nemůžu · Nemocný (kapitola 5). Moje směny jsou <b>tmavší zelená</b> než cizí. Kdo má dvě pozice, má je v jednom řádku; směna na vedlejší pozici nese v buňce její ikonu.</td></tr>
 <tr><th>Skupiny</th><td>Barista · Plácák · Kuchyň (pořadí jako dnes), v hlavičce skupiny malovaný obrázek pozice z DS (26 px — jediné místo v tabulce, kde není vektor). Pod jménem skupiny lidé podle jména, každý s ikonou pozice (vektor). Na telefonu jen hlavní pozice (jedna ikona), na iPadu všechny. Člověk se dvěma pozicemi je jen ve své hlavní skupině; jeho směna na druhé pozici má v buňce ikonu té pozice. Cizí „můžu" vidí tým jako žlutý obrys (kdo, ne detail).</td></tr>
 <tr><th>Řádek „Chybí"</th><td>Poslední řádek každé skupiny. <b>Vždy se slovem, aby se to nedalo přečíst obráceně:</b> první řádek <b>„chybí 1"</b> = kolik lidí ten den na tu pozici chybí; pod ním část dne — <b>dopo</b>, <b>odpo</b>, nebo <b>celý den</b>; u kuchyně (jedna část dne) jen „chybí 1". Třetí řádek <b>„2 můžou"</b> = kolik lidí ten den může, pozici umí a ještě nemá směnu; když nikdo, <b>„0 můžou"</b> (vybledle). Kdo řekl „pryč", se nepočítá; kdo neřekl nic, taky ne — toho ale může Aneta uhánět. Nic nechybí = buňka prázdná. Žlutý obrys = Aneta ještě skládá (jen informace pro tým); <b>červený obrys s plamínkem = díra v hotovém rozpisu</b> — pro Anetu pracovní buňka (ťuk = panel s lidmi, kteří mohli), pro brigádníka „Beru".</td></tr>
 <tr><th>Řádek závazků</th><td>Jen provozní, nad tabulkou. Jeden štítek na člověka, abecedně: <b>„Karel 1/5 · 0/3"</b> = má / závazek, všední · víkend (cíle z Nastavení závazků; celý den = 1, půlden = ½; kdo má jeden z cílů 0, má ve štítku jen jedno číslo). Kdo je <b>nad</b> závazkem, svítí červeně vždy; kdo je <b>pod</b>, svítí žlutě až od „Rozpis hotový" — během skládání jsou pod závazkem všichni, svítit by nemělo nic. Žádná procenta, žádné grafy. Ťuk na štítek = kdy ten člověk může a co má („nahlásil 4 dny · 1 směna").</td></tr>
 <tr><th>Buňka</th><td>Text říká část dne (<b>cd</b> celý den = oba sloty, <b>1/2</b> dopoledne, <b>2/2</b> odpoledne) nebo vlastní čas (<b>od 16</b>, <b>do 14</b>, <b>11–15</b>), styl říká stav (čárkovaně / žlutý obrys / plná zelená / plná červená „pryč" = řekl, že nemůže). Kuchyň má jen dopolední slot 8–14, u kuchyně proto píšeme <b>cd</b> — je to její celá směna, ne půlka. Po hotovém rozpisu může být buňka ještě <b>„čeká"</b> (nahoře zelená s částí dne, dole žlutá se slovem) a <b>„uvolněn"</b> (růžová, jen slovo).</td></tr>
-<tr><th>Konec tabulky</th><td>Až za celým posledním týdnem měsíce je jako poslední „sloupec" <b>karta sousedního měsíce</b>: <b>„Listopad →"</b> se jménem a pod ním pruh stavu toho měsíce — barva + slovo, stejné jako pruh nad tabulkou (žlutý „nahlaš, kdy můžeš" · šedý „Aneta skládá" · zelený „rozdaný" · čárkovaně „otevře se 1. 10.", když ještě neexistuje). Před celým prvním týdnem totéž zrcadlově: <b>„← Září"</b> + „rozdaný" (na telefonu ji vidíš, když potáhneš tabulku doprava před první týden; výchozí posun začíná prvním týdnem). Ťuk na kartu = tabulka <b>přepne na ten měsíc od jeho začátku</b> — prosté přepnutí, žádná horizontální animace, žádný nekonečný pás; pruh nad tabulkou i název u šipek se přepnou s ní. Šipky u názvu měsíce zůstávají jako druhá cesta. Náčrty B3, B4, D3.</td></tr>
-<tr><th>Dny sousedního měsíce</th><td>Tabulka ukazuje <b>vždy celé týdny po–ne</b>, i na telefonu (poslední týden ukáže i neděli). Dny, které spadnou do sousedního měsíce (po–st 28.–30. 9. na začátku října, ne 1. 11. na konci), jsou vidět a jejich sloupec má <b>jemnou šikmou šrafuru</b>; v hlavičce je datum s měsícem („28. 9.", „1. 11."), první den měsíce má silnější levou linku. V buňkách jsou <b>reálné směny a dostupnost toho měsíce</b>, pokud tam jsou, a ťuká se do nich stejně — zapíše se to do jejich měsíce. Pruh nad tabulkou je vždy pruhem otevřeného měsíce; šrafovaný den se řídí fází <i>svého</i> měsíce a v hlavičce má malý štítek („hlásíme" · „skládá" · „rozdaný" · „od 1. 10."), jen když se ta fáze liší. Neotevřený měsíc (listopad v září) je jen k vidění: prázdné buňky, bez „+" a bez děr (předpoklad J). Náčrty B3, B4, D3.</td></tr>
+<tr><th>Konec tabulky</th><td>Až za celým posledním týdnem měsíce je jako poslední „sloupec" <b>karta sousedního měsíce</b>: <b>„Listopad →"</b> se jménem a pod ním pruh stavu toho měsíce — barva + slovo, stejné jako pruh nad tabulkou (žlutý „nahlaš, kdy můžeš" · šedý „Aneta skládá" · zelený „rozdaný" · čárkovaně „otevře se 1. 10.", když ještě neexistuje). Před celým prvním týdnem totéž zrcadlově: <b>„← Září"</b> + „rozdaný" (na telefonu ji vidíš, když potáhneš tabulku doprava před první týden; výchozí posun začíná prvním týdnem). Ťuk na kartu = tabulka <b>přepne na ten měsíc od jeho začátku</b> — prosté přepnutí, žádná horizontální animace, žádný nekonečný pás; pruh nad tabulkou i název u šipek se přepnou s ní. Šipky u názvu měsíce zůstávají jako druhá cesta. Náčrty B3, B4, D3 (kapitola 6).</td></tr>
+<tr><th>Dny sousedního měsíce</th><td>Tabulka ukazuje <b>vždy celé týdny po–ne</b>, i na telefonu (poslední týden ukáže i neděli). Dny, které spadnou do sousedního měsíce (po–st 28.–30. 9. na začátku října, ne 1. 11. na konci), jsou vidět a jejich sloupec má <b>jemnou šikmou šrafuru</b>; v hlavičce je datum s měsícem („28. 9.", „1. 11."), první den měsíce má silnější levou linku. V buňkách jsou <b>reálné směny a dostupnost toho měsíce</b>, pokud tam jsou, a ťuká se do nich stejně — zapíše se to do jejich měsíce. Pruh nad tabulkou je vždy pruhem otevřeného měsíce; šrafovaný den se řídí fází <i>svého</i> měsíce a v hlavičce má malý štítek („hlásíme" · „skládá" · „rozdaný" · „od 1. 10."), jen když se ta fáze liší. Neotevřený měsíc (listopad v září) je jen k vidění: prázdné buňky, bez „+" a bez děr. Náčrty B3, B4, D3 (kapitola 6).</td></tr>
 <tr><th>iPad / PC (1180 px)</th><td>Stejná tabulka, vidět 14–16 dnů naráz, jména 132 px, buňky 46 px široké. Nad tabulkou u provozní řádek závazků, počet děr a jasných, tlačítka „Potvrdit jasné (N)", „Navrhnout rozpis" a „Rozpis hotový".</td></tr>
 <tr><th>Legenda</th><td>Vždy pod tabulkou, tenká, 7 položek (naklikej · můžu · pryč · směna/tvoje · chybí · hoří · dovolená), u Anety ve fázi návrhu 8 (+ návrh), po „Rozpis hotový" 9 (+ čeká · uvolněn). Nikdy se neschovává.</td></tr>
 </tbody></table>
 </div>
 </div>
-
-<h2>3. Náčrty klíčových stavů</h2>
-<p>Náčrty jsou reálné HTML tabulky. Jména smyšlená (stejná jako v demu). Brigádnická persona = Kuba (hlavní pozice barista, vedlejší plácák). Všechny náčrty počítají s jednou <b>šablonou kapacit</b>, aby se čísla v řádcích „Chybí" dala zkontrolovat z hlavy:</p>
+<h3>Čísla v náčrtech</h3>
+<p>Náčrty v celém návodu jsou živé tabulky (dají se posouvat), ne obrázky. Jména smyšlená (stejná jako v demu). Brigádnická persona = Kuba (hlavní pozice barista, vedlejší plácák). Všechny náčrty počítají s jednou <b>šablonou kapacit</b>, aby se čísla v řádcích „Chybí" dala zkontrolovat z hlavy:</p>
 <table class="doc cap" style="max-width:520px"><thead><tr><th>Pozice</th><th>Dopoledne</th><th>Odpoledne</th><th>Sloty / den</th></tr></thead><tbody>
 <tr><td>Barista</td><td>1</td><td>1</td><td>2</td></tr>
 <tr><td>Plácák</td><td>2</td><td>2</td><td>4</td></tr>
 <tr><td>Kuchyň</td><td>1</td><td>0 <small>(v Nastavení)</small></td><td>1</td></tr>
 </tbody></table>
-<p class="meta" style="margin-top:-6px">Reálná čísla si tabulka bere z Nastavení (<code>shift_templates</code> + <code>shift_slot_overrides</code>); šablona v repu má u plácáka 1+1 všední / 2+2 víkend, pro náčrty používám jednotné 2+2, aby kontrola byla jednoduchá. Kdo umí dvě pozice, počítá se do „můžou" u obou — dokud ho Aneta nepotvrdí. Kuchyň na telefonních náčrtech vynechávám kvůli výšce, na iPadu je. Závazky v náčrtech (smyšlené, jako by je Aneta nastavila v Týmu; všední / víkend): <span id="targets-txt"></span>.</p>
+<p class="meta" style="margin-top:-6px">Reálná čísla si tabulka bere z Nastavení (kapitola 7); pro náčrty používám u plácáka jednotné 2+2, aby kontrola byla jednoduchá. Kdo umí dvě pozice, počítá se do „můžou" u obou — dokud ho Aneta nepotvrdí. Kuchyň na telefonních náčrtech vynechávám kvůli výšce, na iPadu je. Závazky v náčrtech (smyšlené, jako by je Aneta nastavila v Týmu; všední / víkend): <span id="targets-txt"></span>.</p>
 
+<h2><span class="n">2</span>Co dělá brigádník: ťuká, kdy může</h2>
+<p><b>Jedno gesto v kruhu, druhé jen upřesňuje:</b> <b>ťuk</b> jede po kruhu tří stavů — nic → <b>můžu</b> (žlutý obrys, celý den) → <b>nemůžu</b> (červené „pryč") → nic; <b>podržení</b> = rozšíření téže buňky (dopoledne · odpoledne · od – do… · nemůžu — proč? · zrušit). Co podržením nastavíš, buňka ukáže textem a ťukání jede dál od toho stavu. Žádný čtvrtý stav, žádné „odeslat".</p>
+<div class="gest" id="gest">
+<div class="card"><b>Ťuk — kruh tří stavů</b><div class="row2"><span class="cell c-free" style="border-color:var(--gold);color:var(--gold-ink)">+</span><span class="arrow">→</span><span class="cell c-av">cd</span><span class="arrow">→</span><span class="cell c-no">pryč</span><span class="arrow" title="zpět na začátek">↻</span></div><small>Každý ťuk = další stav: nic → můžu celý den → nemůžu → nic. Nejčastější odpověď je jeden ťuk, „nemůžu" dva, oprava nejvýš dva — vždy přes „nevyjádřil se". Kuchyň (jedna část dne) totéž.</small></div>
+<div class="card"><b>Podržení — rozšíření téže buňky</b><div class="row2"><span class="cell c-av pressed">cd</span><span class="arrow">→</span><span class="mm">dopoledne · odpoledne · od – do…<br><i>nemůžu — proč?</i> · zrušit</span></div><small>Nabídka u buňky (náčrt B2): jiné zobrazení toho, co v buňce je. Co vybereš, buňka ukáže textem: 1/2 · 2/2 · od 16 · pryč (nebo důvod). Na iPadu prstem; s myší pravý klik nebo ⋯ v rohu buňky.</small></div>
+<div class="card"><b>Ťukání jede dál od aktuálního stavu</b><div class="row2"><span class="cell c-av">1/2</span><span class="arrow">→</span><span class="cell c-no">pryč</span><span class="arrow">→</span><span class="cell c-free" style="border-color:var(--gold);color:var(--gold-ink)">+</span><span class="arrow">→</span><span class="cell c-av">cd</span></div><small>Po podržení se kruh nemění: z „1/2", „2/2" nebo „od 16" je další ťuk nemůžu, další prázdno, další můžu celý den. Buňka nikdy neprojíždí stavy, které nikdo nechtěl.</small></div>
+</div>
+<div class="seq">
+<b>Ťuk na „+" ve svém řádku</b><span>Buňka se hned změní na žlutý obrys „cd" = můžu celý den. Dole lišta „Můžeš út 6. 10. celý den · zatím 1 den" s tlačítkem Zpět. Žádný panel, žádný výběr. <b>Při prvním ťuku v měsíci</b> se pod tabulkou objeví hint: „Klikni dny, kdy můžeš. A když víš, že některý den opravdu nemůžeš, ťukni ho do červena, ať s tím Aneta počítá." + menší řádek „Podrž prst pro dopoledne, odpoledne nebo vlastní čas." — zmizí po prvním podržení, nebo s koncem měsíce (náčrt B).</span>
+<b>Druhý ťuk (na své „můžu")</b><span>Buňka zčervená na <b>„pryč"</b> = nemůžu, říkám to dopředu. Lišta „Nemůžeš ne 11. 10. — Aneta s tebou ten den nepočítá" + Zpět. Platí z „cd" i z „1/2", „2/2", „od 16" — ťukání jede dál od toho, co v buňce je. Není to žádost, nikdo to neschvaluje, žádná zpráva nechodí. Červená je <b>bonus pro Anetu, ne povinnost</b>: většina lidí bude klikat jen „můžu" a je to tak v pořádku.</span>
+<b>Třetí ťuk (na své „pryč")</b><span>Zpět na „+", lišta „Ne 11. 10. — jako bys neklikl." Kruh se zavřel: nic → můžu → nemůžu → nic. Oprava čehokoli = nejvýš dva ťuky a vždy vede přes „nevyjádřil se", takže Aneta nikdy nevidí půl odpovědi.</span>
+<b>Podržení</b><span>Long-press na kterékoli své buňce (prázdné i plné) = <b>rozšíření téže buňky</b>: u ní vyskočí nabídka s tím, co v buňce je, a pěti slovy <b>dopoledne · odpoledne · od – do… · nemůžu — proč? · zrušit</b> (náčrt B2). Jeden ťuk v ní = hotovo, nabídka zmizí; buňka ukáže text (1/2 · 2/2 · od 16 · pryč nebo důvod) a další ťuky jedou po kruhu od tohoto stavu. Kuchyň: bez dopoledne / odpoledne. Když buňka už je „1/2", „2/2" nebo „od 16", má nabídka navrch ještě „celý den". Na iPadu totéž prstem, s myší pravý klik nebo ikonka ⋯ v rohu buňky při najetí.</span>
+<b>Od – do (vlastní čas)</b><span>Dvě políčka předvyplněná otevírací dobou (9:30 / 19:00), změním jedno: „od 16:00". V buňce žlutý obrys <b>„od 16"</b> (jako můžu), „do 14", nebo „11–15". Aneta v panelu vidí „může od 16:00" a potvrdí směnu 16–19. Do „N můžou" se počítám v části dne, kterou svým časem pokrývám (od 16 = odpoledne).</span>
+<b>Důvod k „nemůžu"</b><span>Z nabídky po podržení: „nemůžu — proč?" s nepovinným polem (pár slov: škola, doma). V buňce se důvod ukáže místo slova „pryč", když se vejde (do 5 znaků), jinak jen u Anety. Ťuk na červenou = zpět na prázdno, ať má důvod nebo ne.</span>
+<b>Prázdno</b><span>= neřekl jsem nic. Pro Anetu je rozdíl od „pryč" podstatný: prázdné může uhánět („Připomenout"), červené ne (kapitola 4).</span>
+<b>Další dny</b><span>Ťukám dál, půl měsíce za půl minuty. Žádný „odeslat" krok, žádný košík — každý ťuk je hned uložený a Aneta ho vidí. Lišta se jen aktualizuje („zatím 9 dnů").</span>
+<b>Cizí buňka</b><span>Nic (ťuk na hlavičku dne = detail dne). Cizí „můžu" vidím jako žlutý obrys, cizí „pryč" jako červenou — vím, kdo ten den může a kdo ne, ne víc.</span>
+<b>Karta na konci tabulky</b><span>Až za celým posledním týdnem měsíce „Listopad →" s pruhem stavu listopadu, před celým prvním „← Září"; dny sousedního měsíce v těch týdnech (28.–30. 9., ne 1. 11.) jsou šrafované a ťukáš do nich stejně — zapíše se to do jejich měsíce. Ťuk = přepne na ten měsíc od začátku (bez animace); šipky u názvu měsíce dělají totéž (náčrt B3, anatomie).</span>
+<b>Řádek „Chybí" (žlutý)</b><span>Jen informace „tady ještě nikdo / málo lidí může". Ťuk = věta „Aneta ještě skládá — naklikej, kdy můžeš."</span>
+<b>Aneta skládá (šedý pruh)</b><span>Tabulka vypadá jako v B — svoje „můžu" a „pryč" můžu dál měnit, cizí obrysy vidím, ale <b>zelené ještě ne</b>: Anetin rozpracovaný rozpis tým nevidí. Pruh: „Aneta skládá rozpis · dozvíš se obvykle do týdne"; v Moje směny: „Říjen: zatím jen tvoje dostupnost, rozpis obvykle do týdne"</span>
+<b>Rozpis hotový (zelený pruh)</b><span>Zelené se objeví všem naráz a přijde jedna zpráva, soupis: „Říjen: st 7. celý den (plácák) · so 17. celý den · čt 22. dopoledne. Z tvých 10 dnů, kdy můžeš, máš 3 směny." Pruh „Říjen je rozdaný", Moje směny „Říjen: máš 3 směny" (čas, ICS). Kde jsem mohl a Aneta mě nepotřebovala, zůstává žlutá. Že můžu, zůstane zapsané; kdyby někdo vypadl, Aneta ví, koho oslovit.</span>
+<b>Ťuk na svou zelenou</b><span>List s časem a kolegy ten den a třemi tlačítky <b>Vyměnit · Nemůžu · Nemocný</b>, u všech <b>povinný důvod</b> (jedna věta). Všechno je žádost: buňka se změní na „čeká" (nahoře zelená, dole žlutá), směna je pořád moje, dokud Aneta nerozhodne. Po schválení „uvolněn" (růžová) a Aneta hledá náhradu — nebo zamítnuto a buňka je zpět zelená. Detail v kapitole 5 a v náčrtu G. (Tohle „Nemůžu" je jiné než „pryč": pryč říkám dopředu na den bez směny, tohle je žádost o uvolnění směny, kterou už mám.)</span>
+<b>Nemocný</b><span>Totéž jako Nemůžu, navíc se zeptá <b>od – do</b> a označí všechny moje směny v rozsahu (každá „čeká"), Anetě jde push hned a v panelu je to nahoře. Ani nemoc se neschvaluje sama. Dny bez směny v rozsahu se ukážou jako „nem.".</span>
+<b>Po zámku měsíce</b><span>Od dne zámku (Nastavení) tlačítka Vyměnit a Nemůžu zmizí; zůstane Nemocný a „Napsat Anetě". Samoobsluha končí, změny jen přes ni.</span>
+<b>Řádek „Chybí" (červený, hoří)</b><span>Ťuk = list „So 10. 10. · plácák · dopoledne — Beru". Hned je to moje směna (jako dnes „Beru"), Aneta dostane zprávu. Tady neříkám, kdy můžu, ale beru konkrétní díru v hotovém rozpisu. Kdo klikne dřív, ten ji má.</span>
+<b>Kdykoli v měsíci</b><span>Řádek „Ty" jde měnit pořád — i po hotovém rozpisu. Směny to nemění (ty ruší jen žádost přes Anetu), jen říká Anetě, s kým může počítat, kdyby vznikla díra.</span>
+</div>
+<h3>Jak to vypadá na telefonu</h3>
 <div class="grid">
 <div>
 <div class="tag">A · Brigádník, telefon — nový měsíc, ještě jsem nic neřekl</div>
@@ -468,30 +421,6 @@ tr.me .c-ok,.c-ok.me{background:var(--ok-me)}
 </div>
 
 <div>
-<div class="tag">B3 · Brigádník, telefon — konec měsíce: celý týden se šrafovanou nedělí 1. 11., pak karta „Listopad →"</div>
-<div class="phone">
-<div class="tabs"><span class="on">Tabulka směn</span><span>Moje směny</span></div>
-<div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span class="btn">Dnes</span></div>
-<div id="s-b3"></div>
-<div id="t-b3" class="sh"></div>
-<div class="legend" id="leg-b3"></div>
-</div>
-<div class="cap">Říjen je rozdaný, je pátek 2. 10. Doscrolloval jsem doprava na poslední týden 26. 10. – 1. 11.: <b>neděle 1. 11. je v tabulce, jen šrafovaná</b> — patří listopadu, který se právě otevřel, a tak má v hlavičce datum s měsícem a žlutý štítek „hlásíme" (fáze jiná než říjnová) a v mém řádku „+": ťuk sem se zapíše do listopadu. Aneta P., Nela a Vojta už na 1. 11. řekli, že můžou (žluté obrysy) a řádky Chybí to počítají. Až za neděli stojí <b>karta „Listopad →"</b> se žlutým „nahlaš, kdy můžeš", stejná barva a slovo jako pruh nad listopadem; ťuk na ni = tabulka přepne na listopad od 1. 11., bez animace. Pruh nahoře je pořád říjnový. Na začátku tabulky (potáhnu před 28. 9.) je zrcadlově „← Září" — náčrt B4; zářijové dny už jsou minulost, proto šedé. Kubův říjen: pá 30. „pryč", jinak jsem nic neřekl, což je v pořádku: Aneta složila z toho, co měla, a červená je bonus.</div>
-</div>
-
-<div>
-<div class="tag">B4 · Brigádník, telefon — začátek měsíce: karta „← Září", šrafované 28.–30. 9., čt 1. 10.</div>
-<div class="phone">
-<div class="tabs"><span class="on">Tabulka směn</span><span>Moje směny</span></div>
-<div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span class="btn">Dnes</span></div>
-<div id="s-b4"></div>
-<div id="t-b4" class="sh"></div>
-<div class="legend" id="leg-b4"></div>
-</div>
-<div class="cap">Říjen se teprve hlásí (je 8. 9.) a tabulka začíná celým týdnem: vlevo <b>karta „← Září"</b> se zeleným „rozdaný", pak <b>po–st 28.–30. 9. šrafované</b> — v hlavičce datum s měsícem a zelený štítek „rozdaný", protože září je v jiné fázi než říjen; v řádcích jsou reálné zářijové směny (moje út 29. 9. odpoledne, zelená). Čt 1. 10. má silnější levou linku, tam začíná měsíc. Ťuk do šrafovaného dne se zapíše do září (třeba že můžu ve středu 30., kdyby něco hořelo). Pruh nahoře zůstává říjnový. Na druhém konci je za nedělí 1. 11. karta „Listopad →", ale dokud se listopad neotevře (1. 10.), je ta neděle jen k vidění — štítek „od 1. 10.", bez „+" a bez děr.</div>
-</div>
-
-<div>
 <div class="tag">C · Brigádník, telefon — Aneta složila rozpis</div>
 <div class="phone">
 <div class="tabs"><span class="on">Tabulka směn</span><span>Moje směny</span></div>
@@ -501,10 +430,94 @@ tr.me .c-ok,.c-ok.me{background:var(--ok-me)}
 <div class="legend" id="leg-c"></div>
 <div class="toast" id="c-toast"><span><b>Říjen je hotový</b><span id="c-msg"></span></span></div>
 </div>
-<div class="cap">Plná zelená = moje směna; ve středu jako plácák (ikona podnosu), protože Aneta potřebovala plácáka a já ho umím. Úterý, čtvrtek a sobota zůstaly <b>žluté</b>: mohl jsem, Aneta mě nepotřebovala. Že můžu, zůstane zapsané — kdyby někdo vypadl, Aneta ví, koho oslovit (a mně přijde „hoří"). Pátek „od 16" zůstal žlutý taky, neděle je červená „pryč" — to jsem řekl já, ne Aneta. Řádky „Chybí" jsou prázdné = týden je celý. Lišta nahoře = <b>soupis</b>, jediná zpráva za měsíc: směny za celý říjen a kolik dnů jsem nabídl (6b); v náčrtu je vygenerovaná z dat, ne opsaná — týden 5.–11. v řádku „Ty" je jeho výřez.</div>
+<div class="cap">Plná zelená = moje směna; ve středu jako plácák (ikona podnosu), protože Aneta potřebovala plácáka a já ho umím. Úterý, čtvrtek a sobota zůstaly <b>žluté</b>: mohl jsem, Aneta mě nepotřebovala. Že můžu, zůstane zapsané — kdyby někdo vypadl, Aneta ví, koho oslovit (a mně přijde „hoří"). Pátek „od 16" zůstal žlutý taky, neděle je červená „pryč" — to jsem řekl já, ne Aneta. Řádky „Chybí" jsou prázdné = týden je celý. Lišta nahoře = <b>soupis</b>, jediná zpráva za měsíc: směny za celý říjen a kolik dnů jsem nabídl (kapitola 3); v náčrtu je spočítaná z celého Kubova října, ne opsaná — týden 5.–11. v řádku „Ty" je jeho výřez.</div>
 </div>
+</div>
+<details class="tym"><summary>Pro tým: proč kruh tří stavů, zamítnuté alternativy, feasibility z kódu</summary><div class="tym-in">
+<div class="note"><b>Rozhodnutí — vzor ťukání: kruh tří stavů, podržení jen rozšiřuje</b> (Jakub 7. 9. 0:50; nahrazuje čtyřstavový cyklus + → cd → 1/2 → 2/2 → + z v4 i „ťuk · ťuk zpět · podržení" z v4.4). Proč kruh: (1) každý ťuk je <b>odpověď</b>, ne mazání — člověk nikdy nemusí přemýšlet, jestli teď „ruší" nebo „říká"; (2) „nemůžu" je na dosah druhého ťuku, bez skrytého gesta — a přitom zůstává bonusem: kdo klikne jen „můžu", udělal všechno, co Aneta potřebuje; (3) oprava stojí nejvýš dva ťuky a vždy vede přes prázdno, takže půlka odpovědi nikdy nezůstane viset; (4) podržení nic nového neumí — jen upřesní to, co v buňce je (část dne, čas, důvod), a kruh po něm jede dál. Cena: druhý ťuk na omylem ťuknuté „cd" dá červenou, ne prázdno. Rizika → cesty: <i>chtěl jsem zrušit „cd" a mám „pryč"</i> → lišta říká „Nemůžeš út 6." se Zpět, třetí ťuk je prázdno, a mezitím nikam nic neodešlo (žádná zpráva, žádné schvalování); <i>ťuk na „od 16", které jsem pracně zadal, ho přepíše na „pryč"</i> → Zpět v liště čas vrátí; <i>lidé si myslí, že červenou musí vyplnit všude</i> → věta v hintu i na slidu 3 („když víš, že některý den opravdu nemůžeš…"), Aneta vidí tři skupiny: může · nemůže · neřekl, a uhání jen třetí; <i>„pryč" zaměněné za „hoří"</i> → jiný řádek, plná × obrys, slovo × plamínek (sekce 4, stav 3). Zamítnuté alternativy: „ťuk · ťuk zpět · podržení" (v4.4 — nemůžu schované za podržením, druhý ťuk maže) a čtyřstavový cyklus (v4 — oprava až tři ťuky přes stavy, které nikdo nechtěl).</div>
+<div class="note">Feasibility (z kódu): dnešní <code>availability_rules</code> má <code>specific_date</code>, <code>start_time / end_time</code> a <code>type CAN</code> — „můžu čt 8. 10. dopoledne" je jeden takový řádek (časy z šablony slotu), „celý den" jeden řádek přes obě části, „od 16" řádek s vlastním časem, třetí ťuk (prázdno) = smazání řádku; <b>„pryč" = záporný záznam</b> (dnešní <code>type</code> zná jen <code>CAN</code> — Tomáš doplní <code>CANNOT</code>, nebo sloupec na nosiči dostupnosti). Nic o přihláškách (<code>PENDING</code>) není potřeba. Tým dnes cizí dostupnost číst nesmí (RLS jen admin / provozní) — žluté obrysy v cizích řádcích a čísla „můžou" musí přijít přes stejnou RPC, která vrací tabulku (Tomášova <code>get_shift_table</code>). „Beru" = dnešní <code>claim_shift_slot</code> beze změny (zapisuje rovnou schválenou směnu). Tomáš doplní hodiny.</div>
+<div class="note">Šablona kapacit v repu (<code>shift_templates</code> + <code>shift_slot_overrides</code>) má u plácáka 1+1 všední / 2+2 víkend; náčrty používají jednotné 2+2 (viz „Čísla v náčrtech" v kapitole 1).</div>
+</div></details>
+
+<h2><span class="n">3</span>Jak měsíc žije: tři fáze a pruh nad tabulkou</h2>
+<p>Každý měsíc je právě v jednom ze tří stavů a nad tabulkou to říká <b>jeden pruh: barva + slovo</b>, stejný pro obě role, na telefonu i iPadu. Tabulka pod ním je pořád tatáž; mění se, co v ní kdo vidí a co udělá ťuk. Mezi stavy přepíná jediné tlačítko Anety „Rozpis hotový" (1 → 2 se přepne samo uzávěrkou dostupnosti z Nastavení; kdo naklikne po ní, pořád pomůže — je to text, ne zámek).</p>
+<div class="stages">
+<div class="card"><b>1 · Hlásíme <span class="cell c-av" style="height:22px;min-width:26px;font-size:11px;vertical-align:middle">žlutý</span></b><small>od 1. do uzávěrky (10. předchozího měsíce, jen pravidlo — nic se nezamyká)</small>
+<span class="bar">Oba: <b>„Říjen: hlásíme, kdy můžeme · do 10. 9."</b> · Aneta navíc „odpovědělo 6 z 10"</span>
+<ul><li>Řádek „Ty": ťuk = cd → další ťuk = pryč → další = prázdno; podržení = 1/2 · 2/2 · od 16 · důvod; cizí „můžu" žluté obrysy, cizí „pryč" červené</li><li>Řádek „Chybí": žlutý, celá kapacita + „N můžou"</li><li>Žádné zelené — nikdo nic nemá</li><li>Moje směny: „Říjen: zatím jen tvoje dostupnost, rozpis obvykle do týdne"</li><li>Zprávy: žádné</li></ul></div>
+<div class="card"><b>2 · Aneta skládá <span class="cell" style="height:22px;min-width:26px;font-size:11px;vertical-align:middle;background:var(--closed);color:var(--closed-ink)">šedý</span></b><small>od uzávěrky do „Rozpis hotový" (typicky do týdne po 10.)</small>
+<span class="bar">Brigádník: <b>„Aneta skládá rozpis · dozvíš se obvykle do týdne"</b></span>
+<span class="bar">Aneta: <b>„Skládáš říjen · 13 děr, 5 jasných"</b> + Potvrdit jasné (N) · Navrhnout rozpis · Rozpis hotový</span>
+<ul><li><b>Tým vidí jen svoje „můžu"</b> (může je měnit) a cizí žluté obrysy — <b>rozpracovaný rozpis nevidí</b></li><li>Aneta vidí potvrzené (zelené) i návrh (tečkované); řádek závazků svítí jen nad závazkem</li><li>Řádek „Chybí" u týmu jako ve stavu 1; u Anety klesající čísla, ťuk = panel D</li><li>Moje směny: beze změny („zatím jen tvoje dostupnost…")</li><li>Zprávy: žádné (až naráz)</li></ul></div>
+<div class="card"><b>3 · Rozdaný <span class="cell c-ok" style="height:22px;min-width:26px;font-size:11px;vertical-align:middle">zelený</span></b><small>od „Rozpis hotový" do konce měsíce</small>
+<span class="bar">Brigádník: <b>„Říjen je rozdaný"</b> · „máš 3 směny" / „1 hoří" / „tvoje žádost čeká"</span>
+<span class="bar">Aneta: <b>„Říjen je rozdaný · 2 žádosti · 1 hoří: so 10. plácák dopoledne"</b> + Upravit rozpis</span>
+<ul><li>Zelené <b>všem naráz</b> + soupis; zbylé a nové díry = červený obrys, plamínek</li><li>Ťuk brigádníka do Chybí: <b>Beru</b> (hned směna); na svou zelenou: Vyměnit · Nemůžu · Nemocný (kapitola 5)</li><li>Ťuk Anety: panel (kdo mohl) / Přiřadit / Nabídnout všem; na počítadlo „2 žádosti": panel H</li><li>Moje směny: „Říjen: máš 3 směny"</li><li>Řádek „Ty" jde dál měnit, směny to nemění</li></ul></div>
 </div>
 
+<h3>Pruh ve třech stavech — obě role, telefon i iPad</h3>
+<div class="srow"><div class="tag">1 · Hlásíme — žlutý</div><div class="two">
+<div class="phone mini"><div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span class="btn">Dnes</span></div><div id="s-f1b"></div><div class="sub">Pod ním tabulka jako v náčrtu A / B: můj řádek s „+", žluté obrysy, řádek Chybí s kapacitou.</div></div>
+<div class="pad mini"><div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span></span></div><div id="s-f1a"></div><div class="sub">Aneta zatím nic nedělá; vidí, jak měsíc odpovídá. Žádná tlačítka — nemá co potvrzovat.</div></div>
+</div></div>
+<div class="srow"><div class="tag">2 · Aneta skládá — šedý</div><div class="two">
+<div class="phone mini"><div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span class="btn">Dnes</span></div><div id="s-f2b"></div><div class="sub">Tabulka vypadá pořád jako v B — svoje „můžu" jde měnit, <b>zelené nejsou vidět</b>. Kdo se ptá „už to je?", má odpověď v pruhu.</div></div>
+<div class="pad mini"><div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span><span class="btn g">Potvrdit jasné (7 směn)</span> &nbsp;<span class="btn">Navrhnout rozpis</span> &nbsp;<span class="btn p">Rozpis hotový</span></span></div><div id="s-f2a"></div>
+<div class="sheet"><h4>Říjen je rozdaný?</h4><small>Pošle se soupis <b>8 lidem</b> (3 bez appky — text si zkopíruješ). Zbylé 2 díry začnou hořet. Tým uvidí zelené naráz.</small><div class="chips"><span class="btn g">Ano, rozdat</span><span class="btn">Zpět</span></div></div>
+<div class="sub">Tlačítko „Rozpis hotový" má jediný dialog; po něm se pruh přepne u všech.</div></div>
+</div></div>
+<div class="srow"><div class="tag">3 · Rozdaný — zelený</div><div class="two">
+<div class="phone mini"><div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span class="btn">Dnes</span></div><div id="s-f3b"></div><div style="height:6px"></div><div id="s-f3b2"></div><div class="sub">Dvě podoby: hned po rozdání „máš 3 směny", později „1 hoří" (náčrt F) nebo „tvoje žádost čeká" (G).</div></div>
+<div class="pad mini"><div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span><span class="btn">Upravit rozpis</span></span></div><div id="s-f3a"></div><div class="sub">Dvě počítadla: co hoří (náčrt E) a kolik žádostí čeká (náčrt H). Ťuk na počítadlo otevře panel.</div></div>
+</div></div>
+<div class="srow"><div class="tag">Listování měsíci — každý měsíc má svůj pruh</div><div class="two">
+<div class="phone mini"><div class="mnav"><span>‹ &nbsp;Září 2026&nbsp; ›</span><span class="btn">Dnes</span></div><div id="s-m1"></div><div style="height:6px"></div><div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span class="btn">Dnes</span></div><div id="s-m2"></div><div style="height:6px"></div><div class="mnav"><span>‹ &nbsp;Listopad 2026&nbsp; <span class="off">›</span></span><span class="btn">Dnes</span></div><div id="s-m3"></div></div>
+<div class="sub" style="font-size:13.5px;color:var(--muted)">Dnes je 8. 9.: září je rozdané (3 hoří), říjen se hlásí, listopad ještě neexistuje — <b>otevře se sám 1. 10.</b> a hned bude žlutý. Šipka doprava je vybledlá a místo pruhu je věta. Totéž říká karta na konci tabulky: na říjnové tabulce je vpravo „Listopad →" s čárkovaným „otevře se 1. 10.", od 1. 10. se zbarví do žluta „nahlaš, kdy můžeš"; vlevo „← Září" zeleně „rozdaný" (náčrty B3, B4, D3). Tabulka jede v celých týdnech, takže dny sousedního měsíce v ní jsou vidět šrafovaně — a řídí se fází <i>svého</i> měsíce (v hlavičce mají štítek, když se liší), zatímco pruh nahoře je vždy pruhem otevřeného měsíce. Žádný měsíc nikdy nemá dva stavy; přechod 1 → 2 dělá datum uzávěrky, 2 → 3 Anetino tlačítko, 3 → konec měsíc sám.</div>
+</div></div>
+
+<h3>Kdo dostane zprávu a kdy</h3>
+<table class="doc"><thead><tr><th>Událost</th><th>Komu</th><th>Text</th></tr></thead><tbody>
+<tr><td>Naklikané „můžu" / „pryč"</td><td>nikomu</td><td>—</td></tr>
+<tr><td>„Připomenout" (Aneta ťukne, ručně)</td><td>těm, kdo v měsíci neřekli nic (ne těm s „pryč")</td><td>„Říjen: ještě jsi neřekl, kdy můžeš — stačí ťuknout do svého řádku. Do 10. 9."</td></tr>
+<tr><td>„Rozpis hotový" → <b>soupis</b></td><td>každému, kdo v měsíci řekl aspoň jednou „můžu" nebo má směnu — jednou; kdo nic neřekl a nic nemá, nic</td><td>„Říjen: st 7. celý den (plácák) · so 17. celý den · čt 22. dopoledne. Z tvých 10 dnů, kdy můžeš, máš 3 směny." — náhledy níže, i pro 0 směn</td></tr>
+<tr><td>Potvrzení po hotovém rozpisu</td><td>potvrzenému</td><td>„Máš směnu so 10. 10. dopoledne (plácák)."</td></tr>
+<tr><td>Vznik díry po hotovém rozpisu</td><td>jen lidem, kteří ten den mohli a pozici umí; připomínka N dní předem (práh v Nastavení)</td><td>„Hoří: so 10. 10. plácák dopoledne — mohl jsi. Bereš?"</td></tr>
+<tr><td>Nikdo nemohl</td><td>Anetě</td><td>„So 10. 10. plácák dopoledne: nikdo nemohl. Nabídnout všem plácákům?"</td></tr>
+<tr><td>„Beru"</td><td>Anetě</td><td>„Kuba vzal so 10. plácák dopoledne."</td></tr>
+<tr><td>Žádost Nemůžu / Vyměnit</td><td>Anetě (zvoneček + počítadlo v pruhu; push jen když je směna do 48 h)</td><td>„Vojta nemůže čt 8. 10. celý den (plácák): „zkouška z angličtiny…""</td></tr>
+<tr><td>Žádost Nemocný</td><td>Anetě <b>push hned</b>, nahoře v panelu</td><td>„Nela je nemocná čt 8.–pá 9. 10. (2 směny): „angína…""</td></tr>
+<tr><td>Schváleno</td><td>žadateli; lidem, kteří ten den mohli a pozici umí, „hoří"</td><td>„Čt 8. 10. ti Aneta uvolnila." / „Hoří: čt 8. 10. plácák celý den — mohl jsi. Bereš?"</td></tr>
+<tr><td>Zamítnuto</td><td>žadateli</td><td>„Čt 8. 10. ti zůstává." (+ důvod, pokud ho Aneta napíše)</td></tr>
+<tr><td>Aneta zrušila / přehodila</td><td>jen dotčeným: komu odešla, kdo ji dostal</td><td>„So 10. 10. plácák dopoledne ti Aneta zrušila: „…"" / „Máš směnu so 10. 10. dopoledne (plácák)."</td></tr>
+</tbody></table>
+<h3>Soupis — jedna zpráva na člověka po „Rozpis hotový"</h3>
+<div class="grid">
+<div class="msg"><b>Kuba · 3 směny</b><span id="msg-kuba"></span></div>
+<div class="msg"><b>Brigádník s 0 směnami (nahlásil 2 dny)</b><span id="msg-zero"></span></div>
+</div>
+<ul>
+<li><b>Tvar:</b> měsíc, pak směny v pořadí dnů (den, datum, část dne; pozice jen když není hlavní), tečka, a jedna věta o poměru „z tvých N dnů, kdy můžeš, máš M směn". Nic dalšího — žádné „bohužel", žádné „těšíme se".</li>
+<li><b>Nula směn není „nevybrán":</b> stejná zpráva, jen bez seznamu; věta o poměru říká, kolik dnů člověk nabídl, a že jeho „můžu" platí dál. Kdo nenabídl nic a nic nemá, nedostane nic — není co shrnovat.</li>
+<li><b>Kanál:</b> push tomu, kdo ho má; jinak e-mail; kdo nemá ani jedno, toho Aneta vidí v potvrzovacím dialogu jako „bez appky" s textem k překopírování do iMessage. Do zvonečku v appce jde soupis vždy, s odkazem do tabulky.</li>
+<li><b>Jednou.</b> Soupis odchází jen z „Rozpis hotový"; každé další potvrzení po hotovém = jednotlivá zpráva („Máš směnu so 10. 10. …"). Druhé stisknutí „Rozpis hotový" soupis neposílá znovu.</li>
+</ul>
+
+<h2><span class="n">4</span>Co uděláš ty, když skládáš rozpis</h2>
+<div class="seq">
+<b>Fáze hlášení (do 10.)</b><span>Nad tabulkou: „Říjen: kdy můžou? do 10. 9. · odpovědělo 6 z 10". Řádky „Chybí" ukazují celou kapacitu a rostoucí čísla „můžou" (červené „pryč" se do nich nepočítá). <b>Tři skupiny lidí u každého dne: může · nemůže · neřekl.</b> Žlutý obrys = může, červená „pryč" = <b>vyjádřil se, nemůže</b>, prázdná buňka = ten člověk se k tomu dni ještě <b>nevyjádřil</b>. Červená je pro tým bonus, ne povinnost — většina bude klikat hlavně „můžu", a proto je prázdných buněk hodně a nic to neznamená. Uhánět má smysl jen ty poslední — vedle „odpovědělo 6 z 10" je proto tlačítko <b>Připomenout (4)</b> (jedna zpráva těm, kdo v měsíci neřekli nic; ručně, nikdy samo) a v panelu díry věta „Aneta P. se ke čtvrtku nevyjádřila" s tím samým tlačítkem (náčrt D). Kdo řekl „pryč", je v panelu jen jako věta bez tlačítka.</span>
+<b>Skládání (16.–20.)</b><span>Nad tabulkou: „Skládáš říjen · 13 děr, 6 jasných". Ťuk na „chybí 1 · celý den · 3 můžou" → panel D: jen lidi, kteří ten den mohou, pozici umí a nemají směnu, po částech dne, s počítadlem závazku („1 z 5 všedních") a řazením od nejvíc pod závazkem. Jeden ťuk = potvrzeno. U člověka se dvěma pozicemi tím ťukem rozhodla, kde ten den je.</span>
+<b>„Potvrdit jasné (7 směn)"</b><span>Hromadně potvrdí díry, kde v každé chybějící části může přesně tolik vhodných lidí, kolik chybí. Před tím seznam (9 řádků) s jedním tlačítkem „Ano, potvrdit" — jediný modál v celém flow, protože jde o hromadnou akci. Kdo je ten den „jasný" pro dvě pozice, zůstane Anetě.</span>
+<b>„Navrhnout rozpis"</b><span>Tabulka se předvyplní návrhem (stav 9, tečkovaná světlá zelená) podle čtyř pravidel z karty u tlačítka; hláška „návrh · N směn · zbývá M děr", řádek závazků už počítá s návrhem. Aneta ťuká: na návrh = zrušit, do Chybí = potvrdit jinak (panel D). Tým nic nevidí, žádné zprávy.</span>
+<b>„Potvrdit návrh (N směn)"</b><span>Seznam N řádků a „Ano, potvrdit" — druhý a poslední modál ve flow. Z tečkovaných zelené; co mezitím zastaralo (někdo změnil „můžu"), se přeskočí a vypíše. „Zahodit návrh" vrátí tabulku před návrh.</span>
+<b>Nikdo nemůže</b><span>„chybí 1 · odpo · 0 můžou" → panel bez jmen: „Přiřadit někoho…" (výběr z lidí s tou pozicí bez směny ten den — Aneta mu zavolá, jako dnes) nebo díru nechat; po „Rozpis hotový" se z ní stane hoří a push půjde všem s tou pozicí.</span>
+<b>„Rozpis hotový"</b><span>Jedno tlačítko, jeden potvrzovací dialog: <b>„Říjen je rozdaný? Pošle se soupis 8 lidem (3 bez appky — text si zkopíruješ). Zbylé 2 díry začnou hořet."</b> Po „Ano": všechny potvrzené směny se ukážou týmu naráz, každému, kdo v měsíci řekl aspoň jednou „můžu" nebo má směnu, odejde jeden <b>soupis</b> (i s 0 směnami — věcně, ne „nevybrán"; kdo nic neřekl a nic nemá, nedostane nic), pruh zezelená u všech, zbylé díry zčervenají a lidem, kteří v ty dny mohli a pozici umí, odejde „hoří". Tlačítko zůstane jako „Upravit rozpis" — Aneta ťuká dál, jen zprávy už chodí po jednom.</span>
+<b>Žádosti po hotovém (počítadlo v pruhu)</b><span>„Říjen je rozdaný · 2 žádosti" — ťuk otevře panel (náčrt H): nemoc vždy nahoře se štítkem, pak ostatní podle času; u každé důvod a Schválit / Zamítnout. Schválit = buňka „uvolněn", díra hoří, push lidem, kteří mohli. Zamítnout = buňka zpět zelená, člověku přijde „zůstává ti". Nic se neschvaluje samo, ani nemoc (četnost vidí v měsíčním přehledu absencí). Výměna: kolega přijme, pak Aneta schválí — do té doby „čeká" u obou.</span>
+<b>Díra po hotovém (nemoc, zrušení)</b><span>Ťuk na červenou → stejný panel (kdo mohl), „Potvrdit" pošle „Máš směnu so 10. 10. dopoledne (plácák)". Nebo počká, až si to někdo vezme přes „Beru" — přijde jí „Kuba vzal…".</span>
+<b>Ťuk na zelenou buňku cizího člověka</b><span>Detail: upravit čas (dnešní tužka), <b>Zrušit</b> nebo <b>Přehodit</b> na někoho, kdo ten den mohl — obojí s důvodem (jedna věta, člověk ho dostane ve zprávě). Zrušené = „uvolněn" v jeho řádku, místo → Chybí → hoří. Zprávy jen dotčeným: tomu, komu směna odešla, a tomu, kdo ji dostal.</span>
+<b>Ťuk na hlavičku dne</b><span>Detail dne (jako dnes): kdo pracuje, časy, zavřít den / výjimka. Beze změny.</span>
+<b>Zámek měsíce</b><span>Den zámku z Nastavení, jako dnes: od toho dne brigádníkovi zmizí Vyměnit a Nemůžu (zůstane Nemocný a „Napsat Anetě") — samoobsluha stop, změny jen přes Anetu. Řádku „Ty" (dostupnost) se netýká.</span>
+</div>
+<h3>Jak to vypadá na iPadu</h3>
 <div style="margin-top:28px"><div class="tag">D · Provozní, iPad — skládám říjen</div>
 <div class="pad">
 <div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span><span class="btn g" id="d-btn">Potvrdit jasné (7 směn)</span> &nbsp;<span class="btn">Navrhnout rozpis</span> &nbsp;<span class="btn p">Rozpis hotový</span></span></div>
@@ -531,7 +544,7 @@ tr.me .c-ok,.c-ok.me{background:var(--ok-me)}
 <div class="info"><small><b>Tereza M.</b> je pátek pryč — řekla to dopředu, neuhání se.</small></div>
 </div>
 </div>
-<div class="cap" style="max-width:none">Aneta ťukla do buňky <code>chybí 1 · celý den · 3 můžou</code> pod baristy. Panel ukazuje <b>jen lidi, kteří ten den mohou, baristu umí a ještě nemají směnu</b>, po částech dne, s počítadlem závazku („1 z 5 všedních"; u sobotní díry by bylo „z 3 víkendových") a <b>řazením od nejvíc pod závazkem</b> — proto je odpoledne Karel (0 z 5) nad Kubou (1 z 5), i když Kuba může celý den. Jeden ťuk = potvrzeno, panel zůstane otevřený, dokud není den plný. „Potvrdit cd" je u Kuby, protože může celý den a chybí obě části. Kuba umí i plácáka — tím, že ho Aneta potvrdí jako baristu, o tom rozhodla; z plácáckých „můžou" ten den zmizí. Dole pod ním věta o tichu: <b>Aneta P. se ke čtvrtku nevyjádřila</b> — prázdná buňka, ne červená, tak ji jde ťuknutím „Připomenout" (jedna zpráva, ručně, nikdy samo). <b>„Potvrdit jasné (7 směn)"</b> vyřídí bez otevírání panelů všechny díry, kde je vhodných lidí přesně tolik, kolik chybí: ne 11. plácák (Standa + Vojta), út 13. a čt 15. a so 17. barista (Aneta P. / Karel / Kuba, každý celý den), ne 18. plácák (Vojta + Ilona) — 5 děr, 7 směn. Pá 9. barista jasný <b>není</b> (druhý panel): dopoledne je Aneta P. sama, ale odpoledne můžou dva — Karel a Kuba „<b>od 16:00</b>" — a vybrat musí Aneta; Kubovo „Potvrdit 16–19" udělá směnu 16:00–19:00 (předpoklad G). Tereza je pátek „pryč": v panelu jen jako věta, do „můžou" se nepočítá a nikdo ji neuhání. Člověka, který je ten den „jasný" pro dvě pozice, hromadné potvrzení přeskočí a nechá Anetě. Řádek závazků nad tabulkou zatím počítá jen potvrzené směny za těchto 14 dní; nikdo nesvítí — během skládání je pod závazkem každý, a nad závazkem ještě nikdo. Vedle „Potvrdit jasné" je <b>„Navrhnout rozpis"</b> — co udělá, ukazuje náčrt D2.</div>
+<div class="cap" style="max-width:none">Aneta ťukla do buňky <code>chybí 1 · celý den · 3 můžou</code> pod baristy. Panel ukazuje <b>jen lidi, kteří ten den mohou, baristu umí a ještě nemají směnu</b>, po částech dne, s počítadlem závazku („1 z 5 všedních"; u sobotní díry by bylo „z 3 víkendových") a <b>řazením od nejvíc pod závazkem</b> — proto je odpoledne Karel (0 z 5) nad Kubou (1 z 5), i když Kuba může celý den. Jeden ťuk = potvrzeno, panel zůstane otevřený, dokud není den plný. „Potvrdit cd" je u Kuby, protože může celý den a chybí obě části. Kuba umí i plácáka — tím, že ho Aneta potvrdí jako baristu, o tom rozhodla; z plácáckých „můžou" ten den zmizí. Dole pod ním věta o tichu: <b>Aneta P. se ke čtvrtku nevyjádřila</b> — prázdná buňka, ne červená, tak ji jde ťuknutím „Připomenout" (jedna zpráva, ručně, nikdy samo). <b>„Potvrdit jasné (7 směn)"</b> vyřídí bez otevírání panelů všechny díry, kde je vhodných lidí přesně tolik, kolik chybí: ne 11. plácák (Standa + Vojta), út 13. a čt 15. a so 17. barista (Aneta P. / Karel / Kuba, každý celý den), ne 18. plácák (Vojta + Ilona) — 5 děr, 7 směn. Pá 9. barista jasný <b>není</b> (druhý panel): dopoledne je Aneta P. sama, ale odpoledne můžou dva — Karel a Kuba „<b>od 16:00</b>" — a vybrat musí Aneta; Kubovo „Potvrdit 16–19" udělá směnu 16:00–19:00. Tereza je pátek „pryč": v panelu jen jako věta, do „můžou" se nepočítá a nikdo ji neuhání. Člověka, který je ten den „jasný" pro dvě pozice, hromadné potvrzení přeskočí a nechá Anetě. Řádek závazků nad tabulkou zatím počítá jen potvrzené směny za těchto 14 dní; nikdo nesvítí — během skládání je pod závazkem každý, a nad závazkem ještě nikdo. Vedle „Potvrdit jasné" je <b>„Navrhnout rozpis"</b> — co udělá, ukazuje náčrt D2.</div>
 </div>
 
 <div style="margin-top:28px"><div class="tag">D2 · Provozní, iPad — „Navrhnout rozpis": návrh před potvrzením</div>
@@ -543,7 +556,9 @@ tr.me .c-ok,.c-ok.me{background:var(--ok-me)}
 <div class="legend" id="leg-d2"></div>
 <div class="rules"><b>Návrh drží čtyři pravidla</b><ol><li>pozici umí (hlavní, nebo vedlejší)</li><li>ten den může — v celé části dne, která chybí — a ještě ten den nic nemá (vlastní čas „od 16" návrh nenavrhuje, nechá Anetě)</li><li>nejvíc pod závazkem první (všední, nebo víkendový podle dne)</li><li>ne dva celé dny po sobě — poruší se, jen když jinak nikdo není</li></ol><small>Při remíze: kdo má míň směn celkem, pak abecedně. Plní se nejdřív díry, kde může nejmíň lidí. Žádná skrytá váha „koho raději".</small></div>
 </div>
-<div class="cap" style="max-width:none">Stejných 14 dní jako v D po ťuknutí na „Navrhnout rozpis". <b>Tečkovaná světlá zelená = návrh</b> (stav 9): Aneta ho vidí v řádcích lidí i v řádku závazků (čísla už s návrhem), ale pro tým ještě neexistuje — brigádník nic nevidí, zprávy nechodí. Ťuk na návrh = zrušit (buňka zpět na žluté „můžu", díra zpět do řádku Chybí); ťuk do Chybí = panel D, kde potvrdí jinak; <b>„Potvrdit návrh (N směn)"</b> udělá ze všech tečkovaných zelené najednou — a teprve pak jde „Rozpis hotový" a soupis. Návrh v náčrtu není nakreslený ručně: spočítal ho skript v této stránce přesně podle čtyř pravidel z karty nad daty náčrtu D (Tomáš staví totéž v <code>scheduleProposal.ts</code>, s testy). Díry, které zůstaly, jsou ty, kde nikdo nemůže — Aneta je obvolá („Přiřadit někoho…"), nebo po „Rozpis hotový" hoří. „Potvrdit jasné" zůstává jako menší krok; návrh ho obsahuje. Za pozornost stojí Standa: čt 15. a pá 16. má v návrhu celé dny vedle sebe (a so 17. potvrzenou) — pravidlo 4 se porušilo, protože pátek plácák nemohl nikdo jiný; ve stopě návrhu je to vidět a Aneta rozhodne (nechat / zrušit a nechat díru / zavolat). Naopak Kuba dostal čt 8. jen odpoledne, i když mohl celý den: ve středu má celý den jako plácák, dopoledne šlo Tereze. Kubovo pá 9. „od 16" nechal návrh žluté: vlastní čas se nenavrhuje (pravidlo 2), Aneta ho potvrdí sama v panelu Pá 9. z náčrtu D.</div>
+<div class="cap" style="max-width:none">Stejných 14 dní jako v D po ťuknutí na „Navrhnout rozpis". <b>Tečkovaná světlá zelená = návrh</b> (stav „návrh" v legendě, kapitola 8): Aneta ho vidí v řádcích lidí i v řádku závazků (čísla už s návrhem), ale pro tým ještě neexistuje — brigádník nic nevidí, zprávy nechodí. Ťuk na návrh = zrušit (buňka zpět na žluté „můžu", díra zpět do řádku Chybí); ťuk do Chybí = panel D, kde potvrdí jinak; <b>„Potvrdit návrh (N směn)"</b> udělá ze všech tečkovaných zelené najednou — a teprve pak jde „Rozpis hotový" a soupis. Návrh v náčrtu není nakreslený ručně: je spočítaný přesně podle čtyř pravidel z karty, z dat náčrtu D. Díry, které zůstaly, jsou ty, kde nikdo nemůže — Aneta je obvolá („Přiřadit někoho…"), nebo po „Rozpis hotový" hoří. „Potvrdit jasné" zůstává jako menší krok; návrh ho obsahuje. Za pozornost stojí Standa: čt 15. a pá 16. má v návrhu celé dny vedle sebe (a so 17. potvrzenou) — pravidlo 4 se porušilo, protože pátek plácák nemohl nikdo jiný; ve stopě návrhu je to vidět a Aneta rozhodne (nechat / zrušit a nechat díru / zavolat). Naopak Kuba dostal čt 8. jen odpoledne, i když mohl celý den: ve středu má celý den jako plácák, dopoledne šlo Tereze. Kubovo pá 9. „od 16" nechal návrh žluté: vlastní čas se nenavrhuje (pravidlo 2), Aneta ho potvrdí sama v panelu Pá 9. z náčrtu D.</div>
+</div>
+<details class="tym"><summary>Pro tým: rizika návrhu → cesty</summary><div class="tym-in">
 <table class="doc"><thead><tr><th style="width:38%">Riziko (návrh)</th><th>Cesta</th></tr></thead><tbody>
 <tr><td><b>Preference „koho raději".</b> Lákavé páté pravidlo; v týmu 10 lidí je to skrytá váha, kterou nejde obhájit tomu, kdo ji nikdy neuvidí.</td><td><b>V1 vědomě NE.</b> Čtyři pravidla jsou vysvětlitelná jednou větou komukoli z týmu. Až kdyby Aneta návrh soustavně přepisovala stejným směrem, přidat 3stupňovou prioritu v Týmu, viditelnou jen provozní/admin, a jen jako rozhodčí při remíze (Tomáš v3: vlastní tabulka s manažerskou RLS, 2,5–4 h — ne sloupec u zaměstnance, ten by si své číslo přečetl).</td></tr>
 <tr><td>Návrh nechá díry (nikdo nemůže) a vypadá to jako chyba.</td><td>Díry zůstanou v řádku Chybí jako „chybí 1 · odpo · 0 můžou" — stejně jako bez návrhu; hláška říká „zbývá N děr". Nejdřív se plní nejtěsnější díry, aby snadné dny nerozebraly lidi těžkým.</td></tr>
@@ -552,18 +567,7 @@ tr.me .c-ok,.c-ok.me{background:var(--ok-me)}
 <tr><td>Dva čítače (všední / víkend) místo Jakubova jednoho čísla „3 z 6".</td><td>Model závazků v hubu má dva cíle a sečíst je znamená schovat přesně to, o co se tým hádá (víkendy). Štítek proto ukazuje oba; kdo má jeden z cílů 0, má jedno číslo — Jakubovo „1/6" tak vznikne nastavením, ne kódem. V panelu jen ten čítač, kterého se den týká.</td></tr>
 <tr><td>Dvojí spuštění dá jiný rozpis a Aneta mu přestane věřit.</td><td>Deterministický rozhodčí (míň směn → abecedně). Stejná data = stejný návrh, pokaždé. Tomáš má v rozhodčím ještě „míň v tomhle běhu" a id — implementace, ne pravidlo pro Anetu.</td></tr>
 </tbody></table>
-</div>
-
-<div style="margin-top:28px"><div class="tag">D3 · Provozní, iPad — skládám říjen, doscrollováno na konec: šrafovaná neděle 1. 11., karta „Listopad →"</div>
-<div class="pad">
-<div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span><span class="btn g" id="d3-btn">Potvrdit jasné (…)</span> &nbsp;<span class="btn">Navrhnout rozpis</span> &nbsp;<span class="btn p">Rozpis hotový</span></span></div>
-<div id="s-d3"></div>
-<div class="fair" id="fair-d3"></div>
-<div id="t-d3" class="sh"></div>
-<div class="legend" id="leg-d3"></div>
-</div>
-<div class="cap" style="max-width:none">Anetin iPad v půlce září, celý říjen (po 28. 9. – ne 1. 11.) doscrollovaný na konec. Tabulka jede v celých týdnech, takže poslední sloupec je <b>šrafovaná neděle 1. 11.</b> — listopad ještě neexistuje (otevře se 1. 10.), proto je sloupec prázdný, bez děr v řádcích Chybí a se štítkem „od 1. 10." v hlavičce; až za ní <b>karta „Listopad →"</b> s čárkovaným „otevře se 1. 10.", stejnými slovy jako pruh nad tabulkou (6b). Vlevo je před celým prvním týdnem <b>karta „← Září"</b> („rozdaný · 3 hoří") a šrafované po–st 28.–30. 9. s rozdanými zářijovými směnami — tady mimo záběr, na iPadu vidíš najednou asi 19 dnů. Ťuk na kartu = přepnutí na ten měsíc od začátku, bez animace; šipky u názvu dělají totéž. <b>Řádek závazků počítá jen říjen</b>, šrafované dny do něj nejdou. Týdny 5.–18. jsou z náčrtu D, 19.–31. z v4.5, 1.–4. 10. doplněné ručně (jediná díra: ne 4. barista odpoledne, může Karel); díry, „jasné" i zářijové směny spočítal skript z řádků, pruh a tlačítko čtou jeho čísla. Závazky v náčrtech byly nastavené na dvoutýdenní výřez, celý měsíc je u šesti lidí přestřelí (červené štítky) — čísla jsou smyšlená, cíle jsem neměnila.</div>
-</div>
+</div></details>
 
 <div style="margin-top:28px"><div class="tag">E · Provozní, iPad — hotový týden s hořící dírou</div>
 <div class="pad">
@@ -581,6 +585,31 @@ tr.me .c-ok,.c-ok.me{background:var(--ok-me)}
 <div class="cap" style="max-width:none">Vše plné = zelené, řádky „Chybí" prázdné, žluté obrysy = nevyužité „můžu" (Kuba út/čt/so a pá „od 16", Karel ne, Nela st, Vojta pá, Ilona čt), červené „pryč" = řekli dopředu, že nemůžou (Karel st, Tereza pá, Kuba ne) — Aneta je ten den ani neuhání. Jediná výjimka: sobota plácák — Ilona onemocněla, po hotovém rozpisu je to díra, a díra po rozpisu <b>hoří</b>: červený obrys, plamínek, <code>chybí 1 · dopo · 1 může</code>. Ten jeden je Kuba (mohl celý den, ještě nemá sobotu) — dostal push. Aneta může počkat, až si to vezme (náčrt F), nebo ho potvrdit sama, nebo „Přiřadit někoho…" mimo dostupnost (zavolá mu). Práh „Hoří za N dní" v Nastavení řídí jen připomínku, ne barvu. Řádek závazků je teď za celý říjen a svítí oběma směry: Nela a Vojta nad závazkem (červeně), Karel, Kuba, Tereza a Ilona pod (žlutě). První, koho Aneta u sobotní díry zkusí, je Kuba — mohl a je pod závazkem (1 z 3 víkendových).</div>
 </div>
 
+<div style="margin-top:28px"><div class="tag">H · Provozní, iPad — „Říjen je rozdaný · 2 žádosti"</div>
+<div class="pad">
+<div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span><span class="btn">Upravit rozpis</span></span></div>
+<div id="s-h"></div>
+<div class="fair" id="fair-h"></div>
+<div id="t-h" class="sh"></div>
+<div class="legend" id="leg-h"></div>
+<div class="sheet" id="h-sheet"><h4>Žádosti · 2</h4>
+<div class="row req"><span><b>Nela R.</b> · nemocná · čt 8.–pá 9. 10. · 2 směny (plácák)<span class="pill">nemoc · dnes 7:40</span><small>„angína, jsem u doktora, v pondělí snad ok" · push přišel hned</small></span><span><span class="btn g">Schválit</span> <span class="btn">Zamítnout</span></span></div>
+<div class="row req"><span><b>Vojta K.</b> · nemůže · čt 8. 10. celý den (plácák)<small>„zkouška z angličtiny, dozvěděl jsem se včera" · včera 21:12</small></span><span><span class="btn g">Schválit</span> <span class="btn">Zamítnout</span></span></div>
+<small style="display:block;margin-top:8px">Schválit = směna se uvolní (růžová „uvolněn"), díra začne hořet a lidem, kteří ten den mohli a pozici umí, odejde „hoří". Kdyby prošly obě, čtvrtek by u plácáků hořel celý (2 z 2) — proto se nic neschvaluje samo, ani nemoc.</small>
+</div>
+</div>
+<div class="cap" style="max-width:none">Stejný týden jako G z Anetina iPadu. Pruh je zelený a nese dvě čísla: <b>„1 hoří"</b> (st 7. plácák celý den — Vojtova uvolněná směna, jediný, kdo mohl, je Nela) a <b>„2 žádosti"</b> — ťuk na počítadlo otevře panel. <b>Nemoc je vždy nahoře</b> a má štítek: Nela nahlásila „od–do" čt–pá, obě její směny jsou v tabulce „čeká" a v panelu je to jedna žádost (2 směny). Pod ní Vojtovo „Nemůžu" na čtvrtek. U každé žádosti je důvod, který člověk napsal, a čas, kdy přišla. Aneta rozhoduje po jedné; schválená nemoc jde do evidence jako nemoc (měsíční přehled absencí, kde je vidět i četnost). Řádek závazků je za celý říjen: Vojta po uvolnění spadl na 5/5, Kuba má po „Beru" 1½ víkendové.</div>
+</div>
+
+<h2><span class="n">5</span>Změny po hotovém rozpisu: všechno je žádost</h2>
+<p>Po rozdání se směna nedá „odkliknout". Ťuk na svou zelenou dá tři tlačítka, u všech je <b>povinný důvod</b>, a všechna vedou na žádost: buňka „čeká" drží kapacitu, Aneta rozhodne, teprve pak je místo volné. Jedna cesta, tři štítky — brigádník se nemusí učit tři různé obrazovky, Aneta má všechno v jednom panelu.</p>
+<div class="wrap"><table class="doc"><thead><tr><th style="width:15%">Tlačítko</th><th>Co se stane hned</th><th>Co vidí Aneta</th><th>Po schválení</th><th>Po zamítnutí</th></tr></thead><tbody>
+<tr><td><b>Vyměnit</b></td><td>Vyberu kolegu, který ten den může a pozici umí; kolega přijme. Do schválení „čeká" <b>u obou</b>.</td><td>Žádost „výměna" s důvodem a se jmény; sama nic nepotvrzuje.</td><td>Zelené se prohodí, oběma přijde zpráva.</td><td>Obě buňky zpět, oběma zpráva „zůstává".</td></tr>
+<tr><td><b>Nemůžu</b></td><td>Buňka „čeká". Směna je pořád moje, nikdo si ji nemůže vzít, řádek Chybí se nemění.</td><td>V panelu podle času příchodu; push jen když je směna do 48 h, jinak zvoneček + počítadlo.</td><td>Buňka „uvolněn" (růžová), místo → Chybí → <b>hoří</b>, „hoří" lidem, kteří mohli. Moje „můžu" ten den zmizí.</td><td>Buňka zpět zelená, zpráva „zůstává ti" (+ důvod, když ho Aneta napíše).</td></tr>
+<tr><td><b>Nemocný</b></td><td>Zeptá se <b>od – do</b>; každá moje směna v rozsahu = „čeká", dny bez směny = „nem.". Anetě <b>push hned</b>.</td><td>Vždy nahoře, štítek „nemoc"; jedna žádost = celý rozsah (N směn).</td><td>Jako Nemůžu pro každou směnu v rozsahu + <b>evidence jako nemoc</b> (měsíční přehled absencí — četnost je tam vidět).</td><td>Vzácné, ale možné (proto se neschvaluje samo): buňky zpět, zpráva.</td></tr>
+<tr><td><i>Aneta: Zrušit / Přehodit</i></td><td>Na cizí zelené, s důvodem. Přehodit = vybrat z lidí, kteří ten den mohli.</td><td>—</td><td>„uvolněn" u původního, u nového zelená (nebo díra hoří). Zprávy jen dotčeným.</td><td>—</td></tr>
+</tbody></table></div>
+<h3>Jak to vypadá na telefonu</h3>
 <div style="margin-top:28px"><div class="tag">F · Brigádník, telefon — beru hořící díru</div>
 <div class="grid">
 <div class="phone">
@@ -616,159 +645,7 @@ tr.me .c-ok,.c-ok.me{background:var(--ok-me)}
 </div>
 <div class="cap" style="flex:1;min-width:260px">Tentokrát je „Ty" <b>Vojta</b> — jediný, kdo má v týdnu 5.–11. čtyři směny, takže je na jednom řádku vidět všechno (Kuba má jednu). Týden po náčrtu F: <b>st 7. růžová „uvolněn"</b> — požádal „Nemůžu" (stěhování), Aneta schválila, v řádku Chybí u plácáků ten den hoří <code>chybí 1 · celý den · 1 může</code> (Nela). <b>Čt 8. „čeká"</b> — nahoře zelená s <code>cd</code>, dole žlutá: požádal (zkouška), Aneta ještě nerozhodla, směna je pořád jeho a nikdo si ji nemůže vzít. Út 6. a ne 11. tmavší zelená = moje směny. Ťukl na neděli: list se třemi tlačítky <b>Vyměnit · Nemůžu · Nemocný</b> a polem důvod — bez důvodu se „Poslat Anetě" nerozsvítí. Nela má čt–pá „čeká" (nahlásila nemoc od–do), Ilona so „nem." (schváleno dřív, díru vzal Kuba — <code>1/2</code> s tácem v jeho řádku). Pruh: „Říjen je rozdaný · 1 hoří · tvoje žádost čeká".</div>
 </div></div>
-
-<div style="margin-top:28px"><div class="tag">H · Provozní, iPad — „Říjen je rozdaný · 2 žádosti"</div>
-<div class="pad">
-<div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span><span class="btn">Upravit rozpis</span></span></div>
-<div id="s-h"></div>
-<div class="fair" id="fair-h"></div>
-<div id="t-h" class="sh"></div>
-<div class="legend" id="leg-h"></div>
-<div class="sheet" id="h-sheet"><h4>Žádosti · 2</h4>
-<div class="row req"><span><b>Nela R.</b> · nemocná · čt 8.–pá 9. 10. · 2 směny (plácák)<span class="pill">nemoc · dnes 7:40</span><small>„angína, jsem u doktora, v pondělí snad ok" · push přišel hned</small></span><span><span class="btn g">Schválit</span> <span class="btn">Zamítnout</span></span></div>
-<div class="row req"><span><b>Vojta K.</b> · nemůže · čt 8. 10. celý den (plácák)<small>„zkouška z angličtiny, dozvěděl jsem se včera" · včera 21:12</small></span><span><span class="btn g">Schválit</span> <span class="btn">Zamítnout</span></span></div>
-<small style="display:block;margin-top:8px">Schválit = směna se uvolní (růžová „uvolněn"), díra začne hořet a lidem, kteří ten den mohli a pozici umí, odejde „hoří". Kdyby prošly obě, čtvrtek by u plácáků hořel celý (2 z 2) — proto se nic neschvaluje samo, ani nemoc.</small>
-</div>
-</div>
-<div class="cap" style="max-width:none">Stejný týden jako G z Anetina iPadu. Pruh je zelený a nese dvě čísla: <b>„1 hoří"</b> (st 7. plácák celý den — Vojtova uvolněná směna, jediný, kdo mohl, je Nela) a <b>„2 žádosti"</b> — ťuk na počítadlo otevře panel. <b>Nemoc je vždy nahoře</b> a má štítek: Nela nahlásila „od–do" čt–pá, obě její směny jsou v tabulce „čeká" a v panelu je to jedna žádost (2 směny). Pod ní Vojtovo „Nemůžu" na čtvrtek. U každé žádosti je důvod, který člověk napsal, a čas, kdy přišla. Aneta rozhoduje po jedné; schválená nemoc jde do evidence jako nemoc (měsíční přehled absencí, kde je vidět i četnost). Řádek závazků je za celý říjen: Vojta po uvolnění spadl na 5/5, Kuba má po „Beru" 1½ víkendové.</div>
-</div>
-
-<h2>4. Stavový model buňky</h2>
-<p><b>11 stavů — uzavřená sada</b> (Jakub 7. 9. 0:05; 0:44 přidal „pryč"). Každý má barvu <b>a</b> text nebo tvar — barva sama nikdy nenese význam (barvoslepost, sluníčko na terase, iPad z dálky). Nic dvanáctého: kdo chce nový stav, musí jeden z těchhle zrušit.</p>
-<div class="wrap"><table class="doc" id="states"><thead><tr><th>#</th><th>Stav</th><th>Vzhled</th><th>Text v buňce</th><th>Kdo to vidí / co s tím</th></tr></thead><tbody>
-<tr><td>1</td><td>Naklikej</td><td><span class="cell c-free" style="border-color:var(--gold);color:var(--gold-ink)">+</span> čárkovaný obrys</td><td>+</td><td>Jen v řádku „Ty", otevřený budoucí den, kde jsem nic neřekl. Ťuk = můžu celý den (první stav kruhu), podržení = rozšíření (dopoledne · odpoledne · od–do · nemůžu — proč?). Pro Anetu: prázdno = <b>nevyjádřil se</b>, může připomenout.</td></tr>
-<tr><td>2</td><td>Můžu</td><td><span class="cell c-av">cd</span> žlutý obrys · <span class="cell c-av t">od 16</span> vlastní čas</td><td>cd · 1/2 · 2/2 · od 16 · do 14 · 11–15</td><td>V řádku „Ty" ťuk = další stav kruhu, tedy „pryč" (platí i z „1/2" nebo „od 16"), podržení = jiná část dne nebo čas téže buňky. V cizím řádku jen informace: ten člověk ten den může. Zůstává i po hotovém rozpisu. Vlastní čas se do „N můžou" počítá v části dne, kterou pokrývá; Aneta v panelu vidí „může od 16:00".</td></tr>
-<tr><td>3</td><td>Pryč</td><td><span class="cell c-no">pryč</span> plná červená</td><td>pryč (nebo pár slov proč, když se vejdou: „škola")</td><td>Jen z řádku „Ty" — druhý ťuk v kruhu (na své žluté), důvod volitelně z podržení; vidí oba. Ten člověk ten den <b>nemůže a řekl to dopředu</b>: do „N můžou" se nepočítá, Aneta ho neuhání a v panelu díry je jen jako věta. Třetí ťuk = zpět na prázdno. Není to žádost, nic se neschvaluje, žádná zpráva. Je to <b>bonus</b>: kdo klikne jen „můžu", udělal všechno, co Aneta potřebuje. <b>Proč plná výplň, a ne obrys:</b> obrysy v tabulce znamenají „otevřené" (můžu, chybí, hoří, návrh), plné výplně „hotové" (směna, pryč). Červený <i>obrys</i> s plamínkem zůstává jen pro „hoří" v řádku Chybí — od „pryč" ho dělí řádek (Chybí × člověk), výplň (obrys × plná) i text (chybí + plamínek × pryč).</td></tr>
-<tr><td>4</td><td>Směna</td><td><span class="cell c-ok">cd</span> plná zelená · <span class="cell c-ok me">cd</span> tmavší = tvoje</td><td>cd · 1/2 · 2/2 (+ ikona pozice, když jiná než hlavní)</td><td>Oba. Přidělila Aneta (nebo „Beru"). Tým ji vidí až od „Rozpis hotový" (do té doby je jen u Anety). V řádku „Ty" ťuk = list Vyměnit · Nemůžu · Nemocný (6c). Aneta ťuk na cizí = Zrušit / Přehodit s důvodem.</td></tr>
-<tr><td>5</td><td>Chybí</td><td><span class="cell c-miss"><b>chybí 1</b><small>dopo</small><small>2 můžou</small></span> řádek Chybí, žlutý obrys</td><td>chybí N (lidí) · část dne · N můžou („0 můžou" = nikdo)</td><td>Dokud Aneta skládá. Aneta ťuk = panel s lidmi, kteří mohou (D). Brigádník ťuk = věta „Aneta ještě skládá, naklikej, kdy můžeš." Nic nechybí = prázdná buňka.</td></tr>
-<tr><td>6</td><td>Hoří</td><td><span class="cell c-miss c-burn"><b><svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>chybí 1</b><small>dopo</small><small class="z0">0 můžou</small></span> řádek Chybí, červený obrys + plamínek</td><td>plamínek + chybí N · část dne · N můžou</td><td>Díra po „Rozpis hotový" (zbylá, nebo po uvolnění / nemoci / zrušení). Brigádník ťuk = <b>Beru</b> (F). Aneta ťuk = panel s lidmi, kteří mohli, nebo Přiřadit / Nabídnout všem.</td></tr>
-<tr><td>7</td><td>Čeká</td><td><span class="cell c-wait"><b>cd</b><small>čeká</small></span> nahoře zelená, dole žlutá</td><td>cd · 1/2 · 2/2 nad slovem „čeká"</td><td>Oba. Člověk požádal Nemůžu / Nemocný / Vyměnit a Aneta ještě nerozhodla. Směna je pořád jeho, <b>drží kapacitu</b> — nikdo si ji nemůže vzít, řádek Chybí se nemění. U Anety počítadlo v pruhu „2 žádosti". Ťuk (kdokoli) = kdo a od kdy čeká; důvod vidí jen Aneta. Dnešní <code>CANCEL_REQUESTED</code>.</td></tr>
-<tr><td>8</td><td>Uvolněn</td><td><span class="cell c-rel">uvolněn</span> růžová</td><td>uvolněn</td><td>Oba. Aneta žádost schválila (nebo směnu sama zrušila / přehodila): směna už není jeho, místo je v řádku Chybí a <b>hoří</b>. Zůstává v jeho řádku do konce měsíce, aby bylo vidět, co se stalo; dostupnost ten den je pryč (řekl, že nemůže). Nemoc navíc v evidenci jako nemoc.</td></tr>
-<tr><td>9</td><td>Návrh</td><td><span class="cell c-prop">cd</span> světlejší zelená, tečkovaný obrys</td><td>cd · 1/2 · 2/2 (+ ikona pozice, když jiná než hlavní)</td><td>Jen Aneta, jen mezi „Navrhnout rozpis" a „Potvrdit návrh". Ťuk = zrušit návrh (buňka zpět na „můžu", díra zpět do Chybí). Tým návrh nevidí; potvrzením se změní ve stav 4. Tečky = ještě to není.</td></tr>
-<tr><td>10</td><td>Dovolená / nemoc</td><td><span class="cell c-abs">dov.</span> tyrkysová</td><td>dov. · nem.</td><td>Oba, jen informace. Dovolená se hlásí dál z Domů; nemoc přes „Nemocný" na směně (6c) nebo z Domů, když ten den směnu nemám. Den se směnou: nejdřív „čeká", po schválení „uvolněn" + díra hoří; dny bez směny v rozsahu od–do = „nem.".</td></tr>
-<tr><td>11</td><td>Zavřeno</td><td><span class="cell" style="background:var(--closed);color:var(--closed-ink)">–</span> šedý sloupec</td><td>„zavřeno" v hlavičce</td><td>Celý sloupec, nic se v něm neťuká. Pondělí vždy, plus výjimky z Nastavení.</td></tr>
-</tbody></table></div>
-<p class="meta"><b>Minulý den není stav, ale modifikátor:</b> cokoli z deseti vybledne (opacita), ke čtení, neťuká se — zápis odpracovaného je věc evidence, ne tabulky. <b>Kontrast</b> (měřeno kontrolním skriptem z DOM, light / dark): bílý text na zelené směně 4,7 : 1 (zelená proto ztmavla z #3f9b6a na #2f8257 — dřív 3,4), tvoje směna 7,6, „čeká" nahoře 4,7 a dole 6,5 / 9,6, „uvolněn" 7,2 / 8,7, hoří 8,2 / 7,6, můžu 6,5 / 9,6, návrh 7,2 / 9,7, dov./nem. 5,2 / 6,1 (tyrkys ztmavl z #2c8b7a na #1f6e60 — dřív 3,5), pruhy 4,8–12,3, <b>pryč</b> (bílá na #b7302a / #c9463c) <span id="k-no">6,1 / 4,8</span> — všechno nad 4,5 : 1 pro text 10–12 px tučně.</p>
-<div class="note">Barvy směn cd / 1/2 / 2/2 (zelená / žlutá / oranžová v dnešní matici) nahrazuje jedna zelená (tmavší = tvoje). Část dne nese text, barva nese stav. Žlutá je jen pro „můžu" (obrys v řádku člověka i v řádku Chybí) a pro spodní půlku „čeká", červený obrys jen pro „hoří", plná červená jen pro „pryč", růžová jen pro „uvolněn", tečkovaný obrys jen pro návrh. Prázdná buňka v cizím řádku = ten člověk ten den nic neřekl a nic nemá; červená = řekl, že nemůže.</div>
-<div class="note v2"><b>Jednotky, aby se v tom nikdo neztratil:</b> <b>slot</b> = den × pozice × část dne (dopo / odpo), tolik jich je, kolik říká Nastavení. Řádek „Chybí" ukazuje <b>lidi</b> („chybí 1") a část dne (dopo / odpo / celý den). <b>„N můžou"</b> počítá lidi, kteří ten den mohou aspoň v chybějící části, pozici umí (i jako vedlejší) a ještě ten den nemají směnu. <b>„Jasné"</b> = díra, kde v každé chybějící části může přesně tolik vhodných lidí, kolik chybí. <b>„Díra"</b> = buňka Chybí, ve které něco chybí. <b>Závazek</b> = dva cíle z Nastavení (všední · víkend); plnění: celý den = 1, půlden = ½. <b>„N směn"</b> v tlačítkách počítá lidi × dny (i půlden je jedna směna) — jiná jednotka, jiné slovo.</div>
-
-<h2>5. Interakce brigádníka</h2>
-<p><b>Jedno gesto v kruhu, druhé jen upřesňuje</b> (Jakub 7. 9. 0:50): <b>ťuk</b> jede po kruhu tří stavů — nic → <b>můžu</b> (žlutý obrys, celý den) → <b>nemůžu</b> (červené „pryč") → nic; <b>podržení</b> = rozšíření téže buňky (dopoledne · odpoledne · od – do… · nemůžu — proč? · zrušit). Co podržením nastavíš, buňka ukáže textem a ťukání jede dál od toho stavu. Žádný čtvrtý stav, žádné „odeslat".</p>
-<div class="gest" id="gest">
-<div class="card"><b>Ťuk — kruh tří stavů</b><div class="row2"><span class="cell c-free" style="border-color:var(--gold);color:var(--gold-ink)">+</span><span class="arrow">→</span><span class="cell c-av">cd</span><span class="arrow">→</span><span class="cell c-no">pryč</span><span class="arrow" title="zpět na začátek">↻</span></div><small>Každý ťuk = další stav: nic → můžu celý den → nemůžu → nic. Nejčastější odpověď je jeden ťuk, „nemůžu" dva, oprava nejvýš dva — vždy přes „nevyjádřil se". Kuchyň (jedna část dne) totéž.</small></div>
-<div class="card"><b>Podržení — rozšíření téže buňky</b><div class="row2"><span class="cell c-av pressed">cd</span><span class="arrow">→</span><span class="mm">dopoledne · odpoledne · od – do…<br><i>nemůžu — proč?</i> · zrušit</span></div><small>Nabídka u buňky (náčrt B2): jiné zobrazení toho, co v buňce je. Co vybereš, buňka ukáže textem: 1/2 · 2/2 · od 16 · pryč (nebo důvod). Na iPadu prstem; s myší pravý klik nebo ⋯ v rohu buňky.</small></div>
-<div class="card"><b>Ťukání jede dál od aktuálního stavu</b><div class="row2"><span class="cell c-av">1/2</span><span class="arrow">→</span><span class="cell c-no">pryč</span><span class="arrow">→</span><span class="cell c-free" style="border-color:var(--gold);color:var(--gold-ink)">+</span><span class="arrow">→</span><span class="cell c-av">cd</span></div><small>Po podržení se kruh nemění: z „1/2", „2/2" nebo „od 16" je další ťuk nemůžu, další prázdno, další můžu celý den. Buňka nikdy neprojíždí stavy, které nikdo nechtěl.</small></div>
-</div>
-<div class="seq">
-<b>Ťuk na „+" ve svém řádku</b><span>Buňka se hned změní na žlutý obrys „cd" = můžu celý den. Dole lišta „Můžeš út 6. 10. celý den · zatím 1 den" s tlačítkem Zpět. Žádný panel, žádný výběr. <b>Při prvním ťuku v měsíci</b> se pod tabulkou objeví hint: „Klikni dny, kdy můžeš. A když víš, že některý den opravdu nemůžeš, ťukni ho do červena, ať s tím Aneta počítá." + menší řádek „Podrž prst pro dopoledne, odpoledne nebo vlastní čas." — zmizí po prvním podržení, nebo s koncem měsíce (náčrt B).</span>
-<b>Druhý ťuk (na své „můžu")</b><span>Buňka zčervená na <b>„pryč"</b> = nemůžu, říkám to dopředu. Lišta „Nemůžeš ne 11. 10. — Aneta s tebou ten den nepočítá" + Zpět. Platí z „cd" i z „1/2", „2/2", „od 16" — ťukání jede dál od toho, co v buňce je. Není to žádost, nikdo to neschvaluje, žádná zpráva nechodí. Červená je <b>bonus pro Anetu, ne povinnost</b>: většina lidí bude klikat jen „můžu" a je to tak v pořádku.</span>
-<b>Třetí ťuk (na své „pryč")</b><span>Zpět na „+", lišta „Ne 11. 10. — jako bys neklikl." Kruh se zavřel: nic → můžu → nemůžu → nic. Oprava čehokoli = nejvýš dva ťuky a vždy vede přes „nevyjádřil se", takže Aneta nikdy nevidí půl odpovědi.</span>
-<b>Podržení</b><span>Long-press na kterékoli své buňce (prázdné i plné) = <b>rozšíření téže buňky</b>: u ní vyskočí nabídka s tím, co v buňce je, a pěti slovy <b>dopoledne · odpoledne · od – do… · nemůžu — proč? · zrušit</b> (náčrt B2). Jeden ťuk v ní = hotovo, nabídka zmizí; buňka ukáže text (1/2 · 2/2 · od 16 · pryč nebo důvod) a další ťuky jedou po kruhu od tohoto stavu. Kuchyň: bez dopoledne / odpoledne. Když buňka už je „1/2", „2/2" nebo „od 16", má nabídka navrch ještě „celý den" (předpoklad I). Na iPadu totéž prstem, s myší pravý klik nebo ikonka ⋯ v rohu buňky při najetí.</span>
-<b>Od – do (vlastní čas)</b><span>Dvě políčka předvyplněná otevírací dobou (9:30 / 19:00), změním jedno: „od 16:00". V buňce žlutý obrys <b>„od 16"</b> (jako můžu), „do 14", nebo „11–15". Aneta v panelu vidí „může od 16:00" a potvrdí směnu 16–19 (předpoklad G). Do „N můžou" se počítám v části dne, kterou svým časem pokrývám (od 16 = odpoledne).</span>
-<b>Důvod k „nemůžu"</b><span>Z nabídky po podržení: „nemůžu — proč?" s nepovinným polem (pár slov: škola, doma). V buňce se důvod ukáže místo slova „pryč", když se vejde (do 5 znaků), jinak jen u Anety. Ťuk na červenou = zpět na prázdno, ať má důvod nebo ne.</span>
-<b>Prázdno</b><span>= neřekl jsem nic. Pro Anetu je rozdíl od „pryč" podstatný: prázdné může uhánět („Připomenout"), červené ne (sekce 6).</span>
-<b>Další dny</b><span>Ťukám dál, půl měsíce za půl minuty. Žádný „odeslat" krok, žádný košík — každý ťuk je hned uložený a Aneta ho vidí. Lišta se jen aktualizuje („zatím 9 dnů").</span>
-<b>Cizí buňka</b><span>Nic (ťuk na hlavičku dne = detail dne). Cizí „můžu" vidím jako žlutý obrys, cizí „pryč" jako červenou — vím, kdo ten den může a kdo ne, ne víc.</span>
-<b>Karta na konci tabulky</b><span>Až za celým posledním týdnem měsíce „Listopad →" s pruhem stavu listopadu, před celým prvním „← Září"; dny sousedního měsíce v těch týdnech (28.–30. 9., ne 1. 11.) jsou šrafované a ťukáš do nich stejně — zapíše se to do jejich měsíce. Ťuk = přepne na ten měsíc od začátku (bez animace); šipky u názvu měsíce dělají totéž (náčrt B3, anatomie).</span>
-<b>Řádek „Chybí" (žlutý)</b><span>Jen informace „tady ještě nikdo / málo lidí může". Ťuk = věta „Aneta ještě skládá — naklikej, kdy můžeš."</span>
-<b>Aneta skládá (šedý pruh)</b><span>Tabulka vypadá jako v B — svoje „můžu" a „pryč" můžu dál měnit, cizí obrysy vidím, ale <b>zelené ještě ne</b>: Anetin rozpracovaný rozpis tým nevidí. Pruh: „Aneta skládá rozpis · dozvíš se obvykle do týdne"; v Moje směny: „Říjen: zatím jen tvoje dostupnost, rozpis obvykle do týdne"</span>
-<b>Rozpis hotový (zelený pruh)</b><span>Zelené se objeví všem naráz a přijde jedna zpráva, soupis: „Říjen: st 7. celý den (plácák) · so 17. celý den · čt 22. dopoledne. Z tvých 10 dnů, kdy můžeš, máš 3 směny." Pruh „Říjen je rozdaný", Moje směny „Říjen: máš 3 směny" (čas, ICS). Kde jsem mohl a Aneta mě nepotřebovala, zůstává žlutá. Že můžu, zůstane zapsané; kdyby někdo vypadl, Aneta ví, koho oslovit.</span>
-<b>Ťuk na svou zelenou</b><span>List s časem a kolegy ten den a třemi tlačítky <b>Vyměnit · Nemůžu · Nemocný</b>, u všech <b>povinný důvod</b> (jedna věta). Všechno je žádost: buňka se změní na „čeká" (nahoře zelená, dole žlutá), směna je pořád moje, dokud Aneta nerozhodne. Po schválení „uvolněn" (růžová) a Aneta hledá náhradu — nebo zamítnuto a buňka je zpět zelená. Detail v 6c a v náčrtu G. (Tohle „Nemůžu" je jiné než „pryč": pryč říkám dopředu na den bez směny, tohle je žádost o uvolnění směny, kterou už mám.)</span>
-<b>Nemocný</b><span>Totéž jako Nemůžu, navíc se zeptá <b>od – do</b> a označí všechny moje směny v rozsahu (každá „čeká"), Anetě jde push hned a v panelu je to nahoře. Ani nemoc se neschvaluje sama. Dny bez směny v rozsahu se ukážou jako „nem.".</span>
-<b>Po zámku měsíce</b><span>Od dne zámku (Nastavení) tlačítka Vyměnit a Nemůžu zmizí; zůstane Nemocný a „Napsat Anetě". Samoobsluha končí, změny jen přes ni.</span>
-<b>Řádek „Chybí" (červený, hoří)</b><span>Ťuk = list „So 10. 10. · plácák · dopoledne — Beru". Hned je to moje směna (jako dnes „Beru"), Aneta dostane zprávu. Tady neříkám, kdy můžu, ale beru konkrétní díru v hotovém rozpisu. Kdo klikne dřív, ten ji má.</span>
-<b>Kdykoli v měsíci</b><span>Řádek „Ty" jde měnit pořád — i po hotovém rozpisu. Směny to nemění (ty ruší jen žádost přes Anetu), jen říká Anetě, s kým může počítat, kdyby vznikla díra.</span>
-</div>
-<div class="note"><b>Rozhodnutí — vzor ťukání: kruh tří stavů, podržení jen rozšiřuje</b> (Jakub 7. 9. 0:50; nahrazuje čtyřstavový cyklus + → cd → 1/2 → 2/2 → + z v4 i „ťuk · ťuk zpět · podržení" z v4.4). Proč kruh: (1) každý ťuk je <b>odpověď</b>, ne mazání — člověk nikdy nemusí přemýšlet, jestli teď „ruší" nebo „říká"; (2) „nemůžu" je na dosah druhého ťuku, bez skrytého gesta — a přitom zůstává bonusem: kdo klikne jen „můžu", udělal všechno, co Aneta potřebuje; (3) oprava stojí nejvýš dva ťuky a vždy vede přes prázdno, takže půlka odpovědi nikdy nezůstane viset; (4) podržení nic nového neumí — jen upřesní to, co v buňce je (část dne, čas, důvod), a kruh po něm jede dál. Cena: druhý ťuk na omylem ťuknuté „cd" dá červenou, ne prázdno. Rizika → cesty: <i>chtěl jsem zrušit „cd" a mám „pryč"</i> → lišta říká „Nemůžeš út 6." se Zpět, třetí ťuk je prázdno, a mezitím nikam nic neodešlo (žádná zpráva, žádné schvalování); <i>ťuk na „od 16", které jsem pracně zadal, ho přepíše na „pryč"</i> → Zpět v liště čas vrátí; <i>lidé si myslí, že červenou musí vyplnit všude</i> → věta v hintu i na slidu 3 („když víš, že některý den opravdu nemůžeš…"), Aneta vidí tři skupiny: může · nemůže · neřekl, a uhání jen třetí; <i>„pryč" zaměněné za „hoří"</i> → jiný řádek, plná × obrys, slovo × plamínek (sekce 4, stav 3). Zamítnuté alternativy: „ťuk · ťuk zpět · podržení" (v4.4 — nemůžu schované za podržením, druhý ťuk maže) a čtyřstavový cyklus (v4 — oprava až tři ťuky přes stavy, které nikdo nechtěl).</div>
-<div class="note">Feasibility (z kódu): dnešní <code>availability_rules</code> má <code>specific_date</code>, <code>start_time / end_time</code> a <code>type CAN</code> — „můžu čt 8. 10. dopoledne" je jeden takový řádek (časy z šablony slotu), „celý den" jeden řádek přes obě části, „od 16" řádek s vlastním časem, třetí ťuk (prázdno) = smazání řádku; <b>„pryč" = záporný záznam</b> (dnešní <code>type</code> zná jen <code>CAN</code> — Tomáš doplní <code>CANNOT</code>, nebo sloupec na nosiči dostupnosti). Nic o přihláškách (<code>PENDING</code>) není potřeba. Tým dnes cizí dostupnost číst nesmí (RLS jen admin / provozní) — žluté obrysy v cizích řádcích a čísla „můžou" musí přijít přes stejnou RPC, která vrací tabulku (Tomášova <code>get_shift_table</code>). „Beru" = dnešní <code>claim_shift_slot</code> beze změny (zapisuje rovnou schválenou směnu). Tomáš doplní hodiny.</div>
-
-<h2>6. Interakce provozní (Aneta)</h2>
-<div class="seq">
-<b>Fáze hlášení (do 10.)</b><span>Nad tabulkou: „Říjen: kdy můžou? do 10. 9. · odpovědělo 6 z 10". Řádky „Chybí" ukazují celou kapacitu a rostoucí čísla „můžou" (červené „pryč" se do nich nepočítá). <b>Tři skupiny lidí u každého dne: může · nemůže · neřekl.</b> Žlutý obrys = může, červená „pryč" = <b>vyjádřil se, nemůže</b>, prázdná buňka = ten člověk se k tomu dni ještě <b>nevyjádřil</b>. Červená je pro tým bonus, ne povinnost — většina bude klikat hlavně „můžu", a proto je prázdných buněk hodně a nic to neznamená. Uhánět má smysl jen ty poslední — vedle „odpovědělo 6 z 10" je proto tlačítko <b>Připomenout (4)</b> (jedna zpráva těm, kdo v měsíci neřekli nic; ručně, nikdy samo) a v panelu díry věta „Aneta P. se ke čtvrtku nevyjádřila" s tím samým tlačítkem (náčrt D). Kdo řekl „pryč", je v panelu jen jako věta bez tlačítka.</span>
-<b>Skládání (16.–20.)</b><span>Nad tabulkou: „Skládáš říjen · 13 děr, 6 jasných". Ťuk na „chybí 1 · celý den · 3 můžou" → panel D: jen lidi, kteří ten den mohou, pozici umí a nemají směnu, po částech dne, s počítadlem závazku („1 z 5 všedních") a řazením od nejvíc pod závazkem. Jeden ťuk = potvrzeno. U člověka se dvěma pozicemi tím ťukem rozhodla, kde ten den je.</span>
-<b>„Potvrdit jasné (7 směn)"</b><span>Hromadně potvrdí díry, kde v každé chybějící části může přesně tolik vhodných lidí, kolik chybí. Před tím seznam (9 řádků) s jedním tlačítkem „Ano, potvrdit" — jediný modál v celém flow, protože jde o hromadnou akci. Kdo je ten den „jasný" pro dvě pozice, zůstane Anetě.</span>
-<b>„Navrhnout rozpis"</b><span>Tabulka se předvyplní návrhem (stav 9, tečkovaná světlá zelená) podle čtyř pravidel z karty u tlačítka; hláška „návrh · N směn · zbývá M děr", řádek závazků už počítá s návrhem. Aneta ťuká: na návrh = zrušit, do Chybí = potvrdit jinak (panel D). Tým nic nevidí, žádné zprávy.</span>
-<b>„Potvrdit návrh (N směn)"</b><span>Seznam N řádků a „Ano, potvrdit" — druhý a poslední modál ve flow. Z tečkovaných zelené; co mezitím zastaralo (někdo změnil „můžu"), se přeskočí a vypíše. „Zahodit návrh" vrátí tabulku před návrh.</span>
-<b>Nikdo nemůže</b><span>„chybí 1 · odpo · 0 můžou" → panel bez jmen: „Přiřadit někoho…" (výběr z lidí s tou pozicí bez směny ten den — Aneta mu zavolá, jako dnes) nebo díru nechat; po „Rozpis hotový" se z ní stane hoří a push půjde všem s tou pozicí.</span>
-<b>„Rozpis hotový"</b><span>Jedno tlačítko, jeden potvrzovací dialog: <b>„Říjen je rozdaný? Pošle se soupis 8 lidem (3 bez appky — text si zkopíruješ). Zbylé 2 díry začnou hořet."</b> Po „Ano": všechny potvrzené směny se ukážou týmu naráz (<code>published = true</code>), každému, kdo v měsíci řekl aspoň jednou „můžu" nebo má směnu, odejde jeden <b>soupis</b> (i s 0 směnami — věcně, ne „nevybrán"; kdo nic neřekl a nic nemá, nedostane nic), pruh zezelená u všech, zbylé díry zčervenají a lidem, kteří v ty dny mohli a pozici umí, odejde „hoří". Tlačítko zůstane jako „Upravit rozpis" — Aneta ťuká dál, jen zprávy už chodí po jednom.</span>
-<b>Žádosti po hotovém (počítadlo v pruhu)</b><span>„Říjen je rozdaný · 2 žádosti" — ťuk otevře panel (náčrt H): nemoc vždy nahoře se štítkem, pak ostatní podle času; u každé důvod a Schválit / Zamítnout. Schválit = buňka „uvolněn", díra hoří, push lidem, kteří mohli. Zamítnout = buňka zpět zelená, člověku přijde „zůstává ti". Nic se neschvaluje samo, ani nemoc (četnost vidí v měsíčním přehledu absencí). Výměna: kolega přijme, pak Aneta schválí — do té doby „čeká" u obou.</span>
-<b>Díra po hotovém (nemoc, zrušení)</b><span>Ťuk na červenou → stejný panel (kdo mohl), „Potvrdit" pošle „Máš směnu so 10. 10. dopoledne (plácák)". Nebo počká, až si to někdo vezme přes „Beru" — přijde jí „Kuba vzal…".</span>
-<b>Ťuk na zelenou buňku cizího člověka</b><span>Detail: upravit čas (dnešní tužka), <b>Zrušit</b> nebo <b>Přehodit</b> na někoho, kdo ten den mohl — obojí s důvodem (jedna věta, člověk ho dostane ve zprávě). Zrušené = „uvolněn" v jeho řádku, místo → Chybí → hoří. Zprávy jen dotčeným: tomu, komu směna odešla, a tomu, kdo ji dostal.</span>
-<b>Ťuk na hlavičku dne</b><span>Detail dne (dnešní <code>ShiftDaySheet</code>): kdo pracuje, časy, zavřít den / výjimka. Beze změny.</span>
-<b>Zámek měsíce</b><span><code>monthly_lock_day</code> jako dnes: od toho dne brigádníkovi zmizí Vyměnit a Nemůžu (zůstane Nemocný a „Napsat Anetě") — samoobsluha stop, změny jen přes Anetu. Řádku „Ty" (dostupnost) se netýká.</span>
-</div>
-
-<h2>6b. Měsíc má tři stavy — pruh nad tabulkou</h2>
-<p>Každý měsíc je právě v jednom ze tří stavů a nad tabulkou to říká <b>jeden pruh: barva + slovo</b>, stejný pro obě role, na telefonu i iPadu. Tabulka pod ním je pořád tatáž; mění se, co v ní kdo vidí a co udělá ťuk. Mezi stavy přepíná jediné tlačítko Anety „Rozpis hotový" (1 → 2 se přepne samo uzávěrkou dostupnosti z Nastavení; kdo naklikne po ní, pořád pomůže — je to text, ne zámek).</p>
-<div class="stages">
-<div class="card"><b>1 · Hlásíme <span class="cell c-av" style="height:22px;min-width:26px;font-size:11px;vertical-align:middle">žlutý</span></b><small>od 1. do uzávěrky (10. předchozího měsíce, jen pravidlo — nic se nezamyká)</small>
-<span class="bar">Oba: <b>„Říjen: hlásíme, kdy můžeme · do 10. 9."</b> · Aneta navíc „odpovědělo 6 z 10"</span>
-<ul><li>Řádek „Ty": ťuk = cd → další ťuk = pryč → další = prázdno; podržení = 1/2 · 2/2 · od 16 · důvod; cizí „můžu" žluté obrysy, cizí „pryč" červené</li><li>Řádek „Chybí": žlutý, celá kapacita + „N můžou"</li><li>Žádné zelené — nikdo nic nemá</li><li>Moje směny: „Říjen: zatím jen tvoje dostupnost, rozpis obvykle do týdne"</li><li>Zprávy: žádné</li></ul></div>
-<div class="card"><b>2 · Aneta skládá <span class="cell" style="height:22px;min-width:26px;font-size:11px;vertical-align:middle;background:var(--closed);color:var(--closed-ink)">šedý</span></b><small>od uzávěrky do „Rozpis hotový" (typicky do týdne po 10.)</small>
-<span class="bar">Brigádník: <b>„Aneta skládá rozpis · dozvíš se obvykle do týdne"</b></span>
-<span class="bar">Aneta: <b>„Skládáš říjen · 13 děr, 5 jasných"</b> + Potvrdit jasné (N) · Navrhnout rozpis · Rozpis hotový</span>
-<ul><li><b>Tým vidí jen svoje „můžu"</b> (může je měnit) a cizí žluté obrysy — <b>rozpracovaný rozpis nevidí</b> (<code>published = false</code> na slotech, dnes existuje)</li><li>Aneta vidí potvrzené (zelené) i návrh (tečkované); řádek závazků svítí jen nad závazkem</li><li>Řádek „Chybí" u týmu jako ve stavu 1; u Anety klesající čísla, ťuk = panel D</li><li>Moje směny: beze změny („zatím jen tvoje dostupnost…")</li><li>Zprávy: žádné (až naráz)</li></ul></div>
-<div class="card"><b>3 · Rozdaný <span class="cell c-ok" style="height:22px;min-width:26px;font-size:11px;vertical-align:middle">zelený</span></b><small>od „Rozpis hotový" do konce měsíce</small>
-<span class="bar">Brigádník: <b>„Říjen je rozdaný"</b> · „máš 3 směny" / „1 hoří" / „tvoje žádost čeká"</span>
-<span class="bar">Aneta: <b>„Říjen je rozdaný · 2 žádosti · 1 hoří: so 10. plácák dopoledne"</b> + Upravit rozpis</span>
-<ul><li>Zelené <b>všem naráz</b> + soupis; zbylé a nové díry = červený obrys, plamínek</li><li>Ťuk brigádníka do Chybí: <b>Beru</b> (hned směna); na svou zelenou: Vyměnit · Nemůžu · Nemocný (6c)</li><li>Ťuk Anety: panel (kdo mohl) / Přiřadit / Nabídnout všem; na počítadlo „2 žádosti": panel H</li><li>Moje směny: „Říjen: máš 3 směny"</li><li>Řádek „Ty" jde dál měnit, směny to nemění</li></ul></div>
-</div>
-
-<h3>Pruh ve třech stavech — obě role, telefon i iPad</h3>
-<div class="srow"><div class="tag">1 · Hlásíme — žlutý</div><div class="two">
-<div class="phone mini"><div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span class="btn">Dnes</span></div><div id="s-f1b"></div><div class="sub">Pod ním tabulka jako v náčrtu A / B: můj řádek s „+", žluté obrysy, řádek Chybí s kapacitou.</div></div>
-<div class="pad mini"><div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span></span></div><div id="s-f1a"></div><div class="sub">Aneta zatím nic nedělá; vidí, jak měsíc odpovídá. Žádná tlačítka — nemá co potvrzovat.</div></div>
-</div></div>
-<div class="srow"><div class="tag">2 · Aneta skládá — šedý</div><div class="two">
-<div class="phone mini"><div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span class="btn">Dnes</span></div><div id="s-f2b"></div><div class="sub">Tabulka vypadá pořád jako v B — svoje „můžu" jde měnit, <b>zelené nejsou vidět</b>. Kdo se ptá „už to je?", má odpověď v pruhu.</div></div>
-<div class="pad mini"><div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span><span class="btn g">Potvrdit jasné (7 směn)</span> &nbsp;<span class="btn">Navrhnout rozpis</span> &nbsp;<span class="btn p">Rozpis hotový</span></span></div><div id="s-f2a"></div>
-<div class="sheet"><h4>Říjen je rozdaný?</h4><small>Pošle se soupis <b>8 lidem</b> (3 bez appky — text si zkopíruješ). Zbylé 2 díry začnou hořet. Tým uvidí zelené naráz.</small><div class="chips"><span class="btn g">Ano, rozdat</span><span class="btn">Zpět</span></div></div>
-<div class="sub">Tlačítko „Rozpis hotový" má jediný dialog; po něm se pruh přepne u všech.</div></div>
-</div></div>
-<div class="srow"><div class="tag">3 · Rozdaný — zelený</div><div class="two">
-<div class="phone mini"><div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span class="btn">Dnes</span></div><div id="s-f3b"></div><div style="height:6px"></div><div id="s-f3b2"></div><div class="sub">Dvě podoby: hned po rozdání „máš 3 směny", později „1 hoří" (náčrt F) nebo „tvoje žádost čeká" (G).</div></div>
-<div class="pad mini"><div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span><span class="btn">Upravit rozpis</span></span></div><div id="s-f3a"></div><div class="sub">Dvě počítadla: co hoří (náčrt E) a kolik žádostí čeká (náčrt H). Ťuk na počítadlo otevře panel.</div></div>
-</div></div>
-<div class="srow"><div class="tag">Listování měsíci — každý měsíc má svůj pruh</div><div class="two">
-<div class="phone mini"><div class="mnav"><span>‹ &nbsp;Září 2026&nbsp; ›</span><span class="btn">Dnes</span></div><div id="s-m1"></div><div style="height:6px"></div><div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span class="btn">Dnes</span></div><div id="s-m2"></div><div style="height:6px"></div><div class="mnav"><span>‹ &nbsp;Listopad 2026&nbsp; <span class="off">›</span></span><span class="btn">Dnes</span></div><div id="s-m3"></div></div>
-<div class="sub" style="font-size:13.5px;color:var(--muted)">Dnes je 8. 9.: září je rozdané (3 hoří), říjen se hlásí, listopad ještě neexistuje — <b>otevře se sám 1. 10.</b> a hned bude žlutý. Šipka doprava je vybledlá a místo pruhu je věta. Totéž říká karta na konci tabulky: na říjnové tabulce je vpravo „Listopad →" s čárkovaným „otevře se 1. 10.", od 1. 10. se zbarví do žluta „nahlaš, kdy můžeš"; vlevo „← Září" zeleně „rozdaný" (náčrty B3, B4, D3). Tabulka jede v celých týdnech, takže dny sousedního měsíce v ní jsou vidět šrafovaně — a řídí se fází <i>svého</i> měsíce (v hlavičce mají štítek, když se liší), zatímco pruh nahoře je vždy pruhem otevřeného měsíce (v4.6). Žádný měsíc nikdy nemá dva stavy; přechod 1 → 2 dělá datum uzávěrky, 2 → 3 Anetino tlačítko, 3 → konec měsíc sám.</div>
-</div></div>
-
-<h3>Kdo dostane zprávu a kdy</h3>
-<table class="doc"><thead><tr><th>Událost</th><th>Komu</th><th>Text</th></tr></thead><tbody>
-<tr><td>Naklikané „můžu" / „pryč"</td><td>nikomu</td><td>—</td></tr>
-<tr><td>„Připomenout" (Aneta ťukne, ručně)</td><td>těm, kdo v měsíci neřekli nic (ne těm s „pryč")</td><td>„Říjen: ještě jsi neřekl, kdy můžeš — stačí ťuknout do svého řádku. Do 10. 9."</td></tr>
-<tr><td>„Rozpis hotový" → <b>soupis</b></td><td>každému, kdo v měsíci řekl aspoň jednou „můžu" nebo má směnu — jednou; kdo nic neřekl a nic nemá, nic</td><td>„Říjen: st 7. celý den (plácák) · so 17. celý den · čt 22. dopoledne. Z tvých 10 dnů, kdy můžeš, máš 3 směny." — náhledy níže, i pro 0 směn</td></tr>
-<tr><td>Potvrzení po hotovém rozpisu</td><td>potvrzenému</td><td>„Máš směnu so 10. 10. dopoledne (plácák)."</td></tr>
-<tr><td>Vznik díry po hotovém rozpisu</td><td>jen lidem, kteří ten den mohli a pozici umí; připomínka N dní předem (práh v Nastavení)</td><td>„Hoří: so 10. 10. plácák dopoledne — mohl jsi. Bereš?"</td></tr>
-<tr><td>Nikdo nemohl</td><td>Anetě</td><td>„So 10. 10. plácák dopoledne: nikdo nemohl. Nabídnout všem plácákům?"</td></tr>
-<tr><td>„Beru"</td><td>Anetě</td><td>„Kuba vzal so 10. plácák dopoledne."</td></tr>
-<tr><td>Žádost Nemůžu / Vyměnit</td><td>Anetě (zvoneček + počítadlo v pruhu; push jen když je směna do 48 h)</td><td>„Vojta nemůže čt 8. 10. celý den (plácák): „zkouška z angličtiny…""</td></tr>
-<tr><td>Žádost Nemocný</td><td>Anetě <b>push hned</b>, nahoře v panelu</td><td>„Nela je nemocná čt 8.–pá 9. 10. (2 směny): „angína…""</td></tr>
-<tr><td>Schváleno</td><td>žadateli; lidem, kteří ten den mohli a pozici umí, „hoří"</td><td>„Čt 8. 10. ti Aneta uvolnila." / „Hoří: čt 8. 10. plácák celý den — mohl jsi. Bereš?"</td></tr>
-<tr><td>Zamítnuto</td><td>žadateli</td><td>„Čt 8. 10. ti zůstává." (+ důvod, pokud ho Aneta napíše — otázka 8)</td></tr>
-<tr><td>Aneta zrušila / přehodila</td><td>jen dotčeným: komu odešla, kdo ji dostal</td><td>„So 10. 10. plácák dopoledne ti Aneta zrušila: „…"" / „Máš směnu so 10. 10. dopoledne (plácák)."</td></tr>
-</tbody></table>
-<h3>Soupis — jedna zpráva na člověka po „Rozpis hotový"</h3>
-<div class="grid">
-<div class="msg"><b>Kuba · 3 směny</b><span id="msg-kuba"></span></div>
-<div class="msg"><b>Brigádník s 0 směnami (nahlásil 2 dny)</b><span id="msg-zero"></span></div>
-</div>
-<ul>
-<li><b>Tvar:</b> měsíc, pak směny v pořadí dnů (den, datum, část dne; pozice jen když není hlavní), tečka, a jedna věta o poměru „z tvých N dnů, kdy můžeš, máš M směn". Nic dalšího — žádné „bohužel", žádné „těšíme se".</li>
-<li><b>Nula směn není „nevybrán":</b> stejná zpráva, jen bez seznamu; věta o poměru říká, kolik dnů člověk nabídl, a že jeho „můžu" platí dál. Kdo nenabídl nic a nic nemá, nedostane nic — není co shrnovat.</li>
-<li><b>Kanál</b> (Tomáš v3): push tomu, kdo ho má; jinak e-mail; kdo nemá ani jedno — po cutoveru většina, 31 lidí / 8 účtů — toho Aneta vidí v potvrzovacím dialogu jako „bez appky" s textem k překopírování do iMessage. Do zvonečku v appce jde soupis vždy, s odkazem do tabulky.</li>
-<li><b>Jednou.</b> Soupis odchází jen z „Rozpis hotový"; každé další potvrzení po hotovém = jednotlivá zpráva („Máš směnu so 10. 10. …"). Druhé stisknutí „Rozpis hotový" soupis neposílá znovu.</li>
-</ul>
-
-<h2>6c. Změny po „Rozpis hotový" — všechno je žádost</h2>
-<p>Po rozdání se směna nedá „odkliknout". Ťuk na svou zelenou dá tři tlačítka, u všech je <b>povinný důvod</b>, a všechna vedou na žádost: buňka „čeká" drží kapacitu, Aneta rozhodne, teprve pak je místo volné. Jedna cesta, tři štítky — brigádník se nemusí učit tři různé obrazovky, Aneta má všechno v jednom panelu.</p>
-<div class="wrap"><table class="doc"><thead><tr><th style="width:15%">Tlačítko</th><th>Co se stane hned</th><th>Co vidí Aneta</th><th>Po schválení</th><th>Po zamítnutí</th></tr></thead><tbody>
-<tr><td><b>Vyměnit</b></td><td>Vyberu kolegu, který ten den může a pozici umí (dnešní SwapDialog); kolega přijme. Do schválení „čeká" <b>u obou</b>.</td><td>Žádost „výměna" s důvodem a se jmény; sama nic nepotvrzuje.</td><td>Zelené se prohodí, oběma přijde zpráva.</td><td>Obě buňky zpět, oběma zpráva „zůstává".</td></tr>
-<tr><td><b>Nemůžu</b></td><td>Buňka „čeká". Směna je pořád moje, nikdo si ji nemůže vzít, řádek Chybí se nemění.</td><td>V panelu podle času příchodu; push jen když je směna do 48 h, jinak zvoneček + počítadlo.</td><td>Buňka „uvolněn" (růžová), místo → Chybí → <b>hoří</b>, „hoří" lidem, kteří mohli. Moje „můžu" ten den zmizí.</td><td>Buňka zpět zelená, zpráva „zůstává ti" (+ důvod, otázka 8).</td></tr>
-<tr><td><b>Nemocný</b></td><td>Zeptá se <b>od – do</b>; každá moje směna v rozsahu = „čeká", dny bez směny = „nem.". Anetě <b>push hned</b>.</td><td>Vždy nahoře, štítek „nemoc"; jedna žádost = celý rozsah (N směn).</td><td>Jako Nemůžu pro každou směnu v rozsahu + <b>evidence jako nemoc</b> (měsíční přehled absencí — četnost je tam vidět).</td><td>Vzácné, ale možné (proto se neschvaluje samo): buňky zpět, zpráva.</td></tr>
-<tr><td><i>Aneta: Zrušit / Přehodit</i></td><td>Na cizí zelené, s důvodem. Přehodit = vybrat z lidí, kteří ten den mohli.</td><td>—</td><td>„uvolněn" u původního, u nového zelená (nebo díra hoří). Zprávy jen dotčeným.</td><td>—</td></tr>
-</tbody></table></div>
+<details class="tym"><summary>Pro tým: rizika změn po rozpisu → cesty</summary><div class="tym-in">
 <table class="doc"><thead><tr><th style="width:38%">Riziko</th><th>Cesta</th></tr></thead><tbody>
 <tr><td>„Čeká" vypadá jako díra a někdo si ji chce vzít.</td><td>Buňka je z půlky zelená se svou částí dne a nese slovo „čeká", ne „chybí"; řádek Chybí se nemění, takže není na co ťuknout. Ťuk na „čeká" (kdokoli) řekne jen „Vojta požádal o uvolnění, Aneta rozhoduje".</td></tr>
 <tr><td>Nemoc se schvaluje — působí to nedůvěřivě.</td><td>Ve zprávě to není „schválit nemoc", ale „uvolnit směnu": Aneta potvrzuje, že hledá náhradu. Push hned + nahoře v panelu = nemoc má přednost, jen se neuvolní sama (Jakub 0:05: proti zneužití; četnost v přehledu absencí).</td></tr>
@@ -776,20 +653,216 @@ tr.me .c-ok,.c-ok.me{background:var(--ok-me)}
 <tr><td>Dvě žádosti na týž den a pozici (H: Nela + Vojta čt 8.) — Aneta schválí obě a den se rozpadne.</td><td>Panel u druhé žádosti na stejný den ukáže větu „kdyby prošly obě, čt 8. plácák hoří celý (2 z 2)". Rozhodnutí je její; appka to jen řekne dopředu.</td></tr>
 <tr><td>Uvolněná směna po zámku měsíce.</td><td>Po zámku jsou Vyměnit a Nemůžu pryč, zůstává Nemocný a „Napsat Anetě" — samoobsluha stop, změny jen přes ni (Jakub 23:56).</td></tr>
 </tbody></table>
+</div></details>
 
-<h2>6d. Nastavení → Směny</h2>
-<p>Jedna stránka, dvě úrovně. Provozní mění to, co řídí měsíc; admin navíc lidi, pozice, závazky a zámek. Všechno, co tabulka ukazuje jako číslo nebo datum, se bere odsud — nic v kódu (feedback: parametry editovatelné).</p>
+<h2><span class="n">6</span>Celé týdny a karta sousedního měsíce</h2>
+<p>Tabulka ukazuje vždy celé týdny: říjen 2026 začíná po 28. 9. a končí ne 1. 11. (35 dnů). Dny sousedního měsíce jsou vidět, sloupec má jemnou šikmou šrafuru, v hlavičce je datum i s měsícem („28. 9.", „1. 11."), první den měsíce má silnější levou linku a v buňkách jsou reálné směny a dostupnost, pokud tam jsou (Kubova zelená út 29. 9.). Ťukání v nich funguje normálně a zapisuje se do jejich měsíce. Pruh nad tabulkou zůstává pruhem otevřeného měsíce; šrafovaný den se řídí fází <i>svého</i> měsíce a v hlavičce má malý štítek („hlásíme" · „skládá" · „rozdaný" · „od 1. 10."), jen když se ta fáze liší. Až za celým posledním týdnem stojí karta sousedního měsíce („Listopad →"), před celým prvním „← Září" — ťuk na ni přepne měsíc.</p>
+<div class="grid">
+<div>
+<div class="tag">B3 · Brigádník, telefon — konec měsíce: celý týden se šrafovanou nedělí 1. 11., pak karta „Listopad →"</div>
+<div class="phone">
+<div class="tabs"><span class="on">Tabulka směn</span><span>Moje směny</span></div>
+<div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span class="btn">Dnes</span></div>
+<div id="s-b3"></div>
+<div id="t-b3" class="sh"></div>
+<div class="legend" id="leg-b3"></div>
+</div>
+<div class="cap">Říjen je rozdaný, je pátek 2. 10. Doscrolloval jsem doprava na poslední týden 26. 10. – 1. 11.: <b>neděle 1. 11. je v tabulce, jen šrafovaná</b> — patří listopadu, který se právě otevřel, a tak má v hlavičce datum s měsícem a žlutý štítek „hlásíme" (fáze jiná než říjnová) a v mém řádku „+": ťuk sem se zapíše do listopadu. Aneta P., Nela a Vojta už na 1. 11. řekli, že můžou (žluté obrysy) a řádky Chybí to počítají. Až za neděli stojí <b>karta „Listopad →"</b> se žlutým „nahlaš, kdy můžeš", stejná barva a slovo jako pruh nad listopadem; ťuk na ni = tabulka přepne na listopad od 1. 11., bez animace. Pruh nahoře je pořád říjnový. Na začátku tabulky (potáhnu před 28. 9.) je zrcadlově „← Září" — náčrt B4; zářijové dny už jsou minulost, proto šedé. Kubův říjen: pá 30. „pryč", jinak jsem nic neřekl, což je v pořádku: Aneta složila z toho, co měla, a červená je bonus.</div>
+</div>
+
+<div>
+<div class="tag">B4 · Brigádník, telefon — začátek měsíce: karta „← Září", šrafované 28.–30. 9., čt 1. 10.</div>
+<div class="phone">
+<div class="tabs"><span class="on">Tabulka směn</span><span>Moje směny</span></div>
+<div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span class="btn">Dnes</span></div>
+<div id="s-b4"></div>
+<div id="t-b4" class="sh"></div>
+<div class="legend" id="leg-b4"></div>
+</div>
+<div class="cap">Říjen se teprve hlásí (je 8. 9.) a tabulka začíná celým týdnem: vlevo <b>karta „← Září"</b> se zeleným „rozdaný", pak <b>po–st 28.–30. 9. šrafované</b> — v hlavičce datum s měsícem a zelený štítek „rozdaný", protože září je v jiné fázi než říjen; v řádcích jsou reálné zářijové směny (moje út 29. 9. odpoledne, zelená). Čt 1. 10. má silnější levou linku, tam začíná měsíc. Ťuk do šrafovaného dne se zapíše do září (třeba že můžu ve středu 30., kdyby něco hořelo). Pruh nahoře zůstává říjnový. Na druhém konci je za nedělí 1. 11. karta „Listopad →", ale dokud se listopad neotevře (1. 10.), je ta neděle jen k vidění — štítek „od 1. 10.", bez „+" a bez děr.</div>
+</div>
+</div>
+
+<div style="margin-top:28px"><div class="tag">D3 · Provozní, iPad — skládám říjen, doscrollováno na konec: šrafovaná neděle 1. 11., karta „Listopad →"</div>
+<div class="pad">
+<div class="mnav"><span>‹ &nbsp;Říjen 2026&nbsp; ›</span><span><span class="btn g" id="d3-btn">Potvrdit jasné (…)</span> &nbsp;<span class="btn">Navrhnout rozpis</span> &nbsp;<span class="btn p">Rozpis hotový</span></span></div>
+<div id="s-d3"></div>
+<div class="fair" id="fair-d3"></div>
+<div id="t-d3" class="sh"></div>
+<div class="legend" id="leg-d3"></div>
+</div>
+<div class="cap" style="max-width:none">Anetin iPad v půlce září, celý říjen (po 28. 9. – ne 1. 11.) doscrollovaný na konec. Tabulka jede v celých týdnech, takže poslední sloupec je <b>šrafovaná neděle 1. 11.</b> — listopad ještě neexistuje (otevře se 1. 10.), proto je sloupec prázdný, bez děr v řádcích Chybí a se štítkem „od 1. 10." v hlavičce; až za ní <b>karta „Listopad →"</b> s čárkovaným „otevře se 1. 10.", stejnými slovy jako pruh nad tabulkou (kapitola 3). Vlevo je před celým prvním týdnem <b>karta „← Září"</b> („rozdaný · 3 hoří") a šrafované po–st 28.–30. 9. s rozdanými zářijovými směnami — tady mimo záběr, na iPadu vidíš najednou asi 19 dnů. Ťuk na kartu = přepnutí na ten měsíc od začátku, bez animace; šipky u názvu dělají totéž. <b>Řádek závazků počítá jen říjen</b>, šrafované dny do něj nejdou. Týdny 5.–18. jsou z náčrtu D (jediná díra v 1.–4. 10.: ne 4. barista odpoledne, může Karel). Závazky v náčrtech jsou nastavené na dvoutýdenní výřez, celý měsíc je u šesti lidí přestřelí (červené štítky) — čísla jsou smyšlená.</div>
+</div>
+<details class="tym"><summary>Pro tým: odkud jsou data doplněných týdnů v náčrtech</summary><div class="tym-in">
+<table class="doc"><tbody><tr><td><b>Data doplněných týdnů</b></td><td>skript v HTML (<code>wholeWeeks</code>, <code>fillDone</code>, <code>fillMiss</code>, <code>jasne</code>)</td><td>Týdny 5.–11. (náčrt C) a 19.–31. (v4.5) zůstávají opsané 1:1, ostatní dny rozdaného měsíce doplňuje deterministický <code>fillDone()</code> (napřed tomu, kdo řekl „můžu", pak střídavě), řádky Chybí, řádek závazků, „zbývá N děr" i „Potvrdit jasné (N)" se počítají z řádků — kontrolní skript to přepočítává z DOM.</td></tr></tbody></table>
+<p class="meta">D3: týdny 5.–18. z náčrtu D, 19.–31. z v4.5, 1.–4. 10. doplněné ručně; díry, „jasné" i zářijové směny spočítal skript z řádků, pruh a tlačítko čtou jeho čísla. Závazky (<code>TARGETS</code>) byly nastavené na dvoutýdenní výřez, cíle jsem neměnila — nález, ne chyba.</p>
+</div></details>
+
+<h2><span class="n">7</span>Nastavení → Směny</h2>
+<p>Jedna stránka, dvě úrovně. Provozní mění to, co řídí měsíc; admin navíc lidi, pozice, závazky a zámek. Všechno, co tabulka ukazuje jako číslo nebo datum, se bere odsud.</p>
 <div class="wrap"><table class="doc"><thead><tr><th style="width:22%">Položka</th><th>Co řídí</th><th style="width:12%">Kdo mění</th><th style="width:16%">Výchozí</th></tr></thead><tbody>
 <tr><td><b>Uzávěrka dostupnosti</b></td><td>Den v měsíci, do kdy tým hlásí „můžu"; text ve žlutém pruhu („· do 10. 9.") a přepnutí 1 → 2. Není to zámek — kdo naklikne po ní, pořád pomůže.</td><td>provozní</td><td>15.</td></tr>
 <tr><td><b>„Rozpis hotový do"</b></td><td>Jen text v šedém pruhu („dozvíš se obvykle do týdne") — Anetin slib týmu, ne termín, který by appka vymáhala.</td><td>provozní</td><td>20.</td></tr>
 <tr><td><b>Hoří od N dnů</b></td><td>Připomínka „hoří" N dní před dírou (push lidem, kteří mohli, podruhé). Barva je od „Rozpis hotový" vždy.</td><td>provozní</td><td>2</td></tr>
-<tr><td><b>Týdenní šablona kapacit</b></td><td>Pozice × část dne × den v týdnu (barista 1 / 1, plácák 2 / 2, kuchyň 1 / 0), pondělí zavřeno. Odsud jsou čísla v řádku Chybí.</td><td>provozní</td><td>dnešní <code>shift_templates</code></td></tr>
-<tr><td><b>Výjimky</b></td><td>Konkrétní den: zavřeno / svátek / jiná kapacita (akce, terasa). Hlavička dne to ukáže.</td><td>provozní</td><td><code>shift_slot_overrides</code></td></tr>
-<tr><td>Zámek měsíce</td><td>Den, od kterého brigádník nemá Vyměnit a Nemůžu (zůstává Nemocný a „Napsat Anetě").</td><td>admin</td><td><code>monthly_lock_day</code></td></tr>
+<tr><td><b>Týdenní šablona kapacit</b></td><td>Pozice × část dne × den v týdnu (barista 1 / 1, plácák 2 / 2, kuchyň 1 / 0), pondělí zavřeno. Odsud jsou čísla v řádku Chybí.</td><td>provozní</td><td>dnešní šablona</td></tr>
+<tr><td><b>Výjimky</b></td><td>Konkrétní den: zavřeno / svátek / jiná kapacita (akce, terasa). Hlavička dne to ukáže.</td><td>provozní</td><td>dnešní výjimky</td></tr>
+<tr><td>Zámek měsíce</td><td>Den, od kterého brigádník nemá Vyměnit a Nemůžu (zůstává Nemocný a „Napsat Anetě").</td><td>admin</td><td>dnešní zámek</td></tr>
 <tr><td>Lidi a pozice</td><td>Kdo umí co (hlavní / vedlejší) — odsud „N můžou" a ikony v řádcích.</td><td>admin</td><td>Tým</td></tr>
 <tr><td>Závazky</td><td>Dva cíle na člověka (všední / víkend) pro řádek závazků a řazení kandidátů.</td><td>admin</td><td>5 / 3</td></tr>
 </tbody></table></div>
 
+<h2><span class="n">8</span>Legenda: 11 stavů buňky</h2>
+<p><b>11 stavů — uzavřená sada.</b> Každý má barvu <b>a</b> text nebo tvar — barva sama nikdy nenese význam (barvoslepost, sluníčko na terase, iPad z dálky). Nic dvanáctého: kdo chce nový stav, musí jeden z těchhle zrušit.</p>
+<div class="wrap"><table class="doc" id="states"><thead><tr><th>#</th><th>Stav</th><th>Vzhled</th><th>Text v buňce</th><th>Kdo to vidí / co s tím</th></tr></thead><tbody>
+<tr><td>1</td><td>Naklikej</td><td><span class="cell c-free" style="border-color:var(--gold);color:var(--gold-ink)">+</span> čárkovaný obrys</td><td>+</td><td>Jen v řádku „Ty", otevřený budoucí den, kde jsem nic neřekl. Ťuk = můžu celý den (první stav kruhu), podržení = rozšíření (dopoledne · odpoledne · od–do · nemůžu — proč?). Pro Anetu: prázdno = <b>nevyjádřil se</b>, může připomenout.</td></tr>
+<tr><td>2</td><td>Můžu</td><td><span class="cell c-av">cd</span> žlutý obrys · <span class="cell c-av t">od 16</span> vlastní čas</td><td>cd · 1/2 · 2/2 · od 16 · do 14 · 11–15</td><td>V řádku „Ty" ťuk = další stav kruhu, tedy „pryč" (platí i z „1/2" nebo „od 16"), podržení = jiná část dne nebo čas téže buňky. V cizím řádku jen informace: ten člověk ten den může. Zůstává i po hotovém rozpisu. Vlastní čas se do „N můžou" počítá v části dne, kterou pokrývá; Aneta v panelu vidí „může od 16:00".</td></tr>
+<tr><td>3</td><td>Pryč</td><td><span class="cell c-no">pryč</span> plná červená</td><td>pryč (nebo pár slov proč, když se vejdou: „škola")</td><td>Jen z řádku „Ty" — druhý ťuk v kruhu (na své žluté), důvod volitelně z podržení; vidí oba. Ten člověk ten den <b>nemůže a řekl to dopředu</b>: do „N můžou" se nepočítá, Aneta ho neuhání a v panelu díry je jen jako věta. Třetí ťuk = zpět na prázdno. Není to žádost, nic se neschvaluje, žádná zpráva. Je to <b>bonus</b>: kdo klikne jen „můžu", udělal všechno, co Aneta potřebuje. <b>Proč plná výplň, a ne obrys:</b> obrysy v tabulce znamenají „otevřené" (můžu, chybí, hoří, návrh), plné výplně „hotové" (směna, pryč). Červený <i>obrys</i> s plamínkem zůstává jen pro „hoří" v řádku Chybí — od „pryč" ho dělí řádek (Chybí × člověk), výplň (obrys × plná) i text (chybí + plamínek × pryč).</td></tr>
+<tr><td>4</td><td>Směna</td><td><span class="cell c-ok">cd</span> plná zelená · <span class="cell c-ok me">cd</span> tmavší = tvoje</td><td>cd · 1/2 · 2/2 (+ ikona pozice, když jiná než hlavní)</td><td>Oba. Přidělila Aneta (nebo „Beru"). Tým ji vidí až od „Rozpis hotový" (do té doby je jen u Anety). V řádku „Ty" ťuk = list Vyměnit · Nemůžu · Nemocný (kapitola 5). Aneta ťuk na cizí = Zrušit / Přehodit s důvodem.</td></tr>
+<tr><td>5</td><td>Chybí</td><td><span class="cell c-miss"><b>chybí 1</b><small>dopo</small><small>2 můžou</small></span> řádek Chybí, žlutý obrys</td><td>chybí N (lidí) · část dne · N můžou („0 můžou" = nikdo)</td><td>Dokud Aneta skládá. Aneta ťuk = panel s lidmi, kteří mohou (náčrt D). Brigádník ťuk = věta „Aneta ještě skládá, naklikej, kdy můžeš." Nic nechybí = prázdná buňka.</td></tr>
+<tr><td>6</td><td>Hoří</td><td><span class="cell c-miss c-burn"><b><svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>chybí 1</b><small>dopo</small><small class="z0">0 můžou</small></span> řádek Chybí, červený obrys + plamínek</td><td>plamínek + chybí N · část dne · N můžou</td><td>Díra po „Rozpis hotový" (zbylá, nebo po uvolnění / nemoci / zrušení). Brigádník ťuk = <b>Beru</b> (náčrt F). Aneta ťuk = panel s lidmi, kteří mohli, nebo Přiřadit / Nabídnout všem.</td></tr>
+<tr><td>7</td><td>Čeká</td><td><span class="cell c-wait"><b>cd</b><small>čeká</small></span> nahoře zelená, dole žlutá</td><td>cd · 1/2 · 2/2 nad slovem „čeká"</td><td>Oba. Člověk požádal Nemůžu / Nemocný / Vyměnit a Aneta ještě nerozhodla. Směna je pořád jeho, <b>drží kapacitu</b> — nikdo si ji nemůže vzít, řádek Chybí se nemění. U Anety počítadlo v pruhu „2 žádosti". Ťuk (kdokoli) = kdo a od kdy čeká; důvod vidí jen Aneta.</td></tr>
+<tr><td>8</td><td>Uvolněn</td><td><span class="cell c-rel">uvolněn</span> růžová</td><td>uvolněn</td><td>Oba. Aneta žádost schválila (nebo směnu sama zrušila / přehodila): směna už není jeho, místo je v řádku Chybí a <b>hoří</b>. Zůstává v jeho řádku do konce měsíce, aby bylo vidět, co se stalo; dostupnost ten den je pryč (řekl, že nemůže). Nemoc navíc v evidenci jako nemoc.</td></tr>
+<tr><td>9</td><td>Návrh</td><td><span class="cell c-prop">cd</span> světlejší zelená, tečkovaný obrys</td><td>cd · 1/2 · 2/2 (+ ikona pozice, když jiná než hlavní)</td><td>Jen Aneta, jen mezi „Navrhnout rozpis" a „Potvrdit návrh". Ťuk = zrušit návrh (buňka zpět na „můžu", díra zpět do Chybí). Tým návrh nevidí; potvrzením se změní ve stav 4. Tečky = ještě to není.</td></tr>
+<tr><td>10</td><td>Dovolená / nemoc</td><td><span class="cell c-abs">dov.</span> tyrkysová</td><td>dov. · nem.</td><td>Oba, jen informace. Dovolená se hlásí dál z Domů; nemoc přes „Nemocný" na směně (kapitola 5) nebo z Domů, když ten den směnu nemám. Den se směnou: nejdřív „čeká", po schválení „uvolněn" + díra hoří; dny bez směny v rozsahu od–do = „nem.".</td></tr>
+<tr><td>11</td><td>Zavřeno</td><td><span class="cell" style="background:var(--closed);color:var(--closed-ink)">–</span> šedý sloupec</td><td>„zavřeno" v hlavičce</td><td>Celý sloupec, nic se v něm neťuká. Pondělí vždy, plus výjimky z Nastavení.</td></tr>
+</tbody></table></div>
+<div class="note">Barvy směn cd / 1/2 / 2/2 (zelená / žlutá / oranžová v dnešní matici) nahrazuje jedna zelená (tmavší = tvoje). Část dne nese text, barva nese stav. Žlutá je jen pro „můžu" (obrys v řádku člověka i v řádku Chybí) a pro spodní půlku „čeká", červený obrys jen pro „hoří", plná červená jen pro „pryč", růžová jen pro „uvolněn", tečkovaný obrys jen pro návrh. Prázdná buňka v cizím řádku = ten člověk ten den nic neřekl a nic nemá; červená = řekl, že nemůže.</div>
+<div class="note v2"><b>Jednotky, aby se v tom nikdo neztratil:</b> <b>slot</b> = den × pozice × část dne (dopo / odpo), tolik jich je, kolik říká Nastavení. Řádek „Chybí" ukazuje <b>lidi</b> („chybí 1") a část dne (dopo / odpo / celý den). <b>„N můžou"</b> počítá lidi, kteří ten den mohou aspoň v chybějící části, pozici umí (i jako vedlejší) a ještě ten den nemají směnu. <b>„Jasné"</b> = díra, kde v každé chybějící části může přesně tolik vhodných lidí, kolik chybí. <b>„Díra"</b> = buňka Chybí, ve které něco chybí. <b>Závazek</b> = dva cíle z Nastavení (všední · víkend); plnění: celý den = 1, půlden = ½. <b>„N směn"</b> v tlačítkách počítá lidi × dny (i půlden je jedna směna) — jiná jednotka, jiné slovo.</div>
+<details class="tym"><summary>Pro tým: minulý den jako modifikátor, kontrast změřený z DOM</summary><div class="tym-in">
+<p class="meta"><b>Minulý den není stav, ale modifikátor:</b> cokoli z deseti vybledne (opacita), ke čtení, neťuká se — zápis odpracovaného je věc evidence, ne tabulky. <b>Kontrast</b> (měřeno kontrolním skriptem z DOM, light / dark): bílý text na zelené směně 4,7 : 1 (zelená proto ztmavla z #3f9b6a na #2f8257 — dřív 3,4), tvoje směna 7,6, „čeká" nahoře 4,7 a dole 6,5 / 9,6, „uvolněn" 7,2 / 8,7, hoří 8,2 / 7,6, můžu 6,5 / 9,6, návrh 7,2 / 9,7, dov./nem. 5,2 / 6,1 (tyrkys ztmavl z #2c8b7a na #1f6e60 — dřív 3,5), pruhy 4,8–12,3, <b>pryč</b> (bílá na #b7302a / #c9463c) <span id="k-no">6,1 / 4,8</span> — všechno nad 4,5 : 1 pro text 10–12 px tučně.</p>
+</div></details>
+
+<h2><span class="n">9</span>Při prvním otevření: co ti appka ukáže</h2>
+<p>Kdo poprvé otevře Směny, dostane 4–6 slidů podle role; každý slide je jeden náčrt odsud, drobně animovaný (ťuk, který přepne + → cd; podržení, které vyklopí nabídku; návrh, který se rozsvítí tečkovaně a po potvrzení zezelená; díra, která zčervená). Znovu vyvolatelné z tabu („Jak to funguje" v nabídce u měsíce), takže se nikdo nemusí bát, že to „prošvihl".</p>
+<h3>Slidy pro brigádníka</h3>
+<div class="wrap"><table class="doc" id="slides"><thead><tr><th style="width:4%">#</th><th style="width:26%">Titulek</th><th>Tělo</th><th style="width:12%">Ukázka</th></tr></thead><tbody>
+<tr><td>1</td><td>Tabulka místo tabulky</td><td>Stejný list, jaký kavárna vždycky měla — lidi v řádcích, dny ve sloupcích. Jen živý: tvůj řádek je připnutý nahoře a ťukáš jen do něj. Týdny jsou vždycky celé, od pondělí do neděle — šrafované dny na krajích patří vedlejšímu měsíci.</td><td>řádek</td></tr>
+<tr><td>2</td><td>Měsíc má tři fáze</td><td>Pruh nad tabulkou vždycky říká, kde jsme: žlutý „nahlaš, kdy můžeš" → šedý „Aneta skládá rozpis" → zelený „je rozdaný". Dokud není zelený, žádné směny nevidíš — ani ty svoje. Přijdou naráz.</td><td>pruhy</td></tr>
+<tr><td>3</td><td>Neříkáš, co chceš dělat. Říkáš, kdy můžeš.</td><td><b>Klikni dny, kdy můžeš. A když víš, že některý den opravdu nemůžeš, ťukni ho do červena, ať s tím Aneta počítá.</b> Třetí ťuk vrátí prázdno; podrž prst pro dopoledne, odpoledne nebo vlastní čas. Pozici ani směnu nevybíráš, tu skládá Aneta.</td><td>kruh ťuků (B) · podržení (B2)</td></tr>
+<tr><td>4</td><td>Nic se neodesílá</td><td>Každý ťuk je hned uložený a Aneta ho vidí. Půl měsíce naklikáš za půl minuty. Kdybys ťukl vedle, dole je „Zpět".</td><td>—</td></tr>
+<tr><td>5</td><td>Zelená = máš směnu</td><td>Až Aneta rozpis složí, přijde ti jedna zpráva se všemi tvými směnami. Dny, kdy jsi mohl a Aneta tě nepotřebovala, zůstanou žluté. <b>Že můžeš, zůstane zapsané. Kdyby někdo vypadl, Aneta ví, koho oslovit.</b></td><td>řádek (C)</td></tr>
+<tr><td>6</td><td>Řádek „Chybí" říká, kde je díra</td><td>Pod každou pozicí vidíš, kolik lidí ten den chybí a kolik jich může. Dokud Aneta skládá, je to jen informace.</td><td>chybí</td></tr>
+<tr><td>7</td><td>Nemůžeš? Řekni to a napiš proč</td><td>Ťuk do své zelené = Vyměnit · Nemůžu · Nemocný, vždycky s důvodem. Je to žádost: buňka zežloutne na „čeká", ale směna zůstává tvoje, dokud ji Aneta neuvolní. Pak zrůžoví na „uvolněn" a místo se hledá znovu.</td><td>čeká (G)</td></tr>
+<tr><td>8</td><td>Když něco hoří, můžeš to vzít</td><td>Červená buňka s plamínkem v řádku Chybí = díra v hotovém rozpisu. Ťuk → „Beru" a je to hned tvoje. <b>Tady neříkáš, kdy můžeš, ale bereš konkrétní díru v hotovém rozpisu. Kdo klikne dřív, ten ji má.</b></td><td>hoří (F)</td></tr>
+</tbody></table></div>
+<details class="tym"><summary>Pro tým: onboarding — role a náčrty, zapojení, nahrazené věty, pravidla slidů</summary><div class="tym-in">
+<p>Kdo poprvé otevře Směny, dostane 4–6 slidů podle role; každý slide je jeden náčrt odsud, drobně animovaný (ťuk, který přepne + → cd; podržení, které vyklopí nabídku; návrh, který se rozsvítí tečkovaně a po potvrzení zezelená; díra, která zčervená). Reuse dnešního modulu <code>/onboarding/slides</code> (Jakub 23:28): Eliška slidy, Tomáš zapojení. <b>Etapa 2</b> — brigádník ho uvidí ve chvíli, kdy poprvé může něco naklikat.</p>
+<table class="doc"><thead><tr><th>Role</th><th>Slidy (= náčrty)</th><th>Co se hýbe</th></tr></thead><tbody>
+<tr><td>Brigádník</td><td>pruh (3 stavy) → A → B (kruh: ťuk · ťuk · ťuk) → B2 (podržení = rozšíření) → B („od 16", „pryč") → C (soupis) → F (Beru) → G (Nemůžu → čeká → uvolněn)</td><td>pruh přebarví žlutá → šedá → zelená, tři ťuky do jedné buňky: + → cd → pryč → +, podržení vyklopí nabídku a buňka ukáže „1/2", příchod soupisu, červená díra + „Beru", buňka se rozpůlí na „čeká"</td></tr>
+<tr><td>Provozní</td><td>pruh → D (Chybí → panel → Potvrdit) → D2 (Navrhnout → Potvrdit) → „Rozpis hotový" (dialog) → E (hoří) → H (žádosti) + řádek závazků</td><td>panel vyjede z buňky, návrh se rozsvítí tečkovaně a po potvrzení zezelená, zelené se ukážou naráz, štítek závazku změní barvu, počítadlo žádostí naskočí</td></tr>
+<tr><td>Admin</td><td>totéž co provozní + Nastavení (kapacity, závazky, uzávěrka, práh „hoří")</td><td>—</td></tr>
+</tbody></table>
+<h3>Texty slidů — brigádník (v4.5, pro Tomášovo 3. kolo místo <code>shiftsOnboarding.ts</code>)</h3>
+<p>Struktura zůstává Tomášova (8 slidů po 2. kole), mění se tři těla: slide 3 (ťukání), slide 5 (zelená) a slide 8 (hoří). Ostatní beze změny; ve v4.6 přibyla jedna věta do slidu 1 (celé týdny, šrafované dny).</p>
+<p class="meta">Nahrazené věty (Jakub 0:44): slide 5 měl <del>„Dny, kdy jsi mohl a Aneta tě nepotřebovala, zůstanou žluté — žádné „tentokrát ne" nechodí."</del>, slide 8 měl <del>„Jediné místo, kde se hlásíš na konkrétní směnu."</del>. Stejná myšlenka byla v tomhle dokumentu ještě v tabulce v3.2 → v4, v náčrtech C a F, v sekci 5 (dvakrát) a v soupisu pro 0 směn — všude sjednoceno na nové znění. Pro Tomáše navíc dvě nesrovnalosti v provozním onboardingu 2. kola: slide 7 „Kdo směnu nemá, nedostane nic." odporuje 6b (dostane soupis věcně: kolik dnů nabídl a že jeho „můžu" platí dál; nic nedostane jen ten, kdo nic neřekl a nic nemá) a ukázka „cycle" u slidu 2 (provozní) ať ukazuje kruh <b>tří</b> stavů + → cd → pryč → + (ne čtyři z 2. kola) a k tomu podržení.</p>
+<p class="meta">Pravidla: slide = jedna věta + jeden náčrt, žádný text, který by se nevešel do buňky; animace 900–1600 ms a vždy s důvodem (ukazuje interakci, ne ozdobu); přeskočitelné, dokončení se pamatuje per uživatel a role.</p>
+</div></details>
+
+<div class="tymzone">
+<h2>Pro tým</h2>
+<p class="meta">Poznámky pro tým, který to staví: co se měnilo, proč, co je rozhodnuté a co ještě ne. K práci s tabulkou nic z toho nepotřebuješ.</p>
+<details class="tym verze"><summary>Pro tým: historie verzí dokumentu</summary><div class="tym-in"><p>Koncept hlavního (a jediného pracovního) pohledu modulu Směny pro brigádníky i provozní. Popis + klikatelné náčrty stavů. <b>v4 mění model: brigádník se nehlásí na směnu, jen říká, kdy může; rozpis skládá Aneta</b> (Jakub 6. 9. 23:19). <b>v4.1 doplňuje tři věci z Jakubova 23:32: soupis po hotovém rozpisu, počítadlo férovosti a „Navrhnout rozpis"</b> (náčrt D2, stav 9, sekce 6b) + onboarding (11b) a hodiny z Tomášova feasibility v3. <b>v4.2 (Jakub 23:56 a 0:05): měsíc má tři stavy a pruh nad tabulkou, změny po „Rozpis hotový" jsou žádosti (čeká → uvolněn, Nemocný), uzavřená sada 10 stavů buňky, Nastavení → Směny, ikony vektor + malované hlavičky</b> (náčrty G, H, sekce 6b–6d). <b>v4.4 (Jakub 0:44): nový stav „pryč" (řekl, že nemůže), vlastní čas „od 16", dvě věty onboardingu</b> (náčrty B, B2, sekce 4, 5, 6, 11b). <b>v4.5 (Jakub 0:50, 0:54, 1:11): ťukání = kruh tří stavů nic → můžu → nemůžu → nic, podržení = jen rozšíření téže buňky, věta k červené („ťukni ho do červena, ať s tím Aneta počítá"), karta sousedního měsíce na konci tabulky</b> (náčrty B, B2, <b>B3</b>, <b>D3</b>, sekce 2, 5, 8, 11b). <b>v4.6 (Jakub 1:42): tabulka vždy v celých týdnech po–ne, dny sousedního měsíce šrafované s datem i měsícem a reálnými směnami, karta měsíce až za celým posledním / před celým prvním týdnem</b> (náčrty B3, <b>B4</b>, D3, anatomie, předpoklad J). Stav dnešního modulu ověřen v kódu (<code>MonthMatrix.tsx</code>, <code>ShiftsPage.tsx</code>, <code>AvailabilityManager.tsx</code>, tabulka <code>availability_rules</code>) a v živém demu.</p></div></details>
+<details class="tym"><summary>Pro tým: co se měnilo mezi verzemi (bod → změna)</summary><div class="tym-in">
+<h3>Co se změnilo ve v4.6 (Jakub 7. 9. 1:42 — tabulka vždy v celých týdnech)</h3>
+<div class="wrap"><table class="doc"><thead><tr><th style="width:24%">Bod</th><th style="width:24%">Kde v dokumentu</th><th>Co to znamená</th></tr></thead><tbody>
+<tr><td><b>Celé týdny po–ne, dny sousedního měsíce šrafované</b></td><td>anatomie (nový řádek „Dny sousedního měsíce", řádek „Konec tabulky"), náčrty <b>B3</b>, <b>B4</b>, <b>D3</b>, 5, 6b, copy v 8, 11b (slide 1), předpoklad J</td><td>Tabulka ukazuje vždy celé týdny: říjen 2026 začíná po 28. 9. a končí ne 1. 11. (35 dnů). Dny sousedního měsíce jsou vidět, sloupec má jemnou šikmou šrafuru, v hlavičce je datum i s měsícem („28. 9.", „1. 11."), první den měsíce má silnější levou linku a v buňkách jsou reálné směny a dostupnost, pokud tam jsou (Kubova zelená út 29. 9.). Ťukání v nich funguje normálně a zapisuje se do jejich měsíce. Pruh nad tabulkou zůstává pruhem otevřeného měsíce; šrafovaný den se řídí fází <i>svého</i> měsíce a v hlavičce má malý štítek („hlásíme" · „skládá" · „rozdaný" · „od 1. 10."), jen když se ta fáze liší.</td></tr>
+<tr><td><b>Karta měsíce až za celým týdnem</b></td><td>náčrty B3, B4, D3, anatomie, 5, 6b</td><td>„Listopad →" stojí až za celým posledním týdnem (za šrafovanou nedělí 1. 11.), „← Září" před celým prvním (před po 28. 9.) — ne za posledním / před prvním dnem měsíce jako ve v4.5. Na telefonu poslední týden ukáže i neděli.</td></tr>
+<tr><td><b>Nový náčrt B4 (začátek měsíce)</b></td><td>3</td><td>Říjen ve fázi hlášení, telefon na začátku tabulky: karta „← Září", po–st 28.–30. 9. šrafované se štítkem „rozdaný" a Kubovou zelenou směnou, čt 1. 10. hned za nimi. Vpravo neděle 1. 11. jen k vidění (listopad se otevře 1. 10.).</td></tr>
+<tr><td><b>Data doplněných týdnů</b></td><td>skript v HTML (<code>wholeWeeks</code>, <code>fillDone</code>, <code>fillMiss</code>, <code>jasne</code>)</td><td>Týdny 5.–11. (náčrt C) a 19.–31. (v4.5) zůstávají opsané 1:1, ostatní dny rozdaného měsíce doplňuje deterministický <code>fillDone()</code> (napřed tomu, kdo řekl „můžu", pak střídavě), řádky Chybí, řádek závazků, „zbývá N děr" i „Potvrdit jasné (N)" se počítají z řádků — kontrolní skript to přepočítává z DOM.</td></tr>
+</tbody></table></div>
+
+<h3>Co se změnilo ve v4.5 (Jakub 7. 9. 0:50 upřesnění ťukání, 0:54 věta k červené, 1:11 navigace měsíců)</h3>
+<div class="wrap"><table class="doc"><thead><tr><th style="width:24%">Bod</th><th style="width:24%">Kde v dokumentu</th><th>Co to znamená</th></tr></thead><tbody>
+<tr><td><b>Ťukání = kruh tří stavů</b></td><td>5 (karty gest, sekvence, rozhodnutí), náčrty B, B2, stavy 1–3, anatomie, 6b, copy v 8, 11b</td><td>Ťukání zůstává hlavní ovládání a jede <b>v kruhu: prázdno → můžu (žlutý obrys, celý den) → nemůžu (červená „pryč") → prázdno</b>. Každý ťuk = další stav, oprava nejvýš dva ťuky a vždy přes „nevyjádřil se". <b>Podržení = jen rozšíření téže buňky</b> (dopoledne · odpoledne · od – do… · nemůžu — proč? · zrušit): co tam nastavíš, buňka ukáže textem (cd, 1/2, 2/2, od 16, pryč) a ťukání jede dál od aktuálního stavu (z „1/2" ťuk → pryč → prázdno). Nahrazuje v4.4 „ťuk · ťuk zpět · podržení" (Harryho verze) i čtyřstavový cyklus z v4.</td></tr>
+<tr><td><b>Věta k červené</b></td><td>hint pod tabulkou (náčrt B), slide 3 (11b), copy v 8, sekce 5 a 6</td><td>Červená je <b>bonus, ne povinnost</b> — lidé budou klikat hlavně „můžu". Onboarding i hint proto říkají: <b>„Klikni dny, kdy můžeš. A když víš, že některý den opravdu nemůžeš, ťukni ho do červena, ať s tím Aneta počítá."</b> Aneta vidí tři skupiny: může · nemůže · neřekl — a uhání jen třetí.</td></tr>
+<tr><td><b>Karta sousedního měsíce na konci tabulky</b></td><td>anatomie (řádek „Konec tabulky"), náčrty <b>B3</b> (telefon) a <b>D3</b> (iPad), 6b, copy v 8</td><td>Po doscrollování doprava je poslední „sloupec" karta <b>„Listopad →"</b> s pruhem stavu listopadu (barva + slovo, např. žlutý „nahlaš, kdy můžeš"; neotevřený měsíc čárkovaně „otevře se 1. 10."), vlevo před prvním týdnem <b>„← Září"</b> s pruhem „rozdaný". Ťuk = přepne měsíc na jeho začátek, bez horizontální animace (prosté přepnutí, ne nekonečný pás). Šipky u názvu měsíce zůstávají. Na telefonu karta až po posledním týdnu měsíce. <b>Ve v4.6 upřesněno:</b> karta stojí až za celým posledním týdnem (neděle 1. 11. je v tabulce, šrafovaná), ne za posledním dnem.</td></tr>
+</tbody></table></div>
+
+<h3>Co se změnilo ve v4.4 (Jakub 7. 9. 0:44)</h3>
+<div class="wrap"><table class="doc"><thead><tr><th style="width:24%">Bod</th><th style="width:24%">Kde v dokumentu</th><th>Co to znamená</th></tr></thead><tbody>
+<tr><td class="old">Ťukání: ťuk · ťuk zpět · podržení</td><td class="old">5, náčrty B, B2, 11b</td><td class="old">Harryho verze z 0:44 (ťuk na cokoli svého = zpět, nemůžu jen z nabídky). <b>Ve v4.5 nahrazena Jakubovým kruhem tří stavů</b> (0:50) — viz tabulka výše. Zůstává z ní: náčrt B2 (nabídka u buňky), stav „pryč", vlastní čas „od 16".</td></tr>
+<tr><td><b>Nový stav „pryč"</b></td><td>4 (stav 3 — 11 stavů), legenda, náčrty B–H (Karel st 7., Tereza pá 9., Kuba ne 11.), 6 (Aneta)</td><td>Červená <b>plná</b> buňka se slovem „pryč" (nebo krátkým důvodem) = ten člověk řekl dopředu, že nemůže. Do „N můžou" se nepočítá, ťuk = zpět na prázdno, nic se neschvaluje. Pro Anetu dva druhy ticha: prázdná buňka = <b>nevyjádřil se</b> (může uhánět — „Připomenout"), červená = <b>vyjádřil se, nemůže</b>. Odlišení od „hoří": to je červený <i>obrys</i> s plamínkem v řádku Chybí (otevřená díra), tohle plná výplň v řádku člověka (hotová odpověď).</td></tr>
+<tr><td><b>Vlastní čas</b></td><td>5, náčrt B (pá „od 16"), B2, panel D (Pá 9. — „může od 16:00"), předpoklad G, otázka 10</td><td>Z nabídky „od – do…": dvě políčka předvyplněná otevírací dobou, změníš jedno. V buňce žlutý obrys „od 16" / „do 14" / „11–15"; v Anetině panelu „může od 16:00". Do „N můžou" se počítá v části dne, kterou svým časem pokrývá. Kaskáda v náčrtu D: pá 9. barista už není „jasný" (odpoledne můžou dva) → 13 děr, <b>5 jasných, 7 směn</b> (přepočítal skript).</td></tr>
+<tr><td><b>Onboarding copy</b></td><td>11b (texty slidů brigádníka 1:1 pro Tomášovo 3. kolo), tabulka v3.2 → v4, náčrty C a F, sekce 5, soupis pro 0 směn</td><td>Dvě věty z dema nahrazeny: u zelené <b>„Že můžeš, zůstane zapsané. Kdyby někdo vypadl, Aneta ví, koho oslovit."</b>, u Beru <b>„Tady neříkáš, kdy můžeš, ale bereš konkrétní díru v hotovém rozpisu. Kdo klikne dřív, ten ji má."</b> Stejná myšlenka byla v dokumentu ještě na šesti místech — sjednoceno.</td></tr>
+</tbody></table></div>
+
+<h3>Co přibylo ve v4.2 (Jakub 6. 9. 23:56 + 7. 9. 0:05)</h3>
+<div class="wrap"><table class="doc"><thead><tr><th style="width:24%">Doplněk</th><th style="width:24%">Kde v dokumentu</th><th>Co to znamená</th></tr></thead><tbody>
+<tr><td><b>Měsíc má tři stavy</b></td><td>6b (pruh ve 3 stavech, obě role, telefon i iPad), pruh ve všech náčrtech</td><td>Každý měsíc je právě v jednom stavu a nad tabulkou to říká barevný pruh se slovem: žlutý <b>„Říjen: hlásíme, kdy můžeme · do 10. 9."</b> → šedý <b>„Aneta skládá rozpis · dozvíš se obvykle do týdne"</b> → zelený <b>„Říjen je rozdaný"</b>. Ve druhém stavu tým rozpracovaný rozpis nevidí (<code>published = false</code>); zelené se všem ukážou naráz s tlačítkem Anety „Rozpis hotový". Nový měsíc se otevře sám 1., listuje se šipkami.</td></tr>
+<tr><td><b>Změny po „Rozpis hotový"</b></td><td>6c, náčrty G a H, stavy 7 a 8, zprávy v 6b, copy v 8</td><td>Ťuk na svou zelenou = <b>Vyměnit · Nemůžu · Nemocný</b>, u všech povinný důvod. Nemůžu / Nemocný je <b>žádost</b>, ne odhlášení: buňka <b>„čeká"</b> (půl zelená / půl žlutá, drží kapacitu), Aneta má v pruhu „2 žádosti"; po schválení <b>„uvolněn"</b> (růžová) a místo → Chybí / hoří. Nemocný navíc: od–do, nahoře u Anety, push hned, evidence nemoc — neschvaluje se samo.</td></tr>
+<tr><td><b>Uzavřená sada barev</b></td><td>4 (stavový model), legenda</td><td>10 stavů, každý s textem: naklikej · můžu · směna (tmavší = tvoje) · chybí · hoří · čeká · uvolněn · návrh · dovolená/nemoc · zavřeno. Minulý den není stav, jen vybledne. Kontrast light/dark ověřen skriptem (≥ 4,5 : 1 pro text v buňce).</td></tr>
+<tr><td><b>Nastavení → Směny</b></td><td>6d</td><td>Uzávěrka dostupnosti (den), „rozpis hotový do" (text), „hoří od N dnů", týdenní šablona kapacit + výjimky — provozní; admin navíc lidi / pozice / závazky / zámek měsíce.</td></tr>
+<tr><td><b>Ikony</b></td><td>7, všechny náčrty</td><td>V tabulce vektor (provozní = rozpis s fajfkou, ne klíč; plácák = tác se dvěma sklenkami; kuchyň = hrnec), malované obrázky z DS jen v hlavičkách skupin (26 px) a v onboardingu.</td></tr>
+<tr><td>Otázky 8–9</td><td>10</td><td>Zamítnutí žádosti — má jít důvod zpět? Nemoc u DPP a doklad — Tereza.</td></tr>
+</tbody></table></div>
+
+<h3>Co přibylo ve v4.1 (Jakub 6. 9. 23:32)</h3>
+<div class="wrap"><table class="doc"><thead><tr><th style="width:24%">Doplněk</th><th style="width:24%">Kde v dokumentu</th><th>Co to znamená</th></tr></thead><tbody>
+<tr><td><b>Soupis po „Rozpis hotový"</b></td><td>6b (tabulka zpráv + dva náhledy), náčrt C, sekce 5, 6, 8</td><td>Každý, kdo v měsíci řekl „můžu", dostane jednu zprávu: své směny a „z tvých 10 dnů, kdy můžeš, máš 3 směny". Kdo má 0 směn, dostane totéž věcně — žádné „nevybrán".</td></tr>
+<tr><td><b>Počítadlo férovosti</b></td><td>anatomie (řádek závazků), náčrty D / D2 / E, panel D</td><td>Nad Anetinou tabulkou řádek „Karel 1/5 · 0/3" (má / závazek, všední · víkend, půlden = ½). V panelu u kandidáta „1 z 5 všedních", řazení od nejvíc pod závazkem. Nad závazkem svítí vždy, pod závazkem až od hotového rozpisu.</td></tr>
+<tr><td><b>„Navrhnout rozpis"</b></td><td>náčrt D2 + rizika, stav 9, sekce 6, 6b, rollout 2b</td><td>Tlačítko vedle „Potvrdit jasné": tabulka se předvyplní návrhem (9. stav buňky: světlejší zelená, tečkovaný obrys), Aneta ťuká (zrušit / potvrdit jinak) a „Potvrdit návrh (N směn)". Čtyři viditelná pravidla, žádná skrytá preference.</td></tr>
+<tr><td>Onboarding v appce</td><td>11b</td><td>Tenhle dokument je scénář onboardingu per role, znovu vyvolatelný z tabu, drobně animovaný; etapa 2.</td></tr>
+<tr><td>Hodiny</td><td>11</td><td>Z Tomášova feasibility v3: 20–25 + 32–40 + 20–25 (nová etapa 2b) + 9–12 = 81–102 h.</td></tr>
+</tbody></table></div>
+</div></details>
+<details class="tym"><summary>Pro tým: v3.2 → v4 a sedm bodů zadání</summary><div class="tym-in">
+<h3>Co se změnilo v3.2 → v4</h3>
+<div class="wrap"><table class="doc"><thead><tr><th style="width:44%">v3.2 (přihláška na slot)</th><th>v4 (dostupnost, Aneta skládá)</th></tr></thead><tbody>
+<tr><td class="old">Brigádník se hlásí na konkrétní pozici a část dne, Aneta potvrzuje.</td><td>Brigádník říká jen <b>kdy může</b> (celý den / dopo / odpo). Pozici a den vybírá Aneta.</td></tr>
+<tr><td class="old">Žlutý obrys = přihláška.</td><td>Žlutý obrys = <b>můžu</b>. Nevyužité „můžu" zůstává žluté i po rozpisu — je to informace pro Anetu, s kým počítat u děr.</td></tr>
+<tr><td class="old">Zelená „potvrzeno" + tmavší zelená „moje potvrzená" (2 stavy).</td><td>Jedna zelená = <b>směna</b>. Čí je, říká řádek.</td></tr>
+<tr><td class="old">„plno", „tentokrát ne", zamítnuté přihlášky, lavička.</td><td><b>Zrušeno.</b> Nikdo není zamítnut. Že můžeš, zůstane zapsané — kdyby někdo vypadl, Aneta ví, koho oslovit.</td></tr>
+<tr><td class="old">Chybí: „chybí 1 · dopo · 2 zájemci".</td><td>Chybí: „chybí 1 · dopo · <b>2 můžou</b>" — kdo ten den může, pozici umí a ještě nemá směnu.</td></tr>
+<tr><td class="old">Panel F: výběr pozice a části dne v buňce.</td><td><b>Zrušen.</b> Nic se nevybírá — ťuk = můžu celý den → další ťuk = nemůžu → další = prázdno (kruh tří stavů, v4.5), podržení = rozšíření téže buňky (do v4.3 cyklus cd → 1/2 → 2/2 → prázdno, ve v4.4 ťuk zpět).</td></tr>
+<tr><td class="old">„Potvrdit jasné (N)" = sloty, kde přihlášek je tolik, kolik chybí.</td><td>„<b>Potvrdit jasné (N)</b>" = díry, kde vhodných lidí je přesně tolik, kolik chybí.</td></tr>
+<tr><td class="old">Hoří = díra bez přihlášky do 2 dnů; brigádník ťuk = přihláška.</td><td>Hoří = <b>každá díra po „Rozpis hotový"</b>; brigádník ťuk = <b>Beru</b> — tady neříká, kdy může, ale bere konkrétní díru v hotovém rozpisu; kdo klikne dřív, ten ji má, a je to hned směna.</td></tr>
+<tr><td class="old">Po zamčení měsíce se v řádku „Ty" neťuká.</td><td>Řádek „Ty" jde měnit celý měsíc (po rozpisu to směny nemění). Zámek se týká jen směn, jako dnes.</td></tr>
+<tr><td class="old">10 stavů buňky.</td><td><b>8 stavů</b> buňky (v4.1: 9 — přibyl „návrh", vidí ho jen Aneta; v4.2: <b>10</b> — „čeká" a „uvolněn" pro změny po hotovém rozpisu, „minulý den" už není stav; v4.4: <b>11</b> — „pryč").</td></tr>
+</tbody></table></div>
+
+<h3>Sedm bodů zadání → řešeno takto</h3>
+<table class="doc"><tbody>
+<tr><td>1. Základní pohled = tabulka</td><td>Tabulka je první tab a otevírá se jako výchozí. Kalendář zmizí z tabů (sekce 1).</td></tr>
+<tr><td>2. Přejmenovat na „Tabulka směn"</td><td>Tab „Matice" → „Tabulka směn". Domů karta „Potřebujeme obsadit" vede do tabulky (sekce 8, copy).</td></tr>
+<tr><td>3. Směny přímo zaklikat</td><td>Ve svém připnutém řádku naklikáš, <b>kdy můžeš</b> (ťuk = můžu celý den, další ťuk = nemůžu, další = prázdno; podržení = dopoledne / odpoledne / od–do / důvod). Směnu z toho složí Aneta a ty ji uvidíš zeleně (sekce 5). <i>Jakub 23:19: brigádník nevybírá pozici ani slot.</i></td></tr>
+<tr><td>4. Barvy volné × obsazené, obsazené až po Anetě</td><td>Žlutý obrys = můžu, zelená = směna (přidělila Aneta). Na sloty se nikdo nehlásí, takže „obsazené — už se nehlásí" neexistuje; po hotovém rozpisu se dá jediné: vzít si hořící díru „Beru" (sekce 4, stav 6).</td></tr>
+<tr><td>5. Plácák není koště</td><td>Ikona podnosu se dvěma sklenkami (obsluha nápojů). 4 varianty + doporučení (sekce 7).</td></tr>
+<tr><td>6. Naprosto jednoduché a logické</td><td>Brigádník nemá žádný panel, žádný výběr, žádné „odeslat". 11 stavů (uzavřená sada), každý text v buňce čitelný bez legendy; nad tabulkou pruh, který řekne, co se teď dělá. Potvrzovací dialog jen u nevratného (žádost o uvolnění, hromadné potvrzení, „Rozpis hotový").</td></tr>
+<tr><td>7. Nejdřív popsat, pak stavět</td><td>Tenhle dokument. Po odsouhlasení staví Tomáš; model dostupnosti sedí na dnešní tabulku <code>availability_rules</code> (Tomáš ověřuje), rollout ve 3 etapách (sekce 11).</td></tr>
+</tbody></table>
+</div></details>
+<details class="tym"><summary>Pro tým: co se v hubu mění oproti dnešku (architektura modulu, rizika → cesty)</summary><div class="tym-in">
+<h2>1. Informační architektura modulu po změně</h2>
+<div class="two">
+<div class="card"><div class="tag">Dnes (ověřeno v <code>ShiftsPage.tsx</code>)</div>
+<ul><li>Taby: <b>Kalendář</b> (výchozí) · Matice · Moje směny</li>
+<li>Přihlášení: karta „Potřebujeme obsadit" na Domů nebo detail dne z kalendáře → „Beru" = <b>hned schváleno</b> (kdo dřív přijde)</li>
+<li>Dostupnost: samostatná stránka „Moje dostupnost" (<code>AvailabilityManager</code>) — pravidla „každé úterý 9–14" a výjimky na datum; Aneta ji nikde v rozpisu nevidí</li>
+<li>Menu Správa (provozní): Žádosti · Generovat · Plnění závazků · Nastavení</li>
+<li>Matice je jen ke čtení; provozní z ní klikem skáče do kalendáře</li></ul></div>
+<div class="card"><div class="tag">Nově</div>
+<ul><li>Taby: <b>Tabulka směn</b> (výchozí) · Moje směny</li>
+<li><b>Dostupnost se hlásí přímo v tabulce</b> (řádek „Ty"). Stránka „Moje dostupnost" splyne s tabulkou — tabulka je její nový formulář.</li>
+<li><b>Aneta skládá rozpis v tabulce</b>: řádek „Chybí" → panel s lidmi, kteří ten den mohou → jeden ťuk = potvrdit. Nebo <b>„Navrhnout rozpis"</b>: tabulka se předvyplní podle čtyř viditelných pravidel, Aneta návrh upraví a jedním klikem potvrdí (náčrt D2).</li>
+<li>Nad tabulkou má Aneta <b>řádek závazků</b> („Karel 1/5 · 0/3") — plnění závazků je vidět při skládání, ne na zvláštní stránce.</li>
+<li>Karta na Domů zůstává jako zkratka a vede do tabulky na daný den.</li>
+<li>Menu Správa zůstává, ale zúží se: Žádosti (Nemůžu · Nemocný · Vyměnit — totéž, co Aneta vidí z pruhu „2 žádosti") · Generovat · Závazky (jen nastavení cílů; plnění je nad tabulkou) · Nastavení → Směny (6d). Záložka „Čekající" není potřeba — během skládání nic nečeká na potvrzení.</li>
+<li>Kalendář se z tabů odstraní až po 2 týdnech souběhu (sekce 11); kód zůstane měsíc v repu.</li></ul></div>
+</div>
+<h3>Co zůstává a proč</h3>
+<ul>
+<li><b>Moje směny</b> — jediné místo, kde má brigádník seznam „co mě čeká" i s časy, ICS, výměnou a zrušením. Tabulka ukazuje měsíc, seznam ukazuje mě. Dvě různé otázky.</li>
+<li><b>Správa → Žádosti</b> — zůstane pro věci, které do buňky nepatří: žádosti o zrušení, výměny.</li>
+<li><b>Dovolené a nemoc</b> — beze změny (Domů / Moje směny), v tabulce se jen zobrazují.</li>
+</ul>
+<table class="doc"><thead><tr><th>Riziko</th><th>Cesta</th></tr></thead><tbody>
+<tr><td>Někdo si zvykl na kalendář (detail dne se seznamem lidí a časů).</td><td>Ťuk na hlavičku dne v tabulce otevře stejný „detail dne" (dnešní <code>ShiftDaySheet</code>) — kalendář jako mřížka není potřeba, jeho detail ano.</td></tr>
+<tr><td>Tabulka na telefonu = moc informací.</td><td>Vlastní řádek připnutý nahoře + týdenní krok posunu. Brigádník nemusí nic hledat; zbytek týmu je pod ním jen pro orientaci (kdo se mnou bude, kdo ještě může).</td></tr>
+<tr><td>Lidi naklikají „můžu" a čekají, jestli „prošli".</td><td>Není co procházet — nic se neschvaluje. Hláška nad tabulkou říká, v jaké fázi měsíc je (hlášení → Aneta skládá → hotový), a zpráva přijde jen jednou: až je rozpis hotový (sekce 6b).</td></tr>
+<tr><td>Aneta chce vidět „všechno k vyřízení" na jednom místě, ne hledat po buňkách.</td><td>Řádek „Chybí" pod každou pozicí + „Potvrdit jasné (N)" nad tabulkou vyřídí díry s jedinou možností naráz. Zvoneček zůstává.</td></tr>
+</tbody></table>
+</div></details>
+<details class="tym"><summary>Pro tým: ikony pozic — vektor v tabulce, malované v hlavičkách, varianty</summary><div class="tym-in">
 <h2>7. Ikony pozic — vektor v tabulce, malované jen v hlavičkách</h2>
 <p>Rozhodnuto (Jakub 6. 9. 23:56, srovnání v <code>ikony_pozic_srovnani_2026-09-07.html</code>): <b>pod 24 px vždy čárový vektor</b> — u jména, v buňce, v legendě, v notifikacích; <b>malovaný obrázek ve stylu DS ilustrací jen tam, kde má pozice hlavičku</b> — řádek skupiny v tabulce (26 px), onboarding, profil. Vektor: 24 px mřížka, 2 px tah, stejná rodina jako Lucide ikony v hubu; barista a plácák mají dva mastery (plný / do 16 px bez vnitřních linek). Provozní už není klíč, ale rozpis s fajfkou. Žádné emoji, žádné samolepky; textová zkratka jako fallback (CSV, notifikace bez ikon).</p>
 <div class="icons">
@@ -809,7 +882,8 @@ tr.me .c-ok,.c-ok.me{background:var(--ok-me)}
 <tr><td>Feedback „žádné samolepkové ilustrace v UI".</td><td>Platí pro clipart. Tohle je DS styl (kontura + akvarelová kaňka), Jakubova výjimka — hlídat, aby obrázek vždy seděl na papíru / kaňce a nikdy nebyl v buňce.</td></tr>
 </tbody></table></div>
 </div>
-
+</div></details>
+<details class="tym"><summary>Pro tým: mikrotexty na jednom místě</summary><div class="tym-in">
 <h2>8. Copy — mikrotexty</h2>
 <div class="two">
 <table class="doc"><thead><tr><th>Kde</th><th>Text</th></tr></thead><tbody>
@@ -850,7 +924,8 @@ tr.me .c-ok,.c-ok.me{background:var(--ok-me)}
 <tr><td>Aneta zruší / přehodí</td><td>„Zrušit so 10. 10. Iloně? Napiš důvod — dostane ho ve zprávě. Místo začne hořet."</td></tr>
 </tbody></table>
 </div>
-
+</div></details>
+<details class="tym"><summary>Pro tým: co koncept řeší z Tomášových 8 nálezů</summary><div class="tym-in">
 <h2>9. Co koncept řeší z Tomášových 8 nálezů</h2>
 <table class="doc"><thead><tr><th>Nález</th><th>Řešeno takto</th></tr></thead><tbody>
 <tr><td>1. <code>BurningShifts.tsx</code> mrtvý manažerský panel</td><td>Hořící směny žijí v řádku „Chybí" (stav 6) — panel není potřeba, smazat (etapa 3).</td></tr>
@@ -862,7 +937,8 @@ tr.me .c-ok,.c-ok.me{background:var(--ok-me)}
 <tr><td>7. Duplicity ShiftPlanner*</td><td>Smazat spolu s kalendářovým tabem — etapa 3.</td></tr>
 <tr><td>8. „Stáhnout ICS" stahuje celý feed</td><td>Přejmenovat na „Přidat do kalendáře (celý feed)" v Moje směny. Mimo tabulku.</td></tr>
 </tbody></table>
-
+</div></details>
+<details class="tym"><summary>Pro tým: předpoklady A–J (rozhodnuto, Tomáš s tím staví)</summary><div class="tym-in">
 <h2>10. Předpoklady a otevřené otázky</h2>
 <h3>Předpoklady (rozhodnuto, Tomáš s tím staví)</h3>
 <div class="q">
@@ -877,6 +953,8 @@ tr.me .c-ok,.c-ok.me{background:var(--ok-me)}
 <div class="card"><b>J. Šrafovaný den neotevřeného měsíce je jen k vidění, ne k ťukání.</b>Ne 1. 11. na konci října v půlce září: listopad se otevře 1. 10. a do té doby se nic nehlásí (6b) — buňky jsou prázdné, bez „+" a bez děr v řádcích Chybí, štítek v hlavičce říká „od 1. 10.". Jakmile se měsíc otevře, šrafovaný den se chová jako každý jiný (náčrt B3: 1. 11. žlutě „hlásíme", v řádku Ty „+", tři lidi už řekli, že můžou). Dny <i>minulého</i> měsíce jsou po jeho konci šedé jako minulost (náčrt B3: 28.–30. 9.).<em>Pro Tomáše: stejné pravidlo jako u pruhu — den bere fázi svého měsíce; závazky a „zbývá N děr" počítají jen otevřený měsíc.</em></div>
 <div class="card"><b>E. Preference „koho raději" v návrhu není — vědomě.</b>Čtyři pravidla návrhu jsou veřejně vysvětlitelná; skrytá váha v týmu 10 lidí je riziko morálky i obhajoby (Jakub 23:32).<em>Cesta zpět, kdyby ji Aneta potřebovala: 3stupňová priorita v Týmu, viditelná jen provozní/admin, jen jako rozhodčí při remíze — Tomáš 2,5–4 h, samostatná tabulka s manažerskou RLS. Až po měsíci, kdy Aneta návrh soustavně přepisuje.</em></div>
 </div>
+</div></details>
+<details class="tym"><summary>Pro tým: otázky pro Jakuba, Anetu a Terezu</summary><div class="tym-in">
 <h3>Otázky pro Jakuba a Anetu</h3>
 <div class="q">
 <div class="card"><b>1. Do kdy tým hlásí, kdy může, a do kdy Aneta „zavře rozpis"?</b>Koncept počítá s „do 10." a „Rozpis hotový" kolem 20.<em>Doporučení: 15. / 20., obojí jen text nad tabulkou a datum v Nastavení, ne tvrdý zámek — kdo naklikne 16., pořád pomůže.</em></div>
@@ -890,7 +968,8 @@ tr.me .c-ok,.c-ok.me{background:var(--ok-me)}
 <div class="card"><b>9. Nemoc u DPP a doklad — co appka chce po člověku? (Tereza)</b>„Nemocný" v tabulce je provozní hlášení (uvolni směnu, najdi náhradu), ne nemocenská. U brigádníků na DPP bez účasti na pojištění se doklad neřeší, ale evidence „nemoc" v přehledu absencí je osobní údaj o zdraví.<em>Doporučení: v appce jen štítek „nemoc" bez diagnózy (důvod je volný text — v placeholderu říct „nepiš diagnózu"), retence podle Terezy; ať se Tereza vyjádří k tomu, jestli evidence nemoci u DPP vůbec má zůstat, nebo stačí „absence".</em></div>
 <div class="card"><b>10. Vlastní čas kratší než slot: má „od 16" obsadit celý odpolední slot, nebo má díra 14–16 zůstat v řádku Chybí?</b>Předpoklad G říká obsadit (jako dnes tužka); Aneta rozhoduje, co s dvěma hodinami.<em>Doporučení: obsadit a díru 14–16 nehlídat — v kavárně s jedním baristou na slot to Aneta stejně řeší sama (přesah dopolední směny). Kdyby to vadilo, přidat do buňky Chybí text „chybí 14–16" jako třetí řádek, ne nový stav.</em></div>
 </div>
-
+</div></details>
+<details class="tym"><summary>Pro tým: rollout — tři etapy a hodiny</summary><div class="tym-in">
 <h2>11. Rollout — tři etapy podle toho, co uživatel uvidí</h2>
 <p>Řezáno podle toho, co člověk uvidí, ne podle kódu. DB vždy před FE (PWA cache), každá migrace do <code>project_kns_cutover_map.md</code>. <b>Hodiny z Tomášova feasibility v3</b> (repo <code>c6f4617</code>): 20–25 + 32–40 + 20–25 (nová etapa 2b) + 9–12 = <b>81–102 h</b>; onboarding (11b) a preference (2,5–4 h, jen na vyžádání) mimo součet. Nosič dostupnosti je podle Tomáše <code>shift_standbys</code> („Můžu ten den", vidí celý tým), ne <code>availability_rules</code>.</p>
 <div class="stages">
@@ -907,29 +986,8 @@ tr.me .c-ok,.c-ok.me{background:var(--ok-me)}
 <ul><li>Kalendář z tabů pryč, detail dne zůstává z hlavičky</li><li>Stránka „Moje dostupnost" a tlačítko „Můžu ten den" (<code>shift_standbys</code>) splývají s tabulkou</li><li>Smazat <code>BurningShifts.tsx</code>, <code>ShiftPlanner*</code>, záložku „Čekající"</li><li>Volitelně: předvyplnění z týdenních pravidel (otázka 5)</li></ul>
 <small>Souběh = tabulka i kalendář vedle sebe; když se dva týdny nikdo po kalendáři neptá, jde pryč.</small></div>
 </div>
-
-<h2>11b. Onboarding v appce — tenhle dokument jako scénář</h2>
-<p>Kdo poprvé otevře Směny, dostane 4–6 slidů podle role; každý slide je jeden náčrt odsud, drobně animovaný (ťuk, který přepne + → cd; podržení, které vyklopí nabídku; návrh, který se rozsvítí tečkovaně a po potvrzení zezelená; díra, která zčervená). Znovu vyvolatelné z tabu („Jak to funguje" v nabídce u měsíce), takže se nikdo nemusí bát, že to „prošvihl". Reuse dnešního modulu <code>/onboarding/slides</code> (Jakub 23:28): Eliška slidy, Tomáš zapojení. <b>Etapa 2</b> — brigádník ho uvidí ve chvíli, kdy poprvé může něco naklikat.</p>
-<table class="doc"><thead><tr><th>Role</th><th>Slidy (= náčrty)</th><th>Co se hýbe</th></tr></thead><tbody>
-<tr><td>Brigádník</td><td>pruh (3 stavy) → A → B (kruh: ťuk · ťuk · ťuk) → B2 (podržení = rozšíření) → B („od 16", „pryč") → C (soupis) → F (Beru) → G (Nemůžu → čeká → uvolněn)</td><td>pruh přebarví žlutá → šedá → zelená, tři ťuky do jedné buňky: + → cd → pryč → +, podržení vyklopí nabídku a buňka ukáže „1/2", příchod soupisu, červená díra + „Beru", buňka se rozpůlí na „čeká"</td></tr>
-<tr><td>Provozní</td><td>pruh → D (Chybí → panel → Potvrdit) → D2 (Navrhnout → Potvrdit) → „Rozpis hotový" (dialog) → E (hoří) → H (žádosti) + řádek závazků</td><td>panel vyjede z buňky, návrh se rozsvítí tečkovaně a po potvrzení zezelená, zelené se ukážou naráz, štítek závazku změní barvu, počítadlo žádostí naskočí</td></tr>
-<tr><td>Admin</td><td>totéž co provozní + Nastavení (kapacity, závazky, uzávěrka, práh „hoří")</td><td>—</td></tr>
-</tbody></table>
-<h3>Texty slidů — brigádník (v4.5, pro Tomášovo 3. kolo místo <code>shiftsOnboarding.ts</code>)</h3>
-<p>Struktura zůstává Tomášova (8 slidů po 2. kole), mění se tři těla: slide 3 (ťukání), slide 5 (zelená) a slide 8 (hoří). Ostatní beze změny; ve v4.6 přibyla jedna věta do slidu 1 (celé týdny, šrafované dny).</p>
-<div class="wrap"><table class="doc" id="slides"><thead><tr><th style="width:4%">#</th><th style="width:26%">Titulek</th><th>Tělo</th><th style="width:12%">Ukázka</th></tr></thead><tbody>
-<tr><td>1</td><td>Tabulka místo tabulky</td><td>Stejný list, jaký kavárna vždycky měla — lidi v řádcích, dny ve sloupcích. Jen živý: tvůj řádek je připnutý nahoře a ťukáš jen do něj. Týdny jsou vždycky celé, od pondělí do neděle — šrafované dny na krajích patří vedlejšímu měsíci.</td><td>řádek</td></tr>
-<tr><td>2</td><td>Měsíc má tři fáze</td><td>Pruh nad tabulkou vždycky říká, kde jsme: žlutý „nahlaš, kdy můžeš" → šedý „Aneta skládá rozpis" → zelený „je rozdaný". Dokud není zelený, žádné směny nevidíš — ani ty svoje. Přijdou naráz.</td><td>pruhy</td></tr>
-<tr><td>3</td><td>Neříkáš, co chceš dělat. Říkáš, kdy můžeš.</td><td><b>Klikni dny, kdy můžeš. A když víš, že některý den opravdu nemůžeš, ťukni ho do červena, ať s tím Aneta počítá.</b> Třetí ťuk vrátí prázdno; podrž prst pro dopoledne, odpoledne nebo vlastní čas. Pozici ani směnu nevybíráš, tu skládá Aneta.</td><td>kruh ťuků (B) · podržení (B2)</td></tr>
-<tr><td>4</td><td>Nic se neodesílá</td><td>Každý ťuk je hned uložený a Aneta ho vidí. Půl měsíce naklikáš za půl minuty. Kdybys ťukl vedle, dole je „Zpět".</td><td>—</td></tr>
-<tr><td>5</td><td>Zelená = máš směnu</td><td>Až Aneta rozpis složí, přijde ti jedna zpráva se všemi tvými směnami. Dny, kdy jsi mohl a Aneta tě nepotřebovala, zůstanou žluté. <b>Že můžeš, zůstane zapsané. Kdyby někdo vypadl, Aneta ví, koho oslovit.</b></td><td>řádek (C)</td></tr>
-<tr><td>6</td><td>Řádek „Chybí" říká, kde je díra</td><td>Pod každou pozicí vidíš, kolik lidí ten den chybí a kolik jich může. Dokud Aneta skládá, je to jen informace.</td><td>chybí</td></tr>
-<tr><td>7</td><td>Nemůžeš? Řekni to a napiš proč</td><td>Ťuk do své zelené = Vyměnit · Nemůžu · Nemocný, vždycky s důvodem. Je to žádost: buňka zežloutne na „čeká", ale směna zůstává tvoje, dokud ji Aneta neuvolní. Pak zrůžoví na „uvolněn" a místo se hledá znovu.</td><td>čeká (G)</td></tr>
-<tr><td>8</td><td>Když něco hoří, můžeš to vzít</td><td>Červená buňka s plamínkem v řádku Chybí = díra v hotovém rozpisu. Ťuk → „Beru" a je to hned tvoje. <b>Tady neříkáš, kdy můžeš, ale bereš konkrétní díru v hotovém rozpisu. Kdo klikne dřív, ten ji má.</b></td><td>hoří (F)</td></tr>
-</tbody></table></div>
-<p class="meta">Nahrazené věty (Jakub 0:44): slide 5 měl <del>„Dny, kdy jsi mohl a Aneta tě nepotřebovala, zůstanou žluté — žádné „tentokrát ne" nechodí."</del>, slide 8 měl <del>„Jediné místo, kde se hlásíš na konkrétní směnu."</del>. Stejná myšlenka byla v tomhle dokumentu ještě v tabulce v3.2 → v4, v náčrtech C a F, v sekci 5 (dvakrát) a v soupisu pro 0 směn — všude sjednoceno na nové znění. Pro Tomáše navíc dvě nesrovnalosti v provozním onboardingu 2. kola: slide 7 „Kdo směnu nemá, nedostane nic." odporuje 6b (dostane soupis věcně: kolik dnů nabídl a že jeho „můžu" platí dál; nic nedostane jen ten, kdo nic neřekl a nic nemá) a ukázka „cycle" u slidu 2 (provozní) ať ukazuje kruh <b>tří</b> stavů + → cd → pryč → + (ne čtyři z 2. kola) a k tomu podržení.</p>
-<p class="meta">Pravidla: slide = jedna věta + jeden náčrt, žádný text, který by se nevešel do buňky; animace 900–1600 ms a vždy s důvodem (ukazuje interakci, ne ozdobu); přeskočitelné, dokončení se pamatuje per uživatel a role.</p>
-
+</div></details>
+<details class="tym"><summary>Pro tým: co ukázat Anetě první</summary><div class="tym-in">
 <h2>12. Co ukázat Anetě první</h2>
 <ol>
 <li><b>Její vlastní říjnový list vedle tabulky se skutečnými jmény týmu.</b> Pozná formát (řádek = člověk, sloupec = den, cd / 1/2 / 2/2 — parser importu čte přesně tohle). Demo musí běžet nad daty s kapacitami z Nastavení.</li>
@@ -937,10 +995,12 @@ tr.me .c-ok,.c-ok.me{background:var(--ok-me)}
 <li><b>Tři otázky:</b> skládá po dnech, nebo po týdnech? Sedí jí dva závazky (všední / víkend), nebo chce jedno číslo? Chce návrh potvrzovat naráz (D2), nebo po týdnech?</li>
 <li><b>Až pak brigádnický průchod A → B → C → F na jejím telefonu</b> — ať vidí, co uvidí Kuba: ťuk, ťuk, ťuk, zpráva „máš směny", a „Beru" u hořící díry.</li>
 </ol>
+</div></details>
+<details class="tym"><summary>Pro tým: zdroje a předchozí verze</summary><div class="tym-in">
+<p class="meta" style="margin-top:40px">Zdroje: <code>kns-hub-live/src/components/shifts/MonthMatrix.tsx</code>, <code>AvailabilityManager.tsx</code>, <code>lib/monthMatrix.ts</code>, <code>pages/ShiftsPage.tsx</code>, <code>lib/shiftTypes.ts</code>, migrace <code>20260305235549</code> (<code>availability_rules</code>), <code>20260718120000</code> (RPC <code>claim_shift_slot</code>, <code>get_month_matrix</code>), <code>20260305232611</code> (šablona kapacit, <code>shift_part</code> = AM/PM), demo https://projekty.jakubforman.cz/kns-smeny-a3k7p2/, reporty <code>tomas_kns_tabulka_smen_feasibility_2026-09-06.md</code>, <code>…_v2_dostupnost_2026-09-07.md</code>, <code>…_v3_soupis_navrh_2026-09-07.md</code> (kanály soupisu, <code>employee_shift_targets</code>, generátor), <code>marek_critic_tabulka_smen_2026-09-06.md</code>, memory <code>project_kns_hub.md</code> (Jakub 23:19, 23:28, 23:32, 23:56, 0:05, 0:15, 0:44, 0:50, 0:54, 1:11), <code>ikony_pozic_srovnani_2026-09-07.html</code> + <code>eliska_kns_ikony_pozic_2026-09-07.md</code>. Feedback: design_quality, no_sticker_illustrations, tv_distance_readability, landing_scope_minimal, evaluace_rizika_a_cesty, kns_editable_parameters. Předchozí verze: <code>_v1.html</code>, <code>_v2.html</code>, <code>_v3.html</code> (model přihlášek), <code>_v4.html</code> (dostupnost bez soupisu, závazků a návrhu), <code>_v41.html</code> (bez pruhu, žádostí a nových ikon), <code>_v42.html</code> (před Harryho slovními náhradami Usadit → Potvrdit, 15. → 10.), <code>_v43.html</code> (cyklus ťuků, 10 stavů, bez „pryč" a nabídky), <code>_v44.html</code> (ťuk · ťuk zpět · podržení — Harryho verze, bez karty sousedního měsíce). Onboarding v demu: <code>KNS_Smeny_Demo/hub-src/lib/shiftsOnboarding.ts</code> (2. kolo, 8 slidů).</p>
+</div></details>
+</div>
 
-<p class="meta" style="margin-top:40px">Zdroje: <code>kns-hub-live/src/components/shifts/MonthMatrix.tsx</code>, <code>AvailabilityManager.tsx</code>, <code>lib/monthMatrix.ts</code>, <code>pages/ShiftsPage.tsx</code>, <code>lib/shiftTypes.ts</code>, migrace <code>20260305235549</code> (<code>availability_rules</code>), <code>20260718120000</code> (RPC <code>claim_shift_slot</code>, <code>get_month_matrix</code>), <code>20260305232611</code> (šablona kapacit, <code>shift_part</code> = AM/PM), demo https://kns-smeny-demo.netlify.app, reporty <code>tomas_kns_tabulka_smen_feasibility_2026-09-06.md</code>, <code>…_v2_dostupnost_2026-09-07.md</code>, <code>…_v3_soupis_navrh_2026-09-07.md</code> (kanály soupisu, <code>employee_shift_targets</code>, generátor), <code>marek_critic_tabulka_smen_2026-09-06.md</code>, memory <code>project_kns_hub.md</code> (Jakub 23:19, 23:28, 23:32, 23:56, 0:05, 0:15, 0:44, 0:50, 0:54, 1:11), <code>ikony_pozic_srovnani_2026-09-07.html</code> + <code>eliska_kns_ikony_pozic_2026-09-07.md</code>. Feedback: design_quality, no_sticker_illustrations, tv_distance_readability, landing_scope_minimal, evaluace_rizika_a_cesty, kns_editable_parameters. Předchozí verze: <code>_v1.html</code>, <code>_v2.html</code>, <code>_v3.html</code> (model přihlášek), <code>_v4.html</code> (dostupnost bez soupisu, závazků a návrhu), <code>_v41.html</code> (bez pruhu, žádostí a nových ikon), <code>_v42.html</code> (před Harryho slovními náhradami Usadit → Potvrdit, 15. → 10.), <code>_v43.html</code> (cyklus ťuků, 10 stavů, bez „pryč" a nabídky), <code>_v44.html</code> (ťuk · ťuk zpět · podržení — Harryho verze, bez karty sousedního měsíce). Onboarding v demu: <code>KNS_Smeny_Demo/hub-src/lib/shiftsOnboarding.ts</code> (2. kolo, 8 slidů).</p>
-
-<details class="verze" style="margin-top:3rem;font-size:.85rem;opacity:.75"><summary style="cursor:pointer;font-weight:600">Pro tým: historie verzí dokumentu</summary><p style="margin-top:.6rem">Koncept hlavního (a jediného pracovního) pohledu modulu Směny pro brigádníky i provozní. Popis + klikatelné náčrty stavů. <b>v4 mění model: brigádník se nehlásí na směnu, jen říká, kdy může; rozpis skládá Aneta</b> (Jakub 6. 9. 23:19). <b>v4.1 doplňuje tři věci z Jakubova 23:32: soupis po hotovém rozpisu, počítadlo férovosti a „Navrhnout rozpis"</b> (náčrt D2, stav 9, sekce 6b) + onboarding (11b) a hodiny z Tomášova feasibility v3. <b>v4.2 (Jakub 23:56 a 0:05): měsíc má tři stavy a pruh nad tabulkou, změny po „Rozpis hotový" jsou žádosti (čeká → uvolněn, Nemocný), uzavřená sada 10 stavů buňky, Nastavení → Směny, ikony vektor + malované hlavičky</b> (náčrty G, H, sekce 6b–6d). <b>v4.4 (Jakub 0:44): nový stav „pryč" (řekl, že nemůže), vlastní čas „od 16", dvě věty onboardingu</b> (náčrty B, B2, sekce 4, 5, 6, 11b). <b>v4.5 (Jakub 0:50, 0:54, 1:11): ťukání = kruh tří stavů nic → můžu → nemůžu → nic, podržení = jen rozšíření téže buňky, věta k červené („ťukni ho do červena, ať s tím Aneta počítá"), karta sousedního měsíce na konci tabulky</b> (náčrty B, B2, <b>B3</b>, <b>D3</b>, sekce 2, 5, 8, 11b). <b>v4.6 (Jakub 1:42): tabulka vždy v celých týdnech po–ne, dny sousedního měsíce šrafované s datem i měsícem a reálnými směnami, karta měsíce až za celým posledním / před celým prvním týdnem</b> (náčrty B3, <b>B4</b>, D3, anatomie, předpoklad J). Stav dnešního modulu ověřen v kódu (<code>MonthMatrix.tsx</code>, <code>ShiftsPage.tsx</code>, <code>AvailabilityManager.tsx</code>, tabulka <code>availability_rules</code>) a v živém demu.</p></details>
 </main>
 
 <script>
@@ -1385,6 +1445,13 @@ document.getElementById('d3-sum').textContent=`zbývá ${der(D3.holes)}, ${D3_J.
 document.getElementById('d3-btn').textContent=`Potvrdit jasné (${smen(D3_J.shifts)})`;
 window.D3_HOLES=D3.holes; window.D3_J=D3_J;
 window.TARGETS=TARGETS; window.timeParts=timeParts; window.E_MONTH=E_MONTH; window.H_MONTH=H_MONTH; window.KUBA_OCT=KUBA_OCT; window.PROPOSAL_LOG=PROP.log;
+</script>
+<script>
+// v4.7: přepínač „Zobrazit poznámky pro tým" — otevře / zavře všechny details.tym; výchozí zavřeno
+(()=>{const b=document.getElementById('tym-toggle'); const all=()=>[...document.querySelectorAll('details.tym')];
+  const upd=()=>{const open=all().length&&all().every(d=>d.open); b.textContent=(open?'Skrýt poznámky pro tým':'Zobrazit poznámky pro tým')+' ('+all().length+')'; b.setAttribute('aria-expanded',String(!!open));};
+  b.addEventListener('click',()=>{const open=!all().every(d=>d.open); all().forEach(d=>d.open=open); upd();});
+  all().forEach(d=>d.addEventListener('toggle',upd)); upd();})();
 </script>
 </body>
 </html>
