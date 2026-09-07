@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Calf campaign — three directions · tissue v0.4</title>
+<title>Calf campaign — three directions · tissue v0.5</title>
 
 <!-- NICE! design systém = zdroj (jen čteme). dist/ je single-file bundle (bundle_deck.py). --><style>
 /* ../../NICE_Design_System/build/tokens.css */
@@ -908,7 +908,7 @@ canvas.grain--live::after { display: none; }
 </style>
 <style>
 /* =========================================================================
-   TELATA — tissue deck v0.4 · Eliška, 6. 9. 2026
+   TELATA — tissue deck v0.5 · Eliška, 6. 9. 2026
    Klient: Nevidimi zhivotni · odesílatel: Studio Družina · interní draft.
 
    NICE! DESIGN SYSTÉM, SVĚTLÁ VARIANTA (Jakub 6. 9. 14:08).
@@ -1176,10 +1176,23 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #1A1A1A; }
 /* „Why it's strong" — tři slidy musí fungovat jako jeden objekt (Dana, sekce 3):
    pevná horní hrana, sloupce zarovnané shora, první sloupec širší. Hustota zpět na
    --text-body, protože pět .dl řádků po 22–30 slovech se na 27 px nevejde. */
-.cols2--fixed { top: 372px; align-items: start; }
+.cols2--fixed { top: 452px; align-items: start; }
 .cols2--lead  { grid-template-columns: 1.35fr 1fr 1fr; }
 .cols2--fixed li, .cols2--fixed p,
 .cols2--fixed .dl b, .cols2--fixed .dl span { font-size: var(--text-body); line-height: var(--leading-body); }
+
+/* v0.5 - CTA blok ve tretim sloupci (Misa povysila bulharskou vyzvu na nadpis) */
+.cols2 .cta { display: block; margin-top: var(--gap-l); font-size: var(--text-body-lg);
+              line-height: 1.2; font-weight: 700; color: var(--client); }
+.cols2 .cta + p { margin-top: var(--gap-s); }
+/* dvousloupcova varianta drzici sirku 1. sloupce shodnou s .cols2--lead (648 px),
+   aby .dl na slidu 13 zustal soumeritelny se slidem 08 */
+.cols2--pair { grid-template-columns: 648px 1fr; }
+
+/* v0.5 - slide "The script": Visual = span (ink-2), replika = span.say kurzivou v uvozovkach */
+.dl span.say { display: block; margin-top: var(--gap-s); font-style: italic; color: var(--ink); }
+.scriptnote { position: absolute; left: var(--x2); top: 184px; width: calc(var(--x-right) - var(--x2));
+              font-size: var(--text-body-lg); line-height: 1.2; color: var(--ink-3); }
 
 /* ---------- lightbox (deck chrome) ---------- */
 .lb { position: fixed; inset: 0; z-index: 200; background: rgba(20,20,20,.96);
@@ -1206,7 +1219,7 @@ document.addEventListener('DOMContentLoaded',function(){
 <!-- rail = „nábytek" všech slidů, 1:1 build/components/rail.css.
      Odesílatel je Studio Družina, proto v lockupu originál Družiny (negativ) × klient. -->
 <aside class="rail" id="rail">
-  <span class="rail__label">Tissue v0.4</span>
+  <span class="rail__label">Tissue v0.5</span>
   <div class="lockup" data-lockup="custom">
     <span class="logo lockup__logo"><img src="" data-bundle-src="b0" alt="Studio Družina"></span>
     <span class="lockup__x" aria-hidden="true">×</span>
@@ -1230,10 +1243,10 @@ document.addEventListener('DOMContentLoaded',function(){
 <section class="slide format-169" data-layout="kicker-perex">
   <div class="content">
     <p class="kicker kicker--col"><span>Where</span><span>we start</span></p>
-    <h1 class="headline headline--col">The measure is letters.<br>Not reach, not views.</h1>
+    <h1 class="headline headline--col">Success is measured in letters.<br>Not reach, not views.</h1>
     <div class="body perex perex--2">
-      <p>The only metric said out loud on the call: thousands of letters to MPs. This is the third round &mdash; 2022, 2024, now &mdash; so whatever we make has to look different from what has already run twice.</p>
-      <p>One shooting day with Push Pull in Sofia, everyone appearing as themselves. And one thing shapes all three: since October 2025 the big platforms no longer sell advertising on social issues in the EU, so all three directions are built to travel organically &mdash; through the faces&rsquo; own channels first, paid second.</p>
+      <p>The only metric that really mattered on the call: thousands of letters to MPs. This is the third round of the campaign &mdash; after 2022 and 2024 &mdash; so whatever we create needs to feel genuinely different from what has come before.</p>
+      <p>The production setup is simple: one shooting day with Push Pull in Sofia, with everyone appearing as themselves. And one reality shapes all three directions: since October 2025, major platforms no longer sell political and social-issue advertising in the EU. So the ideas are designed to travel organically first &mdash; through the participants&rsquo; own channels &mdash; with paid media playing a supporting role.</p>
     </div>
   </div>
   <div class="grain" aria-hidden="true"></div>
@@ -1257,8 +1270,7 @@ document.addEventListener('DOMContentLoaded',function(){
       <h1 class="headline stack__headline">A person.<br>A chair.<br>A letter.</h1>
     </div>
     <div class="body ti__body">
-      <p>This is the one where the film and the ask are the same gesture: somebody writes, signs, sends &mdash; then looks up and asks you to do the same.</p>
-      <p>We don&rsquo;t want familiar faces telling people what to do &mdash; we want them to do it first. Each writes their own open letter to Parliament, reads it to camera, signs it and sends it. Then: <b>I wrote mine. Now write yours.</b></p>
+      <p>The film and the ask are the same gesture. We don&rsquo;t want familiar faces telling people what to do. We want them to do it first. Each person writes their own open letter to Parliament &mdash; in their own words, for their own reasons. They read it to camera, sign it and send it. Then they look up: <b>I wrote mine. Now write yours.</b></p>
     </div>
     <div class="photo ti__photo"><img src="" data-bundle-src="b1" alt="A person reading a letter on a chair"><span class="aicap">AI moodboard &mdash; not final</span></div>
   </div>
@@ -1276,23 +1288,45 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="grain" aria-hidden="true"></div>
 </section>
 
+<!-- ══ The script (Dana 7. 9.) ══ -->
+<section class="slide format-169" data-density="read">
+  <div class="content">
+    <p class="kicker kicker--col"><span>Direction</span><span>01</span></p>
+    <h1 class="headline headline--col">The script</h1>
+    <p class="scriptnote">How it sounds &mdash; a sample, not the final script.</p>
+    <div class="cols2">
+      <div><div class="dl">
+        <div><b>Short and plain <i>0:00&ndash;0:12</i></b><span>A chair against a plain studio wall. Then the same chair, same framing, in a kitchen. Then in a farmyard doorway.</span><span class="say">&ldquo;I am writing to you for the third time. In 2022. In 2024. Today.&rdquo; &middot; &ldquo;The first two letters weren&rsquo;t enough.&rdquo;</span></div>
+        <div><b>Personal <i>0:12&ndash;0:38</i></b><span>The chair keeps travelling. The framing never changes, only the room does.</span><span class="say">&ldquo;I am writing about eight weeks. About a metre and a half of the world.&rdquo; &middot; &ldquo;The crate was built to protect them. I moved mine into groups, and I have fewer sick calves, not more.&rdquo; &middot; &ldquo;I&rsquo;ve nothing to add. You know it isn&rsquo;t right.&rdquo;</span></div>
+        <div><b>Sending <i>0:38&ndash;0:52</i></b><span>Cuts shorten to gestures. A nib on paper. A signature. A sheet folded in three. An envelope.</span><span class="say">&ldquo;Mine is written.&rdquo;</span></div>
+      </div></div>
+      <div><div class="dl">
+        <div><b>The empty chair <i>0:52&ndash;1:02</i></b><span>The same frame, the same light. Nobody on the chair. On the seat, a blank sheet and a pen.</span><span class="say">Room tone. Four full seconds of it.</span></div>
+        <div><b>The ask <i>1:02&ndash;1:15</i></b><span>Hold on the empty chair, then one card.</span><span class="say">&ldquo;Ten letters aren&rsquo;t enough. We need one more. Yours.&rdquo;</span></div>
+        <div><b>End card</b><span>The empty chair, still held. Over it one line and one address: <b>&bdquo;&#1040;&#1079; &#1087;&#1080;&#1089;&#1072;&#1093;. &#1057;&#1077;&#1075;&#1072; &#1087;&#1080;&#1096;&#1080; &#1090;&#1080;.&ldquo;</b> &rarr; priziv.bg. No logo, no institution, no attribution.</span></div>
+      </div></div>
+    </div>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+</section>
+
 <!-- ══ 05 D1 HERO FILM · mozaika (bez DS layoutu) ═════════════════════════ -->
 <section class="slide format-169" data-density="read">
   <div class="content">
     <p class="kicker kicker--col"><span>The hero</span><span>film</span></p>
     <div class="mos mos--3">
       <figure><div class="m"><img src="" data-bundle-src="b1" alt="A person reading a letter"><span class="aicap">AI moodboard — not final</span></div>
-        <figcaption><span class="t"><b>01</b><i>0–12 s · short and plain</i></span><p>The returning faces open. <em>“I'm writing for the third time. Last time wasn't enough.”</em></p></figcaption></figure>
+        <figcaption><span class="t"><b>01</b><i>the opening &middot; straight into the letters</i></span><p>No introduction, no campaign language. We open on the first voices already addressing Parliament &mdash; personal, direct, immediately clear that these are their own words.</p></figcaption></figure>
       <figure><div class="m"><img src="" data-bundle-src="b3" alt="A person writing a letter at a table"><span class="aicap">AI moodboard &mdash; not final</span></div>
-        <figcaption><span class="t"><b>02</b><i>12–38 s · personal</i></span><p>Why it matters to me. One or two letters carry the factual part — the crate was built to protect, and today we know more.</p></figcaption></figure>
+        <figcaption><span class="t"><b>02</b><i>the letters &middot; personal</i></span><p>Why it matters to me. Different voices, different reasons. One or two letters carry the factual layer &mdash; individual crates were introduced as a way to protect calves. Today, we know more. Together, the individual letters begin to form one collective argument.</p></figcaption></figure>
       <figure><div class="m"><img src="" data-bundle-src="b4" alt="Hands signing a letter"><span class="aicap">AI moodboard — not final</span></div>
-        <figcaption><span class="t"><b>03</b><i>38–52 s · sending</i></span><p>Cuts shorten to gestures: signature, envelope, sent. Pen and paper carry the rhythm.</p></figcaption></figure>
+        <figcaption><span class="t"><b>03</b><i>the sending &middot; the rhythm builds</i></span><p>The letters move from words into action. Cuts shorten to gestures: a final line, a signature, hands on a keyboard, cursor, click, sent. Typing and clicks build the rhythm as one letter becomes many.</p></figcaption></figure>
       <figure><div class="m"><img src="" data-bundle-src="b5" alt="An empty chair and a blank sheet"><span class="aicap">AI moodboard — not final</span></div>
-        <figcaption><span class="t"><b>04</b><i>52–62 s · the empty chair</i></span><p>Same frame, nobody on it, a blank sheet in front. <em>Four seconds of real silence</em> — less and the point doesn't land.</p></figcaption></figure>
+        <figcaption><span class="t"><b>04</b><i>the empty chair &middot; everything stops</i></span><p>Then, for the first time, nothing happens. Same frame, nobody in it. A blank sheet and an open screen waiting for the next letter. We hold it. No typing. No click. No movement. <em>Real silence.</em></p></figcaption></figure>
       <figure><div class="m"><img src="" data-bundle-src="b6" alt="Sealed envelopes on a chair"><span class="aicap">AI moodboard &mdash; not final</span></div>
-        <figcaption><span class="t"><b>05</b><i>62–75 s · the ask</i></span><p>We need one more. Yours. → priziv.bg</p></figcaption></figure>
-      <figure><div class="m m--txt"><span>Two lengths,<br><i>one shoot</i></span></div>
-        <figcaption><span class="t"><b>06</b><i>the cut</i></span><p>A 60 s cut of the best lines for distribution, and a 2–3 min hero with the full empty chair for the site.</p></figcaption></figure>
+        <figcaption><span class="t"><b>05</b><i>the ask</i></span><p>Their letters are sent. Now it&rsquo;s your turn. &rarr; priziv.bg</p></figcaption></figure>
+      <figure><div class="m m--txt"><span>Two lengths.<br><i>One shoot.</i></span></div>
+        <figcaption><span class="t"><b>06</b><i>the cut</i></span><p>A 2&ndash;3 min hero film gives the letters &mdash; and the people behind them &mdash; room to breathe. A 60 s cut takes the strongest lines into social distribution.</p></figcaption></figure>
     </div>
   </div>
   <div class="grain" aria-hidden="true"></div>
@@ -1302,31 +1336,23 @@ document.addEventListener('DOMContentLoaded',function(){
 <section class="slide format-169" data-density="read">
   <div class="content">
     <p class="kicker kicker--col"><span>The</span><span>letters</span></p>
-    <h1 class="headline headline--col">Ten letters<br>that don&rsquo;t sound alike.</h1>
-    <div class="cols2 cols2--3">
+    <h1 class="headline headline--col">Ten letters.<br>None of them<br>should sound alike.</h1>
+    <div class="cols2">
       <div>
-        <h4>A palette of formats, assigned by person</h4>
+        <h4>Different people. Different reasons. Different voices.</h4>
         <div class="dl">
-          <div><b>Blunt statement <i>2&ndash;3</i></b><span>An actor with authority; a returning face &mdash; &ldquo;I&rsquo;m writing for the third time.&rdquo;</span></div>
-          <div><b>A poem <i>1</i></b><span>A poet, a lyricist. The one format that reads aloud differently.</span></div>
-          <div><b>Very personal <i>2&ndash;3</i></b><span>Someone with a real bond to animals. Watch it doesn&rsquo;t slide back into 2024.</span></div>
-          <div><b>Factual <i>1&ndash;2</i></b><span>A farmer or a vet who moved to group housing. Carries the counter-argument.</span></div>
-          <div><b>One line <i>2&ndash;3</i></b><span>Someone who freezes on camera. &ldquo;I&rsquo;ve nothing to add. You know it isn&rsquo;t right.&rdquo;</span></div>
-        </div>
-      </div>
-      <div>
-        <h4>The factual letter &mdash; the counter-argument in the first person</h4>
-        <div class="quote">
-          <q>The crate was invented in the seventies as protection. We&rsquo;ve learned something since. I moved to groups and I have fewer sick calves, not more. We weren&rsquo;t stupid &mdash; we just know more now.</q>
-          <cite>Draft &mdash; a farmer or a vet who made the switch</cite>
+          <div><b>Blunt <i>2&ndash;3</i></b><span>Direct, authoritative, stripped back. Especially strong for returning faces.</span></div>
+          <div><b>Poetic <i>1</i></b><span>A poet, writer or lyricist. A letter with its own rhythm and language.</span></div>
+          <div><b>Personal <i>2&ndash;3</i></b><span>People with a genuine connection to animals. Emotional, specific and rooted in their own experience.</span></div>
+          <div><b>Factual <i>1&ndash;2</i></b><span>Ideally a farmer or vet who has moved to group housing. A credible voice from inside the system, able to carry the factual counter-argument.</span></div>
+          <div><b>Minimal <i>1&ndash;2</i></b><span>For people whose strength is simplicity rather than performance.</span></div>
         </div>
       </div>
       <div>
         <h4>The voices we&rsquo;d look for</h4>
         <ul>
-          <li>Past showbusiness: <b>culture, science, philosophy</b> &mdash; people heard outside the tabloids.</li>
-          <li>And <b>a farmer</b>. The most dangerous counter-argument isn&rsquo;t &ldquo;the crate protects&rdquo;, it&rsquo;s &ldquo;you city people are demonising farmers&rdquo;. Only a farmer can answer that.</li>
-          <li>A briefing, not a script: three questions the day before, 150 words, handwritten.</li>
+          <li>People from <b>culture, science, philosophy and public life</b> &mdash; voices with credibility beyond celebrity.</li>
+          <li>And, if possible, <b>a farmer or vet who has made the change</b>. The strongest response to the idea that animal welfare campaigns demonise farmers should come from someone who farms.</li>
         </ul>
       </div>
     </div>
@@ -1341,30 +1367,23 @@ document.addEventListener('DOMContentLoaded',function(){
     <h1 class="headline headline--col">The film and the ask<br>are the same gesture.</h1>
     <div class="cols2 cols2--3 cols2--lead cols2--fixed">
       <div>
-        <h4>Why it&rsquo;s strong</h4>
         <div class="dl">
-          <div><b>The idea</b><span>The film performs the exact act we want back. Between 76 and 82&nbsp;% of Bulgarians already agree &mdash; this is a conversion job, not a persuasion job.</span></div>
-          <div><b>The faces</b><span>Nobody plays a part. Each letter is that person&rsquo;s own statement, and a returning face gets a new reason to return: &ldquo;I&rsquo;m writing for the third time.&rdquo;</span></div>
-          <div><b>The image</b><span>The empty chair, not the talking head. Four seconds of nobody and a blank sheet &mdash; the one frame that makes round three look unlike rounds one and two.</span></div>
+          <div><b>The idea</b><span>The film performs the exact action we want back: familiar faces act first, then ask others to follow.</span></div>
+          <div><b>The faces</b><span>Nobody plays a part. Their reasons, their words, their letters.</span></div>
+          <div><b>The image</b><span>The empty chair becomes the campaign&rsquo;s visual signature &mdash; a place waiting for the next person.</span></div>
           <div><b>The reach</b><span>A chair and a letter travel. The same set-up works in a studio, a kitchen, a farmyard &mdash; so the film can open and close in the studio and visit the faces in between. How far it travels is a directing and budget decision.</span></div>
-          <div><b>The day</b><span>Ten letters are ten finished films. Each stands alone, each face can publish their own.</span></div>
         </div>
       </div>
       <div>
-        <h4>What comes out of the shooting day</h4>
-        <ul>
-          <li>One film per face, 30&ndash;60 s &mdash; each can publish it as their own statement.</li>
-          <li>The 60 s cut of the best lines, plus a 2&ndash;3 min hero with the full empty chair for the site.</li>
-          <li>A vertical version with the letter in hand.</li>
-          <li>The best letters from the public, published as posts.</li>
-          <li><b>The empty chair is a repeatable asset</b> &mdash; it waits for the next person and the next wave.</li>
-        </ul>
+        <h4>One shoot. A campaign&rsquo;s worth of content.</h4>
+        <p>One film per face &middot; 60 s social cut &middot; 2&ndash;3 min hero &middot; vertical assets &middot; public letters as follow-up content.</p>
+        <p>The empty chair remains a repeatable asset &mdash; ready for the next person, and the next wave.</p>
       </div>
       <div>
         <h4>The call to action</h4>
-        <p><b>&ldquo;Аз писах. Сега пиши ти.&rdquo;</b> → priziv.bg</p>
-        <p>The letters live on the site as a gallery to be rewritten, not templates to be copied. The best ones from the public go back out as posts, so the wall of letters keeps growing after the film has stopped running.</p>
-        <p class="sep"><b>Worth knowing:</b> the letters get written two to three weeks before the shoot &mdash; the one part of this that has to start early. One extra take per face, about fifteen minutes each, gives us a version that can run as paid.</p>
+        <p>The letters live on the site as inspiration, not copy-paste templates. The strongest public letters become new campaign content &mdash; so the campaign keeps growing after the hero film is out.</p>
+        <b class="cta">&bdquo;&#1040;&#1079; &#1087;&#1080;&#1089;&#1072;&#1093;. &#1057;&#1077;&#1075;&#1072; &#1087;&#1080;&#1096;&#1080; &#1090;&#1080;.&ldquo;</b>
+        <p>&rarr; priziv.bg</p>
       </div>
     </div>
   </div>
@@ -1389,8 +1408,7 @@ document.addEventListener('DOMContentLoaded',function(){
       <h1 class="headline stack__headline">One room.<br>One wall.</h1>
     </div>
     <div class="body ti__body">
-      <p>This is the one built entirely out of objects. One room, one wall, and a joke that stops being funny at exactly the right moment.</p>
-      <p>Each person is handed one real artefact of the past &mdash; proof of something once held to be right, safe or healthy. They look at it, react, and pin it to the wall. One line has to be said on camera, not just in the deck: <b>&ldquo;None of those people were evil. They believed what they knew.&rdquo;</b></p>
+      <p>One room, one wall &mdash; and a series of things we once believed, starting with the absurd and gradually becoming harder to laugh at. Each person is handed one real artefact from the past &mdash; proof of something once believed to be right, safe or healthy. They look at it, react, and pin it to the wall. Together, they build an archive of beliefs we&rsquo;ve left behind. And one thought holds it all together: <b>None of these people were evil. They acted on what they knew at the time.</b></p>
     </div>
     <div class="photo ti__photo"><img src="" data-bundle-src="b7" alt="A wall of pinned documents"><span class="aicap">AI moodboard &mdash; not final</span></div>
   </div>
@@ -1408,23 +1426,45 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="grain" aria-hidden="true"></div>
 </section>
 
+<!-- ══ The script (Dana 7. 9.) ══ -->
+<section class="slide format-169" data-density="read">
+  <div class="content">
+    <p class="kicker kicker--col"><span>Direction</span><span>02</span></p>
+    <h1 class="headline headline--col">The script</h1>
+    <p class="scriptnote">How it sounds &mdash; a sample, not the final script.</p>
+    <div class="cols2">
+      <div><div class="dl">
+        <div><b>The unit <i>0:00&ndash;0:06</i></b><span>Black. Then a hand, a pin, a printed document going onto the wall. Nothing else in frame.</span><span class="say">The pin going in. Room tone. No music.</span></div>
+        <div><b>Opening <i>0:06&ndash;0:30</i></b><span>A face is handed a printed page: a doctor recommending a cigarette. Reads it, looks up, pins it. Each artefact carries its year in the corner.</span><span class="say">&ldquo;They put a doctor in it. So it would look safe.&rdquo; &middot; &ldquo;People drank this. On purpose. For their health.&rdquo;</span></div>
+        <div><b>The turn <i>0:30&ndash;0:50</i></b><span>Same room, same pace, different register. A document on experiments done without anaesthesia &mdash; the first animal on the wall.</span><span class="say">&ldquo;&hellip;that a newborn does not truly feel pain.&rdquo; &middot; &ldquo;None of those people were evil. They believed what they knew.&rdquo;</span></div>
+      </div></div>
+      <div><div class="dl">
+        <div><b>The last one <i>0:50&ndash;1:04</i></b><span>The last face is handed a photograph &mdash; a calf in a crate, taken this year. Looks at the wall. Pins it among them.</span><span class="say">Nothing spoken. The pin.</span></div>
+        <div><b>The date <i>1:04&ndash;1:12</i></b><span>A slow move across the wall. Years in the corners: 1920s. 1950s. 19th century. 1980s. Then the last one: 2026.</span><span class="say">Silence, four seconds, minimum.</span></div>
+        <div><b>End card</b><span><b>WE USED TO BELIEVE A LOT OF THINGS. SOME OF THEM WE STILL DO.</b> &rarr; priziv.bg</span></div>
+      </div></div>
+    </div>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+</section>
+
 <!-- ══ 10 D2 HERO FILM · mozaika ══════════════════════════════════════════ -->
 <section class="slide format-169" data-density="read">
   <div class="content">
     <p class="kicker kicker--col"><span>The hero</span><span>film</span></p>
     <div class="mos mos--3">
       <figure><div class="m"><img src="" data-bundle-src="b9" alt="A hand pinning a document"><span class="aicap">AI moodboard — not final</span></div>
-        <figcaption><span class="t"><b>01</b><i>the unit</i></span><p>A hand, a pin, a document. Every beat of the film is that one gesture, repeated.</p></figcaption></figure>
+        <figcaption><span class="t"><b>01</b><i>the gesture</i></span><p>A hand, a pin, an artefact. The same simple gesture repeats throughout the film: look, react, pin it to the wall.</p></figcaption></figure>
       <figure><div class="m"><img src="" data-bundle-src="b10" alt="Historical documents spread on a table"><span class="aicap">AI moodboard &mdash; not final</span></div>
-        <figcaption><span class="t"><b>02</b><i>opening</i></span><p>Things once sold as safe or healthy. An amused look. Onto the wall it goes.</p></figcaption></figure>
+        <figcaption><span class="t"><b>02</b><i>the opening</i></span><p>Things once believed to be safe, healthy or right. At first, some feel almost absurd. A smile, a raised eyebrow. Onto the wall they go.</p></figcaption></figure>
       <figure><div class="m"><img src="" data-bundle-src="b11" alt="Pinned documents along a wall"><span class="aicap">AI moodboard &mdash; not final</span></div>
-        <figcaption><span class="t"><b>03</b><i>the turn</i></span><p>Practices we defended with the best knowledge we had. The first animal appears on the wall. Nobody is smiling now.</p></figcaption></figure>
+        <figcaption><span class="t"><b>03</b><i>the turn</i></span><p>The beliefs become harder to laugh at. Practices once defended by the best knowledge available at the time. The first animal appears on the wall. Nobody is smiling now.</p></figcaption></figure>
       <figure><div class="m"><img src="" data-bundle-src="b12" alt="A modern photograph pinned among historical documents"><span class="aicap">AI moodboard — not final</span></div>
-        <figcaption><span class="t"><b>04</b><i>the last one</i></span><p>Not a curiosity this time. A photograph of a calf in a crate — pinned among the things we have already left behind.</p></figcaption></figure>
+        <figcaption><span class="t"><b>04</b><i>the last one</i></span><p>This time, it isn&rsquo;t an artefact from the past. It&rsquo;s a photograph of a calf in an individual crate &mdash; pinned among the things we have already left behind.</p></figcaption></figure>
       <figure><div class="m m--txt"><span><i>2026.</i><br>Silence.</span></div>
-        <figcaption><span class="t"><b>05</b><i>the date</i></span><p>The earlier artefacts carry years. This one carries 2026. <em>That last frame is the film.</em></p></figcaption></figure>
+        <figcaption><span class="t"><b>05</b><i>the date</i></span><p>The earlier artefacts carry years from the past. This one carries 2026. <em>The date makes the point: this one isn&rsquo;t history.</em></p></figcaption></figure>
       <figure><div class="m m--txt"><span>Some of them<br><i>we still do</i></span></div>
-        <figcaption><span class="t"><b>06</b><i>the card</i></span><p>WE USED TO BELIEVE A LOT OF THINGS. SOME OF THEM WE STILL DO. → priziv.bg</p></figcaption></figure>
+        <figcaption><span class="t"><b>06</b><i>the card</i></span><p>WE USED TO BELIEVE A LOT OF THINGS. SOME OF THEM WE STILL DO. &rarr; priziv.bg</p></figcaption></figure>
     </div>
   </div>
   <div class="grain" aria-hidden="true"></div>
@@ -1435,31 +1475,20 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="content">
     <p class="kicker kicker--col"><span>Why it&rsquo;s</span><span>strong</span></p>
     <h1 class="headline headline--col">The argument is made<br>by the objects.</h1>
-    <div class="cols2 cols2--3 cols2--lead cols2--fixed">
+    <div class="cols2 cols2--pair cols2--fixed">
       <div>
-        <h4>Why it&rsquo;s strong</h4>
         <div class="dl">
-          <div><b>The idea</b><span>It takes &ldquo;the crate protects&rdquo; apart without arguing with anyone. The case is made by the order of the objects, not by a line of copy.</span></div>
-          <div><b>The faces</b><span>Barely an ask at all. Look at a thing, react honestly, pin it up. It works even for someone who freezes in front of a camera.</span></div>
-          <div><b>The image</b><span>Nothing like 2022 or 2024: one wall filling up, one gesture repeated, and a last photograph that carries the year 2026.</span></div>
-          <div><b>The reach</b><span>One person, one old belief, one honest reaction &mdash; 15&ndash;25 s. Year cards as posts. A clickable wall on the site that keeps growing.</span></div>
-          <div><b>The day</b><span>One room, one setup, nobody travels. The wall is built once and every face shoots against it.</span></div>
+          <div><b>The idea</b><span>It challenges &ldquo;the crate protects&rdquo; without arguing with anyone. The case is made by the objects themselves &mdash; and by the order in which we see them.</span></div>
+          <div><b>The faces</b><span>Nobody needs to perform. Look at something, react honestly, pin it to the wall. The format works with almost anyone.</span></div>
+          <div><b>The image</b><span>One wall slowly filling up. One gesture repeated. And one final photograph dated 2026. Visually, it takes us somewhere completely different from 2022 and 2024.</span></div>
+          <div><b>The reach</b><span>One person, one old belief, one honest reaction. Each becomes a short social film, while the wall can keep growing online.</span></div>
+          <div><b>The shoot</b><span>One room, one setup, one wall. Simple, modular, and flexible enough to survive last-minute changes in the cast.</span></div>
         </div>
       </div>
       <div>
-        <h4>What we&rsquo;d build it from</h4>
-        <ul>
-          <li><b>Documents and printed texts before old advertising.</b> A document reads as evidence; an old ad reads as a joke &mdash; and the joke is the weaker half of this idea.</li>
-          <li><b>Modular order.</b> Two openers get shot, so the wall survives being re-cut without losing a beat.</li>
-          <li><b>Artefact by artefact, not person by person.</b> Anyone can pin anything up; who pins what is decided in the edit, so a dropout never leaves a hole in the picture.</li>
-          <li>The last image &mdash; the calf, 2026 &mdash; gets shot with at least two faces.</li>
-        </ul>
-      </div>
-      <div>
         <h4>What we&rsquo;d need from you</h4>
-        <p><b>One or two Bulgarian artefacts</b>, or the wall reads as an imported Western listicle. That part needs your archives and your relationships &mdash; it&rsquo;s the single thing we can&rsquo;t source from Prague.</p>
-        <p>Where an original can&rsquo;t be used, a period reconstruction carries the beat instead: new artwork, no living brand, no borrowed slogan. It costs us the word &ldquo;authentic&rdquo; and nothing else.</p>
-        <p class="sep"><b>Worth knowing:</b> the artefacts have to be found and cleared before the script is written, because the props have to exist on the day. That gives this direction a long run-up.</p>
+        <p><b>One or two Bulgarian artefacts.</b> Without them, the wall risks feeling like an imported list of Western examples. Your archives and local knowledge can make the idea feel genuinely Bulgarian.</p>
+        <p>The artefacts need to be researched and cleared before the shoot &mdash; which gives this direction the longest lead time of the three.</p>
       </div>
     </div>
   </div>
@@ -1499,6 +1528,44 @@ document.addEventListener('DOMContentLoaded',function(){
     <div class="fb__scrim"></div>
     <p class="fb__cap">One product. One sheet.</p>
     <p class="fb__ai">AI moodboard &mdash; not final</p>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+</section>
+
+<!-- ══ The script (Dana 7. 9.) ══ -->
+<section class="slide format-169" data-density="read">
+  <div class="content">
+    <p class="kicker kicker--col"><span>Direction</span><span>03</span></p>
+    <h1 class="headline headline--col">The script</h1>
+    <p class="scriptnote">How it sounds &mdash; a sample, not the final script.</p>
+    <div class="cols2">
+      <div><div class="dl">
+        <div><b>Stage open <i>0:00&ndash;0:07</i></b><span>Dark hall, one cone of light, a blank screen behind. The first presenter walks in, hands still.</span><span class="say">Room tone of a large hall. Applause, then it settles. No music anywhere in the film.</span></div>
+        <div><b>Feature 01 <i>0:07&ndash;0:14</i></b><span>Mid shot, then macro: a backlit surface at a scale that gives nothing away. Card: SINGLE OCCUPANCY.</span><span class="say">&ldquo;Its own space. One occupant. Nothing shared.&rdquo;</span></div>
+      </div></div>
+      <div><div class="dl">
+        <div><b>Features 02&ndash;03 <i>0:14&ndash;0:26</i></b><span>One camera move carries the handover. Macro: a vent slot, a teat with one drop. The dimension 1,2 &times; 0,8 m draws itself.</span><span class="say">&ldquo;Its own microclimate. Fresh air from every side.&rdquo; &middot; &ldquo;An exact dose. You know how much it drank and when.&rdquo; &middot; a short &ldquo;ooh&rdquo; from the room.</span></div>
+        <div><b>Features 04&ndash;05 <i>0:26&ndash;0:38</i></b><span>A satellite presenter joins from another wall, in daylight. Macro: hinge and latch.</span><span class="say">&ldquo;Zero contact. An illness it has nobody to share with.&rdquo; &middot; &ldquo;You can see it. At any time.&rdquo; Applause only in the pauses now, and thinner.</span></div>
+      </div></div>
+    </div>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+</section>
+
+<section class="slide format-169" data-density="read">
+  <div class="content">
+    <p class="kicker kicker--col"><span>The script</span><span>continued</span></p>
+    <div class="cols2">
+      <div><div class="dl">
+        <div><b>Features 06&ndash;07 <i>0:38&ndash;0:50</i></b><span>It starts to catch. One stops a beat too long before the line, one looks into the lens. Card: ZERO CONTACT.</span><span class="say">&ldquo;Nobody to bother it. Nobody to push it around.&rdquo; &middot; &ldquo;Nobody to touch it.&rdquo; The room goes quiet half a second early.</span></div>
+        <div><b>Feature 08 <i>0:50&ndash;0:57</i></b><span>The quietest face. Card: 8 WEEKS. A hand resting on a dust sheet.</span><span class="say">&ldquo;The first eight weeks. Then it&rsquo;s ready for&mdash;&rdquo; Doesn&rsquo;t finish the sentence.</span></div>
+      </div></div>
+      <div><div class="dl">
+        <div><b>The reveal <i>0:57&ndash;1:14</i></b><span>One unbroken pull-back, no cut. The sheet comes down. Inside the product, a calf. One card: SOLD AS PROTECTION SINCE 1975.</span><span class="say">Nothing. Four seconds of real silence, minimum.</span></div>
+        <div><b>Plain ending <i>1:14&ndash;1:32</i></b><span>A farmer, out of the hall and out of the register. Different light, no screen. The last line is shot twice.</span><span class="say">&ldquo;Calves in groups of ten, milk from a teat, air, space. And fewer illnesses, not more.&rdquo; &middot; organic: &ldquo;I&rsquo;ve written to them.&rdquo; &rarr; priziv.bg &middot; paid: &ldquo;Read the full product description.&rdquo;</span></div>
+        <div><b>End card</b><span><b>SOLD AS PROTECTION SINCE 1975</b> &mdash; no institution, no attribution, no logo. The plain ending carries the address.</span></div>
+      </div></div>
+    </div>
   </div>
   <div class="grain" aria-hidden="true"></div>
 </section>
@@ -1738,7 +1805,7 @@ document.addEventListener('DOMContentLoaded',function(){
           <p style="margin-top:0">Drtinova 10, Prague 5, 150 00</p>
         </div>
         <div>
-          <p>Calf campaign · tissue v0.4</p>
+          <p>Calf campaign · tissue v0.5</p>
           <p style="margin-top:0">September 2026</p>
         </div>
       </div>
@@ -1749,7 +1816,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
 </div></div>
 
-<div class="hud" id="hud">01 / 24</div>
+<div class="hud" id="hud">01 / 28</div>
 <div class="progress" id="bar"></div>
 
 <div class="lb" id="lightbox" hidden>
