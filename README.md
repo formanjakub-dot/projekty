@@ -20,10 +20,14 @@ Statický hosting decků a prototypů NICE! / Družina. Náhrada za Netlify (fre
 ~/Claude/Projects/NICE_Decks/tools/deploy_pages.sh <dist_dir_nebo_soubor> <slug>
 ```
 
+Když je 1. argument **složka**, zkopíruje se její celý obsah — pozor, `dist/` často obsahuje
+i pracovní varianty (`*_edit.html`). Pro jeden bundlovaný deck dávej **cestu k souboru**,
+uloží se jako `index.html`.
+
 Např.:
 ```
 ~/Claude/Projects/NICE_Decks/tools/deploy_pages.sh \
-  ~/Claude/Projects/NICE_Decks/2026-09-07_Telata_tissue_v0.1/dist telata-tissue-druzina-k4m9x2
+  ~/Claude/Projects/NICE_Decks/2026-09-07_Telata_tissue_v0.1/dist/index.html telata-tissue-druzina-k4m9x2
 ```
 
 ## Vlastní doména — co zbývá
