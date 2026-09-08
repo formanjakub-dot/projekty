@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Natáčení Ústí — út 8. 9. 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF7F5; --ink:#14110F; --muted:#6B625C; --line:#E3DCD6;
+  --red:#D0122C; --card:#FFFFFF; --warn:#FFF4E5; --warnline:#E8B36B;
+  --display:'Big Shoulders Display', 'Arial Narrow', sans-serif;
+  --sans:'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:780px;margin:0 auto;padding:0 20px}
+a{color:var(--red)}
+
+/* HEADER */
+header.top{padding:34px 0 20px;border-bottom:2px solid var(--ink)}
+.kicker{font-family:var(--display);text-transform:uppercase;letter-spacing:.06em;font-weight:700;font-size:15px;color:var(--red)}
+h1{font-family:var(--display);text-transform:uppercase;font-weight:800;line-height:.9;
+   font-size:clamp(40px,11vw,68px);margin:6px 0 10px;letter-spacing:-0.01em}
+.sub{font-size:17px;color:var(--muted);margin:0}
+.sub b{color:var(--ink)}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:20;background:rgba(250,247,245,.96);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);margin-bottom:8px}
+nav .scroller{display:flex;gap:8px;overflow-x:auto;padding:10px 20px;max-width:780px;margin:0 auto;
+    scrollbar-width:none}
+nav .scroller::-webkit-scrollbar{display:none}
+nav a{flex:0 0 auto;font-family:var(--display);text-transform:uppercase;font-weight:700;font-size:15px;
+    letter-spacing:.04em;text-decoration:none;color:var(--ink);border:1px solid var(--line);
+    background:var(--card);padding:7px 13px;border-radius:100px}
+nav a:active{background:var(--ink);color:var(--bg)}
+
+section{padding:34px 0;border-bottom:1px solid var(--line);scroll-margin-top:64px}
+h2{font-family:var(--display);text-transform:uppercase;font-weight:800;font-size:clamp(28px,7vw,42px);
+   line-height:.95;margin:0 0 4px;letter-spacing:-0.005em}
+h2 .num{color:var(--red);margin-right:10px}
+.lede{color:var(--muted);font-size:16px;margin:0 0 22px}
+
+/* TIMELINE */
+.tl{list-style:none;margin:0;padding:0}
+.tl li{display:flex;gap:14px;padding:11px 0;border-top:1px solid var(--line)}
+.tl li:first-child{border-top:none}
+.tl .t{flex:0 0 78px;font-family:var(--display);font-weight:800;font-size:23px;line-height:1.1;letter-spacing:.01em}
+.tl .d{flex:1;font-size:17px}
+.tl .d small{display:block;color:var(--muted);font-size:14.5px;margin-top:2px}
+.tl li.hi{background:#fff;border-radius:10px;padding:12px 12px;border:2px solid var(--red);margin:8px 0}
+.tl li.hi .t{color:var(--red)}
+.tl li.dim .t,.tl li.dim .d{color:var(--muted)}
+
+/* CALLOUT */
+.note{background:var(--warn);border:1px solid var(--warnline);border-radius:12px;padding:14px 16px;
+      font-size:16px;margin:18px 0}
+.note b{font-family:var(--display);text-transform:uppercase;letter-spacing:.04em;font-size:16px}
+.flag{background:#fff;border-left:4px solid var(--red);padding:12px 14px;font-size:16px;margin:16px 0;
+      border-radius:0 10px 10px 0;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+
+/* BLOCKS */
+.block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;margin:0 0 16px}
+.block > .bhead{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+.block .bnum{font-family:var(--display);font-weight:800;font-size:30px;color:var(--red);line-height:1}
+.block .btitle{font-family:var(--display);text-transform:uppercase;font-weight:700;font-size:22px;line-height:1.05}
+.label{font-family:var(--display);text-transform:uppercase;letter-spacing:.07em;font-weight:700;
+       font-size:13px;color:var(--muted);margin:14px 0 5px}
+.speech{font-size:21px;line-height:1.55;margin:0}
+.speech p{margin:0 0 12px}
+.speech p:last-child{margin-bottom:0}
+.onscreen{font-family:var(--display);text-transform:uppercase;font-weight:800;font-size:22px;line-height:1.15;
+          border-top:1px solid var(--line);padding-top:10px}
+.onscreen .list{display:block;font-family:var(--sans);text-transform:none;font-weight:400;font-size:15px;
+          color:var(--muted);margin-top:4px;letter-spacing:0}
+.sticker{font-size:26px;margin-left:6px}
+.obraz{font-size:15.5px;color:var(--muted)}
+
+/* MANIFEST SECTIONS */
+.mseg{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:0 0 12px}
+.mseg .segno{font-family:var(--display);text-transform:uppercase;letter-spacing:.07em;font-weight:700;
+     font-size:13px;color:var(--red);margin-bottom:8px}
+.mseg .lines{font-size:21px;line-height:1.5}
+.mseg .lines span{display:block}
+.mseg .lines span.gap{margin-top:10px}
+
+/* LISTS */
+ul.plain{list-style:none;margin:0;padding:0}
+ul.plain li{padding:9px 0 9px 22px;border-top:1px solid var(--line);position:relative;font-size:17px}
+ul.plain li:first-child{border-top:none}
+ul.plain li::before{content:"";position:absolute;left:4px;top:18px;width:7px;height:7px;background:var(--red);border-radius:50%}
+ul.plain li small{display:block;color:var(--muted);font-size:14.5px;margin-top:2px}
+
+/* CONTACTS */
+.contacts{display:grid;gap:10px}
+.c{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--card);
+   border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.c .who{font-weight:700;font-size:17px}
+.c .who small{display:block;font-weight:400;color:var(--muted);font-size:14px}
+.c a.tel{font-family:var(--display);font-weight:800;font-size:22px;text-decoration:none;white-space:nowrap;letter-spacing:.01em}
+
+footer{padding:26px 0 60px;color:var(--muted);font-size:14.5px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header class="top">
+  <div class="kicker">Transformace hrou · Studio Družina</div>
+  <h1>Natáčení<br>Ústí n.&nbsp;L.</h1>
+  <p class="sub"><b>úterý 8. 9. 2026</b> · Větruše + jezero Most · protagonista <b>Adam Kyprý</b><br>
+  Dva scénáře: <b>Manifest vzdělávání</b> a <b>Transformační témata</b></p>
+</header>
+</div>
+
+<nav><div class="scroller">
+  <a href="#den">Den</a>
+  <a href="#manifest">Manifest</a>
+  <a href="#temata">Témata</a>
+  <a href="#obraz">Z obrazu</a>
+  <a href="#kontakty">Kontakty</a>
+  <a href="#technika">Technika</a>
+  <a href="#hlidat">Hlídat</a>
+</div></nav>
+
+<div class="wrap">
+
+<!-- 1 DEN -->
+<section id="den">
+  <h2><span class="num">01</span>Den v kostce</h2>
+  <p class="lede">Časy podle tvé noční úpravy z 7. 9. (sraz 9:30, ne 8:30).</p>
+
+  <ul class="tl">
+    <li><div class="t">9:30</div><div class="d">Sraz s Patrikem — NICE! kancelář, Drtinova 10<small>30 min na naložení interní techniky</small></div></li>
+    <li><div class="t">10:00</div><div class="d">Odjezd z Drtinovy<small>Cesta ~25 min</small></div></li>
+    <li><div class="t">~10:30</div><div class="d">Biofilms, K Žižkovu 1038/1a, Praha 9<small>Otevřeno 9–19. Košík 340 Kč/den. Vyzvednutí = na OP.</small></div></li>
+    <li><div class="t">~12:00</div><div class="d">Příjezd Větruše, Ústí nad Labem<small>D8, ~95 km. Parkuje se autem až k objektu.</small></div></li>
+    <li class="hi"><div class="t">12:00<br>12:30</div><div class="d"><b>Jen ~30 min na obhlídku, výběr pozadí a stavbu.</b><small>Původně bylo 80. Vyber pozadí cestou v hlavě, na místě už jen postav.</small></div></li>
+    <li><div class="t">12:30</div><div class="d"><b>Sraz s Adamem Kyprým</b><small>Adam dorazí naučený, ale ne dokonale — Petra mu tak psala. Točí se po sekcích, s opakováním.</small></div></li>
+    <li><div class="t">12:40</div><div class="d"><b>Blok A — Manifest vzdělávání</b> (~60 min)<small>Delší a náročnější. Točit dokud je Adam čerstvý.</small></div></li>
+    <li><div class="t">13:40</div><div class="d">Pauza (15 min)</div></li>
+    <li><div class="t">13:55</div><div class="d"><b>Blok B — Transformační témata</b> (~80 min)<small>Úvod + 6 bloků + závěr = 8 promluv.</small></div></li>
+    <li><div class="t">15:15</div><div class="d">Doplňky: portrét, detaily, přeběhy, atmo (20 min)</div></li>
+    <li><div class="t">15:35</div><div class="d">Balení</div></li>
+    <li><div class="t">~16:00</div><div class="d">Přejezd na jezero Most (~50 km, ~50 min)</div></li>
+    <li><div class="t">16:45<br>19:40</div><div class="d">Pokrývací záběry, jezero Most<small>Západ slunce 19:36, konec občanského soumraku 20:09. Golden hour prakticky 18:40–19:36.</small></div></li>
+    <li class="dim"><div class="t">~21:00</div><div class="d">Praha</div></li>
+    <li><div class="t">st 9. 9.<br>10:00</div><div class="d"><b>Vrácení interní techniky</b><small>Domča Srna ji ve středu potřebuje — máš to odsouhlasené ve Slacku.</small></div></li>
+  </ul>
+
+  <div class="note"><b>Když se to sype:</b> ustupuje Most, ne Adam. Petra mu psala „max. 3 hodiny“ — tj. do 15:30. Při zpoždění zkrať blok u jezera na 17:00–19:40, pořád to vyjde.</div>
+</section>
+
+<!-- 2 MANIFEST -->
+<section id="manifest">
+  <h2><span class="num">02</span>Blok A — Manifest vzdělávání</h2>
+  <p class="lede">Souvislý monolog. <b>Točí se jen Adamova část.</b> Dětský manifest (5 dětí na různých lokacích) se dnes netočí — přijde jinde, jako prostřihy budou i děti ze škol a školky.</p>
+
+  <div class="flag"><b>K čemu to je</b> (z dokumentu): „Na dětský pohled navazuje Adam Kyprý, učitel a garant projektu Transformace hrou. Nepřináší odborný výklad ani hodnocení. Svými zkušenostmi z každodenní práce s dětmi dává jejich slovům širší kontext a ukazuje, že podobné přístupy už dnes v mnoha školách a školkách přirozeně fungují.“</div>
+
+  <p class="lede">Rozdělení na 7 sekcí níže je <b>můj návrh pro natáčení</b> — v dokumentu je text vcelku. Každá sekce = jeden nájezd, mezi nimi nechat dojet myšlenku.</p>
+
+  <div class="mseg"><div class="segno">Sekce 1</div><div class="lines">
+    <span>Když poslouchám děti…</span>
+    <span class="gap">tak mě vlastně nepřekvapují.</span>
+    <span class="gap">Ony totiž moc dobře vědí, co potřebují.</span>
+    <span class="gap">Chtějí si věci zkoušet.</span>
+    <span>Ptají se.</span>
+    <span>Chtějí přijít věcem na kloub.</span>
+    <span class="gap">A upřímně…</span>
+    <span class="gap">to je přece dobře.</span>
+  </div></div>
+
+  <div class="mseg"><div class="segno">Sekce 2</div><div class="lines">
+    <span>Děti mi to připomínají skoro každý den.</span>
+    <span class="gap">Stačí jim dát trochu prostoru.</span>
+    <span>Nemuset pořád všechno řídit.</span>
+    <span>Nemít potřebu všechno vysvětlovat.</span>
+    <span class="gap">A najednou vidíte, co všechno dokážou.</span>
+  </div></div>
+
+  <div class="mseg"><div class="segno">Sekce 3</div><div class="lines">
+    <span>Někdo přijde s nápadem.</span>
+    <span>Někdo kolem sebe přirozeně spojí ostatní.</span>
+    <span>Někdo hledá cestu, dokud ji nenajde.</span>
+    <span class="gap">A ani si neuvědomí, že se právě učí.</span>
+  </div></div>
+
+  <div class="mseg"><div class="segno">Sekce 4</div><div class="lines">
+    <span>Myslím, že my dospělí máme někdy pocit, že děti musíme pořád něco učit.</span>
+    <span class="gap">Přitom bychom jim možná měli častěji věřit.</span>
+    <span class="gap">Dívat se.</span>
+    <span>Poslouchat.</span>
+    <span>A být připravení pomoct, když o to stojí.</span>
+  </div></div>
+
+  <div class="mseg"><div class="segno">Sekce 5</div><div class="lines">
+    <span>Možná právě tady začíná proměna našeho kraje.</span>
+    <span class="gap">Ne u velkých plánů.</span>
+    <span class="gap">Ale u toho, jak přemýšlíme o dětech.</span>
+    <span class="gap">V Transformaci hrou věříme, že když dětem dáme důvěru, příležitosti a inspirativní lidi kolem sebe, neproměňuje se jen jejich vzdělávání.</span>
+    <span class="gap">Postupně se proměňuje celý Ústecký kraj.</span>
+  </div></div>
+
+  <div class="mseg"><div class="segno">Sekce 6</div><div class="lines">
+    <span>Proto propojujeme školy, školky, učitele, rodiče, obce, firmy, neziskové organizace i další lidi, kterým záleží na tom, v jakém kraji naše děti vyrůstají.</span>
+    <span class="gap">Sdílíme zkušenosti.</span>
+    <span>Propojujeme dobré nápady.</span>
+    <span>Ukazujeme, že změna už se na mnoha místech děje.</span>
+    <span class="gap">Protože když se začne dařit dětem, začne se časem dařit i místu, kde žijí.</span>
+  </div></div>
+
+  <div class="mseg"><div class="segno">Sekce 7 — pointa</div><div class="lines">
+    <span>A právě o tom je Transformace hrou.</span>
+    <span class="gap">Nejde jen o to,</span>
+    <span>co děti naučíme.</span>
+    <span class="gap">Jde o to,</span>
+    <span>jaký svět jim společně vytvoříme.</span>
+    <span class="gap">Jaký svět jednou samy vytvoří.</span>
+  </div></div>
+
+  <div class="note"><b>Pozn.</b> Text je v dokumentu zalomený po krátkých větách — je psaný na dech, ne na odstavce. Nech Adama respektovat pauzy, nespojovat do proudu.</div>
+</section>
+
+<!-- 3 TEMATA -->
+<section id="temata">
+  <h2><span class="num">03</span>Blok B — Transformační témata</h2>
+  <p class="lede">Úvod + <b>6 grafických bloků</b> + závěr. Každý blok: promluva Adama, text v obraze, sticker. Grafika a záběry z příběhů se doplní v postprodukci — dnes se točí <b>jen Adam</b>.</p>
+
+  <div class="flag"><b>Adamův komentář je vyřešený.</b> Sporná věta o „transformačních tématech“ už v dokumentu není — je nahrazená Adamovou vlastní formulací („Pojďme teď společně objevit šest oblastí…“, viz Úvod níže). Dokument upraven <b>7. 9. v 8:57</b>. Komentářové vlákno je sice pořád otevřené, ale text točíš podle aktuální verze.</div>
+
+  <!-- ÚVOD -->
+  <div class="block">
+    <div class="bhead"><div class="bnum">00</div><div class="btitle">Úvod</div></div>
+    <div class="obraz">Úvodní znělka · SUPER KRAJ · Pojďte s námi za nápady</div>
+    <div class="label">Adam Kyprý</div>
+    <div class="speech">
+      <p>„Když se řekne superhrdina, možná si představíte někoho, kdo zachraňuje svět a umí zastavit vlak jediným prstem. Ale co když skuteční superhrdinové žijí přímo tady, v našem kraji?</p>
+      <p>Co když jsou to lidé, kteří každý den přicházejí s nápady, pomáhají druhým a mění svět kolem sebe k lepšímu? Právě díky nim se náš kraj proměňuje.</p>
+      <p>Pojďme teď společně objevit šest oblastí, ve kterých se náš kraj mění a ve kterých vznikají zajímavé nápady, projekty a příležitosti.“</p>
+    </div>
+  </div>
+
+  <!-- 01 -->
+  <div class="block">
+    <div class="bhead"><div class="bnum">01</div><div class="btitle">Náš kraj — významná místa a jejich proměny</div></div>
+    <div class="obraz"><b>Obraz:</b> záběry z příběhů — Adam Kyprý, Grešík, Hraničář, Chrám chmele a piva, …</div>
+    <div class="label">Adam Kyprý</div>
+    <div class="speech"><p>„Někteří superhrdinové vypadají jako učitelé, umělci nebo lidé, kteří pečují o zajímavá místa kolem nás. Pomáhají objevovat příběhy a pochopit, co utvářelo náš kraj, co se v něm mění a proč. A přemýšlet, jak by mohl vypadat v budoucnu.“</p></div>
+    <div class="label">Text v obraze</div>
+    <div class="onscreen">Živější domov <span class="sticker">🏡</span><span class="list">• učitelé • spolky • umělci</span></div>
+  </div>
+
+  <!-- 02 -->
+  <div class="block">
+    <div class="bhead"><div class="bnum">02</div><div class="btitle">Chytré obce — komunita a participace</div></div>
+    <div class="obraz"><b>Obraz:</b> záběry z příběhů — Ekokul, Envi-shop, Jana Masařová, Lukáš Balog, …</div>
+    <div class="label">Adam Kyprý</div>
+    <div class="speech"><p>„Jiní zase pomáhají chytřeji fungovat městům, obcím i lidem v nich. Díky starostům, architektům nebo městským organizacím a aktivním lidem máme lepší dopravu, parky, obchody nebo místa, kde se můžeme potkávat. Díky nim se učíme, jak obce fungují, jak o jejich podobě společně rozhodovat a jak mohou chytrá řešení skutečně zlepšovat život lidí.“</p></div>
+    <div class="label">Text v obraze</div>
+    <div class="onscreen">Chytrá města <span class="sticker">🧠</span><span class="list">• starostové • architekti • městské organizace</span></div>
+  </div>
+
+  <!-- 03 -->
+  <div class="block">
+    <div class="bhead"><div class="bnum">03</div><div class="btitle">Energetika a udržitelná budoucnost kraje</div></div>
+    <div class="obraz"><b>Obraz:</b> záběry z příběhů — AGC, Chart-ferox, Irena Kubicová, Levandule pod Řípem, Lukáš Rázl, …</div>
+    <div class="label">Adam Kyprý</div>
+    <div class="speech"><p>„Pak jsou tu firmy, vědci nebo komunitní projekty. Ti hledají nové způsoby, jak šetřit nejen energii, ale také přírodu. Od udržitelnější výroby po malý obchod s použitým oblečením. Spolu s nimi zkoumáme, odkud energie pochází, jak ji využíváme, jak můžeme šetřit zdroje a hledat udržitelná řešení pro budoucnost.“</p></div>
+    <div class="label">Text v obraze</div>
+    <div class="onscreen">Energie a životní prostředí <span class="sticker">💡</span><span class="list">• vědci • obce • firmy • komunitní projekty</span></div>
+  </div>
+
+  <!-- 04 -->
+  <div class="block">
+    <div class="bhead"><div class="bnum">04</div><div class="btitle">Technologie a inovace</div></div>
+    <div class="obraz"><b>Obraz:</b> záběry z příběhů — Astronomicko přírodovědná observatoř Kadaň, Dominik Simon, Hennlich, Jan Frydrych, …</div>
+    <div class="label">Adam Kyprý</div>
+    <div class="speech"><p>„Další superhrdinové zkouší nové technologie Staví roboty, programují počítače nebo vyrábí věci, které nám usnadňují a zpříjemňují život. Učí nás technologie nejen používat, ale také jim rozumět, zkoušet nové postupy, řešit výzvy a bezpečně se pohybovat v digitálním světě.“</p></div>
+    <div class="label">Text v obraze</div>
+    <div class="onscreen">Superschopnosti budoucnosti <span class="sticker">🤖</span><span class="list">• technici • učitelé • řemeslníci • kutilové</span></div>
+    <div class="note" style="margin-bottom:0"><b>Pozor — chybějící tečka.</b> V dokumentu doslova stojí „…zkouší nové technologie Staví roboty…“. Nech Adama říct „…zkouší nové technologie. Staví roboty…“, jinak to na kameře splyne.</div>
+  </div>
+
+  <!-- 05 -->
+  <div class="block">
+    <div class="bhead"><div class="bnum">05</div><div class="btitle">Podnikavost a nové příležitosti</div></div>
+    <div class="obraz"><b>Obraz:</b> záběry z příběhů — Alena Šumová, Knihkupectví Papírová loď, Posedla, Stavario, …</div>
+    <div class="label">Adam Kyprý</div>
+    <div class="speech"><p>„Pak jsou tu ti, kteří přicházejí s novými nápady a mění je svou prací na skutečnost. Třeba vědci, podnikatelé nebo sociální podniky. Spolu s nimi můžeme objevovat, jak se z nápadu může stát něco skutečného a co všechno k tomu potřebujeme — odvahu, tvořivost i chuť hledat řešení.“</p></div>
+    <div class="label">Text v obraze</div>
+    <div class="onscreen">Budoucnost práce <span class="sticker">📡</span><span class="list">• firmy • podnikatelé • startupy • sociální podniky</span></div>
+  </div>
+
+  <!-- 06 -->
+  <div class="block">
+    <div class="bhead"><div class="bnum">06</div><div class="btitle">Objevujeme náš kraj — pro nejmenší</div></div>
+    <div class="obraz"><b>Obraz:</b> záběry z příběhů — Skloart, Upcymania, Jan Frydrych, Hennlich, …</div>
+    <div class="label">Adam Kyprý</div>
+    <div class="speech"><p>„A víte co? Superhrdinové jste i vy! Nemusíte čekat, až budete dospělí. Stačí být zvídaví. Všímat si věcí kolem sebe. Nebát se přijít s vlastním nápadem a zkusit udělat první krok. Třeba vyrazit na dobrodružnou výpravu, hrát si, objevovat, co je kolem nás, a zjistit, jaká překvapení náš kraj ukrývá.“</p></div>
+    <div class="label">Text v obraze</div>
+    <div class="onscreen">Děti mění svět <span class="sticker">🧒</span><span class="list">• školky • školy • kroužky • dětské projekty</span></div>
+    <div class="note" style="margin-bottom:0"><b>Tenhle blok mluví na děti.</b> Jediný, kde Adam oslovuje diváka přímo („Superhrdinové jste i vy!“). Nech ho jít o stupeň víc nahoru v energii než u ostatních — a natoč si i variantu klidnější, ať je z čeho vybírat.</div>
+  </div>
+
+  <!-- ZÁVĚR -->
+  <div class="block">
+    <div class="bhead"><div class="bnum">07</div><div class="btitle">Závěr</div></div>
+    <div class="label">Adam Kyprý</div>
+    <div class="speech">
+      <p>„Tak co? Jdeme dál objevovat náš SUPERKRAJ?</p>
+      <p>Čekají nás příběhy, nápady, hry, výzvy… a hlavně spousta věcí, které si můžeme sami zkusit. A kdo ví… třeba při tom objevíme i svoje vlastní superschopnosti.“</p>
+    </div>
+    <div class="label">Závěrečný claim v obraze</div>
+    <div class="onscreen">Tvoříme kraj plný možností</div>
+  </div>
+
+  <div class="note"><b>Kolik se toho stihne.</b> Dohromady 8 promluv (Témata) + 7 sekcí (Manifest) = 15 nájezdů. S opakováním, korekcemi a dvěma velikostmi záběru počítej reálně 2,5–3 h, ne 1,5. Petra Adamovi psala „max. 3 hodiny“ — drž se toho.</div>
+</section>
+
+<!-- 4 OBRAZ -->
+<section id="obraz">
+  <h2><span class="num">04</span>Co potřebujeme z obrazu</h2>
+  <p class="lede">Shot list v dokumentech není — tohle je můj návrh, ať se na nic nezapomene.</p>
+
+  <div class="label">Adam — základ pro oba scénáře</div>
+  <ul class="plain">
+    <li><b>Velikost A: polocelek / americký plán</b><small>Základ pro Transformační témata — kolem Adama zbývá místo na grafiku, text v obraze a stickery. Nechat vzduch nad hlavou a po straně.</small></li>
+    <li><b>Velikost B: detail / velký detail</b><small>Pro Manifest — osobnější, na pointy. Natočit aspoň sekce 1, 5 a 7 i v detailu.</small></li>
+    <li><b>Každou sekci nejmíň 2×</b><small>Jednou v A, jednou v B. Střih pak má kam uhnout, když Adam zaškobrtne uprostřed dobrého nájezdu.</small></li>
+    <li><b>Pozadí: krajina Ústí, ne interiér</b><small>Větruše má vyhlídku na město — hloubka za Adamem drží záběr živý. Hlídat, ať za ním nechodí hosté restaurace.</small></li>
+    <li><b>Čistý začátek i konec každé sekce</b><small>2 s ticha před a po. Adam má tendenci navazovat — bez ticha se to nedá střihnout.</small></li>
+  </ul>
+
+  <div class="label">Doplňky u Adama (15–20 min na konci)</div>
+  <ul class="plain">
+    <li><b>Portrét bez řeči</b><small>Adam se dívá do objektivu a mimo — do intra a do předělů.</small></li>
+    <li><b>Detaily rukou, gesta při vyprávění</b><small>Prostřihy, když se bude nasazovat grafika.</small></li>
+    <li><b>Přeběh / příchod na místo</b><small>Vizuál pro znělku „Pojďte s námi za nápady“.</small></li>
+    <li><b>Atmo z Větruše, 2 minuty čistého ruchu</b><small>Bez toho se zvuk nespojí.</small></li>
+  </ul>
+
+  <div class="label">Jezero Most — pokrývací záběry</div>
+  <ul class="plain">
+    <li><b>Krajina do bloku 01 „Náš kraj“</b><small>Široké záběry proměněné krajiny — jezero na místě bývalého dolu je přesně o proměně, o které Adam mluví.</small></li>
+    <li><b>Krajina do bloku 03 „Energetika“</b><small>Rekultivace, voda, obzor. Sedí to na „šetřit nejen energii, ale také přírodu“.</small></li>
+    <li><b>Přechodové / dýchací záběry</b><small>Voda, obloha, pohyb — mezi bloky Transformačních témat.</small></li>
+    <li class="dim"><b>Děti se dnes netočí.</b><small>Prostřihy na děti ze škol a školky přijdou z jiných natáčecích dnů — nesnaž se to tady zachraňovat.</small></li>
+  </ul>
+
+  <div class="note"><b>Než tam pojedeš 50 km:</b> o jezeru Most není v mailu ani na Basecampu ani řádka — stojí to čistě na tvé poznámce z 27. 8. Ať o tom Petra ví, ať se v postprodukci nezjistí, že to nikam nepatří.</div>
+</section>
+
+<!-- 5 KONTAKTY -->
+<section id="kontakty">
+  <h2><span class="num">05</span>Kontakty</h2>
+  <p class="lede">Ty jsi v Petřině mailu Adamovi uvedený jako kontaktní osoba — 737 788 225.</p>
+  <div class="contacts">
+    <div class="c"><div class="who">Adam Kyprý<small>protagonista, garant projektu</small></div><a class="tel" href="tel:+420777548634">777 548 634</a></div>
+    <div class="c"><div class="who">Petra Sychrová<small>produkce, Studio Družina</small></div><a class="tel" href="tel:+420704701435">704 701 435</a></div>
+    <div class="c"><div class="who">Patrik Jelínek<small>kamera</small></div><a class="tel" href="tel:+420774404092">774 404 092</a></div>
+    <div class="c"><div class="who">Hotel Větruše<small>recepce / provozovatel areálu</small></div><a class="tel" href="tel:+420725793185">725 793 185</a></div>
+    <div class="c"><div class="who">Biofilms Praha 9<small>půjčovna, K Žižkovu 1038/1a</small></div><a class="tel" href="tel:+420604775014">604 775 014</a></div>
+    <div class="c"><div class="who">Andrea Kadlecová<small>koncept projektu — dnes NEBUDE na place</small></div><a class="tel" href="tel:+420728129053">728 129 053</a></div>
+  </div>
+</section>
+
+<!-- 6 TECHNIKA -->
+<section id="technika">
+  <h2><span class="num">06</span>Technika</h2>
+
+  <div class="label">Interní — z kanceláře Drtinova 10</div>
+  <ul class="plain">
+    <li><b>Set NICE! / AllAnimal</b><small>Domluveno ve Slacku #technika. <b>Musí být zpátky ve středu 9. 9. do 10:00</b> — Domča Srna ji potřebuje.</small></li>
+    <li><b>Kdo odemyká kancelář v 9:30?</b><small>Tomáš M. se z dovolené vrací dnes.</small></li>
+  </ul>
+
+  <div class="label">Biofilms — Patrikův košík (340 Kč/den bez DPH)</div>
+  <ul class="plain">
+    <li>Ultrabounce Floppy flag 90×90 cm — 1 ks, 150 Kč/den</li>
+    <li>Difuzní rám 95×95 cm + 250 1/2 White Diffusion — 1 ks, 110 Kč/den</li>
+    <li>Steelbag — 1 ks, 80 Kč/den</li>
+  </ul>
+  <div class="note"><b>Objednávka nebyla potvrzená.</b> Do Gmailu nedorazilo potvrzení rezervace na 8. 9. Než tam v 10:30 zastavíš, zavolej 604 775 014 a ověř, že to mají připravené. Otevírají v 9:00. Při vyzvednutí chtějí OP.<br><br>Košík: <a href="https://www.biofilms.cz/en/checkout/share/75zut">biofilms.cz/checkout/share/75zut</a></div>
+
+  <div class="label">Nezapomenout</div>
+  <ul class="plain">
+    <li>Baterie, karty, klapka</li>
+    <li>Mikroport + záložní</li>
+    <li><b>Adamův text na kartách nebo tabletu</b><small>Manifest je dlouhý monolog. Po sekcích to půjde rychleji s oporou — tahle stránka funguje jako čtecí zařízení i na tabletu.</small></li>
+    <li>Voda, deka nebo židle pro Adama</li>
+    <li>Pláštěnka na techniku<small>Ráno přeháňky, přes den zataženo 24–27 °C. Měkké rozptýlené světlo celý den — na Adama ideální, na golden hour u Mostu se ale nedá spolehnout.</small></li>
+  </ul>
+</section>
+
+<!-- 7 HLIDAT -->
+<section id="hlidat">
+  <h2><span class="num">07</span>Na co si dát pozor</h2>
+  <ul class="plain">
+    <li><b>Biofilms — potvrdit telefonem, než tam zajedeš</b><small>Rezervace na 8. 9. není v mailu doložená.</small></li>
+    <li><b>Jen 30 min na stavbu na Větruši</b><small>Vyber pozadí rychle. Rezervu jsi utratil posunem srazu na 9:30.</small></li>
+    <li><b>Povolení neřešíme</b><small>Tvoje rozhodnutí z 6. 9.: točí se bez záboru prostoru, park a vyhlídka jsou veřejné. Kdyby si někdo stěžoval — hotel Větruše 725 793 185, Filmová kancelář ÚK (Hyšková) 778 494 321.</small></li>
+    <li><b>Souhlas Adama má klient</b><small>Ověřeno 6. 9., neřešíš to na place.</small></li>
+    <li><b>Kolize v kalendáři</b><small>10:45 a 11:00 (Petra S. — zvládnou bez tebe, jen se odhlas), 11:30 AA sync, 12:00 BIG (Pažin), 15:00 VŠMU. Odhlásit ráno, ne v autě.</small></li>
+    <li><b>Adam měl dostat texty „trochu naučené“</b><small>Petra mu psala, že to nemusí být dokonalé a bude prostor si to zopakovat. Nečekej odrecitované — čekej, že to budete stavět po větách.</small></li>
+  </ul>
+</section>
+
+<footer>
+  Podklad připravil Lukáš · 8. 9. 2026, 6:20 · zdroje: Gmail vlákno Petra Sychrová → Adam Kyprý (4. 9.), Google Docs „Transformační témata“ (upraveno 7. 9. 8:57) a „Manifest vzdělávání“, plán <span style="white-space:nowrap">Lukas_usti_nataceni_plan_2026-09-08</span>.<br>
+  Texty promluv jsou citované doslova z dokumentů. Rozdělení Manifestu na sekce a shot list jsou můj návrh, ne obsah dokumentů.
+</footer>
+
+</div>
+</body>
+</html>
