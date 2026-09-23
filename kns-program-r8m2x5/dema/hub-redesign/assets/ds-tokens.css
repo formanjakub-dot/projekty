@@ -5,10 +5,6 @@
    ============================================================ */
 
 /* ---------- fonts (local @font-face, woff2 first) ---------- */
-@font-face{font-family:"Tusker Grotesk";src:url("fonts/TuskerGrotesk-4500Medium.woff2") format("woff2"),url("fonts/TuskerGrotesk-4500Medium.ttf") format("truetype");font-weight:500;font-style:normal;font-display:swap}
-@font-face{font-family:"Tusker Grotesk";src:url("fonts/TuskerGrotesk-4600Semibold.woff2") format("woff2"),url("fonts/TuskerGrotesk-4600Semibold.ttf") format("truetype");font-weight:600;font-style:normal;font-display:swap}
-@font-face{font-family:"Tusker Grotesk";src:url("fonts/TuskerGrotesk-4700Bold.woff2") format("woff2"),url("fonts/TuskerGrotesk-4700Bold.ttf") format("truetype");font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:"Tusker Grotesk";src:url("fonts/TuskerGrotesk-4800Super.woff2") format("woff2"),url("fonts/TuskerGrotesk-4800Super.ttf") format("truetype");font-weight:800;font-style:normal;font-display:swap}
 @font-face{font-family:"DM Sans";src:url("fonts/DMSans-Variable.ttf") format("truetype-variations");font-weight:100 1000;font-style:normal;font-display:swap}
 @font-face{font-family:"DM Sans";src:url("fonts/DMSans-Italic-Variable.ttf") format("truetype-variations");font-weight:100 1000;font-style:italic;font-display:swap}
 
