@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Kasa + Hub Nový Svět</title>
+<meta name="description" content="Program Kasa + Hub Nový Svět — co stavíme, proč, cíle a aktuální stav. Dema, návody a materiály na jednom místě.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body data-root="./">
+
+<nav class="nav" aria-label="Hlavní navigace">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="mark">KNS</span><span>Kasa + Hub<small>Kavárna Nový Svět</small></span></a>
+    <ul>
+      <li><a class="item" href="index.html">Úvod</a></li>
+      <li><a class="item" href="mapa/index.html">Mapa</a></li>
+      <li><a class="item" href="dema/index.html">Dema</a></li>
+      <li><a class="item" href="navody/index.html">Návody</a></li>
+      <li><a class="item" href="materialy/index.html">Materiály</a></li>
+      <li><a class="item" href="tonda/index.html">Pro Tondu</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow reveal">Kavárna Nový Svět · Hradčany · program 2026–2027</p>
+    <h1 class="display reveal">Vlastní kasa <em>a hub</em> pro kavárnu</h1>
+    <p class="lede reveal">Stavíme dvě věci, které do sebe zapadají. <b>Hub</b> je online provozní appka, ve které tým už dnes vede tržby a výplaty a postupně v ní pustíme faktury, sklad a směny. <b>Kasa</b> je vlastní pokladna pro iPad, která do 1. 2. 2027 nahradí MobiPOS, umí novou EET a večer sama předá uzávěrku do hubu. Tahle stránka říká, co to je, proč to děláme, kam míříme a kde to dnes je.</p>
+    <div class="strip reveal">
+      <div class="tile hub"><div class="k">Hub · hub.novysvet.net</div><div class="v display">v1.7.6 živě</div><div class="n">Tým denně používá evidenci tržeb a výplaty. Faktury, sklad, směny a rezervace jsou postavené, pouštíme je po jednom.</div></div>
+      <div class="tile kasa"><div class="k">Kasa · iPad, Swift</div><div class="v display">M4.1 hotovo</div><div class="n">Markování, platby, KDS, deník událostí, PIN, pokladna, uzávěrka. Běží design fáze 2 a sync mezi iPady (M5).</div></div>
+      <div class="tile smeny"><div class="k">Směny · Tabulka směn</div><div class="v display">Demo + návod</div><div class="n">Sedm kol dema podle Jakubových rozhodnutí. Čeká na Anetiny připomínky a GO na stavbu do produkce.</div></div>
+      <div class="tile termin"><div class="k">Pevný termín</div><div class="v display">1. 2. 2027</div><div class="n">Povinnost EET 2.0. MobiPOS ji neumí. Kasa má být hlavní pokladnou už od 18. 1. 2027.</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="block" id="co">
+    <h2 class="display">Co stavíme</h2>
+    <p class="sub">Kavárna Nový Svět je rodinná kavárna na Hradčanech (od 2013, úterý–neděle). Provoz dnes stojí na dvou cizích nástrojích: pokladně MobiPOS a papíru s tabulkami. Program je nahrazuje dvěma vlastními, které spolu mluví.</p>
+    <div class="cols">
+      <div class="box">
+        <h3><span class="ico">H</span>Hub — provozní appka online</h3>
+        <p>Webová appka na <a href="https://hub.novysvet.net" target="_blank" rel="noopener">hub.novysvet.net</a>, na telefonu i počítači, každý podle své role (brigádník, provozní, admin, účetní, kuchařka). Běží od 11. 8. 2026 po přechodu ze staré appky bez ztráty dat.</p>
+        <ul>
+          <li><strong>Používá se denně:</strong> evidence tržeb a uzávěrek, výplaty a výplatnice.</li>
+          <li><strong>Postavené, pouštíme postupně:</strong> faktury (přeposlat mail, vyfotit, AI napáruje položky), sklad a nákupní seznam, směny, rezervace, wiki, HACCP, checklisty, onboarding.</li>
+          <li><strong>Pořadí, které Jakub určil:</strong> faktury → sklad a objednávání → směny.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3><span class="ico">K</span>Kasa — vlastní pokladna pro iPad</h3>
+        <p>Nativní appka ve Swiftu na iPadech, které kavárna už má. Tři role zařízení: <strong>Kasa</strong> na baru (hlavní, tiskne, fiskalizuje), <strong>Obsluha</strong> na plac (markuje u stolu), <strong>KDS</strong> v kuchyni (bony a jejich stav).</p>
+        <ul>
+          <li><strong>Všechno podstatné po místní síti</strong> — jede i bez internetu, iPady se po výpadku samy srovnají.</li>
+          <li><strong>EET 2.0 přímo v kase</strong>, účtenka s kódy i offline. Karta přes SumUp, tisk na Epson, který v kavárně je.</li>
+          <li><strong>Večer uzávěrka do hubu</strong> — nahradí ruční zápis tržeb.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3><span class="ico">S</span>Směny — Tabulka směn</h3>
+        <p>Modul hubu, který vzniká podle papírové tabulky, na kterou je tým zvyklý. Brigádník jen ťuká, kdy může (a kdy určitě nemůže), Aneta skládá rozpis a přiděluje pozice, hotový rozpis přijde každému jako soupis.</p>
+        <ul>
+          <li>Řádek = člověk, sloupec = den, celý měsíc na jednu obrazovku iPadu.</li>
+          <li>Cyklus měsíce: sbíráme dostupnost (do 10.) → Aneta skládá → hotový.</li>
+          <li>Hořící díry a „Beru", výměny, nemůžu a nemocný jako žádosti.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="proc">
+    <h2 class="display">Proč</h2>
+    <p class="sub">Čtyři důvody, seřazené od toho, který má datum.</p>
+    <div class="cols">
+      <div class="box proc"><h3><span class="ico">1</span>EET 2.0 má termín</h3><p>Od 1. 1. 2027 běží pilot nové evidence tržeb, od 1. 2. 2027 je povinná. MobiPOS ji neumí. Buď vlastní kasa, nebo přechod na jiný cizí systém.</p></div>
+      <div class="box proc"><h3><span class="ico">2</span>Levnější provoz</h3><p>MobiPOS stojí nižší stovky dolarů ročně. Náš stack vychází na cca <strong>2 100 Kč ročně</strong> (jen účet u Applu) plus poplatky za karty, které se platí už dnes. Hardware kavárna má.</p></div>
+      <div class="box proc"><h3><span class="ico">3</span>Vlastní data, jeden systém</h3><p>Tržby, směny, docházka, sklad a faktury na jednom místě a v našich rukou. Kasa ví, kdo je na směně a co dochází; hub ví, co se prodalo. Žádné přepisování z papíru.</p></div>
+      <div class="box proc"><h3><span class="ico">4</span>Spolehlivost bez internetu</h3><p>Kasa musí být nudně spolehlivá. Proto všechno podstatné běží po místní síti kavárny a cloud je jen záloha — jako u MobiPOS, na který je tým zvyklý.</p></div>
+    </div>
+  </section>
+
+  <section class="block" id="cile">
+    <h2 class="display">Cíle a termíny</h2>
+    <p class="sub">Měřitelné brány. Každá má datum a je jasné, co znamená „splněno".</p>
+    <ol class="goals">
+      <li class="goal"><span class="d">25. 9.</span><span class="t">Apple Developer účet založený, architektura kasy v3 odsouhlasená<small>Jakub · účet Individual na vlastní jméno (kavárna je OSVČ, Organization nejde) · 99 USD/rok</small></span><span class="pill p-ceka">Čeká</span></li>
+      <li class="goal"><span class="d">2. 10.</span><span class="t">Design fáze 2 kasy hotový, model Epson tiskárny a kuchyňského iPadu ověřený<small>Tomáš · podle webového dema (víc prvků, hezčí nabídky, pastelovější barevnost)</small></span><span class="pill p-bezi">Běží</span></li>
+      <li class="goal"><span class="d">4. 10.</span><span class="t">Faktury naostro v hubu<small>100 % zářijových faktur v hubu, párování položek přes 80 % automaticky</small></span><span class="pill p-ceka">Čeká</span></li>
+      <li class="goal"><span class="d">31. 10.</span><span class="t">Dva iPady sdílí účty po místní síti, i bez internetu<small>Brána M5: Kasa → Obsluha do 300 ms; vypnu Kasu, Obsluha jede dál a po návratu se srovná. Když ne → Plán B (Dotykačka / Storyous)</small></span><span class="pill p-bezi">Běží</span></li>
+      <li class="goal"><span class="d">27. 11.</span><span class="t">Zaplatíš si kafe vlastní kartou na vlastní kase a vypadne účtenka<small>SumUp přes Bluetooth, Epson po síti, EET klient napojený na testovací prostředí státu</small></span><span class="pill p-ceka">Čeká</span></li>
+      <li class="goal"><span class="d">1. 12.</span><span class="t">Souběh: kasa vedle MobiPOS na části provozu, uzávěrka teče do hubu<small>Unlisted distribuce od Applu do 7. 12. · prosincový rozpis směn vzniká jen v hubu</small></span><span class="pill p-ceka">Čeká</span></li>
+      <li class="goal"><span class="d">18. 1. 2027</span><span class="t">Kasa je hlavní pokladnou kavárny<small>EET produkce od 1. 1., certifikát na Hanu z DIS+ (1.–20. 11.)</small></span><span class="pill p-ceka">Čeká</span></li>
+      <li class="goal"><span class="d">1. 2. 2027</span><span class="t">Povinnost EET 2.0 — splněná vlastní kasou<small>MobiPOS ještě měsíc jako záchrana</small></span><span class="pill p-ceka">Čeká</span></li>
+      <li class="goal"><span class="d">28. 2. 2027</span><span class="t">MobiPOS zrušený, provoz kasy levnější než MobiPOS<small>cíl ≤ 2 760 Kč/rok (nejlevnější MobiPOS tarif)</small></span><span class="pill p-ceka">Čeká</span></li>
+    </ol>
+  </section>
+
+  <section class="block" id="stav">
+    <h2 class="display">Aktuální stav · <span data-updated>23. 9. 2026</span></h2>
+    <p class="sub">Co je hotové, co právě běží a na co se čeká. Podrobnosti a zdroje jsou v sekcích Dema a Materiály.</p>
+
+    <div class="tw"><table>
+      <tr><th>Oblast</th><th>Stav</th><th>Hotové</th><th>Běží</th><th>Čeká na</th></tr>
+      <tr><td><strong>Hub — provoz</strong></td><td><span class="pill p-hotovo">Živě</span></td><td>v1.7.6 od 6. 9. (multi-pozice, AI párování faktur). Evidence + výplaty denně. Příjem faktur mailem funguje.</td><td>Příprava ostrého startu faktur (kdo nahrává, dva týdny souběh s dnešním postupem).</td><td>Jakub: kdo v kavárně ručí za faktury; smoke test 1.7.6; nasazení role kuchařka (1.7.7).</td></tr>
+      <tr><td><strong>Hub — Tabulka směn</strong></td><td><span class="pill p-bezi">Demo</span></td><td>Koncept v4.8 = návod pro Anetu. Demo po 7 kolech (celý měsíc, ťukání, cyklus měsíce, hořící díry, onboarding, celá obrazovka). Odhad portu do produkce 55–75 h.</td><td>Čekání na Anetiny připomínky (demo dostala 7. 9., připomenuto 23. 9.).</td><td>Aneta: připomínky · Jakub: GO na etapu 1 („tabulka říká pravdu", do 24. 10.) · Tereza: nemoc jako údaj o zdraví, kdo vidí „pryč".</td></tr>
+      <tr><td><strong>Kasa — kód</strong></td><td><span class="pill p-bezi">M4.1 → M5</span></td><td>M1–M3 markování, platba, KDS (léto). M4 (23. 9.): lokální databáze, deník událostí s přehráním, PIN a role, pokladna, uzávěrka do souboru pro hub. M4.1: iOS 16+, (zařízení, pořadí) idempotentně, DPH u dílčích plateb. Kód je na privátním GitHubu.</td><td>M5 LAN sync: Kasa jako hlavní (Bonjour + WebSocket), Obsluha s ostrovním režimem, KDS i jako webový tenký klient z Kasy. Zároveň design fáze 2 (etapy do 2. 10.).</td><td>Jakub: merge M4 do main · GO architektury v3.</td></tr>
+      <tr><td><strong>Kasa — design</strong></td><td><span class="pill p-bezi">Fáze 2</span></td><td>Design fáze 1 (12. 8.). Spec fáze 2 (23. 9.): 36 dvojic demo × Swift, čtyři chybějící vrstvy (ilustrace, horní lišta, motion, typografie).</td><td>Tomáš staví podle webového dema v3.7: landscape, přihlášení jen PINem, sheety z menu, uzávěrka 6 kroků, displej hosta. Nový požadavek: stav jídla u objednávky.</td><td>Jakub: průběžné pohledy na obrazovky (spec je na komentáře moc dlouhá — cílem je demo).</td></tr>
+      <tr><td><strong>Kasa — hardware a síť</strong></td><td><span class="pill p-hotovo">Ověřeno</span></td><td>iPad Pro 11" (2018) = Kasa, iPad Air 4 = Obsluha, Epson tiskárna na baru, SumUp terminál. Wi-Fi kavárny bez izolace klientů, iPady se navzájem vidí (ověřeno 23. 9.). Náklady na HW: 0 Kč.</td><td>Kuchyňský iPad je 1. generace a nativní appku neutáhne → KDS zatím jako web z Kasy.</td><td>Jakub: výměna kuchyňského iPadu (nákup ~10 tis. Kč, schválení) · model Epsonu (2. 10.).</td></tr>
+      <tr><td><strong>Účty a úřady</strong></td><td><span class="pill p-ceka">Čeká</span></td><td>Rozhodnuto: Apple účet Individual na Jakuba. EET 2.0 v legislativě: Sněmovna přehlasovala Senát 9. 9., testovací prostředí státu běží, certifikáty od 1. 11., evidence od 1. 12., provoz 1. 1. 2027.</td><td>Harry: registrace vývojáře u finanční správy, subdoména pro účtenky (do 15. 11.).</td><td>Jakub: Apple účet do 25. 9. · SumUp účet na Hanu do 30. 10. · Hana: certifikát EET 1.–20. 11.</td></tr>
+    </table></div>
+
+    <div class="callout red"><strong>Plán B (rozhodnutí 31. 10.):</strong> když do konce října neběží sync mezi iPady, kavárna přejde 1. 2. 2027 na hotové české řešení s EET 2.0 (Dotykačka / Storyous, 500–1 500 Kč měsíčně) a vlastní kasu dostavíme bez tlaku termínu. Hub tím nic neztrácí.</div>
+
+    <h3>Co se stalo od roadmapy 6. 9.</h3>
+    <ol class="tl">
+      <li class="done"><div class="when">6.–8. 9.</div><h4>Hub 1.7.6 nasazen, koncept a demo Tabulky směn</h4><p>Sedm kol dema za jednu noc podle Jakubových rozhodnutí; koncept přepsán na návod pro Anetu; ikony pozic; demo přesunuto na projekty.jakubforman.cz.</p></li>
+      <li class="done"><div class="when">23. 9. dopoledne</div><h4>Kavárna je OSVČ, ne s.r.o. → Apple účet Individual</h4><p>Bez D-U-N-S a ověřování firmy. Nejjednodušší cesta: účet na Jakubovo jméno. Kasa: GO stavět ve Swiftu, milník M4 hotový a v GitHubu.</p></li>
+      <li class="done"><div class="when">23. 9. poledne</div><h4>Architektura kasy v3: LAN-first</h4><p>Jakub odmítl cloud sync a placenou Supabase. Kasa iPad je hlavní, druhý jede při výpadku sám, cloud jen záloha (hosting kavárny). Náklady ~2 100 Kč/rok.</p></li>
+      <li class="now"><div class="when">23. 9. odpoledne</div><h4>Design fáze 2 a M5 běží paralelně, hardware ověřen v kavárně</h4><p>Webové demo v3.7 = vizuální zdroj pravdy. Kuchyňský iPad neutáhne nativní appku → web KDS z Kasy + zvažovaná výměna. Nový požadavek: stav jídla u objednávky.</p></li>
+      <li><div class="when">do 2. 10.</div><h4>Další brána</h4><p>Design fáze 2 hotový, Apple účet založený, model tiskárny a kuchyňského iPadu jasný, Hukot SSH ověřený.</p></li>
+    </ol>
+  </section>
+
+  <section class="block" id="kdo">
+    <h2 class="display">Kdo na čem dělá</h2>
+    <p class="sub">Lidé z kavárny a AI tým Jakuba (Harry a kolegové). U AI kolegů je uvedená role, ne jméno člověka.</p>
+    <div class="people">
+      <div class="person"><span class="av t">J</span><div><b>Jakub</b><span>Rozhoduje, kupuje, zakládá účty, mergeuje kód. Testuje kasu na iPadu.</span></div></div>
+      <div class="person"><span class="av s">A</span><div><b>Aneta</b><span>Provozní. Testuje demo směn, bude skládat rozpis, ručí za provoz hubu v kavárně.</span></div></div>
+      <div class="person"><span class="av s">H</span><div><b>Hana</b><span>Provozovatelka kavárny. Certifikát EET, účet SumUp, finance.</span></div></div>
+      <div class="person"><span class="av o">T</span><div><b>Tonda</b><span>Programátor v rodině. Konzultuje s Jakubem technickou přípravu kasy — sekce <a href="tonda/index.html">Pro Tondu</a>.</span></div></div>
+      <div class="person"><span class="av l">H</span><div><b>Harry</b><span>Dispečink AI týmu. Rozděluje práci, hlídá termíny, drží tento web aktuální.</span></div></div>
+      <div class="person"><span class="av f">T</span><div><b>Tomáš</b><span>Vývojář. Swift kasa (M4, M5, design fáze 2), demo směn, hub.</span></div></div>
+      <div class="person"><span class="av f">V</span><div><b>Viktor</b><span>Architekt. Architektura kasy v3, technické shrnutí pro Tondu.</span></div></div>
+      <div class="person"><span class="av f">E</span><div><b>Eliška</b><span>Designérka. Koncept Tabulky směn, ikony, design spec kasy, tento web.</span></div></div>
+      <div class="person"><span class="av f">P</span><div><b>Petr</b><span>Rešerše. Apple účet, kompatibilita hardware, náklady vs. MobiPOS.</span></div></div>
+      <div class="person"><span class="av f">T</span><div><b>Tereza</b><span>Právo a GDPR. Údaje o zdraví ve směnách, licence fontů, kdo ručí za co.</span></div></div>
+    </div>
+  </section>
+
+  <section class="block" id="rozcestnik">
+    <h2 class="display">Kde co najdeš</h2>
+    <div class="roz">
+      <a href="mapa/index.html"><span class="num">01</span><h3>Mapa programu</h3><p>Interaktivní osa a pavouk modulů, wiki a otevřené otázky.</p><span class="go">→</span></a>
+      <a href="dema/index.html"><span class="num">02</span><h3>Dema</h3><p>Všechna dema a prototypy: co ukazují, pro koho, verze, stav, náhledy.</p><span class="go">→</span></a>
+      <a href="navody/index.html"><span class="num">03</span><h3>Návody</h3><p>Tabulka směn pro Anetu a další návody pro tým.</p><span class="go">→</span></a>
+      <a href="materialy/index.html"><span class="num">04</span><h3>Materiály</h3><p>Architektura kasy, design spec, ikony, historická roadmapa, slovníček.</p><span class="go">→</span></a>
+      <a href="tonda/index.html"><span class="num">05</span><h3>Pro Tondu</h3><p>Technické shrnutí pro konzultaci s Jakubem.</p><span class="go">→</span></a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>Kasa + Hub Nový Svět · interní web programu · aktualizováno <b><span data-updated>23. 9. 2026</span></b></span>
+    <span>Neindexovaný web na neveřejné adrese. Odkazy nesdílej mimo tým.</span>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KNS Hub — Redesign v POS design systému</title>
+<link rel="stylesheet" href="assets/hub.css">
+</head>
+<body>
+<div class="home-wrap">
+  <div class="k">Prototyp · KNS POS Design System v1.0</div>
+  <h1>KNS Hub,<br>převlečený</h1>
+  <p class="lead">Provozní appka kavárny (kns-pwa-fix) ve vizuálu KNS POS Design Systému —
+    papírová plocha, terakota jako jediná akce, pastely nesou stav vždy se slovním labelem,
+    tabulární čísla na peníze. Stejná struktura a data hubu, jen jiná kůže. Tři nejnáročnější obrazovky.</p>
+  <div class="meta">
+    <span class="chip">Mobil-first (PWA)</span>
+    <span class="chip">DM Sans + Tusker Grotesk</span>
+    <span class="chip">Flat-first, glass jen nav</span>
+    <span class="chip">Soběstačné · bez CDN</span>
+  </div>
+
+  <div class="home-cards">
+    <a class="home-card" href="dnes.html">
+      <span class="dev">01 · Hero moment</span>
+      <h2>Dnes</h2>
+      <p>Uvítání, tržba dne, „Dnes je potřeba řešit", moje směna, „Čeká na mě", rychlé akce.</p>
+      <span class="go">Otevřít →</span>
+      <img class="corner" src="assets/ds/illustrations/hand-wave.png" alt="">
+    </a>
+    <a class="home-card" href="smeny.html">
+      <span class="dev">02 · Nejpoužívanější</span>
+      <h2>Směny</h2>
+      <p>Rozpis týdne po dnech, „Potřebujeme obsadit" s hořícími sloty, obsazení směn týmem.</p>
+      <span class="go">Otevřít →</span>
+      <img class="corner" src="assets/ds/illustrations/coffee-beans.png" alt="">
+    </a>
+    <a class="home-card" href="vyplaty.html">
+      <span class="dev">03 · Finance</span>
+      <h2>Výplaty</h2>
+      <p>Výplaty k potvrzení (podpis), moje čísla po dnech — hodiny, výdělek, dýška, celkem.</p>
+      <span class="go">Otevřít →</span>
+      <img class="corner" src="assets/ds/illustrations/receipt-note.png" alt="">
+    </a>
+  </div>
+
+  <p class="home-foot">
+    <b>Co je věrné DS:</b> tokeny (barvy, typografie, radii, motion, paper-grain) 1:1 z KNS_DesignSystem,
+    lokální fonty, DS ilustrace v hero a prázdných stavech, terakota jen na akce, pastelové stavy vždy s labelem.<br>
+    <b>Kde jsme improvizovali:</b> hub má navigaci (Domů/Provoz/Sklad/Ekonomika/Tým), kterou POS DS ikonová sada
+    (bill/card/cash/tip…) nepokrývá — nav používá jemné linkové ikony v duchu DS + textové labely.
+  </p>
+</div>
+<style id="kns-back-css">.kns-back{position:fixed;left:12px;bottom:12px;z-index:99999;font:600 13px/1 "DM Sans",-apple-system,sans-serif;color:#FBF6EC;background:#3B2F2A;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.25);opacity:.92}.kns-back:hover{opacity:1;background:#E76F51}@media print{.kns-back{display:none}}</style><a class="kns-back" href="../index.html">← Program Kasa + Hub</a>
+</body>
+</html>

@@ -1,0 +1,302 @@
+[
+ {
+  "id": "q01_apple_ucet",
+  "modul": "distribuce",
+  "otazka": "Založíš si Apple Developer účet (Individual, na svoje jméno) do pátku 25. 9.?",
+  "kontext": "Provozovatelka kavárny je OSVČ, a tu Apple do firemního účtu nepustí. Individual není vázaný na IČO — 30 minut, 99 USD, schválení do 48 hodin, bez telefonátu. Bez účtu nejde TestFlight na iPady, a tedy ani test syncu v kavárně (M5).",
+  "doporuceni": "Ano, dnes večer. Hned potom Ad Hoc/TestFlight build na tři iPady; Unlisted až před 1. 2. 2027.",
+  "priorita": "blokuje",
+  "zdroj": "Petr 23. 9. (Apple OSVČ) + architektura v3, sekce 0",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q02_go_v3",
+  "modul": "lan_sync",
+  "otazka": "Odklepneš architekturu kasy v3 — Kasa iPad Pro 2018 jako hlavní, LAN-first, cloud jen záloha, iOS 16?",
+  "kontext": "Viktor přepsal architekturu podle tvých dvou korekcí (LAN místo cloudu, žádný Supabase Pro) a podle hardwaru, který v kavárně už je. Tomáš podle ní už staví M5.",
+  "doporuceni": "GO. Jediná otevřená věc je model kuchyňského iPadu (otázka níž), zbytek je hotový a ověřený.",
+  "priorita": "blokuje",
+  "zdroj": "architektura v3 „Rozhodni“ (23. 9. 11:59)",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q03_smeny_etapa1",
+  "modul": "smeny",
+  "otazka": "Dáš GO na etapu 1 směn „tabulka říká pravdu“ (20–25 h, hotovo do 24. 10.)?",
+  "kontext": "Etapa 1 mění jen to, co tým vidí: Tabulka směn jako výchozí tab, celá tabulka pro všechny, řádek Chybí, pondělí zavřeno, nové barvy. Nic se neťuká, papír běží dál. Nezávisí na Anetiných připomínkách k demu — ty se týkají až etapy 2.",
+  "doporuceni": "GO teď. Tomáš začne migrací a RPC get_shift_table, souběžně se opraví send-push bez ochrany (nález z auditu).",
+  "priorita": "blokuje",
+  "zdroj": "koncept Tabulka směn v4.8, sekce 11 + memory 23. 9. („čeká GO po vysvětlení“)",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q04_kds_ipad",
+  "modul": "kds_nativni",
+  "otazka": "Koupíme nový iPad do kuchyně (iPad A16 128 GB ~9 990 Kč, nebo repas Air 4/5 za 8,4–10 tis.)?",
+  "kontext": "Kuchyňský iPad je Air 1. generace se stropem iOS 12 — nativní kasu neutáhne. Řekl jsi, že raději vyměníš. Je to nákup nad 5 000 Kč, takže potřebuje tvoje schválení.",
+  "doporuceni": "Nový iPad A16 (záruka, 5+ let podpory, cena skoro stejná jako repas). Webový KDS z Kasy stavíme stejně jako zálohu.",
+  "priorita": "blokuje",
+  "zdroj": "Jakub 23. 9. 16:16 + Petr 5. 9. (kandidáti) + HW ověření 16:08",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q05_faktury_smoke",
+  "modul": "faktury",
+  "otazka": "Uděláš 10minutový smoke test hubu 1.7.6 (patička 1.7.6 · Tým → zaškrtávátka pozic · faktura → „Napárovat přes AI“)?",
+  "kontext": "Verze je nasazená od 6. 9., ale nikdo z lidí ji neproklikal. Faktury naostro pro tým chceme do 4. 10. — po tvém testu Harry rozešle návod.",
+  "doporuceni": "Na iPadu v kavárně, klidně s Anetou u toho. Když něco zaskřípe, napiš to sem.",
+  "priorita": "brzy",
+  "zdroj": "memory 6. 9. 16:35 (zbývá smoke test Jakubem)",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q06_aneta_demo",
+  "modul": "smeny",
+  "otazka": "Aneta na demo směn 16 dní nereaguje. Má si ho s ní projít Harry na iPadu v kavárně, nebo to zvedneš ty?",
+  "kontext": "Demo odešlo 7. 9., urgence 23. 9. ráno. Bez jejího průchodu se etapa 2 (ťukání) nemá o co opřít — koncept je postavený na tom, jak skládá rozpis ona.",
+  "doporuceni": "Harry si s ní domluví 20 minut mimo špičku; ty jen řekni, který den je pro kavárnu klidný.",
+  "priorita": "brzy",
+  "zdroj": "memory 23. 9. restart (urgence 10:53)",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q07_proklik_m4",
+  "modul": "db_eventlog",
+  "otazka": "Proklikáš M4 na simulátoru nebo iPadu do 5. 10. (celá směna v letadlovém režimu, zabít appku, storno s důvodem)?",
+  "kontext": "To je brána milníku 4 — první, kde by ses měl dotknout kasy ty sám. Kód je hotový, 38 testů zelených.",
+  "doporuceni": "Až bude Apple účet, Tomáš ti pošle TestFlight build na tvůj iPad — bez simulátoru na Macu.",
+  "priorita": "brzy",
+  "zdroj": "architektura v3, sekce 7 (brána M4)",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q08_merge_main",
+  "modul": "distribuce",
+  "otazka": "Mergnout větev feat/pos-swift-m4 do main na GitHubu?",
+  "kontext": "Výchozí větev repa je teď m4, protože main je pořád jen kostra z M1 bez README. Tomáš to nechal na tobě — je to rozhodnutí, ne úklid.",
+  "doporuceni": "Ano. main = to, co běží; další milníky (M5, design 2) se pak mergují do něj.",
+  "priorita": "pozdeji",
+  "zdroj": "Tomáš M4.1 nález 4",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q09_storno_uctu",
+  "modul": "pin_role",
+  "otazka": "Kdo smí stornovat celý účet — jen vedoucí směny a admin, nebo každý na směně?",
+  "kontext": "Storno položky smí každý, storno celého účtu Tomáš zatím nechal na vedoucím a víc — držel stav prototypu. Otázka z FUNKCE.md (č. 12) je nezodpovězená od července.",
+  "doporuceni": "Vedoucí+. Jsou to peníze ven; obsluha stornuje položky, celý účet řeší ten, kdo ho pak vysvětlí v uzávěrce.",
+  "priorita": "brzy",
+  "zdroj": "Tomáš M4 „Na tobě“ (a)",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q10_piny",
+  "modul": "pin_role",
+  "otazka": "PINy týmu: zadá je Aneta v Nastavení (až bude správa lidí v M5), nebo je pošleš ty?",
+  "kontext": "V appce jsou teď demo PINy z prototypu. Chceš přihlášení jen PINem bez výběru jména — každý člověk tedy potřebuje unikátní 4místný kód.",
+  "doporuceni": "Aneta v Nastavení, sama, až s prvním TestFlight buildem. PINy nikam nepsat — ani sem.",
+  "priorita": "pozdeji",
+  "zdroj": "Tomáš M4 „Na tobě“ (b) + Jakub 23. 9. 15:48",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q11_hotovost",
+  "modul": "pokladna",
+  "otazka": "Jaká je ranní hotovost v kase a jaká tolerance manka? (v appce jsou zatím prototypové hodnoty)",
+  "kontext": "Uzávěrka podle toho hlásí manko/přebytek a barví ho. Reálná čísla nemusíš psát sem — stačí říct, že je nastaví Aneta v Nastavení.",
+  "doporuceni": "Nastaví Aneta v Nastavení při prvním spuštění; my jen potvrdíme, že tolerance je jedna částka, ne procento.",
+  "priorita": "pozdeji",
+  "zdroj": "Tomáš M4 „Na tobě“ (c), FUNKCE.md 13–14",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q12_epson_model",
+  "modul": "tisk",
+  "otazka": "Jaký model je Epson na baru? (štítek zespodu, nebo Feed při zapnutí → vytiskne status list)",
+  "kontext": "IP a port raw tisku známe a fungují. Model rozhodne, jestli použijeme pohodlnější ePOS-Print XML (TM-m30 / T88) nebo zůstaneme u raw ESC/POS jako dnes MobiPOS.",
+  "doporuceni": "Raw ESC/POS stačí na účtenky i zásuvku — model chci hlavně kvůli jistotě u otevírání zásuvky a šířky papíru.",
+  "priorita": "brzy",
+  "zdroj": "Viktor v3 „Rozhodni“ (2. 10.) + Jakub 23. 9. 15:48",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q13_wifi_ups",
+  "modul": "lan_sync",
+  "otazka": "Zůstanou všechny tři iPady i tiskárna na stejné Wi-Fi kavárny (bez hostovské sítě)? A chceš k routeru UPS (~1 500 Kč), aby výpadek proudu neshodil kasu?",
+  "kontext": "Síť jsem ověřil na místě: iPady se navzájem vidí, žádná izolace klientů. LAN sync na tom stojí — přesunout iPad na hostovskou Wi-Fi by ho odřízl.",
+  "doporuceni": "Ano na obojí; UPS koupit až po bráně M5 (30. 10.), kdy budeme vědět, že LAN drží.",
+  "priorita": "brzy",
+  "zdroj": "architektura v3, sekce 0 (Wi-Fi) + HW ověření 23. 9. 16:08",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q14_sumup_ucet",
+  "modul": "sumup",
+  "otazka": "Založíš do 30. 10. SumUp účet na provozovatelku + vygeneruješ affiliate key? A kolik je měsíční obrat kartou (kvůli tarifu Payments Plus)?",
+  "kontext": "Peníze musí téct na účet provozovatele, klíč se váže na bundle ID appky. Payments Plus (19 €/měs) se vyplatí zhruba nad 50 tisíc Kč EU karet měsíčně — obrat vytáhneš z reportu MobiPOS, sem ho psát nemusíš.",
+  "doporuceni": "Účet ano do 30. 10.; tarif rozhodnout až s obratem v ruce do 15. 11.",
+  "priorita": "brzy",
+  "zdroj": "architektura v3, sekce 0 (SumUp)",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q15_eet_cert",
+  "modul": "eet",
+  "otazka": "Sedneš si 1.–20. 11. s provozovatelkou k počítači pro certifikát EET 2.0 v DIS+ (Identita občana / datovka, 30 minut)?",
+  "kontext": "Certifikát vydává Daňová informační schránka plus od 1. 11. Bez něj M7 (ostrý souběh od 1. 12.) nemá co podepisovat. Registraci vývojáře posílá Harry teď.",
+  "doporuceni": "Dej si to do kalendáře na první listopadový týden — pak zbývá rezerva na případné potíže s Identitou občana.",
+  "priorita": "pozdeji",
+  "zdroj": "architektura v3, sekce 0 (EET)",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q16_plan_b",
+  "modul": "lan_sync",
+  "otazka": "Potvrdíš Plán B: když do 30. 10. nebude stabilní LAN sync dvou iPadů s failoverem, přepneme na hotové české řešení s EET 2.0 (Dotykačka / Storyous)?",
+  "kontext": "Kasa ve Swiftu by pak jela dál bez tlaku termínu. Body bez návratu zůstávají: 18. 1. kasa primární, 28. 2. MobiPOS zrušit.",
+  "doporuceni": "Potvrdit jednou větou — je to pojistka, ne plán. Za měsíc se k tomu vrátíme s výsledky brány M5.",
+  "priorita": "brzy",
+  "zdroj": "architektura v3, sekce 0 (body bez návratu) + memory 6. 9.",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q17_tusker_licence",
+  "modul": "design_ux",
+  "otazka": "Máme licenci na vložení fontu Tusker Grotesk do appky (Displaay, app-embedding je samostatná licence)? Když ne — DM Sans 800 i na hero nadpisy?",
+  "kontext": "Tusker zůstává jen na hero (login, Domů, pauza, displej). Zatím jde o interní distribuci, ale před Unlisted/App Store to musí být čisté. Tomáš i Viktor to dnes flagovali znovu.",
+  "doporuceni": "Napsat Displaay a zeptat se na cenu app licence; do odpovědi stavíme s DM Sans 800 jako fallbackem, výměna je jeden token.",
+  "priorita": "brzy",
+  "zdroj": "Eliška spec design fáze 2, §4 a §6 + Tomáš design fáze 2 (rizika) + Viktor TLDR, checklist 18",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q18_zvuk",
+  "modul": "design_ux",
+  "otazka": "Zvuk ťuknutí na kase: výchozí zapnutý, nebo vypnutý? (iPad nemá haptiku, zvuk ji nahrazuje)",
+  "kontext": "Harry zatím rozhodl „vypnutý, přepínač v Nastavení, KDS bez zvuku“ — můžeš změnit.",
+  "doporuceni": "Vypnutý. Na baru hraje hudba a tichý tik nikdo neslyší; kdo ho chce, zapne si ho.",
+  "priorita": "pozdeji",
+  "zdroj": "Eliška spec design fáze 2, §5 a §6",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q19_ilustrace_dlazdice",
+  "modul": "design_ux",
+  "otazka": "Ilustrace pro dlaždice KDS / Pokladna / Uzávěrka: použít stávající z dema (polévka · kávová zrna · panorama), nebo nechat dokreslit nové?",
+  "kontext": "Demo má 37 ilustrací, Swift 0. Tři nové obrazovky z M4 nemají v demu svůj obrázek.",
+  "doporuceni": "Stávající teď (fáze 2 je o rychlosti), nové tři dokreslit až po fázi 2 v jednom balíku s ikonami pozic pro hub.",
+  "priorita": "pozdeji",
+  "zdroj": "Eliška spec design fáze 2, §6",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q20_ucty_pro_vsechny",
+  "modul": "smeny",
+  "otazka": "Účty v hubu pro všechny (dnes má účet jen část týmu): založit každému, nebo dostupnost zadává Aneta za ně?",
+  "kontext": "Dostupnost („můžu“) si naklikne jen ten, kdo má účet — je klíčovaná na uživatele. Bez účtů se z tabulky stane Anetin přepis papíru.",
+  "doporuceni": "Účty všem, i brigádníkům na pár směn. Onboarding v appce je na to stavěný; Aneta jen předá kód.",
+  "priorita": "blokuje",
+  "zdroj": "Tomáš demo 1. kolo „K rozhodnutí“ (7. 9. 0:33)",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q21_nastaveni_provozni",
+  "modul": "smeny",
+  "otazka": "Má provozní (Aneta) vidět Nastavení → Směny? Dnes Nastavení vidí jen admin.",
+  "kontext": "V Nastavení → Směny je uzávěrka dostupnosti, „hoří od N dnů“, týdenní šablona kapacit. Bez přístupu to musí nastavovat admin (ty).",
+  "doporuceni": "Ano, jen záložku Směny; lidi, pozice a závazky zůstávají adminovi.",
+  "priorita": "brzy",
+  "zdroj": "Tomáš demo 2. kolo, otázky pro Jakuba (7. 9. 1:15)",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q22_pryc_viditelnost",
+  "modul": "smeny",
+  "otazka": "Červené „pryč / nemůžu“ s důvodem: vidí ho celý tým, nebo jen Aneta?",
+  "kontext": "V demu vidí červenou i důvod všichni. Důvod je volný text — může být osobní.",
+  "doporuceni": "Červenou vidí všichni (kolegové vědí, s kým nepočítat), důvod jen Aneta a admin.",
+  "priorita": "brzy",
+  "zdroj": "Tomáš demo 3. kolo, sekce 7 (7. 9. 2:03)",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q23_nemoc_tereza",
+  "modul": "smeny",
+  "otazka": "„Nemocný“ v tabulce je údaj o zdraví. Stačí v přehledu absencí štítek „absence“ bez slova nemoc, nebo chceš „nemoc“ evidovat? (Tereza)",
+  "kontext": "V provozu je to jen hlášení „uvolni směnu, najdi náhradu“. U brigádníků na DPP se doklad neřeší, ale evidence nemoci je citlivý osobní údaj.",
+  "doporuceni": "Štítek „nemoc“ bez diagnózy, v poli důvodu nápověda „nepiš diagnózu“, retenci určí Tereza. Ať se k tomu vyjádří ona, ne my.",
+  "priorita": "pozdeji",
+  "zdroj": "koncept Tabulka směn, otázka 9 + Tomáš demo v3",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q24_zavazky",
+  "modul": "smeny",
+  "otazka": "Férovost: dva závazky (všední / víkend), jak je má hub dnes, nebo jedno číslo „3 z 6“?",
+  "kontext": "Hub počítá dva cíle na měsíc a řadí kandidáty „nejvíc pod závazkem první“. Sečíst to na jedno číslo znamená přestavět model.",
+  "doporuceni": "Dva. U díry se ukáže ten relevantní („so: 1 ze 3 víkendů“), nad tabulkou oba. Aneta ať si to řekne po prvním měsíci.",
+  "priorita": "pozdeji",
+  "zdroj": "Tomáš feasibility v3 (7. 9.) + koncept otázka 6",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q25_kucharka_rezervace",
+  "modul": "tym_role",
+  "otazka": "Má role kuchařka vidět rezervace? (větev 1.7.7 je hotová, čeká na nasazení)",
+  "kontext": "Kuchařka má 13 práv = běžný uživatel bez rezervací. Nasazení potřebuje i redeploy funkce create-user, jinak hub hlásí „Neplatná role“.",
+  "doporuceni": "Ne — rezervace jsou věc placu. Nasadit spolu s faktury naostro (do 4. 10.).",
+  "priorita": "brzy",
+  "zdroj": "Tomáš role kuchařka (6. 9.)",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q26_eet_vypadek_kasy",
+  "modul": "eet",
+  "otazka": "Když hlavní iPad vypadne a Obsluha iPad se povýší na Kasu: má mít certifikát EET i on (klíč na dvou zařízeních), nebo mají platby počkat na původní Kasu?",
+  "kontext": "Podpis EET je jen na Kasa iPadu (klíč v Keychain). Povýšený iPad tedy vydá účtenku bez kódu BKP — Viktor to v TLDR označil jako díru. Zákonná fronta 48 h to kryje jen tehdy, když se Kasa vrátí. Souvisí: platba kartou na Obsluze bez Kasy = tržba bez podpisu.",
+  "doporuceni": "Certifikát na oba „Kasa-schopné“ iPady (Pro 2018 + Air 4), KDS bez něj; platby v ostrovním režimu bez Kasy zakázat, jen hotovost s „dopodepsat“. Větší útočná plocha je menší zlo než nevydaná účtenka v pátek večer.",
+  "priorita": "blokuje",
+  "zdroj": "Viktor TLDR pro Tondu, otázka 4 a 5 + checklist 20",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q27_archiv_obnova",
+  "modul": "cloud_hukot",
+  "otazka": "Kam se budou 10 let archivovat doklady (zákon o DPH § 35) a jak obnovíme kasu, když se iPad ztratí nebo rozbije — stačí denní dump na Hukot + záložní certifikát u tebe?",
+  "kontext": "SQLite na iPadu není archiv. Cloud dump zatím neexistuje, Hukot zálohuje jen týdně, export pro účetní není, runbook „nový iPad za hodinu“ není. TLDR to má jako neřešené (položky 2, 8, 9).",
+  "doporuceni": "Denní dump na Hukot + kopie k tobě (iCloud/Drive) automaticky; export účtenek jako CSV/PDF pro účetní jednou měsíčně; záložní .p12 certifikátu u tebe; runbook obnovy otestovat v lednu (je to v M8).",
+  "priorita": "brzy",
+  "zdroj": "Viktor TLDR, checklist 2, 8, 9 + otázka 6",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q28_storno_tips",
+  "modul": "platby",
+  "otazka": "Storno už zaplacené tržby (host reklamuje po zaplacení) a spropitné: jak to má kasa vést — dobropis do EET, spropitné do uzávěrky a jeho rozdělení týmu?",
+  "kontext": "Storno položky před platbou umíme s důvodem. Storno po zaplacení je záporná tržba do EET a dnes není navržené. Spropitné je v uzávěrce 0 a váže se na displej hosta (M6). Obojí se dotýká daní a výplat.",
+  "doporuceni": "Storno po zaplacení = nová záporná tržba s odkazem na původní účtenku (EET to tak chce), jen vedoucí+, s důvodem. Spropitné: evidovat z karty i hotovosti v uzávěrce, rozdělení řešit v hubu u výplat — a nechat Terezu potvrdit zdanění.",
+  "priorita": "brzy",
+  "zdroj": "Viktor TLDR, checklist 5 a 6",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q29_update_okno",
+  "modul": "distribuce",
+  "otazka": "Kdy se smí kasa aktualizovat v provozu — ráno před otevřením, a kdo to odklikne na všech třech iPadech?",
+  "kontext": "Smíšené verze protokolu = klienti odmítnutí Kasou (jiná verze → reject). TestFlight buildy vyprší po 90 dnech, Unlisted se aktualizuje sám. Okno pro update není definované.",
+  "doporuceni": "Pevné okno: úterý ráno před otevřením, Aneta aktualizuje všechny tři naráz podle checklistu na A4; appka ukáže „čeká na update“ místo tiché nekompatibility.",
+  "priorita": "pozdeji",
+  "zdroj": "Viktor TLDR, otázka 3 + checklist 10",
+  "stav": "otevrena"
+ },
+ {
+  "id": "q30_pocty_mist",
+  "modul": "markovani",
+  "otazka": "Kolik míst mají stoly Ulice, Příborník a Židle? V kase je zatím Tomášův odhad (Ulice 2/4, Příborník 2, Židle 1).",
+  "kontext": "Plánek je 1:1 z MobiPOSu (22 stolů, zóny Terasa · Kavárna · Ulice). „(1)/(2)“ v názvu stolu je jméno, ne počet hostů — hosty ukazuje ikona u názvu.",
+  "doporuceni": "Napiš tři čísla, nebo řekni, že to má nastavit Aneta v Nastavení → Stoly (přidáme editaci počtu míst).",
+  "priorita": "brzy",
+  "zdroj": "Tomáš design fáze 2 (23. 9.), rizika / k rozhodnutí",
+  "stav": "otevrena"
+ }
+]

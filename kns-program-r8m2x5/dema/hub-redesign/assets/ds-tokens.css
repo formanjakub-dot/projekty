@@ -1,0 +1,297 @@
+/* ============================================================
+   KNS POS Design System — tokens (mirror KNS_DesignSystem v1.0)
+   Zdroj pravdy: Projects/KNS_DesignSystem/tokens/*.css
+   Lokální fonty, žádné CDN. Needitovat ručně mimo sync s DS.
+   ============================================================ */
+
+/* ---------- fonts (local @font-face, woff2 first) ---------- */
+@font-face{font-family:"Tusker Grotesk";src:url("fonts/TuskerGrotesk-4500Medium.woff2") format("woff2"),url("fonts/TuskerGrotesk-4500Medium.ttf") format("truetype");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Tusker Grotesk";src:url("fonts/TuskerGrotesk-4600Semibold.woff2") format("woff2"),url("fonts/TuskerGrotesk-4600Semibold.ttf") format("truetype");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"Tusker Grotesk";src:url("fonts/TuskerGrotesk-4700Bold.woff2") format("woff2"),url("fonts/TuskerGrotesk-4700Bold.ttf") format("truetype");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Tusker Grotesk";src:url("fonts/TuskerGrotesk-4800Super.woff2") format("woff2"),url("fonts/TuskerGrotesk-4800Super.ttf") format("truetype");font-weight:800;font-style:normal;font-display:swap}
+@font-face{font-family:"DM Sans";src:url("fonts/DMSans-Variable.ttf") format("truetype-variations");font-weight:100 1000;font-style:normal;font-display:swap}
+@font-face{font-family:"DM Sans";src:url("fonts/DMSans-Italic-Variable.ttf") format("truetype-variations");font-weight:100 1000;font-style:italic;font-display:swap}
+
+:root{
+  /* ---------- colors — core palette ---------- */
+  --terakota:#E76F51;    /* Účta   — primary action */
+  --safran:#F2B24A;      /* Energie — warning, reservation */
+  --merunka:#FFB086;     /* Radost */
+  --obloha:#A8C6E8;      /* Klid   — info */
+  --levandule:#CBB7F6;   /* Inspirace — wants to pay */
+  --salvej:#9BB79E;      /* Rovnováha */
+  --espresso:#3B2F2A;    /* Kotva  — ink */
+  --papir:#FBF6EC;       /* paper  — page ground */
+  --uhel:#1F1F1F;        /* charcoal — max contrast text */
+  --koral:#FF6F61;       /* Korál  — error, destructive */
+
+  --papir-2:#F5EEE1;     /* sunken surface */
+  --papir-3:#EDE4D4;     /* track / pressed */
+  --card:#FFFCF6;        /* flat card fill */
+
+  --ink-90:rgba(31,31,31,.92);
+  --ink-70:rgba(59,47,42,.72);
+  --ink-45:rgba(59,47,42,.48);
+  --ink-20:rgba(59,47,42,.2);
+  --ink-12:rgba(59,47,42,.12);
+  --ink-08:rgba(59,47,42,.08);
+
+  /* night surfaces (kuchyňský iPad jede tmavě celý den) */
+  --night:#17120F;
+  --night-2:#1E1815;
+  --night-card:#28201B;
+  --night-card-2:#332A24;
+  --paper-70:rgba(251,246,236,.72);
+  --paper-45:rgba(251,246,236,.45);
+  --paper-12:rgba(251,246,236,.14);
+
+  /* semantic surfaces */
+  --surface-page:var(--papir);
+  --surface-card:var(--card);
+  --surface-sunken:var(--papir-2);
+  --surface-track:var(--papir-3);
+  --surface-inverse:var(--espresso);
+  --surface-night:var(--night-2);
+  --surface-night-card:var(--night-card);
+
+  /* semantic text */
+  --text-strong:var(--uhel);
+  --text-heading:var(--espresso);
+  --text-body:var(--ink-70);
+  --text-muted:var(--ink-45);
+  --text-accent:var(--terakota);
+  --text-on-dark:var(--papir);
+  --text-on-dark-muted:var(--paper-70);
+  --text-price:var(--uhel);
+
+  /* actions */
+  --action-primary:var(--terakota);
+  --action-primary-hover:#DC6244;
+  --action-primary-fg:#FFFCF6;
+  --action-secondary-fg:var(--terakota);
+  --action-secondary-ring:var(--terakota);
+  --action-tertiary:var(--papir-2);
+  --action-tertiary-fg:var(--espresso);
+  --action-danger:rgba(255,111,97,.22);
+  --action-danger-fg:#C4483C;
+  --action-disabled:var(--papir-3);
+  --action-disabled-fg:var(--ink-45);
+
+  /* borders / separators */
+  --line-subtle:rgba(59,47,42,.1);
+  --line-default:rgba(59,47,42,.2);
+  --line-strong:rgba(59,47,42,.3);
+  --border-hairline:var(--line-subtle);
+
+  /* TABLE STATES — pastely nesou stav, vždy s textovým labelem */
+  --state-free:#8DE3C6;
+  --state-free-bg:rgba(141,227,198,.28);
+  --state-free-fg:#1F6B55;
+  --state-occupied:var(--terakota);
+  --state-occupied-bg:rgba(231,111,81,.22);
+  --state-occupied-fg:#B0432B;
+  --state-reserved:#F7D491;
+  --state-reserved-bg:rgba(247,212,145,.42);
+  --state-reserved-fg:#8A6209;
+  --state-wantspay:var(--levandule);
+  --state-wantspay-bg:rgba(203,183,246,.38);
+  --state-wantspay-fg:#5B44A0;
+
+  /* STATUS */
+  --status-ok:#6FC18B;
+  --status-ok-bg:rgba(111,193,139,.24);
+  --status-ok-fg:#2E7A4B;
+  --status-warn:var(--safran);
+  --status-warn-bg:rgba(242,178,74,.26);
+  --status-warn-fg:#8A6209;
+  --status-danger:var(--koral);
+  --status-danger-bg:rgba(255,111,97,.2);
+  --status-danger-fg:#C4483C;
+  --status-info:var(--obloha);
+  --status-info-bg:rgba(168,198,232,.32);
+  --status-info-fg:#2C577F;
+  --status-neutral-bg:var(--papir-2);
+  --status-neutral-fg:var(--ink-70);
+
+  /* KDS ageing semafor */
+  --kds-0-5:#9BD9B4;
+  --kds-5-15:#F5CE86;
+  --kds-15-25:#FFB086;
+  --kds-25:#FF9A90;
+
+  /* category colours */
+  --cat-kava:var(--terakota);
+  --cat-napoje:var(--safran);
+  --cat-jidlo:var(--salvej);
+  --cat-dezerty:var(--levandule);
+  --cat-merch:var(--obloha);
+
+  /* tile tints */
+  --tint-papir:var(--card);
+  --tint-merunka:rgba(255,176,134,.34);
+  --tint-safran:rgba(242,178,74,.3);
+  --tint-obloha:rgba(168,198,232,.34);
+  --tint-salvej:rgba(155,183,158,.34);
+  --tint-levandule:rgba(203,183,246,.32);
+  --tint-koral:rgba(255,111,97,.22);
+  --tint-dead:rgba(59,47,42,.1);
+
+  /* ---------- typography ---------- */
+  --font-display:"DM Sans",-apple-system,"Helvetica Neue","Segoe UI",Roboto,sans-serif;
+  --font-body:"DM Sans",-apple-system,"SF Pro Text","Helvetica Neue","Segoe UI",Roboto,sans-serif;
+  --font-condensed:"Tusker Grotesk","Big Shoulders Display","Avenir Next Condensed","Arial Narrow",sans-serif;
+  --font-hand:"Snell Roundhand","Bradley Hand","Segoe Script",cursive; /* lokální substituce Caveat — bez CDN */
+  --font-mono:"SF Mono",ui-monospace,Menlo,monospace;
+
+  --text-display-xl:72px;   --leading-display-xl:80px;
+  --text-display-l:48px;    --leading-display-l:56px;
+  --text-h1:32px;           --leading-h1:40px;
+  --text-h2:24px;           --leading-h2:32px;
+  --text-section:18px;      --leading-section:24px;
+  --text-body-l:16px;       --leading-body-l:24px;
+  --text-body:14px;         --leading-body:20px;
+  --text-caption:12px;      --leading-caption:16px;
+  --text-overline:10px;     --leading-overline:12px;
+
+  --text-money-hero:72px;
+  --text-money-xl:48px;
+  --text-money-l:36px;
+  --text-money-m:24px;
+  --text-money-s:18px;
+
+  --tracking-display:-.02em;
+  --tracking-display-l:-.01em;
+  --tracking-section:.08em;
+  --tracking-overline:.12em;
+
+  --weight-regular:400;
+  --weight-medium:500;
+  --weight-semibold:600;
+  --weight-bold:700;
+
+  /* ---------- spacing / radii / touch ---------- */
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+  --space-5:24px; --space-6:32px; --space-7:40px; --space-8:68px;
+
+  --radius-xs:4px; --radius-sm:8px; --radius-md:12px;
+  --radius-lg:16px; --radius-xl:24px; --radius-pill:999px;
+
+  --stroke-hairline:.5px; --stroke-1:1px; --stroke-2:2px; --stroke-3:3px;
+
+  --tap-min:48px; --tap-chip:40px; --tap-btn:48px; --tap-btn-big:56px;
+  --tap-tile:112px; --tap-numpad:56px;
+
+  --rail-cat:120px;
+  --panel-bill:35%;
+  --tile-min:150px;
+  --ticket-min:230px;
+  --ticket-min-rush:180px;
+
+  /* ---------- elevation — flat first ---------- */
+  --elev-0:none;
+  --elev-1:0 1px 2px rgba(59,47,42,.06);
+  --elev-2:0 4px 12px rgba(59,47,42,.08);
+  --elev-3:0 12px 24px rgba(59,47,42,.12);
+  --elev-4:0 24px 48px rgba(59,47,42,.16);
+
+  --elev-card:none;
+  --elev-sheet:var(--elev-3);
+  --elev-toast:var(--elev-3);
+  --elev-float:var(--elev-2);
+  --elev-device:0 0 0 10px #0E0B09,0 0 0 11px rgba(251,246,236,.08),0 40px 90px rgba(0,0,0,.5);
+
+  --ring-hairline:inset 0 0 0 1px var(--line-subtle);
+  --ring-default:inset 0 0 0 1px var(--line-default);
+  --ring-selected:inset 0 0 0 2px var(--terakota);
+  --ring-focus:0 0 0 3px rgba(231,111,81,.28);
+
+  /* ---------- paint & paper ---------- */
+  --paper-ground:#FBF6EC;
+  --paper-grain:radial-gradient(circle at 18% 22%,rgba(59,47,42,.028) 0 1px,transparent 1px),radial-gradient(circle at 72% 68%,rgba(59,47,42,.022) 0 1px,transparent 1px);
+  --paper-grain-size:7px 7px,11px 11px;
+
+  --wash-terakota:radial-gradient(58% 62% at 34% 30%,rgba(231,111,81,.78) 0%,rgba(231,111,81,.42) 42%,rgba(255,176,134,.22) 68%,transparent 84%),radial-gradient(44% 40% at 70% 66%,rgba(255,176,134,.5) 0%,transparent 72%);
+  --wash-safran:radial-gradient(58% 62% at 38% 32%,rgba(242,178,74,.72) 0%,rgba(242,178,74,.38) 44%,rgba(253,235,200,.24) 70%,transparent 86%),radial-gradient(42% 38% at 68% 68%,rgba(248,206,133,.46) 0%,transparent 72%);
+  --wash-merunka:radial-gradient(58% 62% at 32% 34%,rgba(255,176,134,.72) 0%,rgba(255,176,134,.38) 44%,rgba(255,231,216,.24) 70%,transparent 86%),radial-gradient(44% 40% at 72% 64%,rgba(255,203,172,.46) 0%,transparent 72%);
+  --wash-obloha:radial-gradient(58% 62% at 36% 30%,rgba(168,198,232,.74) 0%,rgba(168,198,232,.4) 44%,rgba(230,239,248,.24) 70%,transparent 86%),radial-gradient(42% 40% at 70% 68%,rgba(198,218,240,.48) 0%,transparent 72%);
+  --wash-salvej:radial-gradient(58% 62% at 34% 32%,rgba(155,183,158,.7) 0%,rgba(155,183,158,.38) 44%,rgba(225,234,226,.22) 70%,transparent 86%),radial-gradient(44% 38% at 70% 66%,rgba(189,207,191,.46) 0%,transparent 72%);
+  --wash-levandule:radial-gradient(58% 62% at 36% 34%,rgba(203,183,246,.7) 0%,rgba(203,183,246,.36) 44%,rgba(240,235,253,.22) 70%,transparent 86%),radial-gradient(42% 40% at 68% 66%,rgba(221,209,249,.46) 0%,transparent 72%);
+  --wash-espresso:radial-gradient(66% 70% at 30% 26%,rgba(59,47,42,.94) 0%,rgba(88,71,64,.72) 46%,rgba(122,102,92,.4) 74%,transparent 92%),radial-gradient(40% 36% at 76% 22%,rgba(231,111,81,.3) 0%,transparent 70%);
+
+  --line-ink:#2A2320;
+  --line-weight:2px;
+  --wash-underline:linear-gradient(90deg,transparent 0%,rgba(231,111,81,.85) 18%,rgba(231,111,81,.85) 82%,transparent 100%);
+
+  /* ---------- glass & layers ---------- */
+  --blur-0:0px; --blur-1:8px; --blur-2:16px; --blur-3:24px;
+
+  --glass-fill-10:rgba(255,252,246,.1);
+  --glass-fill-20:rgba(255,252,246,.2);
+  --glass-fill-40:rgba(255,252,246,.4);
+  --glass-fill-60:rgba(255,252,246,.6);
+  --glass-fill-80:rgba(255,252,246,.8);
+  --glass-fill-100:rgba(255,252,246,1);
+
+  --glass-tint-none:transparent;
+  --glass-tint-subtle:rgba(255,176,134,.12);
+  --glass-tint-soft:rgba(168,198,232,.16);
+  --glass-tint-medium:rgba(255,176,134,.26);
+  --glass-tint-strong:rgba(231,111,81,.32);
+
+  --glass-edge:inset 0 0 0 1px rgba(255,252,246,.7);
+  --glass-edge-soft:inset 0 0 0 1px rgba(255,252,246,.45);
+
+  --z-background:0; --z-content:10; --z-floating:20;
+  --z-modal:30; --z-alert:40; --z-toast:50;
+
+  --atmo-terakota:linear-gradient(150deg,#E76F51 0%,#F2A07C 55%,#FFD9C2 100%);
+  --atmo-safran:linear-gradient(150deg,#F2B24A 0%,#F8CE85 55%,#FDEBC8 100%);
+  --atmo-merunka:linear-gradient(150deg,#FFB086 0%,#FFCBAC 55%,#FFE7D8 100%);
+  --atmo-obloha:linear-gradient(150deg,#A8C6E8 0%,#C6DAF0 55%,#E6EFF8 100%);
+  --atmo-salvej:linear-gradient(150deg,#9BB79E 0%,#BDCFBF 55%,#E1EAE2 100%);
+  --atmo-levandule:linear-gradient(150deg,#CBB7F6 0%,#DDD1F9 55%,#F0EBFD 100%);
+  --atmo-espresso:linear-gradient(150deg,#3B2F2A 0%,#584740 55%,#7A665C 100%);
+
+  /* ---------- motion — dva hlasy ---------- */
+  --dur-press:.1s; --dur-fast:.12s; --dur-base:.16s;
+  --dur-enter:.24s; --dur-sheet:.22s; --dur-frame:90ms;
+  --ease-out:cubic-bezier(.3,1,.4,1);
+  --ease-pop:cubic-bezier(.3,1.4,.4,1);
+  --ease-sheet:cubic-bezier(.3,1.2,.4,1);
+  --ease-stop-2:steps(2,end);
+  --ease-stop-3:steps(3,end);
+  --ease-stop-6:steps(6,end);
+  --press-scale:.98;
+  --pulse-slow:1.8s;
+  --pulse-alarm:1.4s;
+}
+
+/* smooth — prostorové */
+@keyframes kns-fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes kns-sheetUp{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes kns-glassIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+/* stop-motion — potvrzení (pouštět se steps()) */
+@keyframes kns-popIn{0%{transform:scale(.92);opacity:0}60%{transform:scale(1.03)}100%{transform:scale(1);opacity:1}}
+@keyframes kns-stamp{0%{transform:scale(.82) rotate(-1.5deg)}55%{transform:scale(1.06) rotate(.8deg)}100%{transform:scale(1) rotate(0)}}
+@keyframes kns-toastIn{0%{opacity:0;transform:translateX(-50%) translateY(16px) scale(.9)}100%{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}}
+@keyframes kns-writeIn{from{clip-path:inset(-8% 102% -12% -2%)}to{clip-path:inset(-8% -2% -12% -2%)}}
+@keyframes kns-wiggle{0%,49%{transform:rotate(-1.6deg)}50%,100%{transform:rotate(1.8deg)}}
+/* alarmy — jediné povolené loopy */
+@keyframes kns-pulse{50%{opacity:.5}}
+@keyframes kns-alarm{50%{box-shadow:0 0 0 5px rgba(255,111,97,.24)}}
+@keyframes kns-ready{50%{box-shadow:0 0 0 5px rgba(111,193,139,.3)}}
+
+/* utility */
+.kns-paper{background-color:var(--paper-ground);background-image:var(--paper-grain);background-size:var(--paper-grain-size)}
+.kns-underline{position:relative}
+.kns-underline::after{content:"";position:absolute;left:0;bottom:-8px;width:64px;height:2px;background:var(--wash-underline);border-radius:2px}
+.kns-display{font-family:var(--font-display);font-weight:var(--weight-bold);letter-spacing:var(--tracking-display)}
+.kns-hand{font-family:var(--font-hand);font-weight:500;color:var(--terakota)}
+.kns-section{font-family:var(--font-body);font-size:var(--text-section);line-height:var(--leading-section);font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:var(--tracking-section)}
+.kns-overline{font-family:var(--font-body);font-size:var(--text-overline);line-height:var(--leading-overline);font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:var(--tracking-overline)}
+.kns-num{font-variant-numeric:tabular-nums}
+
+/* respekt k prefers-reduced-motion — potvrzení skočí rovnou do cíle */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+}

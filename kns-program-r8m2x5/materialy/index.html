@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Materiály · Kasa + Hub Nový Svět</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+</head>
+<body data-root="../">
+
+<nav class="nav" aria-label="Hlavní navigace">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><span class="mark">KNS</span><span>Kasa + Hub<small>Kavárna Nový Svět</small></span></a>
+    <ul>
+      <li><a class="item" href="../index.html">Úvod</a></li>
+      <li><a class="item" href="../mapa/index.html">Mapa</a></li>
+      <li><a class="item" href="../dema/index.html">Dema</a></li>
+      <li><a class="item" href="../navody/index.html">Návody</a></li>
+      <li><a class="item" href="index.html">Materiály</a></li>
+      <li><a class="item" href="../tonda/index.html">Pro Tondu</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="wrap">
+  <header class="section-hero">
+    <p class="eyebrow">04 · Materiály</p>
+    <h1 class="display">Dokumenty, ze kterých se staví</h1>
+    <p class="lede">Architektura, design, ikony a historická roadmapa. Reporty kolegů z Týmového inboxu tady nejsou jako samostatné stránky — jejich fakta jsou zapracovaná do úvodu a do karet. Dole je slovníček pojmů pro Anetu i Tondu.</p>
+  </header>
+
+  <section class="block" style="padding-top:.5rem" id="dokumenty">
+    <div class="cards" data-cards="materialy"></div>
+  </section>
+
+  <section class="block" id="slovnicek">
+    <h2 class="display">Slovníček pojmů</h2>
+    <p class="sub">Slova, která se v programu opakují. Když něco chybí, napiš Harrymu.</p>
+    <input class="gloss-filter" type="search" placeholder="Hledat pojem…" data-gloss-filter aria-label="Hledat v slovníčku">
+    <dl class="gloss" data-gloss></dl>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>Kasa + Hub Nový Svět · aktualizováno <b><span data-updated>23. 9. 2026</span></b></span>
+    <span>Nový materiál přidá Harry přes <code>build.py</code> + <code>data/obsah.json</code>.</span>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>

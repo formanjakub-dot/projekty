@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kasa Swift · design fáze 2 — audit proti demu v3.7 a spec pro SwiftUI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --terakota:#E76F51;--safran:#F2B24A;--merunka:#FFB086;--obloha:#A8C6E8;--levandule:#CBB7F6;--salvej:#9BB79E;
+  --espresso:#3B2F2A;--papir:#FBF6EC;--papir2:#F5EEE1;--papir3:#EDE4D4;--card:#FFFCF6;--uhel:#1F1F1F;--koral:#FF6F61;
+  --ink70:rgba(59,47,42,.72);--ink45:rgba(59,47,42,.48);--ink20:rgba(59,47,42,.2);--ink12:rgba(59,47,42,.12);--ink08:rgba(59,47,42,.08);
+  --ok-bg:rgba(111,193,139,.24);--ok-fg:#2E7A4B;--warn-bg:rgba(242,178,74,.26);--warn-fg:#8A6209;--danger-bg:rgba(255,111,97,.2);--danger-fg:#C4483C;--info-bg:rgba(168,198,232,.32);--info-fg:#2C577F;
+  --disp:"Big Shoulders Display","Tusker Grotesk","Arial Narrow",sans-serif;--body:"DM Sans",-apple-system,"Helvetica Neue",sans-serif;--mono:"DM Mono","SF Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--papir);color:var(--uhel);font-family:var(--body);font-size:14.5px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(circle at 18% 22%,rgba(59,47,42,.028) 0 1px,transparent 1px),radial-gradient(circle at 72% 68%,rgba(59,47,42,.022) 0 1px,transparent 1px);background-size:7px 7px,11px 11px}
+.wrap{max-width:1380px;margin:0 auto;padding:40px 32px 120px}
+h1,h2,h3,h4{margin:0;color:var(--espresso)}
+h1{font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:64px;line-height:.92;letter-spacing:.005em}
+h2{font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:40px;line-height:.95;margin:72px 0 18px;padding-top:14px;border-top:2px solid var(--espresso)}
+h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;font-size:26px;line-height:1;margin:44px 0 12px}
+h4{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink45);margin:22px 0 8px}
+p{margin:0 0 12px;max-width:78ch}
+a{color:var(--terakota);text-decoration:none}a:hover{text-decoration:underline}
+code,kbd{font-family:var(--mono);font-size:12.5px;background:var(--papir2);padding:1px 5px;border-radius:5px;color:var(--espresso)}
+pre{font-family:var(--mono);font-size:12.5px;line-height:1.5;background:var(--card);box-shadow:inset 0 0 0 1px var(--ink12);border-radius:12px;padding:14px 16px;overflow:auto;margin:10px 0 16px}
+.lead{font-size:18px;line-height:1.5;color:var(--ink70);max-width:70ch}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:12.5px;color:var(--ink45);margin:18px 0 0}
+.meta b{color:var(--espresso);font-weight:600}
+.kicker{font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--terakota);margin-bottom:12px}
+.toc{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;margin:28px 0 0}
+.toc a{display:block;background:var(--card);box-shadow:inset 0 0 0 1px var(--ink12);border-radius:12px;padding:10px 14px;font-weight:600;color:var(--espresso)}
+.toc a small{display:block;font-weight:500;color:var(--ink45);font-size:11.5px}
+.toc a:hover{box-shadow:inset 0 0 0 1px var(--ink20),0 4px 12px rgba(59,47,42,.08);text-decoration:none}
+/* verdict cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:18px 0}
+.card{background:var(--card);border-radius:16px;padding:16px 18px;box-shadow:inset 0 0 0 1px var(--ink12)}
+.card .l{font-size:10.5px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--ink45)}
+.card .v{font-family:var(--disp);font-weight:800;font-size:38px;line-height:1;margin:6px 0 4px;font-variant-numeric:tabular-nums}
+.card .d{font-size:12.5px;color:var(--ink70)}
+.card.hero{background:var(--espresso);color:var(--papir)}.card.hero .l{color:var(--merunka)}.card.hero .v{color:var(--papir)}.card.hero .d{color:rgba(251,246,236,.72)}
+/* compare */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0 10px}
+.cmp figure{margin:0;background:var(--card);border-radius:16px;padding:10px;box-shadow:inset 0 0 0 1px var(--ink12)}
+.cmp img{width:100%;height:auto;display:block;border-radius:10px;background:#eee}
+.cmp figcaption{font-size:12px;color:var(--ink70);padding:8px 4px 2px;display:flex;justify-content:space-between;gap:10px}
+.cmp figcaption b{font-weight:700;color:var(--espresso)}
+.tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--papir2);color:var(--ink70);white-space:nowrap}
+.tag.demo{background:rgba(231,111,81,.16);color:#B0432B}.tag.swift{background:var(--info-bg);color:var(--info-fg)}
+/* tables */
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:14px;overflow:hidden;box-shadow:inset 0 0 0 1px var(--ink12);margin:10px 0 22px;font-size:13px}
+th{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink45);text-align:left;padding:10px 12px;background:var(--papir2);border-bottom:1px solid var(--ink12)}
+td{padding:9px 12px;vertical-align:top;border-bottom:1px solid var(--ink08)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;color:var(--espresso);width:17%}
+td code{white-space:nowrap}
+.p1,.p2,.p3{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.06em;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.p1{background:var(--danger-bg);color:var(--danger-fg)}.p2{background:var(--warn-bg);color:var(--warn-fg)}.p3{background:var(--ok-bg);color:var(--ok-fg)}
+.chip{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--papir2);color:var(--ink70);margin:2px 4px 2px 0}
+.strip{background:var(--warn-bg);color:var(--warn-fg);border-radius:10px;padding:10px 14px;font-weight:600;font-size:13px;margin:10px 0 16px}
+.strip.ok{background:var(--ok-bg);color:var(--ok-fg)}.strip.info{background:var(--info-bg);color:var(--info-fg)}
+.strip.danger{background:var(--danger-bg);color:var(--danger-fg)}
+.sw{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.box{background:var(--card);border-radius:14px;padding:14px 16px;box-shadow:inset 0 0 0 1px var(--ink12)}
+.box h4{margin:0 0 8px}
+ul,ol{margin:0 0 14px;padding-left:22px}li{margin:3px 0}
+.foot{margin-top:70px;font-size:12px;color:var(--ink45);border-top:1px solid var(--ink12);padding-top:14px}
+@media (max-width:900px){.cmp,.two{grid-template-columns:1fr}h1{font-size:44px}h2{font-size:32px}.wrap{padding:24px 16px 80px}}
+@media print{.wrap{max-width:none}h2{break-before:page}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="kicker">KNS POS · Swift kasa · design fáze 2 · 23. 9. 2026 · Eliška</div>
+<h1>Swift na úroveň dema<br>— nebo výš</h1>
+<p class="lead" style="margin-top:18px">Audit SwiftUI appky <b>KNS POS &amp; HUB</b> (branch <code>feat/pos-swift-m5</code>, build 23. 9.) proti demu <b>KNS POS v3.7.0</b> a design systému <b>KNS_DesignSystem</b>. Každý rozdíl má screenshot a hodnotu ze zdroje (pos.css / tokens / components), ne dojem. Výstup je implementační spec pro Tomáše: obrazovka po obrazovce, nové M4 obrazovky 1:1, jedna knihovna komponent, asset list a sedm míst, kde nativní iPad demo předčí.</p>
+<div class="meta">
+  <span><b>Demo</b> lokální demo v3.7.0 · element <code>.device</code> 1180×885 px (4:3) · Playwright, DPR 2</span>
+  <span><b>Swift</b> iPad Pro 11" (M5) simulátor, iOS 26.3, <b>landscape 1210×834 pt</b> · <code>simctl io screenshot</code> vrací framebuffer na výšku → otočeno <code>sips -r 90</code>, appka sama renderuje na šířku (ověřeno oknem simulátoru)</span>
+  <span><b>Screenshoty</b> <code>MY_AI/.scratch/kns_pos_design2_2026-09-23/</code> (originály 2×), náhledy vedle tohoto souboru</span>
+  <span><b>Zdroje hodnot</b> <code>KNS_POS_Demo/public/assets/pos.css</code> (2932 ř.), <code>KNS_DesignSystem/tokens/*.css</code>, <code>components/**/*.jsx</code>, <code>Sources/DesignTokens.swift</code></span>
+</div>
+
+<div class="toc">
+  <a href="#souhrn">0 · Souhrn<small>co chybí nejvíc, skóre po vrstvách</small></a>
+  <a href="#top10">1 · Top 10 změn<small>podle dopadu × práce</small></a>
+  <a href="#audit">2 · Audit obrazovek<small>17 obrazovek, demo | Swift, hodnoty</small></a>
+  <a href="#m4">3 · Nové M4 obrazovky 1:1<small>PIN, Pokladna, Uzávěrka, Předání, Pauza</small></a>
+  <a href="#komponenty">4 · Knihovna komponent<small>16 SwiftUI komponent se spec</small></a>
+  <a href="#motion">5 · Motion + typografie<small>tokeny → SwiftUI, DM Sans opsz nález</small></a>
+  <a href="#assety">6 · Asset list<small>ilustrace, atmosféry, textury, ikony, fonty</small></a>
+  <a href="#lepe">7 · „Nebo lépe"<small>7 nativních míst, riziko → cesta</small></a>
+  <a href="#plan">8 · Pořadí a odhad<small>4 etapy, co se rozhoduje</small></a>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="souhrn">0 · Souhrn</h2>
+<p class="lead">Swift má po fázi 1 správné <b>barvy, radiusy, sklo na sheetech a washe</b>. Co dělá demo „hezčí a pastelovější" a co v appce chybí úplně, jsou <b>čtyři vrstvy</b>: malované ilustrace (0 z 37 přeneseno), horní bar s pull-down menu a LivePillem (neexistuje, každá obrazovka má vlastní hlavičku), motion (0 animací v celém <code>Sources/</code>) a typografická hierarchie (Tusker na 22 místech místo jen hero, DM Sans v opsz 9 místo 14–24, váhy 800/uppercase u titulků chybí). Pátá věc není vrstva, ale <b>hustota</b>: demo má na každé obrazovce víc stavů (pending řádek žlutě, servisní chipy, semafor stáří, čekačka, s-sebou pruh), Swift ukazuje jen jádro.</p>
+
+<div class="cards">
+  <div class="card hero"><div class="l">Ilustrace v Assets.xcassets</div><div class="v">0 / 37</div><div class="d">Demo je má na home, dlaždicích, prázdných stavech, KDS, pauze i displeji hosta.</div></div>
+  <div class="card"><div class="l">Animace ve Swiftu</div><div class="v">0</div><div class="d"><code>withAnimation</code>, <code>.animation</code>, <code>.transition</code>: 0 výskytů v 21 souborech. Demo: 16 kns-* keyframes + 7 tokenů.</div></div>
+  <div class="card"><div class="l">Tusker mimo hero</div><div class="v">22 ×</div><div class="d">Pravidlo 6. 9.: Tusker jen hero (≥ 46 px). Titulky obrazovek, sheetů, stolů = DM Sans 800 uppercase.</div></div>
+  <div class="card"><div class="l">Top bar v3.7</div><div class="v">0 / 4</div><div class="d">Kontext · segment Provoz|Účty · LivePill · rukojeť menu. Ani jeden prvek ve Swiftu.</div></div>
+  <div class="card"><div class="l">Obrazovek auditováno</div><div class="v">17</div><div class="d">31 stavů dema, 19 stavů Swiftu. 2 Swift stavy (Pauza, Předání kasy) nešly vyvolat bez zásahu do kódu — spec je z dema.</div></div>
+</div>
+
+<h4>Skóre po vrstvách DS (odhad z auditu, ne token-count)</h4>
+<table>
+<tr><th>Vrstva</th><th>Swift dnes</th><th>Co to znamená na obrazovce</th><th>Po fázi 2</th></tr>
+<tr><td>Barvy a stavy</td><td>≈ 85 %</td><td>Paleta 1:1, chybí <code>--cat-*</code> mapa (rail má barvy z importu), hero espresso karty, štítky stavů na účtu.</td><td>100 %</td></tr>
+<tr><td>Radius, spacing, cíle</td><td>≈ 80 %</td><td>Dlaždice 12 místo 16, numpad 44 místo 62, hosté 56 místo 76, sheet 24 ok.</td><td>100 %</td></tr>
+<tr><td>Sklo + vrstvení</td><td>≈ 40 %</td><td>Sheety a labely ano; scrim systémový šedý místo espresso .4 + blur 3; žádný top bar glass, žádný pull-down, žádná atmosféra na platbě/displeji.</td><td>95 % (scrim = vlastní overlay)</td></tr>
+<tr><td>Paint (washe, ilustrace, grain)</td><td>≈ 25 %</td><td>Washe ano (CSS stand-in), ilustrace 0, papírové zrno 0, atmosféry 0.</td><td>100 %</td></tr>
+<tr><td>Typografie</td><td>≈ 45 %</td><td>Fonty načtené, ale hierarchie ne: Tusker všude, DM Sans opsz 9, váhy 400 kde demo 700/800, overline bez trackingu.</td><td>100 %</td></tr>
+<tr><td>Motion</td><td>0 %</td><td>Nic se nehýbe. Ani press scale.</td><td>90 % (steps() přes PhaseAnimator / timer)</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2 id="top10">1 · Top 10 změn podle dopadu</h2>
+<p>Seřazeno podle „kolik to změní dojem z celé appky / kolik to stojí". Priorita: <span class="p1">P1</span> dopad velký, <span class="p2">P2</span> střední, <span class="p3">P3</span> kosmetika. Odhady jsou pro Tomáše v člověkodnech při znalosti kódu.</p>
+<table>
+<tr><th>#</th><th>Změna</th><th>Kde</th><th>Zdroj hodnot</th><th>Práce</th><th>Prio</th></tr>
+<tr><td>1</td><td><b>Top bar 4 prvky + pull-down glass sheet</b> — jedna komponenta pro kasu/KDS/sekce; nahradí 8 různých hlaviček „Domů + Tusker titul". Pokladna, Uzávěrka, Předání, Pauza se otevírají z menu jako sheety nad plánkem (ne jako routy z Home).</td><td>všechny obrazovky</td><td>§4.1, §4.2 · pos.css 100–111, 2104–2107, 2755–2905</td><td>2 d</td><td><span class="p1">P1</span></td></tr>
+<tr><td>2</td><td><b>Ilustrace do xcassets + Tile s ilustrací a washem</b> — home (104 pt), katalog (58 pt), prázdné stavy (84–110 pt s wiggle), KDS „došlo", pauza, displej hosta.</td><td>Home, Objednávka, KDS, Zákazník</td><td>§4.3, §6 · pos.css 2184–2195, 2216–2241, 1955–1957</td><td>1 d</td><td><span class="p1">P1</span></td></tr>
+<tr><td>3</td><td><b>Typografická hierarchie</b> — Tusker jen hero (login 76, home h1 46, pauza 72, displej 88, zaplaceno/pokladna titul ne); všechny titulky sheetů/obrazovek DM Sans 800 uppercase 19–24 + tracking .03–.04em; overline 10–11 px 800 .1–.14em; peníze DM Sans 800 tabular 21/24/30/34/44. Přepnout DM Sans na static 18pt (opsz).</td><td>všude</td><td>§5.2 · typography.css, pos.css 1760–1766</td><td>1 d</td><td><span class="p1">P1</span></td></tr>
+<tr><td>4</td><td><b>Motion vrstva</b> — press scale .98/100 ms na každém tlačítku, popIn steps(3) jen na nově přidaném řádku, sheet .22 s ease-sheet, chevron rotace, pulz „chce platit", KDS alarm, stamp na potvrzení. Respektovat Reduce Motion.</td><td>všude</td><td>§5.1 · motion.css, pos.css 1855–1890</td><td>1,5 d</td><td><span class="p1">P1</span></td></tr>
+<tr><td>5</td><td><b>PIN login 1:1</b> — espresso brand panel 1 : 1.25 s pozdravem Tusker 76, lidé 2 sloupce 66 pt, klávesy 76×62 radius 18, tečky 14, glass gear + role chip.</td><td>PinLoginView</td><td>§3.1 · pos.css 657–700</td><td>0,5 d</td><td><span class="p1">P1</span></td></tr>
+<tr><td>6</td><td><b>Platba jako v demu</b> — atmosféra merunka + gradient, paysum na skle, částky 30/44 px, numpad 56 pt DM Sans 600 tabular, rychlé částky, „Zbývá doplatit" sunken → „Vrátit" ok-bg, metody glass-fill-80 + elev-1.</td><td>PaymentView, AmountPad</td><td>§2.8 · pos.css 1593–1700, 2148–2160, payment/*.jsx</td><td>1 d</td><td><span class="p1">P1</span></td></tr>
+<tr><td>7</td><td><b>KDS světlý 1:1</b> — název položky DM Sans 800 20 px, číslo bonu Tusker pill, semafor tón karty + horní 4 px, oddělovače chodů, checkbox 44, boční panel Hotové · Výdej, statistiky v baru, zrno papíru.</td><td>KDSView</td><td>§2.13 · pos.css 2331–2420, 1361–1400, kds/*.jsx</td><td>1 d</td><td><span class="p1">P1</span></td></tr>
+<tr><td>8</td><td><b>Objednávka: hustota stavů</b> — pending řádky žlutě (status-warn-bg) + nadpis „NOVÉ — K ODESLÁNÍ", tužka 40, rail uppercase 13.5/700 terakota aktivní, dlaždice radius 16 + var-chip terakota outline + leaf + počet, prázdný stav s ilustrací, „⋯ Akce", Poslat espresso (ne zelená).</td><td>OrderView</td><td>§2.6 · pos.css 1573–1590, 1300–1345</td><td>1 d</td><td><span class="p2">P2</span></td></tr>
+<tr><td>9</td><td><b>Vlastní overlay pro dialogy</b> — scrim rgba(59,47,42,.4) + blur 3, sheet 560/720 pt na střed, radius 24, glass-fill-80 + blur 16 + elev-3; jedna komponenta místo <code>.sheet()</code> (SwiftUI scrim nejde přebarvit — nález fáze 1).</td><td>všechny dialogy</td><td>§4.4 · pos.css 280–300, 2817–2843</td><td>0,5 d</td><td><span class="p2">P2</span></td></tr>
+<tr><td>10</td><td><b>Uzávěrka jako Režim zavírání</b> — chipy kroků (hotovo ok-bg ✓ / aktivní espresso / další papir-2), diff-pill „± 0 Kč SEDÍ PŘESNĚ", cash-notes 3×58, navigace ghost + terakota 1fr 1fr. 6 kroků vs. 4 = funkční rozdíl, k rozhodnutí (§8).</td><td>UzaverkaView</td><td>§3.3 · pos.css 874–930, 2440–2520</td><td>1 d</td><td><span class="p2">P2</span></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2 id="audit">2 · Audit obrazovka po obrazovce</h2>
+<p>Vlevo demo, vpravo Swift (oba na šířku). Pod dvojicí tabulka: prvek → demo (hodnota ze zdroje) → Swift (stav) → priorita. Barvy jsou tokeny z <code>tokens/colors.css</code>, hodnoty v px z dema = pt ve SwiftUI (obě strany jsou logické jednotky na 2×).</p>
+
+<!-- 2.1 -->
+<h3 id="a-login">2.1 Přihlášení · PIN</h3>
+<div class="cmp">
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_02_login_pin.jpg" alt=""><figcaption><b>Demo</b> home.html · krok PIN <span class="tag demo">1180×885</span></figcaption></figure>
+  <figure><img src="swift_design_faze2_2026-09-23_img/swift_01_pin_login.jpg" alt=""><figcaption><b>Swift</b> PinLoginView <span class="tag swift">1210×834</span></figcaption></figure>
+</div>
+<table>
+<tr><th>Prvek</th><th>Demo (hodnota)</th><th>Swift dnes</th><th>Prio</th></tr>
+<tr><td>Layout</td><td><code>.hs</code> grid <b>1fr 1.25fr</b>: vlevo espresso brand panel, vpravo obsah (padding 30/34, gap 18)</td><td>Jedna papírová plocha, brand vlevo nahoře malý, lidé 1 sloupec, PIN karta vpravo</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Brand panel</td><td>bg <code>--espresso</code>, padding 34; overline „KAVÁRNA NOVÝ SVĚT · POS" 11/800 tracking .2em <code>--merunka</code>; <b>pozdrav Tusker 76 px / .95 uppercase</b> („DOBRÉ RÁNO." podle času); dole sysrows 12.5/600 rgba(251,246,236,.75) + tečka 8 px <code>--status-ok</code> s ringem 3 px; verze + čas</td><td>chybí (Tusker „NOVÝ SVĚT / POS" ~40 px na papíru)</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Nadpis kroku</td><td><code>.hs-main h2</code> DM Sans <b>800 uppercase 22</b> tracking .03em („KDO JE U KASY?" / „ANETA — ZADEJ PIN")</td><td>„Kdo je u kasy?" 14 regular; „ANETA" Tusker 22</td><td><span class="p2">P2</span></td></tr>
+<tr><td>Lidé</td><td><code>.hs-people</code> <b>2 sloupce</b> gap 10; <code>.hs-person</code> min-h 66, bg papir-2, radius 12, padding 12/14; avatar 40 pill, DM Sans 800 17; jméno 15/700, role 11.5/600 opacity .6; vybraný = <code>--terakota</code> + <code>#FFFCF6</code></td><td>1 sloupec, řádky ~44 pt, avatar 24, jméno 13, vybraný = merunka tint + šipka</td><td><span class="p1">P1</span></td></tr>
+<tr><td>PIN tečky</td><td><code>.pin-dots i</code> <b>14 px</b>, gap 12, <code>--ink-12</code> → <code>--espresso</code></td><td>8 pt tečky, ink-20</td><td><span class="p3">P3</span></td></tr>
+<tr><td>Klávesy</td><td><code>.pinpad</code> 3 × <b>76 px</b>, gap 10; tlačítko <b>výška 62, radius 18</b>, bg papir-2, DM Sans 800 22; 4. řádek „←" · 0 · „Zpět"</td><td>3 × ~56, výška ~40, radius 8, DM Sans 20 regular; „⌫" · 0 · „→"</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Role zařízení</td><td><code>.hs-gear</code> 44 pill glass-fill-60 + blur 8 + edge-soft + elev-1 vpravo nahoře; <code>.hs-rolechip</code> „Toto zařízení: Kasa" 11/700 glass pill</td><td>chybí (role v Nastavení)</td><td><span class="p2">P2</span></td></tr>
+<tr><td>Washe</td><td>žádné na loginu (espresso panel dělá kontrast)</td><td>terakota + salvej wash v rozích</td><td><span class="p3">P3</span> nechat jen pokud zůstane jednoplošný layout — doporučuji panel</td></tr>
+</table>
+
+<!-- 2.2 -->
+<h3 id="a-home">2.2 Domů · rozcestník</h3>
+<div class="cmp">
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_03_home_dlazdice.jpg" alt=""><figcaption><b>Demo</b> home.html po PINu <span class="tag demo">.mh</span></figcaption></figure>
+  <figure><img src="swift_design_faze2_2026-09-23_img/swift_03_home.jpg" alt=""><figcaption><b>Swift</b> HomeView <span class="tag swift">--login --screen home</span></figcaption></figure>
+</div>
+<table>
+<tr><th>Prvek</th><th>Demo (hodnota)</th><th>Swift dnes</th><th>Prio</th></tr>
+<tr><td>Hlavička</td><td>h1 <b>Tusker 46 / .95 uppercase</b> „NOVÝ SVĚT POS" (jediné Tusker na home); vedle <code>.who</code> 12.5/600 ink-45 „<b>Aneta</b> · Kasa / středa 23. září · tržba dne 4 517 Kč (69 % ø)"; vpravo btn „Odhlásit" (btn 48, papir-2, ikona ic-ds)</td><td>Tusker ~40 dvouřádkový OK; vpravo datum „Středa 23. Září" (velké Z — chyba), tržba, dvě ikonová tlačítka 44 (zámek, odhlásit) bez labelu</td><td><span class="p2">P2</span></td></tr>
+<tr><td>Washe stránky</td><td><code>.mh::before</code> wash-safran 460×380 top −120 right −140 rot −10° op .5; <code>::after</code> wash-salvej 420×360 bottom −140 left −120 rot 14° op .5</td><td>ano (fáze 1), safran vpravo nahoře + salvej vlevo dole — sedí</td><td><span class="p3">P3</span></td></tr>
+<tr><td>Grid dlaždic</td><td><b>3 sloupce</b>, gap 14; dlaždice <b>min-h 188, radius 24</b>, padding 16, bg card + ring-hairline, obsah zarovnán dolů</td><td>4 sloupce, výška ~150, radius ~20 (8 dlaždic: přibyly KDS, Pokladna, Uzávěrka — víc než demo, v pořádku)</td><td><span class="p2">P2</span> → 4 sloupce nechat, výšku 188, radius 24</td></tr>
+<tr><td>Wash v dlaždici</td><td><code>.mh-tile::before</code> top −34 % right −26 % w 85 % h 95 % op .8; wash per dlaždice: Kasa terakota, Stoly salvej, Zákazníci merunka, Přehledy obloha, Nastavení levandule</td><td>ano, ale sytější a od vrchu; Kasa má wash terakota z levého rohu</td><td><span class="p3">P3</span> jen doladit pozici/opacitu</td></tr>
+<tr><td><b>Ilustrace</b></td><td><code>.mh-tile .illu</code> <b>104×104</b> top 12 right 12, object-fit contain; PNG <code>cup / chair / people-two / receipt-note / lamp</code></td><td>SF Symbol 30 pt v pravém horním rohu</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Label na skle</td><td><code>.lbl</code> glass-fill-60 + blur 8, radius 12, padding 10/14, glass-edge-soft; <b>b DM Sans 800 uppercase 21</b> tracking .03em; small 11.5/600 ink-70</td><td>label na světlé ploše ano; titul Tusker ~20 (má být DM Sans 800)</td><td><span class="p2">P2</span></td></tr>
+<tr><td>Overline</td><td><code>.k</code> 10/800 tracking .14em uppercase ink-45, absolutně top 14 left 16</td><td>ano</td><td>—</td></tr>
+<tr><td>Hub karta</td><td>6. dlaždice „KNS HUB · DNES": směna, rezervace, odkaz na hub — data z hubu</td><td>chybí (funkční, ne design; M5 sync)</td><td>—</td></tr>
+<tr><td>Hover/press</td><td><code>translateY(−3) + elev-2</code> .16 s ease-out</td><td>nic</td><td><span class="p2">P2</span> → press scale .98</td></tr>
+</table>
+
+<!-- 2.3 -->
+<h3 id="a-topbar">2.3 Horní bar v3.7 + pull-down menu</h3>
+<div class="cmp">
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_05_kasa_pulldown_menu.jpg" alt=""><figcaption><b>Demo</b> kasa.html · bar 4 prvky + otevřené menu <span class="tag demo">#tbSheet</span></figcaption></figure>
+  <figure><img src="swift_design_faze2_2026-09-23_img/swift_04_kasa_planek.jpg" alt=""><figcaption><b>Swift</b> hlavička plánku (Domů · PLÁNEK · S sebou · KDS) <span class="tag swift">bez menu</span></figcaption></figure>
+</div>
+<div class="strip">Tohle je největší strukturální rozdíl. Demo má jeden bar pro celé zařízení a všechno „ostatní" (směna, pokladna, uzávěrka, správa) schované v menu shora. Swift má na každé obrazovce jinou hlavičku a Pokladnu/Uzávěrku jako dlaždice na Home. Jakubovo zadání v3.7: „vidět jen věci, co jsou opravdu třeba".</div>
+<table>
+<tr><th>Prvek</th><th>Demo (hodnota)</th><th>Swift dnes</th><th>Prio</th></tr>
+<tr><td>Bar</td><td><code>.topbar</code> padding 12/18, gap 14, bg <b>rgba(251,246,236,.82) + blur 8</b>, hairline dole; min-h prvků 48</td><td>per-obrazovka HStack, bg papír bez blur, hairline ano</td><td><span class="p1">P1</span></td></tr>
+<tr><td>1 · Kontext</td><td>na plánku: logo <code>logo-kns-coral.png</code> 44 + „NOVÝ SVĚT" <b>Tusker 26/700</b> tracking .02em + role „KASA · BAR" 11/700 .14em terakota; na účtu: <code>.tb-back</code> 48 pill papir-2 „←" 19/700 + <code>.tb-name</code> Tusker 22/700 (jediná cesta zpět, <code>.os-back</code> mizí)</td><td>„Domů" pill s ikonou + titul obrazovky Tusker ~28; na účtu „< Plánek" pill + KULATÝ Tusker</td><td><span class="p1">P1</span></td></tr>
+<tr><td>2 · Segment</td><td><code>.seg</code> track papir-3 radius 12 padding 4 gap 4; tlačítko radius 8, 600, min-h 40; <b>aktivní terakota + #FFFCF6</b>; „Provoz | Účty (4)"</td><td>chybí (Účty = jen historie v Přehledech)</td><td><span class="p1">P1</span></td></tr>
+<tr><td>3 · LivePill</td><td><code>.livepill</code> min-h 44, padding 8/16, pill, <b>glass-fill-80 + blur 16, elev-2 + glass-edge-soft</b>; tečka 8 status-ok; b 12/600; span 10 tabular op .75; event = popIn .24 s ease-pop + tón ok/warn/danger/ink; alarm pulz 1.4 s</td><td>chybí; na Home je řádek „Online · server mock · EET 2.0 · Lokální DB" 12 px</td><td><span class="p1">P1</span></td></tr>
+<tr><td>4 · Rukojeť</td><td><code>.tb-handle</code> min-h 48, padding 6 12 6 6, pill, papir-2; avatar 32 terakota DM 800 13; jméno 12.5/600 + small 10.5/500 ink-45; chevron 15 rotate 180° při otevření (.16 s); badge <code>.tb-dot</code> 11 px status-warn/danger s ringem 2.5 px papir-2</td><td>chybí (avatar nikde)</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Pull-down sheet</td><td><code>.tb-sheet</code> glass-fill-80 + <b>blur 24</b>, radius 0 0 24 24, padding 16/24/12, gap 16, glass-edge-soft + elev-3; enter translateY(−101 %→0) <b>.22 s ease-sheet</b> cubic-bezier(.3,1.2,.4,1), exit .22 s ease-out; scrim rgba(59,47,42,.4) + blur 3; grip 64×5 ink-12</td><td>chybí</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Hlava sheetu</td><td>avatar 40 terakota 800 16; jméno 15/800 + „směna od 9:30" 11.5/600 ink-45; vpravo <code>.pulse-chip</code> glass-fill-60 „Dnes 4.5k / ø 6.5k" + bar 4 px gradient ok→safran; alert chipy 8/13 pill 12.5/700 warn-bg/fg („Bez zapsaného příchodu")</td><td>—</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Dlaždice menu</td><td>skupiny SMĚNA / PROVOZ / SPRÁVA (titulek 10/800 .13em ink-45); grid minmax(230,1fr) gap 8; <code>.tbs-tile</code> <b>min-h 56</b>, padding 10/14, radius 12, glass-fill-60 + edge-soft; ikona 26/19 px; b 13.5/700, small 11/600 ink-45 lh 1.35; stav-chip 10.5/800 pill; warn = inset ring 1.5 status-warn</td><td>—</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Položky</td><td>Moje směna · Přestávka · Předání kasy · Rezervace / Pokladna · Uzávěrka · Vitrína · 86 · Denní menu / Přepnout pohled · Displej hosta · Nastavení obrazovky · Odhlásit se</td><td>Swift má: Pokladna, Uzávěrka, Nastavení, Odhlásit, Zámek (= Přestávka), Předání (v PinLoginView). Chybí: Moje směna, Rezervace, Vitrína, Denní menu, Displej hosta (funkční, M5+)</td><td>—</td></tr>
+</table>
+
+<!-- 2.4 -->
+<h3 id="a-planek">2.4 Plánek stolů</h3>
+<div class="cmp">
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_04_kasa_planek.jpg" alt=""><figcaption><b>Demo</b> kasa.html · Provoz <span class="tag demo">.fp</span></figcaption></figure>
+  <figure><img src="swift_design_faze2_2026-09-23_img/swift_04_kasa_planek.jpg" alt=""><figcaption><b>Swift</b> FloorPlanView <span class="tag swift">--open-table NIC</span></figcaption></figure>
+</div>
+<table>
+<tr><th>Prvek</th><th>Demo (hodnota)</th><th>Swift dnes</th><th>Prio</th></tr>
+<tr><td>Plátno</td><td><code>.fp</code> papir-2 + hairline, radius 16; zóna Terasa papir-3-ish s labelem 11/800 .14em; washe <code>.fs</code> safran 46×40 % @ 108 %/−6 % op .16 + salvej 42×38 % @ −6 %/108 %</td><td>sedí (fáze 1)</td><td>—</td></tr>
+<tr><td>Stůl</td><td><code>.fp-t</code> radius 12, padding 4; název <b>DM Sans 800 uppercase 12.5</b> tracking .03em v barvě stavu (<code>--state-*-fg</code>); info 9.5/700 ink-45 („volný · 3 m." / „652 Kč · kuchyň" + „⏱ 18 m · obj 18 m"); rohové „…" jako affordance</td><td>název mixed-case 14 regular v state-fg; info 10 ok; bez „…" a bez částky/času u obsazeného</td><td><span class="p2">P2</span></td></tr>
+<tr><td>Stavy</td><td>free: state-free-bg + inset 1 px line-subtle · busy: state-occupied-bg bez ringu · rez: state-reserved-bg · pay: state-wantspay-bg + <b>kns-pulse 1.8 s</b> · sel: ring-selected 2 px terakota · přechod bg .16 s</td><td>free/busy/rez/pay ano, statické, bez sel ringu a přechodu</td><td><span class="p2">P2</span></td></tr>
+<tr><td>Bar · čekačka</td><td><code>.fp-t.barc</code> papir-3 + ring-default, radius 8/8/20/8, „volný · 2 židle"</td><td>zelený jako volný stůl</td><td><span class="p3">P3</span></td></tr>
+<tr><td>Legenda</td><td>tečky 8 px + 12.5/600 ink-70; 5 položek</td><td>ano</td><td>—</td></tr>
+<tr><td>S sebou</td><td>velké tlačítko vpravo nahoře „S sebou / bar — bez stolu" card radius 16 ring-hairline 60 pt s ikonou bag; dole pruh status-warn-bg „S sebou otevřené: #57 · Petr · 252 Kč" pill chipy 44; čekačka pruh</td><td>btn „S sebou" terakota 44 v hlavičce; pruhy chybí (otevřené účty s sebou nejsou vidět)</td><td><span class="p2">P2</span></td></tr>
+</table>
+
+<!-- 2.5 -->
+<h3 id="a-hoste">2.5 Dialog „kolik hostů?" · S sebou</h3>
+<div class="cmp">
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_07_kasa_dialog_hoste.jpg" alt=""><figcaption><b>Demo</b> GuestCountDialog <span class="tag demo">.sheet</span></figcaption></figure>
+  <figure><img src="swift_design_faze2_2026-09-23_img/swift_07_kasa_dialog_hoste.jpg" alt=""><figcaption><b>Swift</b> GuestCountSheet <span class="tag swift">--show-guests Kulatý</span></figcaption></figure>
+</div>
+<table>
+<tr><th>Prvek</th><th>Demo (hodnota)</th><th>Swift dnes</th><th>Prio</th></tr>
+<tr><td>Overlay</td><td>scrim <b>rgba(59,47,42,.4) + blur 3</b>; sheet width min(560, 94 %), radius 24, padding 26, gap 16, glass-fill-80 + blur 16, elev-3</td><td>systémový šedý scrim bez blur; sheet ~380 pt, radius 24, glass ✓</td><td><span class="p2">P2</span> (§4.4)</td></tr>
+<tr><td>Titulek</td><td>ikona guests 26 + <b>DM Sans 800 uppercase 24</b> tracking .04em „KULATÝ — KOLIK HOSTŮ?"; sub 13 ink-45; x 40 pill papir-2</td><td>ikona SF + 20 regular mixed-case; x 32</td><td><span class="p2">P2</span></td></tr>
+<tr><td>Pořadí</td><td><b>jazyk nejdřív</b> (chipy CZ/EN/DE 44 s vlajkou, aktivní terakota), pak počet</td><td>počet nejdřív, jazyk dole (text chipy CZ/EN/DE — OK, vlajky nepoužívat)</td><td><span class="p3">P3</span> pořadí sjednotit s demem</td></tr>
+<tr><td>Mřížka</td><td><code>.guest-grid</code> 3 sloupce gap 10; tlačítko <b>min-h 76, radius 12</b>, papir-2, <b>DM Sans 800 30</b>; press terakota; „9+"</td><td>3 sloupce, ~56 pt, radius 12, 22 regular</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Čekačka</td><td>btn „Usadit z čekačky — Novákovi (2)" 60 pt papir-2 (jen když existuje)</td><td>chybí (funkční)</td><td>—</td></tr>
+<tr><td>Přeskočit</td><td><code>.btn.ghost</code> 48, inset 1.5 ink-12, 15/700</td><td>ano</td><td>—</td></tr>
+</table>
+
+<!-- 2.6 -->
+<h3 id="a-order">2.6 Objednávka · dvoupanel</h3>
+<div class="cmp">
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_09_kasa_objednavka_polozky.jpg" alt=""><figcaption><b>Demo</b> 3 nové řádky (pending) + katalog Sladké <span class="tag demo">.os</span></figcaption></figure>
+  <figure><img src="swift_design_faze2_2026-09-23_img/swift_09_kasa_objednavka_polozky.jpg" alt=""><figcaption><b>Swift</b> OrderView, 4 řádky před odesláním <span class="tag swift">--open-table Kulatý --seed</span></figcaption></figure>
+</div>
+<div class="cmp">
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_08b_kasa_ucet_obsazeny_stul.jpg" alt=""><figcaption><b>Demo</b> odeslaný účet: čas u stolu, servisní chipy, štítky chodů, mods/poznámky <span class="tag demo">Výklenek</span></figcaption></figure>
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_08_kasa_objednavka_prazdna.jpg" alt=""><figcaption><b>Demo</b> prázdný účet: ilustrace cup 84 + wiggle, „NOVÝ ÚČET — KULATÝ" <span class="tag demo">.bill-empty</span></figcaption></figure>
+</div>
+<table>
+<tr><th>Prvek</th><th>Demo (hodnota)</th><th>Swift dnes</th><th>Prio</th></tr>
+<tr><td>Panely</td><td><code>.os</code> grid <b>minmax(320, 35 %) 1fr</b>; účet bg papír + border-right ink-12; rail <code>.os-cats</code> 118 px; katalog bg papir-2 padding 16</td><td>35 % ✓, rail 132 (komentář v DesignTokens: čeká na sazbu railu), katalog bg papír (má být papir-2)</td><td><span class="p3">P3</span></td></tr>
+<tr><td>Hlavička účtu</td><td><code>.os-title</code> DM Sans 800 uppercase 19 tracking .03em; <code>.os-guests</code> pill 40 papir-2 800 14 s ikonou; dashed hairline dole; na kase bez „← Plánek" (bar má zpět)</td><td>„< Plánek" pill + Tusker KULATÝ 26 + guests pill + ikona s sebou</td><td><span class="p2">P2</span></td></tr>
+<tr><td>Čas u stolu</td><td><code>.os-times</code> chip „⏱ sedí 23 m · poslední objednávka před 23 min" papir-2 radius 8 11/700; warn = status-warn-bg</td><td>chybí</td><td><span class="p2">P2</span></td></tr>
+<tr><td>Servisní chipy</td><td><code>.svc-chips</code> Příbory · Voda · Chléb · Servírováno, pill 38, papír + inset 1.5 ink-12, 12.5/700; on = espresso</td><td>chybí (funkční, ale levné)</td><td><span class="p3">P3</span></td></tr>
+<tr><td><b>Řádek účtu</b></td><td><code>.os-row</code> radius 8; <b>pending = status-warn-bg</b> pod nadpisem „NOVÉ — K ODESLÁNÍ" (10.5/800 .12em); qty box „1×" 800; název 700 + varianta ink-45; poznámka koral italic; štítek chodu „S JÍDLEM" ok-bg 9/800; cena 800 tabular; tužka 40 sunken; stepper 40 sunken radius 8 „−/+" 600 18</td><td>řádky bez pozadí, qty terakota, název regular, stepper 32 papir-3; odeslané řádky mají „✓ u baru / v kuchyni" 11 ok — dobré, demo to nemá</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Patička</td><td>border-top ink-12, padding 12/14/14; „CELKEM" overline + <b>34/800 tabular</b>; <code>.os-paybtn</code> terakota <b>min-h 62</b>, 18/700, radius 16; řada 1fr auto: „Poslat (3) →" <b>espresso</b> 48 + „⋯ Akce" ghost</td><td>Celkem 34 ✓; Zaplatit 56 ✓; „Do kuchyně (5) →" <b>zelená #2E7A4B</b> (má být espresso <code>--surface-inverse</code>, pos.css 1310); Akce chybí</td><td><span class="p2">P2</span></td></tr>
+<tr><td>Prázdný stav</td><td><code>.bill-empty</code> ilustrace cup 84 <b>wiggle</b> (steps(1) 1.15 s ±1.7°), „NOVÝ ÚČET — KULATÝ" 19/800 ink-70, hint 13.5 ink-45</td><td>jen text „Nový účet — markuj vpravo"</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Rail kategorií</td><td><code>.cat-rail button</code> min-h 62, radius 12, <b>DM Sans 700 uppercase 13.5</b> tracking .05em ink-45, tečka <code>--cat-*</code> 9 px; <b>aktivní = terakota + #FFFCF6</b> (pos.css 1300); hover papir-2</td><td>52 pt, mixed-case 13 medium, aktivní <b>espresso</b>; barvy teček z importu (ne DS mapa Káva terakota / Nápoje safran / Jídlo salvej / Dezerty levandule / Merch obloha)</td><td><span class="p2">P2</span></td></tr>
+<tr><td><b>Dlaždice</b></td><td><code>.tile</code> card, <b>radius 16</b>, ring-hairline, padding 14/14/12, min-h 96 (grid minmax(148,1fr) gap 12); <code>.nm</code> 15/700 s tile-dot 9; <code>.pr</code> <b>21/800 tabular</b> „64,–"; <code>.var-chip</code> „⋯ VARIANTY" 9/800 .07em pill <b>inset 1 px terakota + text terakota</b>; <code>.badge-count</code> „6 ks" pill ring-default 11 ok-fg (low = koral); <code>.kds-mark</code> lístek 14 px salvej v rohu; <b>ilustrace 58×58</b> right 2 bottom 2; dead = opacity .5 + „86"; HH badge safran</td><td>card radius 12 ring ✓; název 15 regular; cena 21/700 ✓; „⋯ varianty" <b>šedý chip lowercase</b>; tečka 6 px vpravo dole u položek kuchyně (má být leaf/HH); bez ilustrace; bez počtu</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Ilustrace ↔ položka</td><td><code>pos.js</code> 40–61: podle názvu (polévka→soup, croissant, chléb/sendvič→bread, omelet→omelette, granol/jogurt→granola, dort/cheesecake/koláč/buchta→cake, čaj→tea-cup, limo→glass, víno→wine, pivo→beer, zrnk→coffee-beans, espresso tonic) jinak podle kategorie (Káva cup, Nápoje glass, Teplé hot-chocolate, Čaj tea-cup, Sladké cake, Lihoviny spirits, Vína wine-bottle, Jídlo plate-food, Snídaně omelette, Balíčky bag, Ostatní bag-coffee, Zmrzlina icecream, Koktejly cocktail; Oblíbené = domovská kategorie)</td><td>—</td><td>převzít tabulku 1:1 do <code>MenuItem.illustration</code></td></tr>
+</table>
+
+<!-- 2.7 -->
+<h3 id="a-mod">2.7 Modifikátory</h3>
+<div class="cmp">
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_10_kasa_modifikatory.jpg" alt=""><figcaption><b>Demo</b> ModifierSheet · Espresso (fast mode: tap = přidat) <span class="tag demo">.sheet.mp</span></figcaption></figure>
+  <figure><img src="swift_design_faze2_2026-09-23_img/swift_10_kasa_modifikatory.jpg" alt=""><figcaption><b>Swift</b> ModifierSheet · Cappuccino <span class="tag swift">--show-mod cappuccino</span></figcaption></figure>
+</div>
+<table>
+<tr><th>Prvek</th><th>Demo (hodnota)</th><th>Swift dnes</th><th>Prio</th></tr>
+<tr><td>Titulek</td><td>DM Sans <b>800 uppercase 24</b> „ESPRESSO"; skupina <code>.tp-zone</code> 11/800 .12em ink-45 „VARIANTA · volitelné (max 2)"</td><td>20 regular „Cappuccino"; skupina overline ✓</td><td><span class="p2">P2</span></td></tr>
+<tr><td>Volby</td><td><code>.mp-opts</code> <b>2 sloupce</b> gap 9; tlačítko papir-2 radius 12, <b>min-h 56</b>, b 15/700 + cena 11.5/700 <b>terakota</b> pod názvem („+20,–"); on = terakota + #FFFCF6</td><td>inline chipy 40 pt „Iced +8,-" 14 regular papir-2</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Fast mode</td><td>povinná skupina s 1 volbou → tap = přidat, bez tlačítka; jinak <code>.btn.primary.big</code> 60 „Přidat na účet · 84 Kč"</td><td>vždy tlačítko terakota 56</td><td><span class="p3">P3</span></td></tr>
+<tr><td>Poznámka</td><td><code>.mp-note</code> „✎ Sýr, bez chilli…" 13 ink-70 italic — vstup do poznámky kuchyni</td><td>chybí</td><td><span class="p3">P3</span></td></tr>
+</table>
+
+<!-- 2.8 -->
+<h3 id="a-pay">2.8 Platba</h3>
+<div class="cmp">
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_13_kasa_platba_hotovost.jpg" alt=""><figcaption><b>Demo</b> hotovost: paysum · přijato · numpad + rychlé částky · zbývá <span class="tag demo">?open=hotovost</span></figcaption></figure>
+  <figure><img src="swift_design_faze2_2026-09-23_img/swift_12_kasa_platba.jpg" alt=""><figcaption><b>Swift</b> PaymentView · karta <span class="tag swift">--pay</span></figcaption></figure>
+</div>
+<div class="cmp">
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_14_kasa_uctenka.jpg" alt=""><figcaption><b>Demo</b> účtenka: mono, zubatý okraj, Na firmu / Tisk <span class="tag demo">.receipt</span></figcaption></figure>
+  <figure><img src="swift_design_faze2_2026-09-23_img/swift_14_kasa_zaplaceno.jpg" alt=""><figcaption><b>Swift</b> Zaplaceno <span class="tag swift">--pay-done</span></figcaption></figure>
+</div>
+<table>
+<tr><th>Prvek</th><th>Demo (hodnota)</th><th>Swift dnes</th><th>Prio</th></tr>
+<tr><td>Kontejner</td><td>sheet 560 pt (pay) na scrimu; pozadí <code>.os-pay</code> = <b>atmo-merunka.png cover + gradient rgba(251,246,236,.5→.72)</b>; obsah max 560 na střed</td><td><code>.page</code> sheet přes většinu iPadu, papír bez atmosféry</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Titulek</td><td>„PLATBA — VELKÝ 1" DM Sans 800 uppercase 24 + x 40</td><td>„ZAPLATIT" Tusker 28 + sub „Kulatý"</td><td><span class="p2">P2</span></td></tr>
+<tr><td>Souhrn</td><td><code>.paysum</code> <b>glass-fill-60 + blur 8, radius 16</b>, edge-soft + elev-1, padding 16; Mezisoučet/Spropitné 14; dashed hr; „Celkem" <b>24/800</b> tabular</td><td>chybí (rovnou účtenka)</td><td><span class="p2">P2</span></td></tr>
+<tr><td>Metody</td><td><code>[data-methods] .btn</code> glass-fill-80 + edge-soft + elev-1, 48; vybraná terakota; Hotovost · Karta (SumUp) · Hotovost + karta · Voucher</td><td>3 tlačítka 44, vybraná terakota ✓, sklo slabší</td><td><span class="p3">P3</span></td></tr>
+<tr><td>Přijato</td><td><code>.cash-received</code> papir-2 radius 12 padding 14/16; label 11/800 .1em ink-45; <b>hodnota 30/800</b></td><td>AmountPad (bez screenshotu) — ověřit velikosti</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Numpad</td><td><code>.cash-pad</code> 3 × 56 pt, DM Sans <b>600 22 tabular</b>, radius 12, card + ring-hairline; „↺ · 0 · ⌫"; rychlé částky 100/200/500/1000/2000 + „Přesně 265 Kč" = <code>.cash-notes</code> 58 pt card + inset 1.5 ink-12, 600 19 tabular</td><td>AmountPad — sjednotit s PinPad (§4.7)</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Zbývá / Vrátit</td><td><code>.cash-back.due</code> sunken papir-2, radius 16, padding 18/20, label 12/800 .12em, <b>44/800</b> tracking −.01em; při přeplatku <code>.cash-back</code> <b>status-ok-bg + ok-fg</b> „VRÁTIT 35 Kč"</td><td>?</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Spropitné</td><td><code>.tips</code> TipGrid: 0 · 5 % · 10 % · 15 % · vlastní, pill 44, on = terakota</td><td>chybí</td><td><span class="p3">P3</span> (funkční)</td></tr>
+<tr><td>Rozdělit</td><td>segment „Celý účet | Rozdělit" = <code>.seg</code> (terakota aktivní); split rows s pick terakota</td><td>segment <b>espresso</b> aktivní, pill</td><td><span class="p3">P3</span></td></tr>
+<tr><td>Účtenka</td><td><code>.receipt</code> card radius 6, padding 22/20, <b>SF Mono 12 / 1.55</b>, stín 0 6 22 rgba(59,47,42,.18), <b>zubatý okraj</b> (::after radial 15×10); hlava DM Sans 800 uppercase 19 .05em; dashed hr rgba(59,47,42,.3); CELKEM 800; FIK/BKP; tlačítka „Na firmu (IČO/DIČ)" ghost + „Tisk — Epson TM-m30" terakota</td><td>card radius 12 ring, DM Sans 12, bez mono/zubů/stínu; „Hotovo — zpět na plánek" espresso; ok strip „Karta · 3 845 Kč" ✓ (pěkné, nechat)</td><td><span class="p2">P2</span></td></tr>
+</table>
+
+<!-- 2.9 pokladna -->
+<h3 id="a-pokladna">2.9 Pokladna</h3>
+<div class="cmp">
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_15_kasa_pokladna.jpg" alt=""><figcaption><b>Demo</b> sheet z menu <span class="tag demo">?open=pokladna</span></figcaption></figure>
+  <figure><img src="swift_design_faze2_2026-09-23_img/swift_15_pokladna.jpg" alt=""><figcaption><b>Swift</b> PokladnaView (celá obrazovka) <span class="tag swift">--screen pokladna</span></figcaption></figure>
+</div>
+<p>Spec 1:1 v <a href="#m4-pokladna">§3.2</a>. Hlavní rozdíly: hero espresso karta „OČEKÁVÁNO V KASE" (label safran, hodnota 26/800 papír) vs. bílá karta s terakota 22 regular; dvě velká tlačítka Vklad/Výběr (btn.big 60, radius 16, šipky) + široký No-sale s vysvětlením vs. 4 ikonové karty; log pohybů s časem · co · kdo · tag · částka vs. prázdný box.</p>
+
+<!-- 2.10 uzávěrka -->
+<h3 id="a-uzaverka">2.10 Uzávěrka · Režim zavírání</h3>
+<div class="cmp">
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_21_uzaverka_3_pokladna.jpg" alt=""><figcaption><b>Demo</b> krok 3 · počítání hotovosti + diff-pill <span class="tag demo">?open=pocitani</span></figcaption></figure>
+  <figure><img src="swift_design_faze2_2026-09-23_img/swift_19_uzaverka.jpg" alt=""><figcaption><b>Swift</b> UzaverkaView krok 1 · Přehled dne <span class="tag swift">--screen uzaverka</span></figcaption></figure>
+</div>
+<div class="cmp">
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_19_uzaverka_1_ukoly.jpg" alt=""><figcaption><b>Demo</b> krok 1 · Úkoly (checklist + speciální úkoly z hubu) <span class="tag demo">?open=uzaverka</span></figcaption></figure>
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_24_uzaverka_6_souhrn.jpg" alt=""><figcaption><b>Demo</b> krok 6 · Souhrn &amp; rozeslání <span class="tag demo">?open=handoff</span></figcaption></figure>
+</div>
+<p>Spec 1:1 v <a href="#m4-uzaverka">§3.3</a>. Swift má 4 kroky (Přehled · Počítání · Kdo pracoval · Odesláno), demo 6 (Úkoly · Docházka · Pokladna · Předávka · Co dochází · Rozeslání). Vizuálně: chipy kroků, diff-pill, cash-notes, navigace ghost+terakota = přenositelné hned; Úkoly/Předávka/Co dochází potřebují data z hubu (M5) — rozhodnutí v §8.</p>
+
+<!-- 2.11 předání + pauza -->
+<h3 id="a-predani">2.11 Předání kasy · Přestávka</h3>
+<div class="cmp">
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_06b_kasa_predani_pin.jpg" alt=""><figcaption><b>Demo</b> předání: hero + kdo přebírá + PIN 2/4 <span class="tag demo">#shiftSheet</span></figcaption></figure>
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_05b_kasa_prestavka_overlay.jpg" alt=""><figcaption><b>Demo</b> pauza: espresso + zrno, Tusker 72, ilustrace <span class="tag demo">.break-ov</span></figcaption></figure>
+</div>
+<div class="strip info">Swift obě obrazovky má (<code>PinLoginView.swift</code>: LockScreenView + předání), ale nejdou vyvolat launch argumentem a kód jsem nesměla měnit — screenshot chybí. Spec 1:1 v §3.4 a §3.5 vychází z dema; Tomáš ať přiloží screenshot po implementaci.</div>
+
+<!-- 2.13 KDS -->
+<h3 id="a-kds">2.12 KDS</h3>
+<div class="cmp">
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_25_kds.jpg" alt=""><figcaption><b>Demo</b> kds.html světlý · 3 bony, semafor, chody, boční výdej <span class="tag demo">.device.kds</span></figcaption></figure>
+  <figure><img src="swift_design_faze2_2026-09-23_img/swift_25_kds.jpg" alt=""><figcaption><b>Swift</b> KDSView <span class="tag swift">--screen kds</span></figcaption></figure>
+</div>
+<table>
+<tr><th>Prvek</th><th>Demo (hodnota)</th><th>Swift dnes</th><th>Prio</th></tr>
+<tr><td>Plocha</td><td>papír + <b>paper-grain.png 512×512 tile</b>; washe safran 440×360 (top −120, right 120, op .42, rot −10°) + salvej 400×340 (bottom −140, left −110, op .42, rot 16°); grid <code>.kds-main</code> 1fr 208 px</td><td>papír bez zrna, salvej wash vlevo dole slabě; bez bočního panelu</td><td><span class="p2">P2</span></td></tr>
+<tr><td>Bar</td><td>brand + „KUCHYŇ · KDS"; statistiky <b>3 VE FRONTĚ · 15 min PRŮM. ČAS · 0 HOTOVO DNES</b> (20/800 + overline 9.5/800 .1em); chipy „86 · došlo", „⚡ Rush"; LivePill; gear; avatar „Aneta · kuchyň · 14:43"</td><td>„KDS" Tusker + sub; chip „4 aktivních"; x</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Bon</td><td><code>.ticket</code> radius 16, <b>bg podle stáří</b> rgba(155,217,180,.16) / (245,206,134,.2) / (255,154,144,.22) + <b>inset 0 4 px 0 0 kds-color</b> + ring-hairline; prahy ≥ 5 min safran, ≥ 10 min korál; late = kns-alarm ring 5 px koral .24 1.4 s</td><td>radius 12 card + zelený proužek 3 px nahoře; všechny čerstvé → nelze ověřit tón; bez alarmu</td><td><span class="p2">P2</span></td></tr>
+<tr><td>Hlava bonu</td><td>padding 12/14/8; <b>číslo Tusker 19/700 pill</b> padding 2/9/1 bg ink-08 (late: danger-bg/fg); „VÝKLENEK" 11/800 .08em ink-45; čas <b>17/800 tabular</b> vpravo (warn safran-fg, late koral)</td><td>„#4" pill 13 DM, „Kulatý" 14, čas 12 regular</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Položka</td><td>qty 13/800 safran-fg min-w 30; <b>název DM Sans 800 20 / 1.12</b>; mods 12.5/600 ink-70; poznámka „✎ „bez chilli"" 12.5 italic koral; <b>checkbox 44 card</b> vpravo; hotovo = přeškrtnutí 3 px + opacity .38</td><td>qty 13 safran, název <b>14 regular</b>, stanice chip vpravo (kuchyň safran-bg / bar), bez checkboxu</td><td><span class="p1">P1</span> (čitelnost z 1,5 m)</td></tr>
+<tr><td>Chody</td><td>dashed oddělovač + „⏱ S JÍDLEM" / „⏱ PO JÍDLE" overline; levá svislá linka 3 px status-ok / levandule u odloženého chodu</td><td>chybí (datový model chodů — mimo design)</td><td>—</td></tr>
+<tr><td>Bump</td><td><code>.bump</code> světlý: rgba(255,252,246,.75) + hairline, radius 13, <b>min-h 52</b>, margin 0 10 12, „Hotovo ✓" 15/700; ready = status-ok-bg + pulz 1.4 s „Zavřít bon" 16.5</td><td>„✓ Došlo — hotovo" ghost 44</td><td><span class="p2">P2</span></td></tr>
+<tr><td>Boční panel</td><td><code>.kds-side</code> 208 px border-left, „HOTOVÉ · VÝDEJ" 11/800 .13em ink-45, done-card card radius 12 s entrance</td><td>chybí</td><td><span class="p2">P2</span></td></tr>
+<tr><td>Prázdný stav</td><td>ilustrace soup 110 wiggle + „Fronta prázdná" 19/800</td><td>?</td><td><span class="p2">P2</span></td></tr>
+<tr><td>Tmavá varianta</td><td>KDS v noci: <code>.device.dark</code> night-2 + paper-grain-dark; přepínač v gearu</td><td>chybí</td><td><span class="p3">P3</span> fáze 3</td></tr>
+</table>
+
+<!-- 2.14 zákazník -->
+<h3 id="a-cd">2.13 Displej hosta</h3>
+<div class="cmp">
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_26_customer_idle.jpg" alt=""><figcaption><b>Demo</b> customer.html · párování: atmo-espresso + Tusker 88 + glass numpad <span class="tag demo">.cd</span></figcaption></figure>
+  <figure><img src="swift_design_faze2_2026-09-23_img/swift_26_zakaznik.jpg" alt=""><figcaption><b>Swift</b> ZakaznikView <span class="tag swift">--screen zakaznik</span></figcaption></figure>
+</div>
+<table>
+<tr><th>Prvek</th><th>Demo (hodnota)</th><th>Swift dnes</th><th>Prio</th></tr>
+<tr><td>Plocha</td><td><code>.cd</code> bg <b>atmo-espresso.png cover</b> (1536×1024) + fallback gradient <code>--atmo-espresso</code>; text papír</td><td>papír, hlavička „Domů · ZÁKAZNÍK"</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Idle</td><td>ilustrace hero-cafe-cut 190 (alpha cutout na washi) + <b>h1 Tusker 88/.95</b> „KAVÁRNA NOVÝ SVĚT" + p 15 rgba(251,246,236,.6)</td><td>Tusker 44 espresso + 2 řádky</td><td><span class="p1">P1</span></td></tr>
+<tr><td>Párování</td><td>overline „CUSTOMER DISPLAY · PÁROVÁNÍ" merunka .2em; tečky; numpad <b>glass-fill-10 + blur 8</b>, klávesy 56 radius 12; seznam stanic pill glass</td><td>chybí (M5 sync)</td><td>—</td></tr>
+<tr><td>Účet</td><td><code>.cd-bill</code> grid 1.35fr 1fr; položky 18; celkem <b>72/800</b> (money-hero); nová položka glassIn; díky: Tusker 74 „DĚKUJEME"</td><td>zrcadlí poslední účtenku (jiný koncept)</td><td>rozhodnutí §8</td></tr>
+</table>
+
+<!-- 2.15 přehledy, nastavení -->
+<h3 id="a-sekce">2.14 Přehledy · Nastavení</h3>
+<div class="cmp">
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_29_prehledy.jpg" alt=""><figcaption><b>Demo</b> prehledy.html <span class="tag demo">.sec-wrap</span></figcaption></figure>
+  <figure><img src="swift_design_faze2_2026-09-23_img/swift_29_prehledy.jpg" alt=""><figcaption><b>Swift</b> PrehledyView <span class="tag swift">--screen prehledy --demo-receipts</span></figcaption></figure>
+</div>
+<div class="cmp">
+  <figure><img src="swift_design_faze2_2026-09-23_img/demo_30_nastaveni.jpg" alt=""><figcaption><b>Demo</b> nastaveni.html · layout editor <span class="tag demo">jiná funkce</span></figcaption></figure>
+  <figure><img src="swift_design_faze2_2026-09-23_img/swift_30_nastaveni.jpg" alt=""><figcaption><b>Swift</b> NastaveniView · role + parametry <span class="tag swift">--screen nastaveni</span></figcaption></figure>
+</div>
+<table>
+<tr><th>Prvek</th><th>Demo (hodnota)</th><th>Swift dnes</th><th>Prio</th></tr>
+<tr><td>Plocha sekce</td><td><code>.sec-wrap</code> papir-2, padding 18/22/24; wash obloha 420×340 top −110 right −130 op .4</td><td>papír, bez washe</td><td><span class="p3">P3</span></td></tr>
+<tr><td>Stat karty</td><td><code>.sec-card</code> card radius 16 padding 14/16 ring-hairline; l 10/800 .11em; <b>v 24/800 tabular</b>; d 11/600 ink-45; <b>hero = espresso + label merunka</b> (Tržba dne)</td><td>karty ✓; hodnota <b>26 regular terakota</b>; bez hero</td><td><span class="p2">P2</span></td></tr>
+<tr><td>Uzávěrka flow</td><td>pruh 3 kroků (Kasa → Uzávěrka neodeslána → KNS hub) + CTA terakota „Otevřít uzávěrku na kase →" + warn strip otevřených účtů</td><td>chybí</td><td><span class="p3">P3</span></td></tr>
+<tr><td>Seznam účtů</td><td><code>.acct-row</code> papir-2 radius 12 padding 11/14; číslo v pill 32 terakota-bg; tt 14.5/800; sub 11.5/600; amt 17/800</td><td>řádek card, „#5" terakota, 14/12</td><td><span class="p3">P3</span></td></tr>
+<tr><td>Nastavení</td><td>DS: seg (radius 12/8, aktivní terakota), overline 10/800 .11em, karty ring-hairline; happy hour = safran karta</td><td>chipy 44 pt terakota aktivní ✓, overline ✓, karty ✓ — vizuálně nejblíž demu ze všech obrazovek</td><td>—</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2 id="m4">3 · Nové M4 obrazovky — 1:1 podle dema</h2>
+<p>Rozměry jsou v pt (= px dema). Sheety se otevírají z pull-down menu nad plánkem přes <a href="#c-overlay">DSOverlay</a>. Pokud Tomáš zatím nechá routy z Home, obsah sheetu stejně sedí do <code>max-width 560/720</code> na střed obrazovky.</p>
+
+<h3 id="m4-pin">3.1 Přihlášení PIN</h3>
+<pre>HStack(spacing: 0)
+├─ BrandPanel  width = 1/2.25 šířky (grid 1fr 1.25fr → 44 %)  bg espresso, padding 34
+│   ├─ Overline „KAVÁRNA NOVÝ SVĚT · POS"  DM 11/800 tracking .2em  color merunka
+│   ├─ Hero  Tusker 4700Bold 76 pt / lineHeight .95, uppercase, 2 řádky
+│   │     text podle hodiny: &lt;10 „DOBRÉ RÁNO." · &lt;17 „DOBRÝ DEN." · jinak „DOBRÝ VEČER."
+│   ├─ Spacer
+│   ├─ SysRows  3× (dot 8 status-ok + ring 3 rgba(62,97,82,.3)) + DM 12.5/600 rgba(251,246,236,.75)
+│   └─ „v4.0 · milník 4 ·  14:42"  DM 12 rgba(251,246,236,.45)
+└─ Main  padding 30/34, VStack gap 18
+    ├─ TopRight: RoleChip „Toto zařízení: Kasa" (glass-fill-60 pill 11/700 ink-45) + GearButton 44 glass
+    ├─ H2  DM 800 uppercase 22 tracking .03em   („KDO JE U KASY?" → „ANETA — ZADEJ PIN")
+    ├─ krok who: LazyVGrid 2 sloupce gap 10 · PersonRow min-h 66 papir-2 r12 padding 12/14
+    │     avatar 40 pill (barva podle role: vedoucí terakota, obsluha salvej, kuchyň safran) DM 800 17
+    │     jméno 15/700 · role 11.5/600 opacity .6 · vybraný = terakota fill + #FFFCF6
+    └─ krok pin: PinDots 4× 14 pt gap 12 (ink-12 → espresso, popIn steps(3) při zadání)
+          PinPad 3 sloupce × 76, gap 10, klávesa h 62 r 18 papir-2, DM 800 22
+          řádek 4: „←" (smazat) · „0" · „Zpět" (DM 700 15)
+          špatný PIN: kns-stamp shake? NE — demo: toast „✕ Špatný PIN" + tečky zpět; ve Swiftu tečky koral 300 ms + reset</pre>
+
+<h3 id="m4-pokladna">3.2 Pokladna (sheet 720)</h3>
+<pre>DSSheet(width: 720)  glass-fill-80 + blur 16, r 24, padding 26, gap 16
+├─ Head: ic-ds cash 26 + „POKLADNA" DM 800 uppercase 24 .04em · X 40 pill papir-2
+├─ Sub  DM 13 ink-45: „Otevřena 7:51 (Aneta) s floatem 2 000 Kč · dýška se drží stranou."
+├─ StatRow  3 sloupce gap 10 · StatTile papir-2 r 12 padding 13/14
+│     l 10/800 .1em ink-45 · v DM 800 26 tabular (demo .dc .v 22 → v3 render 26)
+│     [hero] „OČEKÁVÁNO V KASE" bg espresso, l color safran, v papír
+│     „HOTOVOSTNÍ TRŽBY"  ·  „VKLADY − VÝBĚRY" (záporné = minus, ne barva)
+├─ Actions 2 sloupce gap 10 · Button.big 60 r 16 papir-2 DM 17/700
+│     „↓ Vklad do kasy"   „↑ Výběr z kasy" (výběr jen vedoucí+ → disabled .35 s hintem)
+├─ NoSale  1 řádek 100 % 60: vlevo „⊘ No-sale — otevřít šuplík bez prodeje" 17/700, vpravo hint 12.5/600 ink-70
+├─ Overline „POHYBY DNE" 11/800 .12em ink-45
+└─ Log  ListRow 9/0 border-bottom ink-12: čas 11.5/700 ink-45 w 40 · co 13/600 + kdo 11 ink-45 · tag 9/800 pill papir-2 (FLOAT/VKLAD/VÝBĚR/NO-SALE/PŘEDÁNÍ) · částka 800 tabular („+2 000 Kč" / „−3 000 Kč")
+   prázdné: EmptyState(ilustrace receipt-note 84, „Zatím žádný pohyb", hint „Začni počáteční hotovostí.")
+Sub-sheety Vklad/Výběr: cash-received (30/800) + cash-pad + reason-grid (2 sloupce 58 r 12, on = koral) + „Důvod (povinný)" tp-zone</pre>
+
+<h3 id="m4-uzaverka">3.3 Uzávěrka = Režim zavírání (sheet 720, scrollable)</h3>
+<pre>Head „REŽIM ZAVÍRÁNÍ" 24/800 + X · sub 13 ink-45 (datum · zavírá Aneta — vedené kolečko: úkoly → docházka → kasa → …)
+StepChips  wrap, gap 6, šipky „→" ink-45 mezi
+   chip pill h 30 padding 6/11, DM 11/800 uppercase .06em
+   hotovo = status-ok-bg + ok-fg + „✓" · aktivní = espresso fill + papír · další = papir-2 + ink-70
+WarnStrip  status-warn-bg r 8 padding 10/13 12.5/700 („⚠ 4 otevřené účty (…) — před zavřením zaplatit nebo převést.")
+Krok 1 Úkoly:   Checklist row h 60 border-bottom ink-12 · checkbox 36 papir-2 r 8 → status-ok-bg + ✓ · label 15/600
+Krok 2 Docházka: DochRow (jméno, přišel/odešel time inputs 40, ✓ chip ok-bg)
+Krok 3 Pokladna: Card papir-2 r 12 padding 16: „NAPOČÍTÁNO V KASE" overline vlevo, 30/800 vpravo
+                 CashNotes 3 sloupce gap 9, h 58 r 12 card + inset 1.5 ink-12, DM 600 19 tabular (2000 · 1000 · 500 / 200 · 100 · 50 / +10 · = očekáváno · ↺ Vynulovat — alt 14/700)
+                 DiffPill  na střed, pill, padding 12/24: „± 0 Kč" 24/800 + „SEDÍ PŘESNĚ" 11/800 .1em
+                   tón: |diff| ≤ tolerance → status-ok-bg/fg · jinak status-danger-bg/fg „CHYBÍ 120 Kč" / warn „PŘEBÝVÁ 40 Kč"
+Krok 4 Předávka / 5 Co dochází: seznam řádků se stepperem (data hub, M5)
+Krok 6 Souhrn: SummaryCard papir-2 r 12: řádky 14/600 (label ink-70, hodnota 800 tabular), poslední „Tržba dne" 24/800; „KAM SE TO ROZEŠLE" list card r 12 s ikonou + b + small
+Nav  grid 1fr 1fr gap 10: ghost „← Docházka" · terakota „Pokračovat → předávka kuchyni" (Button.big 60 r 16); poslední krok: „Uložit a zavřít den" espresso
+Přechod kroků: kns-fadeUp .24 s ease-out (jen obsah pod chipy)</pre>
+
+<h3 id="m4-predani">3.4 Předání kasy (sheet 560)</h3>
+<pre>Head „PŘEDÁNÍ KASY" (ic-ds undo/handoff nebo SF arrow.triangle.2.circlepath) + X
+Sub 13 ink-45 „Mezistav hotovosti se zapíše do logu pokladny — kdo předal, kdo převzal, kolik v kase."
+StatRow 2 sloupce: hero „V KASE PŘI PŘEDÁNÍ 558 Kč" · „PŘEDÁVÁ Aneta"
+Overline „KDO PŘEBÍRÁ" · ReasonGrid 3 sloupce gap 9, h 58 r 12 papir-2, jméno 14.5/700 + role 10.5/600; on = koral #FF6F61 + #FFFCF6 (ne terakota — DS reason-grid)
+→ po výběru: Overline „HANKA — POTVRĎ PIN (2/4)" · PinDots 14 · NumRow 5 sloupců 1–9,0 h 58 (cash-notes styl)
+„← Zpět" ghost 48 → zpět do pull-down menu (ne zavřít)
+Úspěch: toast glass „✓ Kasa předána — Hanka (558 Kč v kase, v logu)" + relogin jako Hanka</pre>
+
+<h3 id="m4-pauza">3.5 Přestávka (celá obrazovka)</h3>
+<pre>ZStack: bg espresso + paper-grain-dark.png tile 512 (opacity 1, je v PNG)
+VStack center gap 16:
+  Overline „KAVÁRNA NOVÝ SVĚT · POS" 11/800 .2em safran
+  HStack: „PAUZA" Tusker 72/700 papír + ilustrace cup 72 (wiggle)
+  p 14 rgba(251,246,236,.6) „Aneta má pauzu — kasa je zamčená. Markovat může kolega po přihlášení."
+  Button „Pokračovat — PIN" card fill #FFFCF6 espresso text, 60 r 16, 17/700
+Auto-lock po nečinnosti (Nastavení 5 min) = stejná obrazovka, text „Kasa zamčená po nečinnosti".</pre>
+
+<!-- ============================================================ -->
+<h2 id="komponenty">4 · Knihovna komponent pro SwiftUI</h2>
+<p>Jedna složka <code>Sources/DS/</code>, každá komponenta = jeden soubor + náhled. Hodnoty odkazují na demo/DS zdroj. Pravidlo z DS: <b>komponenty jsou flat (fill + hairline), stín má jen to, co plave</b> (sheet, toast, LivePill, float). Hloubka se dělá vrstvením papír → wash → obsah → sklo.</p>
+
+<div class="grid3">
+<div class="box" id="c-topbar"><h4>4.1 DSTopBar</h4>
+<ul><li>h 64 (padding 12/18), <code>.ultraThinMaterial</code> + overlay rgba(251,246,236,.82), hairline dole; obsah scrolluje pod ní (<code>safeAreaInset</code>)</li>
+<li>sloty: <b>context</b> (brand | back+name) · <b>segment</b> · Spacer · <b>LivePill</b> · <b>MenuHandle</b></li>
+<li>brand: logo 44 (<code>logo-kns-coral</code>) + Tusker 26/700 „NOVÝ SVĚT" + role 11/700 .14em terakota</li>
+<li>back: pill 48 papir-2 „←" 19/700; name DM 800 uppercase 22 (Tusker jen pokud Jakub potvrdí — demo Tusker 22 je pod hero prahem, doporučuji DM Sans)</li>
+<li>zdroj: pos.css 100–111, 2104–2107, 2755–2811</li></ul></div>
+
+<div class="box" id="c-pulldown"><h4>4.2 DSPullDownMenu</h4>
+<ul><li>ZStack overlay pod barem: scrim rgba(59,47,42,.4) + blur 3 (opacity .22 s ease-out)</li>
+<li>sheet: glass-fill-80 na <code>.regularMaterial</code>, blur 24, r 0/0/24/24, padding 16/24/12, elev-3 + edge-soft; offset −101 %→0 <code>.spring(response:.22, dampingFraction:.72)</code> (≈ ease-sheet overshoot), zavření <code>.timingCurve(.3,1,.4,1, duration:.22)</code></li>
+<li>gesta: tap rukojeť · swipe dolů z baru (ne ze systémové hrany) = open; tap scrim · swipe nahoru = close; <b>žádný poloviční stav</b> (snap)</li>
+<li>head (avatar 40, jméno 15/800, small 11.5/600, PulseChip), alerts, 3 skupiny × MenuTile 56 (glass-fill-60 + edge-soft, r 12, ikona 26, b 13.5/700, small 11/600, st-chip)</li>
+<li>badge na rukojeti 11 px warn/danger + slovní label uvnitř</li>
+<li>zdroj: pos.css 2813–2905, kasa.html 1495–1640</li></ul></div>
+
+<div class="box" id="c-tile"><h4>4.3 DSTile (home) · DSItemTile (katalog)</h4>
+<ul><li><b>home</b>: r 24, min-h 188, card + ring-hairline, wash (DSWash) top −34 % right −26 % w 85 % h 95 % op .8, ilustrace 104 top 12 right 12, overline k 10/800 .14em, label glass-fill-60 + blur 8 r 12 padding 10/14 (b DM 800 uppercase 21 .03em, small 11.5/600 ink-70); press: scale .98 + elev-2</li>
+<li><b>katalog</b>: r 16, card + ring-hairline, padding 14/14/12, min-h 96; name 15/700 + cat-dot 9; price DM 800 21 tabular „64,–"; VarChip 9/800 .07em pill inset 1 terakota; CountBadge 11 pill ring-default (low = inset 1.5 koral); leaf 14 salvej; HH badge safran 9/800; ilustrace 58 right 2 bottom 2 (dead: op .5); dead = tint-dead + „86"</li>
+<li>zdroj: pos.css 2216–2241, 192–203, 1318–1345, 2184–2195; ItemTile.jsx</li></ul></div>
+
+<div class="box" id="c-overlay"><h4>4.4 DSOverlay + DSSheet</h4>
+<ul><li>vlastní ZStack místo <code>.sheet()</code>: scrim rgba(59,47,42,.4) + blur 3 (<code>.background(.ultraThinMaterial)</code> + Color overlay), tap = close, Esc/klávesnice</li>
+<li>sheet width 560 (wide 720, pay 560), max-h 92 %, r 24, padding 26, gap 16; glass-fill-80 + blur 16 (<code>.regularMaterial</code> + fill), elev-3 (radius 12, y 12, .12) + edge-soft</li>
+<li>enter: kns-sheetUp (opacity 0→1, y 24→0, scale .98→1) .22 s ease-sheet; exit .16 s ease-out</li>
+<li>head: ikona + h2 DM 800 uppercase 24 .04em + X 40 pill papir-2; sub 13 ink-45 (−10 margin)</li>
+<li>zdroj: pos.css 280–300, 2817–2843; dialogs/Sheet.jsx</li></ul></div>
+
+<div class="box" id="c-button"><h4>4.5 DSButton</h4>
+<ul><li>základ: min-h 48, padding 12/20, r 12, DM 15/700 .01em, papir-2 + espresso; <b>big</b>: 60, 17, r 16; disabled op .35</li>
+<li>varianty: primary terakota + #FFFCF6 (hover #DC6244) · inverse espresso + papír (Poslat) · ghost inset 1.5 ink-12 · danger action-danger rgba(255,111,97,.22) + #C4483C (destruktivní, měkké) · koral plný jen pro reason-grid on</li>
+<li>press: scaleEffect .98, .1 s (ButtonStyle) — na všech tlačítkách, i chipech</li>
+<li>zdroj: pos.css 145–160, 1306–1312, 1961–1963; core/Button.jsx</li></ul></div>
+
+<div class="box" id="c-pill"><h4>4.6 DSPillButton / Chip / Segment</h4>
+<ul><li>chip 40 pill papir-2 12.5/700; on = espresso (svc) nebo terakota (lang, cat)</li>
+<li>status chip: ok/warn/danger/info-bg + fg 12.5/700, padding 8/13</li>
+<li>segment: track papir-3 r 12 padding 4 gap 4; seg r 8 600 min-h 40; on terakota + #FFFCF6, bez stínu</li>
+<li>zdroj: pos.css 163–169, 1961–1963; core/Chip.jsx, SegmentedControl.jsx</li></ul></div>
+
+<div class="box" id="c-numpad"><h4>4.7 DSNumPad (jedna komponenta, 3 velikosti)</h4>
+<ul><li><b>pin</b>: 3×76, h 62, r 18, papir-2, DM 800 22; řádek „←/0/Zpět"</li>
+<li><b>cash</b>: 3×56, r 12, card + ring-hairline, DM 600 22 tabular; „↺ / 0 / ⌫" alt 16 ink-45; vedle QuickAmounts (58, card + inset 1.5 ink-12, 600 19)</li>
+<li><b>row</b> (předání PIN): 5 sloupců h 58</li>
+<li>readouts: CashReceived (papir-2 r 12, label 11/800 .1em, v 30/800) · MoneyReadout due (papir-2 r 16, 44/800) / change (status-ok-bg + ok-fg)</li>
+<li>zdroj: pos.css 681–690, 1969–1975, 2437–2449; payment/Numpad.jsx, MoneyReadout.jsx, QuickAmounts.jsx</li></ul></div>
+
+<div class="box" id="c-stat"><h4>4.8 DSStatTile</h4>
+<ul><li>papir-2 (v sekcích card + ring-hairline) r 12–16, padding 13/14; l 10/800 .1em ink-45; v DM 800 22–26 tabular; d 11/600 ink-45</li>
+<li>hero: espresso + l merunka/safran + v papír</li>
+<li>hodnota nikdy terakota regular (Swift dnes) — barva jen pro stav, ne dekoraci</li>
+<li>zdroj: pos.css 924–928, 2277–2287</li></ul></div>
+
+<div class="box" id="c-row"><h4>4.9 DSListRow · DSBillRow · DSAcctRow</h4>
+<ul><li>list: padding 9/0, border-bottom ink-12, čas 11.5/700 ink-45, text 13/600 + small 11, tag 9/800 pill, částka 800 tabular</li>
+<li>bill: r 8; pending status-warn-bg; qty box 800; name 700 + mods ink-45; note koral italic; course tag ok-bg 9/800; price 800; pencil 40 sunken; stepper 40×40 sunken r 8; <b>popIn steps(3) .24 s jen u nově přidaného</b></li>
+<li>acct: papir-2 r 12 padding 11/14, pill 32 terakota-bg, tt 14.5/800, sub 11.5/600, amt 17/800</li>
+<li>zdroj: pos.css 1581–1590, 1988–1992, 1710–1720; pos/BillRow.jsx, AccountCard.jsx</li></ul></div>
+
+<div class="box" id="c-livepill"><h4>4.10 DSLivePill</h4>
+<ul><li>min-h 44, padding 8/16, pill, glass-fill-80 + blur 16, elev-2 + edge-soft; dot 8 status-ok; b 12/600 „Online · LAN sync"; span 10 tabular op .75 „EET ✓ · 14:42"</li>
+<li>event: padding 8/18/8/10, popIn ease-pop .24 s, tón ok/warn/danger/ink (ink = espresso + papír), ikona 16, po 4 s zpět; alarm: pulz 1.4 s</li>
+<li>jediný status na zařízení — kontextové ohlášky (zaplaceno, došlo, host chce platit) jdou sem, ne do baru</li>
+<li>zdroj: pos.css 2701–2740, livepill.js; core/LivePill.jsx</li></ul></div>
+
+<div class="box" id="c-empty"><h4>4.11 DSEmptyState</h4>
+<ul><li>ilustrace 84–110 (op .92) + <b>wiggle</b> steps(1) 1.15 s −1.6°/+1.8° (origin 50 % 88 %) + titul 19/800 ink-70 + hint 13.5 ink-45 lh 1.6</li>
+<li>účet: cup 84 „NOVÝ ÚČET — {STŮL}" · KDS: soup 110 „Fronta prázdná" · pokladna: receipt-note · zákazníci: people-two</li>
+<li>Reduce Motion: bez wiggle</li>
+<li>zdroj: pos.css 237–238, 1869–1872, 1955–1957; paint/Illustration.jsx</li></ul></div>
+
+<div class="box" id="c-wash"><h4>4.12 DSWash · DSAtmosphere · DSPaper</h4>
+<ul><li>DSWash existuje (CSS stand-in 1:1) — nechat; pozice a opacita per obrazovka podle tabulek výše</li>
+<li>DSPaper: papír + <code>paper-grain.png</code> tile 512 pt (Image.resizable(resizingMode:.tile) v 0.5 scale) na page pozadí (KDS, home, sekce), nikdy na kartách</li>
+<li>DSAtmosphere: PNG cover + volitelný gradient overlay: espresso (displej, pauza ne — tam grain), merunka + rgba(251,246,236,.5→.72) (platba)</li>
+<li>zdroj: paint.css, pos.css 1938–1943, 2028–2036, 2148–2160; paint/Wash.jsx</li></ul></div>
+
+<div class="box" id="c-kds"><h4>4.13 DSKdsTicket + DSBump</h4>
+<ul><li>r 16, bg dle stáří + inset top 4 kds-color + ring-hairline; late alarm ring 5 koral .24 pulz 1.4 s (Reduce Motion: outline 3 rgba(255,111,97,.45))</li>
+<li>hlava: num Tusker 19/700 pill (padding 2/9/1, ink-08; late danger) · where 11/800 .08em · tm 17/800 tabular</li>
+<li>položka: qty 13/800 safran-fg w 30 · name DM 800 20/1.12 · mods 12.5/600 ink-70 · note italic koral · checkbox 44 card; done = line-through 3 px + op .38</li>
+<li>bump 52 r 13 rgba(255,252,246,.75) + hairline „Hotovo ✓"; ready = ok-bg + pulz; exit kns-bumpOut 240 ms</li>
+<li>zdroj: pos.css 2331–2420, 1361–1400, 328–360; kds/KdsTicket.jsx, BumpButton.jsx</li></ul></div>
+
+<div class="box" id="c-receipt"><h4>4.14 DSReceipt</h4>
+<ul><li>card r 6, padding 22/20, <code>.system(size:12, design:.monospaced)</code> lh 1.55, shadow (radius 11, y 6, .18), zubatý spodní okraj (Canvas: kruhy 15×10)</li>
+<li>hlava DM 800 uppercase 19 .05em + 10.5 op .65; dashed hr rgba(59,47,42,.3); CELKEM 800; FIK/BKP mono</li>
+<li>tlačítka: ghost „Na firmu (IČO/DIČ)" + primary „Tisk — Epson TM-m30"</li>
+<li>zdroj: pos.css 981–1000</li></ul></div>
+
+<div class="box" id="c-toast"><h4>4.15 DSToast</h4>
+<ul><li>glass-fill-80 + blur 16, espresso 700, edge-soft + elev-3, pill, bottom center; in kns-toastIn .27 s steps(3); out .15 s (opacity + 8 pt dolů)</li>
+<li>zdroj: pos.css 1874–1885; dialogs/Toast.jsx</li></ul></div>
+
+<div class="box" id="c-table"><h4>4.16 DSTableCard (plánek)</h4>
+<ul><li>r 12, padding 4; name DM 800 uppercase 12.5 .03em state-fg; info 9.5/700 ink-45; „…" 10 ink-45 v rohu</li>
+<li>stavy flat: free bg + inset 1 line-subtle · busy/rez bez ringu · pay pulz 1.8 s · sel ring 2 terakota; bg animace .16 s ease-out; bar/čekačka papir-3 + ring-default r 8/8/20/8</li>
+<li>zdroj: pos.css 556–592, 1994–2000; pos/TableCard.jsx</li></ul></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="motion">5 · Motion + typografie</h2>
+<div class="two">
+<div>
+<h3>5.1 Motion tokeny → SwiftUI</h3>
+<table>
+<tr><th>Token</th><th>Demo</th><th>SwiftUI</th></tr>
+<tr><td>dur-press</td><td>.1 s, scale .98</td><td><code>ButtonStyle</code>: <code>.scaleEffect(isPressed ? 0.98 : 1).animation(.easeOut(duration:0.1))</code></td></tr>
+<tr><td>ease-out</td><td>cubic-bezier(.3,1,.4,1)</td><td><code>.timingCurve(0.3,1,0.4,1, duration: d)</code></td></tr>
+<tr><td>ease-pop</td><td>(.3,1.4,.4,1) overshoot</td><td><code>.spring(response:0.24, dampingFraction:0.6)</code></td></tr>
+<tr><td>ease-sheet</td><td>(.3,1.2,.4,1), .22 s</td><td><code>.spring(response:0.22, dampingFraction:0.72)</code></td></tr>
+<tr><td>steps(3) / steps(2) / frame 90 ms</td><td>stop-motion (popIn, stamp, toast, wiggle)</td><td>iOS 17: <code>PhaseAnimator</code> s <code>.linear(duration:0)</code> mezi fázemi + <code>Task.sleep(90 ms)</code>; iOS 16 fallback: <code>Timer</code>/<code>Task</code> přepínající 3 stavy bez implicitní animace (<code>.animation(nil)</code>). Nikdy plynulé — v tom je ta hlína.</td></tr>
+<tr><td>kns-popIn</td><td>.92/0 → 1.03 → 1/1</td><td>jen na <b>nově přidaném řádku</b> (id == lastAdded), ne při každém překreslení</td></tr>
+<tr><td>kns-stamp</td><td>.82 rot −1.5° → 1.06 rot .8° → 1, .32 s steps(3)</td><td>potvrzení: zaplaceno-ring, předání OK, bump</td></tr>
+<tr><td>kns-sheetUp / glassIn / fadeUp</td><td>y 24/12/8 + opacity, .22/.24 s</td><td><code>.transition(.offset(y:24).combined(with:.opacity))</code> + ease-sheet</td></tr>
+<tr><td>kns-wiggle</td><td>2 fáze ±1.7°, 1.15 s (empty) / 2.6 s (titul)</td><td>Timer 575 ms toggle rotationEffect, anchor (.5,.88); off při Reduce Motion</td></tr>
+<tr><td>pulse-slow / alarm</td><td>1.8 s / 1.4 s opacity .5 / ring 5 px</td><td><code>.animation(.easeInOut(duration:0.9).repeatForever(autoreverses:true))</code>; Reduce Motion = statický ring</td></tr>
+<tr><td>Zásada</td><td colspan="2">Feedback až <b>po</b> akci, ≤ 400 ms, nikdy neblokuje další tap. Pozadí (washe, papír) se nehýbe. Jediné smyčky = alarmy + idle wiggle. <code>@Environment(\.accessibilityReduceMotion)</code> respektovat všude.</td></tr>
+</table>
+</div>
+<div>
+<h3>5.2 Typografie — nálezy</h3>
+<div class="strip danger"><b>DM Sans jede v optické velikosti 9.</b> Bundle má jen <code>DMSans-Variable.ttf</code> (osy opsz 9–40, wght 100–1000); CoreText ho registruje jako <code>DMSans-9ptRegular_*</code> (ověřeno probe: <code>DMSans-Bold → DMSans-9ptRegular_Bold</code>). Demo v prohlížeči používá <code>font-optical-sizing:auto</code> → 14–24 px text jede v opsz 14–24 (užší, pevnější). Proto Swift působí „vzdušněji a širší". <b>Cesta:</b> přibalit statické <code>DMSans_18pt-Regular/Medium/SemiBold/Bold.ttf</code> (DS má 3 ze 4 v <code>assets/fonts</code>, SemiBold doplnit z Google Fonts repa; OFL) a v <code>DS.dm()</code> volat je; peníze ≥ 30 pt ideálně 24pt instance. Alternativa: variable font + <code>kCTFontVariationAttribute</code> opsz = velikost — víc kódu, stejný výsledek.</div>
+<table>
+<tr><th>Role</th><th>Demo</th><th>Swift dnes → má být</th></tr>
+<tr><td>Hero</td><td>Tusker 4700 Bold: login 76, displej 88/74, pauza 72, home h1 46, brand v baru 26, KDS číslo bonu 19 (jediné malé Tusker)</td><td>Tusker na 22 místech vč. titulků Zaplatit/Pokladna/Uzávěrka/Přehledy/KDS/KULATÝ → jen hero list; <code>tusker()</code> nechat jen v těchto místech</td></tr>
+<tr><td>Titulek sheetu / obrazovky</td><td>DM Sans 800 uppercase 24 (sheet) / 22 (sekce) / 19 (účet) tracking .03–.04em</td><td>20 regular mixed → 800 uppercase + <code>.kerning</code></td></tr>
+<tr><td>Overline</td><td>10–11 px 800 tracking .1–.14em uppercase ink-45</td><td>✓ velikost, doplnit váhu 800 a tracking .12em</td></tr>
+<tr><td>Body / meta</td><td>15/700 názvy, 13–14 text, 11–12.5/600 meta ink-45</td><td>názvy regular → 700; meta ok</td></tr>
+<tr><td>Peníze</td><td>DM Sans 800 tabular: 21 dlaždice · 24 karty · 30 přijato · 34 celkem · 44 vrátit · 72 displej</td><td><code>DS.money()</code> = Bold + monospacedDigit ✓ → přidat stupnici jako enum</td></tr>
+<tr><td>Mono</td><td>SF Mono 12 (účtenka, FIK)</td><td><code>.system(design:.monospaced)</code> — bez assetu</td></tr>
+</table>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="assety">6 · Asset list</h2>
+<p>iPady jsou všechny <b>@2x</b> (Pro 2018, Air 3, Air 4) — @3x není potřeba, do xcassets jde jedna 2× varianta. Zdroje: <code>KNS_DesignSystem/assets/illustrations</code> (37 PNG s alfou, 15 MB) a <code>KNS_POS_Demo/public/assets/ds</code> (atmosféry 15 MB, textury 3.5 MB, ikony 308 KB, logo).</p>
+<table>
+<tr><th>Skupina</th><th>Soubory</th><th>Použití (pt)</th><th>Export</th><th>Poznámka</th></tr>
+<tr><td>Ilustrace home</td><td>cup 316×227 · chair 292×205 · people-two 324×202 · receipt-note 285×196 · lamp 260×227 (+ pro nové dlaždice: soup = KDS, coffee-beans = Pokladna, prague-skyline nebo hero-layers = Uzávěrka)</td><td>104</td><td>@2x = 208 px výška; zdroje ~200 px → <b>stačí</b>, ale hrana měkká — ideálně re-export z Jakubova zdroje 2× (ASSETS-BRIEF.md)</td><td>PNG alfa, <code>renderingMode(.original)</code></td></tr>
+<tr><td>Ilustrace katalog</td><td>cup · glass · hot-chocolate · tea-cup · cake · spirits · wine-bottle · plate-food · omelette · bag · bag-coffee · icecream · cocktail · soup · croissant · bread · granola · teapot · wine · beer · coffee-beans · espresso-tonic (22)</td><td>58 (S: 42)</td><td>@2x 116 px; 1024² zdroje → downscale na 256, <code>_web</code> 512 verze stačí</td><td>mapa položka→ilustrace v §2.6; ve Swiftu tabulka v <code>MenuItem</code></td></tr>
+<tr><td>Ilustrace stavy</td><td>cup (účet) · soup (KDS) · hand-wave (displej díky) · hero-cafe-cut 282×176 (displej idle) · person-thinking · person-sofa · plant</td><td>84–190</td><td>hero-cafe-cut na 190 pt = 380 px → <b>zdroj 282 px je malý</b> (1.35×) — chce re-export nebo dovolit 140 pt</td><td>wiggle jen na empty states</td></tr>
+<tr><td>Atmosféry</td><td>atmo-espresso (displej, 2.4 MB) · atmo-merunka (platba, 2.2 MB); zbylých 5 zatím ne</td><td>cover celé obrazovky</td><td>1536×1024 PNG → <b>HEIC/JPEG q .85 ~250 KB</b> (bez alfy), do xcassets jako Data/Image</td><td>+ fallback gradient <code>--atmo-*</code> (už v DS)</td></tr>
+<tr><td>Textury</td><td>paper-grain (1024², 1.6 MB) · paper-grain-dark (1.6 MB) · edge-wash 2048×512 (444 KB, zatím nepoužito)</td><td>tile 512</td><td>PNG s alfou 512² @2x (=1024 zdroj) tile; jen na page pozadí</td><td>na iPad Pro 2018 ověřit GPU (Instruments), jinak grain jen na KDS + home</td></tr>
+<tr><td>Ikony ic-ds</td><td>cash · bill · catalog · undo · guests · table · kitchen · card · qr · split · tip · note · language · bag · cancel (15, 96×74 px)</td><td>15–26</td><td>@2x přímo (96 px = 48 pt) ✓</td><td>malované, ne template; použít jen tam, kde je má demo (guests, cash, bill, bag, kitchen)</td></tr>
+<tr><td>Chybějící ikony</td><td>menu: hodiny, přestávka, předání, rezervace, pokladna, uzávěrka, vitrína, denní menu, přepnout, displej, nastavení, odhlásit (demo = emoji)</td><td>19–26</td><td>—</td><td><b>Náhrada: SF Symbols</b> weight .medium, ink-70 (clock, cup.and.saucer, arrow.triangle.2.circlepath, calendar, banknote, moon.stars, birthday.cake, fork.knife, arrow.left.arrow.right, display, gearshape, rectangle.portrait.and.arrow.right). Jeden systém pro funkční ikony, malované jen ilustrace — lepší než emoji v demu.</td></tr>
+<tr><td>Logo</td><td>logo-kns-coral.png 4320² (160 KB)</td><td>44</td><td>@2x 88 px + 1× 512 pro splash</td><td></td></tr>
+<tr><td>Fonty</td><td>Tusker 4500/4600/4700/4800 ✓ v bundlu · DM Sans Variable → <b>vyměnit za static 18pt R/M/SB/B</b> (§5.2)</td><td></td><td></td><td><b>Licence:</b> DM Sans = SIL OFL 1.1, embedding OK. <b>Tusker Grotesk = Displaay, komerční — app-embedding je samostatná licence</b> (desktop/web nestačí) → ověřit, co KNS koupilo; do App Store bez ní ne. Caveat (ručně psané anotace) se v POS UI nepoužívá → nepřidávat.</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2 id="lepe">7 · „Nebo lépe" — kde nativní iPad demo předčí</h2>
+<p>Nic z toho nezpomaluje kasu; každé má riziko a cestu. Pořadí podle poměru efekt/práce.</p>
+<table>
+<tr><th>#</th><th>Místo</th><th>Co nativní umí navíc</th><th>Riziko</th><th>Cesta</th></tr>
+<tr><td>1</td><td>Sklo a scrim</td><td>Skutečné <code>.ultraThinMaterial</code>/<code>.regularMaterial</code> s vibrancy na 120 Hz — demo backdrop-filter jen emuluje. Pull-down menu a dialogy budou reálně „plavat" nad plánkem.</td><td>iPad Pro 2018 / Air 3: víc vrstev materiálu nad grain texturou = overdraw</td><td>Materiál jen na sheet/bar/pill (3 vrstvy max), grain jen na page; <code>drawingGroup()</code> nepoužívat; měřit Core Animation FPS na Air 3</td></tr>
+<tr><td>2</td><td>Částky</td><td><code>.contentTransition(.numericText(countsDown:))</code> (iOS 16) — celkem, zbývá, vrátit „rolují" jako čítač; demo jen přepisuje text</td><td>žádné</td><td>na Celkem 34, Zbývá 44, LivePill čas; 0,16 s ease-out</td></tr>
+<tr><td>3</td><td>LivePill</td><td><code>matchedGeometryEffect</code> morph idle pill ↔ event bublina + numericText na tik; ne Live Activity (na iPadu jen zamčená obrazovka, v appce nic)</td><td>tik 1×/s nesmí re-layoutovat bar</td><td>pevná min-width pillu, animovat jen fill/text; padding nikdy (pravidlo v3.6.1)</td></tr>
+<tr><td>4</td><td>Zvuk místo haptiky</td><td><b>iPad nemá Taptic Engine</b> — „haptika" ze zadání nejde. Místo ní krátký tick (<code>AudioServicesPlaySystemSound(1104)</code> nebo vlastní 40 ms sample) na markování / bump / zaplaceno, jako má demo v „zvuky"</td><td>hluk na baru, kuchyň</td><td>přepínač v Nastavení obrazovky (default zap na kase, vyp na KDS), hlasitost přes systém</td></tr>
+<tr><td>5</td><td>SF Symbols efekty</td><td>iOS 17 <code>.symbolEffect(.bounce)</code> na paperplane (Poslat), checkmark (bump), lock (pauza); iOS 16 fallback scale</td><td>target iOS 16 → <code>#available</code></td><td>jen potvrzení po akci (stop-motion pravidlo), ≤ 400 ms</td></tr>
+<tr><td>6</td><td>Editor plánku</td><td><code>DragGesture</code> + snap na 8 pt grid + <code>.hoverEffect</code> pro Magic Keyboard; demo v3.3 má editor, ale bez fyziky</td><td>omylem posunutý stůl během servisu</td><td>edit mode jen long-press 600 ms + „Upravit plánek" v Nastavení; mimo edit <code>allowsHitTesting</code> na drag off</td></tr>
+<tr><td>7</td><td>Pull-down gesto</td><td>Interaktivní spring (sheet sleduje prst, rubber-band, snap) — v prohlížeči jen transform transition</td><td>swipe od horní hrany = systémové Notification Center / Control Center</td><td>aktivační zóna = bar (64 pt pod hranou) + rukojeť, ne hrana; <code>defersSystemGestures(on:.top)</code> jako pojistka; tap vždy funguje</td></tr>
+<tr><td>8</td><td>Zámek zařízení</td><td><code>UIRequiresFullScreen</code> + landscape lock (rozhodnuto) + <code>isIdleTimerDisabled</code> na KDS/displeji + Guided Access doporučení pro bar</td><td>Guided Access blokuje i přepnutí pohledu</td><td>Guided Access jen na displeji hosta; kasa/KDS bez</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2 id="plan">8 · Pořadí, odhad, rozhodnutí</h2>
+<div class="two">
+<div>
+<h4>Etapy pro Tomáše (celkem ≈ 9–10 dní)</h4>
+<ol>
+<li><b>Základ (2 d):</b> DM Sans static 18pt · typografická stupnice + Tusker jen hero · DSButton press · DSOverlay/DSSheet · DSNumPad 3 velikosti · DSStatTile · ilustrace do xcassets + mapa položek.</li>
+<li><b>Bar + menu (2 d):</b> DSTopBar 4 sloty · DSLivePill · DSPullDownMenu · Pokladna/Uzávěrka/Předání/Pauza jako sheety z menu · segment Provoz | Účty.</li>
+<li><b>Obrazovky 1:1 (3 d):</b> PIN login · Home dlaždice s ilustrací · Objednávka (pending, rail, dlaždice, empty) · Platba (atmosféra, readouts, numpad, účtenka) · KDS světlý · Displej hosta idle.</li>
+<li><b>Motion + „lépe" (2 d):</b> popIn/stamp/sheetUp/wiggle/pulz · numericText · symbolEffect · zvuk · Reduce Motion; screenshoty demo | Swift na 1210×834 jako důkaz (stejné launch argy jako tady).</li>
+</ol>
+<p>Po každé etapě Critic (Eliška) nad stejnou sadou screenshotů — <code>.scratch/kns_pos_design2_2026-09-23/shoot_*.js</code> a launch argy v §2 jsou znovupoužitelné.</p>
+</div>
+<div>
+<h4>Co se musí rozhodnout (Jakub)</h4>
+<ol>
+<li><b>Tusker v baru a u názvu stolu (22–26 pt)</b> — demo ho tam má, pravidlo 6. 9. říká jen hero. Doporučuji DM Sans 800 uppercase; Tusker nechat na login/home/pauza/displej + číslo bonu (Jakubova výjimka?).</li>
+<li><b>Pokladna/Uzávěrka/Předání: sheety z menu (demo) vs. routy z Home (Swift).</b> Doporučuji demo — kasa má jeden bar, Home je jen rozcestník po PINu.</li>
+<li><b>Uzávěrka 6 kroků (Úkoly · Předávka · Co dochází z hubu)</b> — design převezmu hned, data až M5. Zatím 4 kroky ve stylu 6?</li>
+<li><b>Displej hosta:</b> párování s kasou (demo, M5 sync) vs. zrcadlo poslední účtenky (Swift). Vizuál espresso atmosféra + Tusker 88 platí v obou.</li>
+<li><b>Tusker app-embedding licence</b> — ověřit před App Store buildem.</li>
+<li><b>Zvuk místo haptiky</b> (iPad nemá Taptic) — zapnout defaultně na kase?</li>
+<li><b>Ilustrace pro nové dlaždice Home</b> (KDS, Pokladna, Uzávěrka) — návrh: soup · coffee-beans · prague-skyline; nebo dokreslit 3 nové v batchi.</li>
+</ol>
+</div>
+</div>
+
+<div class="foot">Eliška · 23. 9. 2026 · Zdroje: <code>KNS_POS_Demo</code> v3.7.0 (lokální demo v3.7.0), <code>KNS_DesignSystem</code> (tokens, components, guidelines), <code>kns-pos-swift</code> feat/pos-swift-m5 (build /tmp/kns_dd_e2, BUILD SUCCEEDED), audit fáze 1 <code>tomas_pos_design_faze1_2026-08-12.md</code>. Kód Swiftu ani dema nebyl měněn. Screenshoty: 31 stavů dema (Playwright, element .device), 19 stavů Swiftu (simctl, iPad Pro 11" M5, landscape). Nevyfocené Swift stavy: Pauza, Předání kasy (bez launch argu).</div>
+
+</div>
+<style id="kns-back-css">.kns-back{position:fixed;left:12px;bottom:12px;z-index:99999;font:600 13px/1 "DM Sans",-apple-system,sans-serif;color:#FBF6EC;background:#3B2F2A;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.25);opacity:.92}.kns-back:hover{opacity:1;background:#E76F51}@media print{.kns-back{display:none}}</style><a class="kns-back" href="index.html">← Program Kasa + Hub</a>
+</body>
+</html>

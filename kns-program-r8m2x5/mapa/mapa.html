@@ -1,0 +1,1065 @@
+<title>Kasa a Hub Nový Svět</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<style>
+/* ---------- KNS tokeny (světlo = papír, tma = noc) ---------- */
+:root{
+  color-scheme:light;
+  --terakota:#E76F51;--terakota-hover:#DC6244;--safran:#F2B24A;--merunka:#FFB086;--obloha:#A8C6E8;
+  --levandule:#CBB7F6;--salvej:#9BB79E;--espresso:#3B2F2A;--koral:#FF6F61;--uhel:#1F1F1F;
+  --bg:#FBF6EC;--bg-2:#F5EEE1;--bg-3:#EDE4D4;--card:#FFFCF6;
+  --ink:#1F1F1F;--ink-h:#3B2F2A;--ink-70:rgba(59,47,42,.72);--ink-45:rgba(59,47,42,.48);--ink-20:rgba(59,47,42,.2);--ink-12:rgba(59,47,42,.12);--ink-08:rgba(59,47,42,.08);
+  --line:rgba(59,47,42,.12);--line-2:rgba(59,47,42,.22);
+  --st-hotovo:#6FC18B;--st-hotovo-bg:rgba(111,193,139,.24);--st-hotovo-fg:#2E7A4B;
+  --st-bezi:#F2B24A;--st-bezi-bg:rgba(242,178,74,.28);--st-bezi-fg:#8A6209;
+  --st-ceka:#A8C6E8;--st-ceka-bg:rgba(168,198,232,.34);--st-ceka-fg:#2C577F;
+  --st-plan:#D9CFBF;--st-plan-bg:rgba(59,47,42,.08);--st-plan-fg:#6B5E56;
+  --danger-bg:rgba(255,111,97,.2);--danger-fg:#C4483C;
+  --be:#3B2F2A;--fe:#E76F51;
+  --grain:radial-gradient(circle at 18% 22%,rgba(59,47,42,.028) 0 1px,transparent 1px),radial-gradient(circle at 72% 68%,rgba(59,47,42,.022) 0 1px,transparent 1px);
+  --wash-a:radial-gradient(58% 62% at 34% 30%,rgba(242,178,74,.32) 0%,rgba(242,178,74,.12) 44%,transparent 80%);
+  --wash-b:radial-gradient(52% 50% at 60% 60%,rgba(155,183,158,.30) 0%,transparent 76%);
+  --shadow-sheet:0 12px 24px rgba(59,47,42,.14);
+  --radius:16px;--radius-sm:10px;
+  --scrim:rgba(59,47,42,.4);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#17120F;--bg-2:#1E1815;--bg-3:#28201B;--card:#241C18;
+    --ink:#FBF6EC;--ink-h:#FBF6EC;--ink-70:rgba(251,246,236,.74);--ink-45:rgba(251,246,236,.5);--ink-20:rgba(251,246,236,.22);--ink-12:rgba(251,246,236,.14);--ink-08:rgba(251,246,236,.09);
+    --line:rgba(251,246,236,.12);--line-2:rgba(251,246,236,.22);
+    --st-hotovo-fg:#9BD9B4;--st-bezi-fg:#F5CE86;--st-ceka-fg:#C6DAF0;--st-plan:#4A3E37;--st-plan-bg:rgba(251,246,236,.08);--st-plan-fg:rgba(251,246,236,.6);
+    --danger-fg:#FF9A90;--be:#FBF6EC;--fe:#F2A07C;
+    --grain:radial-gradient(circle at 18% 22%,rgba(251,246,236,.03) 0 1px,transparent 1px),radial-gradient(circle at 72% 68%,rgba(251,246,236,.02) 0 1px,transparent 1px);
+    --wash-a:radial-gradient(58% 62% at 34% 30%,rgba(242,178,74,.14) 0%,transparent 80%);
+    --wash-b:radial-gradient(52% 50% at 60% 60%,rgba(155,183,158,.14) 0%,transparent 76%);
+    --shadow-sheet:0 12px 32px rgba(0,0,0,.5);--scrim:rgba(0,0,0,.55);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#17120F;--bg-2:#1E1815;--bg-3:#28201B;--card:#241C18;
+  --ink:#FBF6EC;--ink-h:#FBF6EC;--ink-70:rgba(251,246,236,.74);--ink-45:rgba(251,246,236,.5);--ink-20:rgba(251,246,236,.22);--ink-12:rgba(251,246,236,.14);--ink-08:rgba(251,246,236,.09);
+  --line:rgba(251,246,236,.12);--line-2:rgba(251,246,236,.22);
+  --st-hotovo-fg:#9BD9B4;--st-bezi-fg:#F5CE86;--st-ceka-fg:#C6DAF0;--st-plan:#4A3E37;--st-plan-bg:rgba(251,246,236,.08);--st-plan-fg:rgba(251,246,236,.6);
+  --danger-fg:#FF9A90;--be:#FBF6EC;--fe:#F2A07C;
+  --grain:radial-gradient(circle at 18% 22%,rgba(251,246,236,.03) 0 1px,transparent 1px),radial-gradient(circle at 72% 68%,rgba(251,246,236,.02) 0 1px,transparent 1px);
+  --wash-a:radial-gradient(58% 62% at 34% 30%,rgba(242,178,74,.14) 0%,transparent 80%);
+  --wash-b:radial-gradient(52% 50% at 60% 60%,rgba(155,183,158,.14) 0%,transparent 76%);
+  --shadow-sheet:0 12px 32px rgba(0,0,0,.5);--scrim:rgba(0,0,0,.55);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);background-image:var(--grain);background-size:7px 7px,11px 11px;color:var(--ink);font-family:"DM Sans",-apple-system,"Helvetica Neue","Segoe UI",Roboto,sans-serif;font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:active{transform:scale(.98)}
+a{color:var(--terakota);text-decoration:none;text-underline-offset:3px}
+a:hover{text-decoration:underline}
+h1,h2,h3,h4{margin:0;color:var(--ink-h)}
+.num{font-variant-numeric:tabular-nums}
+.app{max-width:1440px;margin:0 auto;padding-inline:clamp(16px,3vw,40px);padding-block:20px 80px}
+
+/* ---------- hlavička ---------- */
+.hdr{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px;padding-block:8px 20px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand .mark{width:40px;height:40px;border-radius:12px;background:var(--terakota);display:grid;place-items:center;color:#FFFCF6;font-weight:800;font-size:15px;letter-spacing:.02em;flex:none}
+.kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-45)}
+h1{font-size:clamp(26px,3.4vw,40px);line-height:1.05;letter-spacing:-.02em;font-weight:800}
+.hdr .meta{font-size:13px;color:var(--ink-70);text-align:right}
+.hdr .meta b{color:var(--ink-h)}
+.underline{position:relative;display:inline-block}
+.underline::after{content:"";position:absolute;left:0;bottom:-6px;width:64px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent 0%,rgba(231,111,81,.85) 18%,rgba(231,111,81,.85) 82%,transparent 100%)}
+
+/* ---------- souhrn ---------- */
+.souhrn{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-block:8px 22px}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:inset 0 0 0 1px var(--line);padding:18px 20px;position:relative;overflow:hidden}
+.card.kpi{grid-column:span 3;min-height:172px}
+.card.kpi::before{content:"";position:absolute;inset:-30% -20% auto auto;width:70%;height:120%;background:var(--wash-a);pointer-events:none}
+.card.kpi.hub::before{background:var(--wash-b)}
+.card.kpi .lbl{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-70)}
+.card.kpi .big{font-size:56px;line-height:1;font-weight:800;letter-spacing:-.03em;margin-top:6px;color:var(--ink-h)}
+.card.kpi .big small{font-size:22px;font-weight:700;color:var(--ink-45);margin-left:2px}
+.card.kpi .sub{font-size:13px;color:var(--ink-70);margin-top:6px}
+.bars{display:grid;gap:5px;margin-top:12px}
+.bar{display:grid;grid-template-columns:76px 1fr 40px;align-items:center;gap:8px;font-size:12px;color:var(--ink-70)}
+.bar .track{height:8px;border-radius:999px;background:var(--bg-3);overflow:hidden}
+.bar .fill{height:100%;border-radius:999px;background:var(--be)}
+.bar.fe .fill{background:var(--fe)}
+.bar .v{text-align:right;font-weight:700;color:var(--ink-h)}
+.card.list{grid-column:span 3}
+.card.list h3{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-70);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.card.list ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.card.list li{display:flex;gap:9px;font-size:13.5px;line-height:1.35;align-items:flex-start}
+.card.list li .dot{width:8px;height:8px;border-radius:50%;flex:none;margin-top:6px;background:var(--st-bezi)}
+.card.list li .dot.jakub{background:var(--terakota)}
+.card.list li .dot.hotovo{background:var(--st-hotovo)}
+.card.list li .who{color:var(--ink-45);font-size:12px;margin-left:4px;white-space:nowrap}
+.card.list li .term{color:var(--terakota);font-weight:700;font-size:12px;white-space:nowrap;margin-left:auto;padding-left:6px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.02em;line-height:1.4;white-space:nowrap}
+.pill.hotovo{background:var(--st-hotovo-bg);color:var(--st-hotovo-fg)}
+.pill.bezi{background:var(--st-bezi-bg);color:var(--st-bezi-fg)}
+.pill.ceka{background:var(--st-ceka-bg);color:var(--st-ceka-fg)}
+.pill.plan{background:var(--st-plan-bg);color:var(--st-plan-fg)}
+.pill.q{background:rgba(231,111,81,.16);color:var(--terakota)}
+.pill.q.zero{background:var(--st-plan-bg);color:var(--st-plan-fg)}
+.pill.blokuje{background:var(--danger-bg);color:var(--danger-fg)}
+.pill.brzy{background:var(--st-bezi-bg);color:var(--st-bezi-fg)}
+.pill.pozdeji{background:var(--st-plan-bg);color:var(--st-plan-fg)}
+.pill.zapracuje{background:var(--st-ceka-bg);color:var(--st-ceka-fg)}
+.pill.zapracovano{background:var(--st-hotovo-bg);color:var(--st-hotovo-fg)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:12px;font-weight:700;font-size:14px;background:var(--terakota);color:#FFFCF6;transition:background .12s}
+.btn:hover{background:var(--terakota-hover)}
+.btn:disabled{background:var(--bg-3);color:var(--ink-45);cursor:default}
+.btn.ghost{background:transparent;color:var(--ink-h);box-shadow:inset 0 0 0 1px var(--line-2)}
+.btn.ghost:hover{background:var(--bg-2)}
+.btn.sm{min-height:36px;padding:0 12px;font-size:13px;border-radius:10px}
+
+/* ---------- přepínač pohledů ---------- */
+.tabs{display:flex;gap:6px;padding:4px;background:var(--bg-2);border-radius:14px;width:max-content;max-width:100%;margin-block:6px 16px;box-shadow:inset 0 0 0 1px var(--line)}
+.tabs button{min-height:40px;padding:0 16px;border-radius:10px;font-weight:700;font-size:14px;color:var(--ink-70)}
+.tabs button[aria-selected="true"]{background:var(--card);color:var(--ink-h);box-shadow:0 1px 2px rgba(59,47,42,.08),inset 0 0 0 1px var(--line)}
+.view{display:none}
+.view.on{display:block}
+.view-hd{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 20px;margin-bottom:12px}
+.view-hd h2{font-size:20px;font-weight:800;letter-spacing:-.01em}
+.view-hd p{margin:0;font-size:13.5px;color:var(--ink-70);max-width:70ch}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:12.5px;color:var(--ink-70);align-items:center}
+.legend .sw{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px}
+.scroller{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;border-radius:var(--radius);background:var(--card);box-shadow:inset 0 0 0 1px var(--line);padding:6px}
+.scroller svg{display:block;font-family:inherit}
+svg text{fill:var(--ink)}
+.mono{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12.5px}
+
+/* SVG třídy */
+.ax-line{stroke:var(--line);stroke-width:1}
+.ax-month{stroke:var(--line-2);stroke-width:1}
+.ax-txt{font-size:12px;fill:var(--ink-70);font-weight:600}
+.lane-bg{fill:var(--bg-2)}
+.lane-txt{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;fill:var(--ink-70)}
+.ms{cursor:pointer}
+.ms rect{rx:8;ry:8;stroke-width:1}
+.ms.hotovo rect{fill:var(--st-hotovo-bg);stroke:var(--st-hotovo)}
+.ms.bezi rect{fill:var(--st-bezi-bg);stroke:var(--st-bezi)}
+.ms.ceka rect{fill:var(--st-ceka-bg);stroke:var(--st-ceka)}
+.ms.plan rect{fill:var(--st-plan-bg);stroke:var(--st-plan);stroke-dasharray:3 3}
+.ms text{font-size:12.5px;font-weight:700;fill:var(--ink-h);pointer-events:none}
+.ms text.st{font-size:10.5px;font-weight:600;fill:var(--ink-70);text-transform:uppercase;letter-spacing:.06em}
+.ms:hover rect{filter:brightness(.96)}
+.ms.hotovo text.st{fill:var(--st-hotovo-fg)}.ms.bezi text.st{fill:var(--st-bezi-fg)}.ms.ceka text.st{fill:var(--st-ceka-fg)}
+.today line{stroke:var(--terakota);stroke-width:2;stroke-dasharray:5 4}
+.today text{fill:var(--terakota);font-size:12px;font-weight:800}
+.dl{cursor:default}
+.dl path{fill:var(--koral)}
+.dl.bbn path{fill:var(--espresso)}
+.dl.planb path{fill:var(--safran)}
+.dl.jakub path{fill:var(--terakota)}
+.dl text{font-size:11px;font-weight:700;fill:var(--ink-h)}
+.dl line{stroke:var(--ink-20);stroke-width:1;stroke-dasharray:2 3}
+.node{cursor:pointer}
+.node .box{fill:var(--card);stroke:var(--line-2);stroke-width:1;rx:12;ry:12}
+.node:hover .box{stroke:var(--terakota);stroke-width:1.5}
+.node.sel .box{stroke:var(--terakota);stroke-width:2}
+.node .ttl{font-size:12.5px;font-weight:700;fill:var(--ink-h)}
+.node .stdot{r:4}
+.node.hotovo .stdot{fill:var(--st-hotovo)}.node.bezi .stdot{fill:var(--st-bezi)}.node.ceka .stdot{fill:var(--st-ceka)}.node.plan .stdot{fill:var(--st-plan);stroke:var(--ink-20)}
+.node .trk{fill:var(--bg-3)}
+.node .be{fill:var(--be)}.node .fe{fill:var(--fe)}
+.node .lb{font-size:9.5px;font-weight:700;fill:var(--ink-45);letter-spacing:.04em}
+.node .pv{font-size:10px;font-weight:700;fill:var(--ink-70)}
+.node .qb{fill:var(--terakota)}
+.node .qt{font-size:10px;font-weight:800;fill:#FFFCF6}
+.edge{fill:none;stroke:var(--ink-20);stroke-width:1.5}
+.edge.link{stroke:var(--terakota);stroke-dasharray:4 4;opacity:.8}
+.grp{fill:var(--bg-2);rx:20;ry:20;opacity:.7}
+.grp-t{font-size:12px;font-weight:800;letter-spacing:.14em;fill:var(--ink-45)}
+
+/* ---------- wiki panel ---------- */
+.scrim{position:fixed;inset:0;background:var(--scrim);opacity:0;pointer-events:none;transition:opacity .2s;z-index:30}
+.scrim.on{opacity:1;pointer-events:auto}
+.wiki{position:fixed;top:env(safe-area-inset-top,0px);right:0;bottom:0;width:min(520px,100vw);background:var(--card);box-shadow:var(--shadow-sheet);transform:translateX(105%);transition:transform .24s cubic-bezier(.3,1.2,.4,1);z-index:40;display:flex;flex-direction:column;border-left:1px solid var(--line)}
+.wiki.on{transform:none}
+.wiki-hd{padding:18px 20px 12px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:flex-start;position:sticky;top:0;background:var(--card)}
+.wiki-hd .t{flex:1;min-width:0}
+.wiki-hd .kicker{margin-bottom:4px}
+.wiki-hd h2{font-size:22px;line-height:1.15;font-weight:800;letter-spacing:-.01em}
+.wiki-hd .x{width:40px;height:40px;border-radius:12px;background:var(--bg-2);display:grid;place-items:center;font-size:18px;flex:none}
+.wiki-bd{padding:14px 20px 40px;overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch}
+.wiki-bd section{margin-bottom:18px}
+.wiki-bd h4{font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-45);margin-bottom:6px}
+.wiki-bd p{margin:0 0 6px;font-size:14.5px}
+.wiki-bd ul{margin:0;padding-left:18px;font-size:14px;display:grid;gap:4px}
+.wiki-bd li.no{color:var(--ink-70)}
+.wiki-bd .roz{display:grid;gap:6px}
+.wiki-bd .roz div{display:grid;grid-template-columns:64px 1fr;gap:8px;font-size:13.5px}
+.wiki-bd .roz b{color:var(--terakota);font-weight:700;white-space:nowrap}
+.wiki-bd .kde{display:grid;gap:5px;font-size:13px}
+.wiki-bd .kde code{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12px;background:var(--bg-2);padding:2px 6px;border-radius:6px;word-break:break-all}
+.pbars{display:grid;gap:8px;margin:8px 0 4px}
+.pbars .bar{grid-template-columns:70px 1fr 44px;font-size:13px}
+.pbars .bar .track{height:10px}
+.pbars .src{grid-column:1/-1;font-size:12px;color:var(--ink-45);margin-top:-4px}
+.qcard{border-radius:14px;background:var(--bg-2);padding:12px 14px;margin-bottom:10px;box-shadow:inset 0 0 0 1px var(--line)}
+.qcard .qh{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.qcard .qm{font-size:11.5px;color:var(--ink-45);font-weight:600}
+.qcard .qq{font-size:15px;font-weight:700;color:var(--ink-h);margin:0 0 6px}
+.qcard .qc{font-size:13px;color:var(--ink-70);margin:0 0 6px}
+.qcard .qd{font-size:13px;margin:0 0 8px;padding:8px 10px;border-radius:10px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line)}
+.qcard .qd b{color:var(--terakota)}
+.qcard textarea{width:100%;min-height:74px;resize:vertical;border-radius:10px;border:1px solid var(--line-2);background:var(--card);color:var(--ink);padding:10px 12px;font:inherit;font-size:14px}
+.qcard textarea:focus{outline:none;border-color:var(--terakota);box-shadow:0 0 0 3px rgba(231,111,81,.24)}
+.qcard .qa{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.qcard .ans{font-size:14px;padding:10px 12px;border-radius:10px;background:var(--card);box-shadow:inset 0 0 0 1px var(--st-ceka);white-space:pre-wrap}
+.qcard .ans-meta{font-size:12px;color:var(--ink-45);margin-top:4px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.qcard .src{font-size:11.5px;color:var(--ink-45);margin-top:6px}
+.note{font-size:13px;color:var(--ink-70);padding:10px 12px;border-radius:10px;background:var(--bg-2)}
+.note.err{color:var(--danger-fg);background:var(--danger-bg)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 10px;border-radius:999px;background:var(--bg-2);box-shadow:inset 0 0 0 1px var(--line);font-size:12.5px;font-weight:600;color:var(--ink-h)}
+.chip:hover{background:var(--bg-3)}
+.chip .d{width:7px;height:7px;border-radius:50%}
+.chip .d.hotovo{background:var(--st-hotovo)}.chip .d.bezi{background:var(--st-bezi)}.chip .d.ceka{background:var(--st-ceka)}.chip .d.plan{background:var(--st-plan)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);background:var(--espresso);color:#FBF6EC;padding:10px 16px;border-radius:12px;font-weight:600;font-size:14px;opacity:0;transition:.2s;z-index:60;pointer-events:none;max-width:calc(100vw - 32px)}
+.toast.on{opacity:1;transform:translateX(-50%)}
+.foot{margin-top:28px;font-size:12.5px;color:var(--ink-45);display:flex;flex-wrap:wrap;gap:6px 18px}
+
+@media (max-width:1100px){.card.kpi{grid-column:span 6}.card.list{grid-column:span 6}}
+@media (max-width:640px){
+  .souhrn{gap:10px}.card{padding:14px 16px}.card.kpi,.card.list{grid-column:span 12}.card.kpi{min-height:0}
+  .card.kpi .big{font-size:44px}
+  .hdr .meta{text-align:left}
+  .wiki{top:auto;height:min(92dvh,100%);width:100vw;border-left:0;border-top:1px solid var(--line);border-radius:20px 20px 0 0;transform:translateY(105%)}
+  .wiki.on{transform:none}
+  .wiki::before{content:"";position:absolute;top:8px;left:50%;width:44px;height:5px;border-radius:3px;background:var(--ink-20);transform:translateX(-50%)}
+  .wiki-hd{padding-top:22px}
+  .tabs button{padding:0 12px;font-size:13px}
+}
+@media (prefers-reduced-motion:reduce){.wiki,.scrim,.toast{transition:none}}
+</style>
+
+<div class="app">
+  <header class="hdr">
+<meta name="robots" content="noindex,nofollow">
+    <div>
+      <div class="brand"><div class="mark">KNS</div><div><div class="kicker">Kavárna Nový Svět · program</div><h1 class="underline">Kasa a Hub</h1></div></div>
+    </div>
+    <div class="meta"><b id="m-dnes"></b> · stav dat <b id="m-verze"></b><br>Klikni na milník nebo modul — otevře se wiki s otázkami pro tebe.</div>
+  </header>
+
+  <section class="souhrn" aria-label="Souhrn">
+    <div class="card kpi kasa"><div class="lbl">Kasa (Swift, iPady)</div><div class="big num"><span id="k-pct">–</span><small>%</small></div><div class="sub" id="k-sub"></div><div class="bars" id="k-bars"></div></div>
+    <div class="card kpi hub"><div class="lbl">Hub (hub.novysvet.net)</div><div class="big num"><span id="h-pct">–</span><small>%</small></div><div class="sub" id="h-sub"></div><div class="bars" id="h-bars"></div></div>
+    <div class="card list"><h3>Tento týden běží</h3><ul id="tyden"></ul></div>
+    <div class="card list"><h3><span>Čeká na tebe</span><button class="pill q" id="q-count" type="button">otázky: –</button></h3><ul id="ceka"></ul></div>
+  </section>
+
+  <div class="tabs" role="tablist" aria-label="Pohled">
+    <button role="tab" aria-selected="true" data-view="osa">Časová osa</button>
+    <button role="tab" aria-selected="false" data-view="mapa">Mapa modulů</button>
+  </div>
+
+  <section class="view on" id="view-osa" role="tabpanel">
+    <div class="view-hd">
+      <div><h2>1. 7. 2026 → 28. 2. 2027</h2><p>Dvě dráhy: nahoře kasa po milnících M1–M8, dole hub po modulech a etapách směn. Červená čára je dnešek, kosočtverce nahoře jsou termíny, které nepohneš.</p></div>
+      <div class="legend"><span><i class="sw" style="background:var(--st-hotovo-bg);box-shadow:inset 0 0 0 1px var(--st-hotovo)"></i>hotovo</span><span><i class="sw" style="background:var(--st-bezi-bg);box-shadow:inset 0 0 0 1px var(--st-bezi)"></i>běží</span><span><i class="sw" style="background:var(--st-ceka-bg);box-shadow:inset 0 0 0 1px var(--st-ceka)"></i>čeká (na tebe / na Anetu)</span><span><i class="sw" style="background:var(--st-plan-bg);box-shadow:inset 0 0 0 1px var(--st-plan)"></i>plán</span><span><i class="sw" style="background:var(--koral);border-radius:50%"></i>EET</span><span><i class="sw" style="background:var(--espresso);border-radius:50%"></i>bod bez návratu</span><span><i class="sw" style="background:var(--terakota);border-radius:50%"></i>tvůj termín</span></div>
+    </div>
+    <div class="scroller" id="osa-wrap"></div>
+  </section>
+
+  <section class="view" id="view-mapa" role="tabpanel">
+    <div class="view-hd">
+      <div><h2>Moduly a co na čem stojí</h2><p>Každý uzel má dvě lišty: tmavá = backend (data, logika, sync), terakotová = frontend (obrazovky, design). Procenta jsou odhad z testů a reportů — ve wiki je u každého napsané, z čeho. Šipka = „stojí na“. Tečkovaná = propojení kasa ↔ hub.</p></div>
+      <div class="legend"><span><i class="sw" style="background:var(--be)"></i>backend</span><span><i class="sw" style="background:var(--fe)"></i>frontend</span><span><i class="sw" style="background:var(--st-hotovo);border-radius:50%"></i>hotovo</span><span><i class="sw" style="background:var(--st-bezi);border-radius:50%"></i>běží</span><span><i class="sw" style="background:var(--st-ceka);border-radius:50%"></i>čeká</span><span><i class="sw" style="background:var(--st-plan);border-radius:50%;box-shadow:inset 0 0 0 1px var(--ink-20)"></i>plán</span><span><i class="sw" style="background:var(--terakota);border-radius:50%"></i>číslo = otevřené otázky</span></div>
+    </div>
+    <div class="scroller" id="mapa-wrap"></div>
+  </section>
+
+  <div class="foot"><span>Zdroje: memory project_kns_hub.md (6.–23. 9.), architektura kasy v3 (Viktor), reporty Tomáš M3/M4/M4.1, design spec fáze 2 (Eliška), Petr HW + Apple, koncept Tabulka směn v4.8, demo směn v7.</span><span>Data v bloku <code class="mono">#data</code>, otázky v databázi stránky.</span></div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="wiki" id="wiki" aria-hidden="true">
+  <div class="wiki-hd"><div class="t"><div class="kicker" id="w-kicker"></div><h2 id="w-title"></h2></div><button class="x" id="w-close" aria-label="Zavřít">×</button></div>
+  <div class="wiki-bd" id="w-body"></div>
+</aside>
+<div class="toast" id="toast"></div>
+
+<script type="application/json" id="data">
+{
+  "meta": {"dnes": "2026-09-23", "od": "2026-07-01", "do": "2027-03-01", "verze": "23. 9. 2026 17:00", "poznamka": "Harry aktualizuje: meta.dnes, meta.verze, souhrn.*, milniky[].stav/od/do, moduly[].backend/frontend/stav/wiki. Otázky jsou v db (kolekce otazky), ne tady."},
+
+  "souhrn": {
+    "tento_tyden": [
+      {"kdo": "Tomáš", "co": "M5 LAN sync — Kasa server, klient, ostrovní režim, povýšení; testy syncu + latence v appce", "stav": "bezi", "ref": "m:lan_sync"},
+      {"kdo": "Tomáš", "co": "Design fáze 2 podle dema v3.7 HOTOVÁ dnes (etapy 1–5 v jednom běhu, 40/40 testů) — zbývá merge s M5 (1 konflikt) + Critic", "stav": "hotovo", "ref": "m:design_ux"},
+      {"kdo": "Tomáš", "co": "Stav jídla u objednávky — čip a detail v UI hotové (design 2), model a eventy v M5", "stav": "bezi", "ref": "m:stav_jidla"},
+      {"kdo": "Viktor", "co": "Technické TLDR pro Tondu (nezávislé oči na architekturu) — 11 otázek + checklist 20 věcí, co možná zapomínáme", "stav": "hotovo", "ref": "m:lan_sync"},
+      {"kdo": "Tomáš", "co": "Webový KDS servírovaný z Kasy po LAN (záloha pro starý iPad v kuchyni)", "stav": "bezi", "ref": "m:kds_web"},
+      {"kdo": "Harry", "co": "Registrace vývojáře EET (epodpora@fs.gov.cz) + ověření Hukot SSH/cron do 2. 10.", "stav": "bezi", "ref": "m:eet"},
+      {"kdo": "Aneta", "co": "Připomínky k demu Tabulky směn — urgence 23. 9. 10:53", "stav": "ceka", "ref": "m:smeny"}
+    ],
+    "ceka_na_jakuba": [
+      {"co": "Apple Developer účet — Individual, na tvoje jméno (30 min, 99 USD)", "termin": "pá 25. 9.", "ref": "m:distribuce"},
+      {"co": "GO na architekturu kasy v3 (LAN-first, iPad Pro 2018 hlavní, iOS 16)", "termin": "pá 25. 9.", "ref": "m:lan_sync"},
+      {"co": "GO na etapu 1 směn „tabulka říká pravdu“ (20–25 h, do 24. 10.)", "termin": "teď", "ref": "m:smeny"},
+      {"co": "Smoke test hubu 1.7.6 → faktury naostro pro tým", "termin": "do 4. 10.", "ref": "m:faktury"},
+      {"co": "iPad do kuchyně místo Air 1. gen (nákup ~10 tis. Kč, 🔴 schválení)", "termin": "do 2. 10.", "ref": "m:kds_nativni"},
+      {"co": "Proklik M4 na simulátoru/iPadu (brána 5. 10.) + merge m4 → main", "termin": "do 5. 10.", "ref": "m:db_eventlog"},
+      {"co": "Model Epsonu (štítek zespodu) + potvrzení Wi-Fi bez izolace", "termin": "pá 2. 10.", "ref": "m:tisk"},
+      {"co": "SumUp účet na provozovatelku + affiliate key + karetní obrat z MobiPOS", "termin": "30. 10.", "ref": "m:sumup"},
+      {"co": "Certifikát EET 2.0 — s provozovatelkou v DIS+", "termin": "1.–20. 11.", "ref": "m:eet"},
+      {"co": "EET při výpadku Kasy: certifikát i na Obsluha iPadu, nebo platby čekají? (díra z TLDR)", "termin": "před M6b", "ref": "m:eet"},
+      {"co": "Počty míst u stolů Ulice / Příborník / Židle (v kase je Tomášův odhad)", "termin": "brzy", "ref": "m:markovani"}
+    ]
+  },
+
+  "deadliny": [
+    {"datum": "2026-09-25", "nazev": "Apple účet + GO v3", "typ": "jakub"},
+    {"datum": "2026-10-02", "nazev": "Hukot · Wi-Fi · KDS iPad · Epson", "typ": "jakub"},
+    {"datum": "2026-10-30", "nazev": "SumUp účet", "typ": "jakub"},
+    {"datum": "2026-10-31", "nazev": "Plán B checkpoint (LAN sync ok?)", "typ": "planb"},
+    {"datum": "2026-11-01", "nazev": "DIS+ vydává certifikáty EET", "typ": "eet"},
+    {"datum": "2026-12-01", "nazev": "Souběh kasy v provozu · MOJE EET", "typ": "eet"},
+    {"datum": "2027-01-01", "nazev": "EET 2.0 provoz (pilotní měsíc)", "typ": "eet"},
+    {"datum": "2027-01-18", "nazev": "Kasa primární — bod bez návratu 1", "typ": "bbn"},
+    {"datum": "2027-02-01", "nazev": "Povinnost EET 2.0", "typ": "eet"},
+    {"datum": "2027-02-28", "nazev": "MobiPOS zrušit — bod bez návratu 2", "typ": "bbn"}
+  ],
+
+  "milniky": [
+    {"id": "k_m1", "draha": "kasa", "radek": 0, "nazev": "M1 Kostra appky", "od": "2026-07-25", "do": "2026-07-28", "stav": "hotovo", "popis": "SwiftUI kostra kasy, DS tokeny, první obrazovky. Jeden večer Tomáše (27. 7.).", "brana": "", "moduly": ["design_ux", "markovani"], "zdroj": "architektura v3, sekce 7 (tempo M1–M3)"},
+    {"id": "k_m23", "draha": "kasa", "radek": 0, "nazev": "M2 + M3 Markování · platba s DPH · split · KDS · Domů", "od": "2026-08-01", "do": "2026-08-12", "stav": "hotovo", "popis": "Účet, položky, platba s rozpadem DPH, dělení účtu, kuchyňský displej, persistence do state.json. Ověřeno na simulátoru přes DEBUG argumenty (dotyk tehdy nešel simulovat).", "brana": "Build SUCCEEDED, flow split ověřen (report 11. 8.)", "moduly": ["markovani", "platby", "split", "kds_nativni"], "zdroj": "tomas_pos_swift_m3_2026-08-11.md"},
+    {"id": "k_df1", "draha": "kasa", "radek": 1, "nazev": "Design fáze 1", "od": "2026-08-12", "do": "2026-08-14", "stav": "hotovo", "popis": "DS tokeny v kódu 25 % → 36 %: washe, KDS semafor, elevation, glass přes systémový materiál. Motion 0 %, typografie beze změny.", "brana": "", "moduly": ["design_ux"], "zdroj": "tomas_pos_design_faze1_2026-08-12.md"},
+    {"id": "k_m4", "draha": "kasa", "radek": 0, "nazev": "M4 Lokální jádro: DB · event log · PIN · pokladna · uzávěrka", "od": "2026-09-23", "do": "2026-10-02", "stav": "hotovo", "popis": "SQLite (GRDB) místo state.json, append-only event log jako zdroj pravdy, PIN s rolemi, pokladna, uzávěrka s JSON pro hub. M4.1: target iOS 16, identita eventu (deviceId, seq), DPH u splitu, repo na GitHubu. Kód hotový 23. 9. ve 13:48 — 38 testů zelených.", "brana": "5. 10.: ty proklikáš celou směnu v letadlovém režimu, účty přežijí zabití appky, storno chce důvod a je v logu.", "moduly": ["db_eventlog", "pin_role", "pokladna", "uzaverka"], "zdroj": "tomas_pos_swift_m4 + m41 (23. 9.)"},
+    {"id": "k_df2", "draha": "kasa", "radek": 1, "nazev": "Design fáze 2 (podle dema v3.7) — hotová v jednom dni", "od": "2026-09-23", "do": "2026-09-24", "stav": "hotovo", "popis": "Plán byl do 2. 10., Tomáš to zvládl v jednom běhu: DS knihovna ~16 komponent (DSTopBar + pull-down menu, DSOverlay s reálným blurem, motion s Reduce Motion), 37 ilustrací + 15 ikon, DM Sans static 18pt, PIN jen kódem (třes u neznámého, auto-zámek 1 min), plánek 22 stolů 1:1 z MobiPOSu se zónami, uzávěrka 6 kroků, KDS světlý přes fullScreenCover, čip stavu položky. 40/40 testů, 0 warningů, 20 dvojic screenshotů demo | Swift. Zbývá merge s M5 (1 konflikt v SectionViews.swift) a Critic.", "brana": "Critic nad 20 dvojicemi screenshotů; merge s M5 bez regrese testů.", "moduly": ["design_ux", "pin_role", "platby", "kds_nativni", "stav_jidla"], "zdroj": "eliska_kasa_design_faze2_spec (15:18) + Jakub 14:36, 15:48"},
+    {"id": "k_m5", "draha": "kasa", "radek": 0, "nazev": "M5 LAN sync + failover + cloud v0 + TestFlight na 3 iPady", "od": "2026-09-23", "do": "2026-10-30", "stav": "bezi", "popis": "Kasa iPad Pro 2018 = server (Bonjour + WebSocket), Obsluha Air 4 a KDS = klienti s plnou kopií DB; ostrovní režim; povýšení na Kasu pod PINem. Cloud v0 = denní dump na Hukot. Začalo dřív než plán (5. 10.): branch feat/pos-swift-m5 má 3 commity (sync vrstva, testy, latence).", "brana": "30. 10.: markuješ na A, na B vidíš do 300 ms · zabiješ Kasu → B jede dál, po návratu dosync bez duplicit · bez routeru se iPady najdou · ráno je dump v cloudu.", "moduly": ["lan_sync", "kds_web", "obsluha", "cloud_hukot", "distribuce"], "zdroj": "architektura v3 sekce 7 + git log feat/pos-swift-m5 (23. 9.)"},
+    {"id": "k_m6a", "draha": "kasa", "radek": 0, "nazev": "M6a Platby SumUp · tisk Epson · digitální účtenka", "od": "2026-11-02", "do": "2026-11-27", "stav": "plan", "popis": "SumUp SDK přes Bluetooth k terminálu, který na baru už je; stávající Epson na baru po LAN — raw ESC/POS (40 sloupců) nebo ePOS XML podle modelu; účtenka s QR na uctenka.novysvet.net.", "brana": "27. 11.: zaplatíš si kafe vlastní kartou přes vlastní kasu a vypadne účtenka s BKP a QR.", "moduly": ["sumup", "tisk", "displej_hosta"], "zdroj": "architektura v3 sekce 7"},
+    {"id": "k_m6b", "draha": "kasa", "radek": 1, "nazev": "M6b EET 2.0 klient (Playground)", "od": "2026-11-02", "do": "2026-11-27", "stav": "plan", "popis": "PKP/BKP/FIK přímo na Kasa iPadu, fronta 48 h v DB, testovací certifikát, Playground round-trip. Paralelně s M6a, druhý Tomáš.", "brana": "27. 11.: Playground vrátí FIK na 20/20 testovacích tržeb včetně splitu a storna.", "moduly": ["eet"], "zdroj": "architektura v3 sekce 3 a 7"},
+    {"id": "k_m7", "draha": "kasa", "radek": 0, "nazev": "M7 Hub napojení · ostrý certifikát · souběh · Unlisted", "od": "2026-11-30", "do": "2026-12-23", "stav": "plan", "popis": "Uzávěrka volá hub RPC save_day_data přímo z Kasy, směny se tahají z hubu; import ostrého certifikátu (provozovatelka v DIS+); rozdílový report kasa vs. MobiPOS denně do #my_ai; kasa v souběhu od 1. 12.; podání Unlisted po 7. 12.", "brana": "23. 12.: 10 dní souběhu s rozdílem tržeb 0 Kč, uzávěrka se sama objeví v hubu, 1 vyvolaný výpadek Kasy bez ztráty.", "moduly": ["uzaverka_hub", "smeny_kasa", "eet", "distribuce"], "zdroj": "architektura v3 sekce 7 a 8"},
+    {"id": "k_m8", "draha": "kasa", "radek": 0, "nazev": "M8 Pilot EET na produkci + cutover", "od": "2027-01-04", "do": "2027-02-01", "stav": "plan", "popis": "1. 1. přepnutí na produkční EET (leden = státní pilotní měsíc). Každý večer: fronta 0, FIK na 100 % tržeb, rozdíl vs. MobiPOS 0. Od 18. 1. kasa primární. 1. 2. povinnost.", "brana": "18. 1.: 5 dní po sobě bez incidentu, tým markuje bez dotazů, Aneta potvrdí, že MobiPOS nepotřebuje.", "moduly": ["eet", "distribuce"], "zdroj": "architektura v3 sekce 7 a 8"},
+    {"id": "k_mobipos", "draha": "kasa", "radek": 1, "nazev": "MobiPOS jen jako záchrana → 28. 2. zrušit", "od": "2027-01-18", "do": "2027-02-28", "stav": "plan", "popis": "MobiPOS zůstává zaplacený a nainstalovaný na pultu do konce února. Únor bez záložního použití = zrušit předplatné.", "brana": "", "moduly": [], "zdroj": "architektura v3 sekce 0"},
+
+    {"id": "h_cutover", "draha": "hub", "radek": 0, "nazev": "Cutover: stará appka → nový hub", "od": "2026-07-29", "do": "2026-08-11", "stav": "hotovo", "popis": "Data převedena 11. 8. 19:17, stará appka zmrazena 22:49. 18 modulů, 707 testů. Tým od té doby jede na hub.novysvet.net.", "brana": "", "moduly": ["evidence", "vyplaty"], "zdroj": "memory project_kns_hub.md (11. 8.)"},
+    {"id": "h_176", "draha": "hub", "radek": 0, "nazev": "1.7.5 + 1.7.6 (multi-pozice, AI párování faktur) — nasazeno 6. 9.", "od": "2026-08-12", "do": "2026-09-06", "stav": "hotovo", "popis": "Napsané 12. 8., živě až 6. 9. 16:35 (Harry přes Lovable SQL editor + Publish). Migrace ai_parovani ve 3 bězích ověřena, 20 edge funkcí nasazeno. Zbývá tvůj smoke test.", "brana": "Smoke test: patička 1.7.6, Tým → zaškrtávátka pozic, faktura → „Napárovat přes AI“.", "moduly": ["faktury", "tym_role"], "zdroj": "memory (6. 9. 15:30–16:35)"},
+    {"id": "h_demo", "draha": "hub", "radek": 1, "nazev": "Demo Tabulky směn pro Anetu (7 kol, noc 6./7. 9.)", "od": "2026-09-06", "do": "2026-09-08", "stav": "hotovo", "popis": "Reálné hub komponenty nad mock Supabase: kruh ťukání (můžu / pryč), celé týdny, celý měsíc, fáze měsíce, žádosti po hotovém, onboarding per role, fullscreen. Playwright 100/100 živě. Koncept = návod pro Anetu v4.8.", "brana": "", "moduly": ["smeny", "onboarding"], "zdroj": "tomas_kns_smeny_demo_v7 + koncept v4.8"},
+    {"id": "h_aneta", "draha": "hub", "radek": 1, "nazev": "Čeká na Anetu — připomínky k demu", "od": "2026-09-08", "do": "2026-10-02", "stav": "ceka", "popis": "Odesláno 7. 9. 15:02 jako Harry (iMessage), 16 dní bez reakce, urgence 23. 9. 10:53. Bez jejího průchodu se etapa 1 může stavět (DB + RPC), ale etapa 2 (ťukání) ne.", "brana": "", "moduly": ["smeny"], "zdroj": "memory (7. 9. 15:02, 23. 9. restart)"},
+    {"id": "h_faktury", "draha": "hub", "radek": 0, "nazev": "Faktury naostro pro tým", "od": "2026-09-28", "do": "2026-10-04", "stav": "ceka", "popis": "První modul z pořadí faktury → sklad → směny. Inbound faktury@hub.novysvet.net už funguje, AI párování nasazené. Čeká: tvůj smoke test 1.7.6, pak návod týmu a kdo ručí za faktury (účetní má přístup — rozhodnuto 6. 9.).", "brana": "Aneta a účetní zpracují reálný týden faktur jen v hubu.", "moduly": ["faktury"], "zdroj": "roadmapa 6. 9. (artefakt 4f948489) + Jakub 6. 9."},
+    {"id": "h_kucharka", "draha": "hub", "radek": 2, "nazev": "Role kuchařka 1.7.7 — nasazení", "od": "2026-09-28", "do": "2026-10-02", "stav": "ceka", "popis": "Branch feat/role-kucharka hotový (13 práv, testy 922/59). Past: edge fn create-user má whitelist rolí → bez redeploye UI hlásí „Neplatná role“ (týká se i role rezervace). Otázka: má kuchařka vidět rezervace?", "brana": "", "moduly": ["tym_role"], "zdroj": "tomas_kns_role_kucharka_2026-09-06.md"},
+    {"id": "h_sklad", "draha": "hub", "radek": 0, "nazev": "Sklad a objednávání naostro", "od": "2026-10-05", "do": "2026-10-31", "stav": "plan", "popis": "Druhý modul v pořadí. Modul v hubu existuje od cutoveru, tým ho nepoužívá. Rollout = návod + první inventura v hubu.", "brana": "", "moduly": ["sklad"], "zdroj": "roadmapa 6. 9. + Jakub 6. 9."},
+    {"id": "h_sm1", "draha": "hub", "radek": 1, "nazev": "Směny etapa 1 „tabulka říká pravdu“", "od": "2026-10-05", "do": "2026-10-24", "stav": "ceka", "popis": "20–25 h. Tab „Tabulka směn“ výchozí, celý tým vidí celou tabulku (nová RPC get_shift_table, 2 RLS blokátory pryč), řádek Chybí, řádek Ty, pondělí zavřeno, nové barvy a ikony, závazky nad tabulkou. Běží vedle papíru, hlášení na listopad ještě postaru. Opravit i send-push bez permission gate (HIGH z auditu 28. 7.).", "brana": "Aneta: „tohle je můj Excel, jen živý — a vidím, kde chybí lidi.“", "moduly": ["smeny"], "zdroj": "koncept v4.8 sekce 11 + feasibility v3"},
+    {"id": "h_sm2", "draha": "hub", "radek": 1, "nazev": "Směny etapa 2 „kde říkám, kdy můžu“", "od": "2026-10-26", "do": "2026-11-07", "stav": "plan", "popis": "32–40 h (port z dema 55–75 h celkem). Kruh ťukání, celé týdny, fáze měsíce (sbíráme → Aneta skládá → hotový), Potvrdit, Rozpis hotový + soupis, Beru na hořící díru, žádosti po hotovém, Nastavení → Směny, onboarding per role. Hlášení na prosinec do 10. 11.", "brana": "Brigádník: „naklikám půl měsíce za půl minuty a pak mi přijde, kdy jdu.“", "moduly": ["smeny", "onboarding"], "zdroj": "koncept v4.8 sekce 11 + demo v5 odhad"},
+    {"id": "h_prosinec", "draha": "hub", "radek": 2, "nazev": "Prosinec = první měsíc složený v hubu", "od": "2026-11-10", "do": "2026-12-01", "stav": "plan", "popis": "Tým hlásí dostupnost do 10. 11. (jen pravidlo v pruhu, žádný zámek), Aneta skládá ručně, „Rozpis hotový“ obvykle do týdne. Papír vedle toho naposledy.", "brana": "", "moduly": ["smeny"], "zdroj": "koncept v4.8 sekce 6b + Jakub 7. 9. 0:15"},
+    {"id": "h_sm3", "draha": "hub", "radek": 1, "nazev": "Směny etapa 3 úklid (kalendář pryč)", "od": "2026-11-23", "do": "2026-12-04", "stav": "plan", "popis": "9–12 h po 2 týdnech souběhu tabulka + kalendář. Smazat BurningShifts, ShiftPlanner*, záložku Čekající; Moje dostupnost splývá s tabulkou.", "brana": "", "moduly": ["smeny"], "zdroj": "koncept v4.8 sekce 11"},
+    {"id": "h_kasa_hub", "draha": "hub", "radek": 2, "nazev": "Uzávěrka z kasy rovnou do hubu (M7)", "od": "2026-11-30", "do": "2026-12-23", "stav": "plan", "popis": "Hub účet „Kasa“ s jedinou permission edit_daily_evidence; uzávěrka volá save_day_data; směny se tahají do kasy přes list_shifts (docházka jako vodítko).", "brana": "", "moduly": ["uzaverka_hub", "smeny_kasa", "evidence"], "zdroj": "architektura v3 sekce 5 a 7"},
+    {"id": "h_sm2b", "draha": "hub", "radek": 1, "nazev": "Směny etapa 2b „Navrhnout rozpis“", "od": "2027-01-05", "do": "2027-01-30", "stav": "plan", "popis": "20–25 h, až po jednom měsíci, který Aneta složí ručně (prosinec). Čtyři viditelná pravidla + rozhodčí, návrh v oddělené tabulce, „Potvrdit návrh (N)“. Bez preference „koho raději“.", "brana": "", "moduly": ["smeny"], "zdroj": "koncept v4.8 sekce 11 + Jakub 6. 9. 23:32"}
+  ],
+
+  "moduly": [
+    {"id": "db_eventlog", "draha": "kasa", "nazev": "Lokální DB + event log", "stav": "hotovo", "vaha": 3, "poz": [0, 2],
+     "backend": {"pct": 95, "z": "M4/M4.1: 9 tabulek GRDB, 16 typů eventů, replay 3 testy, identita (deviceId, seq) + INSERT OR IGNORE, 38 testů zelených"},
+     "frontend": {"pct": null, "z": "bez vlastní obrazovky — jen Nastavení → Replay / Vymazat živý stav"},
+     "zavisi": [],
+     "wiki": {"co": "Základ celé kasy. Každá změna (položka na účet, platba, storno, přihlášení) se zapíše jako událost do lokální databáze na iPadu. Stav kasy se z těch událostí kdykoli poskládá znovu.",
+      "zamysleno": "Když se něco pokazí, nic se neztratí — události se nemažou, jen přibývají. Stejný princip pak pohání i synchronizaci mezi iPady (M5): druhý iPad si jen stáhne události, které mu chybí.",
+      "umi": ["SQLite soubor Documents/kns.sqlite, 9 tabulek, každá s tenantId i deviceId", "16 typů událostí, přehrání z logu dá bit po bitu stejný stav (ověřeno i živě na 19 událostech)", "Duplicitní událost = nic se nestane (ověřeno ve 3 pořadích doručení ze 2 zařízení)", "Cizí položka dorazivší dřív než účet nespadne (nález M4.1)"],
+      "neumi": ["Staré události line.qty z doby před M4.1 nesou jen rozdíl, ne absolutní množství — před zapojením druhého iPadu vymazat živý stav", "Odeslání kamkoli mimo iPad (to je M5 a cloud v0)"],
+      "rozhodnuti": [{"d": "14. 7.", "t": "Vše podstatné na lokální síti, ne v cloudu."}, {"d": "23. 9. 11:21", "t": "LAN-first potvrzeno, cloud jen záloha; Supabase Pro pryč."}, {"d": "23. 9.", "t": "Deployment target iOS 16.0 (Petr: kód nemá žádné iOS 17+ API)."}],
+      "kde": [{"l": "Repo (private)", "u": "https://github.com/formanjakub-dot/kns-pos-swift"}, {"l": "Branch", "p": "feat/pos-swift-m4 @ e1cf5ca"}, {"l": "Report", "p": "AI Tým/Týmový Inbox/tomas_pos_swift_m4_2026-09-23.md + m41"}]}},
+
+    {"id": "markovani", "draha": "kasa", "nazev": "Markování (účet, položky)", "stav": "hotovo", "vaha": 3, "poz": [1, 1],
+     "backend": {"pct": 90, "z": "M2/M3 hotovo; v M4 přepsáno na eventy tab.open/line.add/line.qty/line.void; testy replay"},
+     "frontend": {"pct": 85, "z": "design 2 hotový: objednávka s pending žlutě, rail, dlaždice s ilustrací, empty state; plánek 22 stolů 1:1 z MobiPOSu se zónami Terasa · Kavárna · Ulice; počty míst = Tomášův odhad; chybí servisní chipy, s sebou pruh"},
+     "zavisi": ["db_eventlog", "design_ux"],
+     "wiki": {"co": "Otevřít účet ke stolu, naklikat položky z katalogu, měnit množství, stornovat s důvodem, poslat do kuchyně.",
+      "zamysleno": "Jako v demu v3.7: vlevo účet, vpravo katalog s ilustrovanými dlaždicemi a kategoriemi, nové položky žlutě „K ODESLÁNÍ“, jedno tlačítko Poslat.",
+      "umi": ["Účet, položky, množství, storno položky s důvodem (4 důvody z prototypu)", "Účty přežijí restart appky (od M4 jsou v DB)", "Poslání do kuchyně = událost kds.send", "Design 2: plánek 22 stolů se zónami, obsazený stůl = hosté · částka · doba · lišta, objednávka s ilustrovanými dlaždicemi a žlutým „K ODESLÁNÍ“"],
+      "neumi": ["Počty míst u stolů Ulice / Příborník / Židle = odhad, potvrdit", "Servisní chipy, čekačka, HH/počty ks, editace menu v appce", "Objednávka u stolu z Obsluha iPadu — až s M5"],
+      "rozhodnuti": [{"d": "23. 9. 14:36", "t": "Kasa = landscape lock. Demo v3.7 je vizuální zdroj pravdy."}, {"d": "23. 9. 15:48", "t": "Plánek převzít z MobiPOS polohou a orientací; zóny Terasa · Kavárna · Ulice, Kavárna uprostřed a výchozí."}],
+      "kde": [{"l": "Kód", "p": "Sources/OrderView.swift, FloorPlanView.swift (worktree kns-pos-swift-design2)"}, {"l": "Demo (zdroj pravdy vzhledu)", "p": "~/Claude/Projects/KNS_POS_Demo/ → npm start → :4700"}]}},
+
+    {"id": "platby", "draha": "kasa", "nazev": "Platby + rozpad DPH", "stav": "hotovo", "vaha": 3, "poz": [2, 2],
+     "backend": {"pct": 80, "z": "M3 platba hotovost/karta s DPH 21/12/osvob/mimo; M4.1 DPH i u dílčí platby (test 2–12 dílů); chybí spropitné (tips = 0) a napojení na terminál (SumUp = vlastní uzel)"},
+     "frontend": {"pct": 85, "z": "design 2 hotový: merunková atmosféra, souhrn na skle, numpad, rychlé částky, Zbývá/Vrátit 44, účtenka; prázdné Přijato = přesně (o tap méně než demo); chybí spropitné"},
+     "zavisi": ["markovani", "db_eventlog"],
+     "wiki": {"co": "Zaplatit účet hotově nebo kartou, spočítat vrácení, rozpadnout DPH podle sazeb pro uzávěrku.",
+      "zamysleno": "Částka z kasy poletí do SumUp terminálu přes Bluetooth (M6a), účtenka ponese BKP/FIK (M6b). Spropitné přes displej hosta.",
+      "umi": ["Hotovost + karta (ruční potvrzení), dopočet vrácení", "Rozpad DPH na účtence i v uzávěrce; u dělené platby poměrně, součet sedí na korunu", "Platba je událost payment.record — nic se neztratí"],
+      "neumi": ["Spropitné (tips v uzávěrce je 0) — váže se na displej hosta", "Reálný terminál (SumUp SDK) — M6a", "Vzhled podle dema — fáze 2"],
+      "rozhodnuti": [{"d": "23. 9. (Viktor v3)", "t": "SumUp přes Bluetooth SDK primárně, Cloud API až fáze 2."}],
+      "kde": [{"l": "Kód", "p": "Sources/PaymentView.swift, ClosingTests (kns-pos-swift)"}, {"l": "Důkaz DPH splitu", "p": ".scratch/kns_pos_swift_m41_2026-09-23/05_uzaverka_dph_ze_splitu.png"}]}},
+
+    {"id": "split", "draha": "kasa", "nazev": "Dělení účtu (split)", "stav": "hotovo", "vaha": 1, "poz": [3, 1],
+     "backend": {"pct": 90, "z": "M3 rovným dílem + po položkách; M4.1 DPH u dílů; zbytek po dělení do posledního dílu"},
+     "frontend": {"pct": 80, "z": "funkční dlaždice ≥ 48 pt, design 2 komponenty; hit-test prstem na reálném iPadu stále neověřen"},
+     "zavisi": ["platby"],
+     "wiki": {"co": "Rozdělit účet mezi víc lidí — rovným dílem nebo výběrem položek, každý díl zaplatit zvlášť.",
+      "zamysleno": "Jeden tap „rozdělit na N“, dílčí účtenky, poslední díl dopočítá zbytek.",
+      "umi": ["Rovným dílem i po položkách", "Dílčí platby s DPH (od M4.1)"],
+      "neumi": ["Vzhled podle dema — fáze 2"],
+      "rozhodnuti": [],
+      "kde": [{"l": "Report", "p": "AI Tým/Týmový Inbox/tomas_pos_swift_m3_2026-08-11.md"}]}},
+
+    {"id": "pin_role", "draha": "kasa", "nazev": "PIN · role · zámek · předání", "stav": "hotovo", "vaha": 2, "poz": [1, 3],
+     "backend": {"pct": 80, "z": "M4: 3 role (admin / vedoucí / obsluha), isManager gate, zámek po N min, předání kasy, AuthTests 7; chybí správa lidí a PINů v Nastavení (M5, 1 den)"},
+     "frontend": {"pct": 90, "z": "design 2: PIN jen kódem (neznámý kód = třes), Pauza přijme kód kohokoli (vlastní odemkne, kolegův převezme), zámek 30 s–10 min / nikdy, výchozí 1 min; 2 nové testy na unikátní PIN"},
+     "zavisi": ["db_eventlog"],
+     "wiki": {"co": "Kdo je u kasy a co smí. Přihlášení PINem, automatický zámek po nečinnosti, předání kasy kolegovi, docházka jako vodítko pro uzávěrku.",
+      "zamysleno": "Jeden unikátní 4místný PIN na člověka, žádný výběr jména. Role říká jen co kdo smí (výběr z pokladny, storno celého účtu = vedoucí+). Profese (barista, kuchyň) patří do hubu, ne do kasy.",
+      "umi": ["3 role, předání kasy odhlásí a přihlásí přebírajícího", "Přihlášení jen PINem, unikátní kód per člověk (kontrola v seedu), auto-zámek výchozí 1 min", "PIN hashovaný se solí (formát, který v M6 ověří server)", "Docházka se loguje z přihlášení, uzávěrka ji předvyplní"],
+      "neumi": ["Správa lidí a PINů v Nastavení — dnes jen reset dat; seed = demo PINy z prototypu → před ostrým provozem přepsat", "Předání kasy zatím nepíše do logu pokladny (text to říká poctivě)"],
+      "rozhodnuti": [{"d": "23. 9. 15:48", "t": "Přihlášení jen PINem, unikátní kód per zaměstnanec; auto-zámek v Nastavení, výchozí 1 min."}, {"d": "6. 9.", "t": "Aneta jako admin vidí finance = správně."}],
+      "kde": [{"l": "Kód", "p": "Sources/Auth*.swift, PinLoginView.swift (kns-pos-swift)"}, {"l": "Screenshot", "p": ".scratch/kns_pos_swift_m4_2026-09-23/01_pin_login.png"}]}},
+
+    {"id": "pokladna", "draha": "kasa", "nazev": "Pokladna (hotovost)", "stav": "hotovo", "vaha": 2, "poz": [2, 4],
+     "backend": {"pct": 85, "z": "M4: očekávaná hotovost, float/vklad/výběr/no-sale s povinným důvodem, storna do logu, tolerance v Nastavení, ClosingTests"},
+     "frontend": {"pct": 85, "z": "design 2: Pokladna jako sheet z pull-down menu, vnořený Vklad ověřen tapy (log + Očekáváno), AmountPad v DS"},
+     "zavisi": ["pin_role", "db_eventlog"],
+     "wiki": {"co": "Kolik má být v šuplíku: ranní hotovost, vklady, výběry, otevření kasy bez prodeje — vše s důvodem, aby uzávěrka seděla.",
+      "zamysleno": "Sheet z horního menu (jako demo), velká číselná klávesnice AmountPad (po nálezu s českou klávesnicí, která místo 2350 psala Ěšřé).",
+      "umi": ["Očekávaná hotovost, pohyby s důvodem, log pohybů", "Výběr a ranní hotovost jen vedoucí+ (obsluze se dlaždice zamkne)"],
+      "neumi": ["Reálná ranní hotovost a tolerance — v Nastavení jsou prototypové hodnoty"],
+      "rozhodnuti": [{"d": "23. 9. (Harry dle Elišky)", "t": "Pokladna / Uzávěrka / Předání / Pauza jako sheety z menu, ne dlaždice na Domů."}],
+      "kde": [{"l": "Screenshot", "p": ".scratch/kns_pos_swift_m4_2026-09-23/05_pokladna.png"}]}},
+
+    {"id": "uzaverka", "draha": "kasa", "nazev": "Uzávěrka dne", "stav": "hotovo", "vaha": 3, "poz": [3, 4],
+     "backend": {"pct": 75, "z": "M4: wizard 4 kroky, rozpad DPH, manko/přebytek vs. tolerance, docházka z login eventů, JSON 1:1 s hub-inbox (test hlídá klíče); tips 0, tasks 0/0; jen na disk, neodesílá"},
+     "frontend": {"pct": 85, "z": "design 2: uzávěrka jako 6 kroků (režim zavírání) v DS; data checklistu a spropitného stále 0"},
+     "zavisi": ["platby", "pokladna", "pin_role"],
+     "wiki": {"co": "Zavřít den: tržba, rozpad DPH, spočítat hotovost, potvrdit docházku, odeslat do hubu (dnes uloží JSON na disk).",
+      "zamysleno": "Šest kroků jako v demu („režim zavírání“ s checklistem), výsledek letí přímo do hubu (M7) a den se objeví v evidenci bez ručního zásahu.",
+      "umi": ["Přehled → počítání (manko 33 Kč v toleranci 50) → docházka → odesláno; JSON Documents/uzaverky/YYYY-MM-DD.json ve tvaru hubu"],
+      "neumi": ["Odeslání do hubu (M7 save_day_data, potřebuje hub účet Kasa)", "Spropitné a checklist zavírání (tips, tasks)", "Storno už zaplacené tržby (= záporná tržba do EET) není navržené"],
+      "rozhodnuti": [{"d": "23. 9. (Harry dle Elišky)", "t": "Uzávěrka 6 kroků designově, data z hubu až M5/M7."}],
+      "kde": [{"l": "Výsledný JSON", "p": ".scratch/kns_pos_swift_m4_2026-09-23/14_uzaverka_2026-09-23.json"}]}},
+
+    {"id": "lan_sync", "draha": "kasa", "nazev": "LAN sync · failover (M5)", "stav": "bezi", "vaha": 3, "poz": [4, 2],
+     "backend": {"pct": 45, "z": "branch feat/pos-swift-m5: 3 commity (Kasa server, klient, ostrovní režim, povýšení; testy protokol/merge/konflikty/epocha; latence v appce) — neověřeno v kavárně, brána 30. 10."},
+     "frontend": {"pct": 20, "z": "LivePill „ostrovní režim“, párování QR, Admin → Zařízení — v návrhu, ne v kódu (spec fáze 2 + architektura v3)"},
+     "zavisi": ["db_eventlog"],
+     "wiki": {"co": "Aby tři iPady (Kasa na baru, Obsluha na place, KDS v kuchyni) viděly totéž — přes Wi-Fi kavárny, bez internetu. Když Kasa vypadne, ostatní jedou dál a po návratu se dosyncnou.",
+      "zamysleno": "Kasa iPad Pro 2018 = jediná autorita pořadí (Bonjour _knskasa._tcp + WebSocket). Klienti mají plnou kopii DB. Bez routeru se iPady najdou peer-to-peer. Mrtvou Kasu jde povýšit na jiném iPadu pod PINem vedoucího. Cloud (Hukot) jen jako záloha, mimo kritickou cestu.",
+      "umi": ["V kódu (neověřeno na place): protokol hello/catchup/event/ack, server, klient, ostrovní režim, povýšení s epochou po 120 s, konfliktní značky, web KDS server, 68 testovacích funkcí"],
+      "neumi": ["Test v kavárně: 300 ms A→B, zabít Kasu, vypnout router — brána 30. 10.", "TestFlight na 3 iPady (čeká na Apple účet)", "Role zařízení v Admin + párování QR", "Plán B 31. 10.: bez stabilního syncu → Dotykačka/Storyous"],
+      "rozhodnuti": [{"d": "23. 9. 11:21", "t": "LAN-first jako MobiPOS: jeden iPad hlavní, druhý při výpadku jede sám. Supabase Pro 25 $ je moc."}, {"d": "23. 9. 16:08 (Harry)", "t": "Bonjour v síti kavárny funguje, žádná izolace klientů (ověřeno na místě)."}],
+      "kde": [{"l": "Branch", "p": "feat/pos-swift-m5 @ 5edbff3 (Desktop kopie + origin)"}, {"l": "Architektura", "p": "AI Tým/Výzkum/KNS_POS_Architektura/kasa_architektura_2026-09-23.html (sekce 1–2)"}, {"l": "TLDR pro Tondu (nezávislé oči)", "p": "AI Tým/Výzkum/KNS_Program_Web/tonda_tldr_2026-09-23.md"}]}},
+
+    {"id": "kds_nativni", "draha": "kasa", "nazev": "KDS nativní (kuchyň)", "stav": "ceka", "vaha": 2, "poz": [2, 0],
+     "backend": {"pct": 70, "z": "M2/M3 kds.send + kds.done eventy, bony; role KDS jako tenký klient = M5"},
+     "frontend": {"pct": 80, "z": "design 2: KDS světlý (stáří bonu, checkbox 44, Zavřít bon s pulzem, Hotové · Výdej, statistiky v baru), otevírá se přes fullScreenCover (funguje i na iOS 16/17); kliknutí na položky zatím nepersistuje"},
+     "zavisi": ["markovani", "lan_sync"],
+     "wiki": {"co": "Obrazovka v kuchyni: bony podle stáří, „Došlo“, statistiky. Hlavní varianta KDS (Jakub 16:16).",
+      "zamysleno": "iPad napevno v kuchyni jako tenký klient Kasy — jen bony a jejich stav. Protože iPad Air 1. gen (iOS 12) appku neutáhne, buď nový iPad (nákup 🔴), nebo webový KDS z Kasy jako záloha.",
+      "umi": ["Bony s barvou podle stáří (0–5 / 5–15 / 15–25 / 25+ min), Hotovo/Výdej"],
+      "neumi": ["Běh na kuchyňském iPadu (Air 1. gen, iOS 12 = strop) — potřebuje jiný HW", "Tenký klient po LAN (M5)", "Stav položek per kus persistovaný (M5)"],
+      "rozhodnuti": [{"d": "23. 9. 16:16", "t": "Obě varianty: nativní KDS = hlavní, webový KDS z Kasy = záloha; raději vyměnit kuchyňský iPad za novější (nákup = 🔴)."}],
+      "kde": [{"l": "HW ověření", "p": "memory 23. 9. 16:08 — kuchyňský iPad = iPad Air 1. gen (iOS 12 = strop)"}, {"l": "Kandidáti nákupu", "p": "Petr 5. 9.: iPad A16 128 GB ~9 990 Kč, repas Air 4/5 8,4–10 tis."}]}},
+
+    {"id": "kds_web", "draha": "kasa", "nazev": "KDS webový (záloha z Kasy)", "stav": "bezi", "vaha": 1, "poz": [4, 0],
+     "backend": {"pct": 10, "z": "rozhodnuto 16:08, předáno M5 Tomášovi 16:10 (HTTP /kds + WebSocket z Kasy, JS pro Safari iOS 12); v kódu nic neověřeno"},
+     "frontend": {"pct": 0, "z": "nic"},
+     "zavisi": ["lan_sync"],
+     "wiki": {"co": "Kasa iPad odservíruje jednoduchou webovou stránku s bony, kterou otevře Safari i na starém iPadu v kuchyni.",
+      "zamysleno": "Záložní cesta bez nákupu HW: HTTP + WebSocket z Kasy po LAN, JS kompatibilní se Safari iOS 12.",
+      "umi": [],
+      "neumi": ["Vše — zadáno dnes"],
+      "rozhodnuti": [{"d": "23. 9. 16:08 (Harry)", "t": "KDS = webový tenký klient servírovaný Kasou, bez nákupu HW."}, {"d": "23. 9. 16:16 (Jakub)", "t": "Web KDS jen jako záloha, hlavní je nativní + novější iPad."}],
+      "kde": [{"l": "Zadání", "p": "memory 23. 9. 16:08–16:18 (předáno M5)"}]}},
+
+    {"id": "obsluha", "draha": "kasa", "nazev": "Obsluha iPad (plac)", "stav": "plan", "vaha": 2, "poz": [4, 1],
+     "backend": {"pct": 40, "z": "stejný kód jako klient v M5 (ostrovní režim častější — baterie, roaming); role zařízení řídí routing = M5 0,5 dne"},
+     "frontend": {"pct": 60, "z": "plánek 22 stolů se zónami hotový v design 2 (stejná appka); chybí role zařízení Obsluha a LAN (M5)"},
+     "zavisi": ["lan_sync", "markovani"],
+     "wiki": {"co": "iPad Air 4 na magnetu, který obsluha bere ke stolu: objednávka u stolu, stav jídla, později platba u stolu.",
+      "zamysleno": "Plánek první (zóny Terasa · Kavárna · Ulice jako v MobiPOS), obsazený stůl ukazuje pax, částku, dobu a stav jídla. Ostrovní režim, když se iPad uspí nebo odejde ze signálu.",
+      "umi": [],
+      "neumi": ["Vše síťové (M5)", "Platba u stolu se SumUp (fáze 2 po M6a)"],
+      "rozhodnuti": [{"d": "23. 9. 11:46", "t": "Obsluha = iPad Air 4 (opravený) na magnetu; máme, nekupuje se."}],
+      "kde": [{"l": "MobiPOS screeny (vzor plánku)", "p": "AI Tým/Výzkum/KNS_POS_Design_Audit/mobipos_screeny_2026-09-23/"}]}},
+
+    {"id": "stav_jidla", "draha": "kasa", "nazev": "Stav jídla u objednávky", "stav": "bezi", "vaha": 1, "poz": [3, 0],
+     "backend": {"pct": 10, "z": "rozhraní store.kitchenStatus(of:) + canReturnToPrep existuje; dnes odvozeno jen z KDSTicket.done (odesláno / hotovo); v přípravě / vydáno / vrátit do přípravy = M5 (eventy kds.status)"},
+     "frontend": {"pct": 60, "z": "design 2: čip odesláno → v přípravě → hotovo → vydáno / storno, detail s časovou osou, „Vrátit do přípravy“ a storno — ověřeno tapy"},
+     "zavisi": ["kds_nativni", "markovani"],
+     "wiki": {"co": "U každé položky je vidět, kde je: odesláno → v přípravě → hotovo (čas + kdo) → vydáno / storno; „vrátit do přípravy“.",
+      "zamysleno": "Obsluha u stolu zjistí, jestli se jídlo „neztratilo“, bez chození do kuchyně.",
+      "umi": ["UI: čip stavu v řádku účtu + detail s časovou osou (design 2)", "Odesláno / hotovo odvozené z bonu"],
+      "neumi": ["V přípravě / vydáno / vrátit do přípravy jako eventy z KDS (M5 nahradí tělo extension)"],
+      "rozhodnuti": [{"d": "23. 9. 16:16", "t": "Nový požadavek: stav jídla viditelný u objednávky."}],
+      "kde": [{"l": "UI", "p": "kns-pos-swift-design2/Sources/KitchenStatus.swift (rozhraní pro M5 popsané v reportu)"}]}},
+
+    {"id": "tisk", "draha": "kasa", "nazev": "Tisk účtenek (Epson)", "stav": "plan", "vaha": 2, "poz": [3, 3],
+     "backend": {"pct": 0, "z": "M6a; tiskárna má pevnou IP v síti kavárny, port raw ESC/POS otevřený (ověřeno), 40 sloupců; model tiskárny neznámý"},
+     "frontend": {"pct": 0, "z": "M6a (účtenka jako DSReceipt ve spec)"},
+     "zavisi": ["platby", "lan_sync"],
+     "wiki": {"co": "Účtenka na vyžádání, otevření zásuvky, bony do kuchyně jako záložní kanál za KDS.",
+      "zamysleno": "Stávající Epson na baru přes LAN: raw ESC/POS na portu 9100 (jako dnes MobiPOS „Vlastní kód“), ePOS-Print XML jen pokud je to TM-m30/T88 a bude pohodlnější.",
+      "umi": [],
+      "neumi": ["Vše — M6a (2.–27. 11.)"],
+      "rozhodnuti": [{"d": "23. 9. 15:48", "t": "Tiskárna na baru: pevná IP, raw ESC/POS („Vlastní kód“ jako v MobiPOS), 40 sloupců → M6."}],
+      "kde": [{"l": "Zjištění modelu", "p": "Petr 23. 9.: štítek zespodu, nebo Feed při zapnutí → status list → web UI EpsonNet Config"}]}},
+
+    {"id": "sumup", "draha": "kasa", "nazev": "SumUp terminál", "stav": "plan", "vaha": 2, "poz": [3, 2],
+     "backend": {"pct": 0, "z": "M6a; PaymentProvider jako prázdný protokol vzniká v M5; terminál se SIM na baru máme"},
+     "frontend": {"pct": 0, "z": "M6a"},
+     "zavisi": ["platby"],
+     "wiki": {"co": "Částka z kasy poletí do SumUp terminálu přes Bluetooth, výsledek zpět na účet. Bez přepisování částky rukou.",
+      "zamysleno": "SumUp iOS SDK (podlaha iOS 16), affiliate key vázaný na bundle ID; SIM v terminálu slouží jen autorizaci. Fáze 2: párování i k Obsluze pro platbu u stolu. Payments Plus 19 €/měs se vyplatí nad ~50 tis. Kč EU karet měsíčně.",
+      "umi": [],
+      "neumi": ["Vše — M6a"],
+      "rozhodnuti": [{"d": "23. 9. (Viktor v3)", "t": "SDK Bluetooth primár, Cloud API fáze 2; účet na provozovatelku kavárny (OSVČ)."}],
+      "kde": [{"l": "Research", "p": "AI Tým/Týmový Inbox/Petr_kasa_hw_kompatibilita_naklady_2026-09-23.md"}]}},
+
+    {"id": "eet", "draha": "kasa", "nazev": "EET 2.0 (fiskalizace)", "stav": "plan", "vaha": 3, "poz": [4, 4],
+     "backend": {"pct": 0, "z": "M6b (2.–27. 11.) Playground → M8 produkce 1. 1.; Harry: registrace vývojáře (epodpora) 🟡; certifikáty DIS+ od 1. 11."},
+     "frontend": {"pct": 0, "z": "LivePill stavů fronty — M6b"},
+     "zavisi": ["platby", "distribuce"],
+     "wiki": {"co": "Zákonná evidence tržeb od 1. 2. 2027: každá účtenka nese kódy (BKP/PKP), a když je internet, dostane od Finanční správy FIK. Offline účtenka platí, kódy se dopošlou do 48 h.",
+      "zamysleno": "Podpis přímo na Kasa iPadu (klíč v Keychain), fronta v lokální DB, cloud jen sleduje stav. Leden = státní pilotní měsíc bez sankcí — proto od 1. 1.",
+      "umi": [],
+      "neumi": ["Vše — M6b + M8", "Díra z TLDR: po povýšení jiného iPadu na Kasu tam není klíč certifikátu → buď cert i na Obsluha iPadu, nebo platby čekají na původní Kasu", "Platba kartou na Obsluze v ostrovním režimu = tržba bez podpisu (Viktor navrhuje zakázat)"],
+      "rozhodnuti": [{"d": "23. 9. (Viktor)", "t": "Fiskalizace na Kasa iPadu, ne na serveru (mění rozhodnutí 14. 7.) — offline účtenka musí nést BKP."}],
+      "kde": [{"l": "Stav zákona", "p": "Sněmovna přehlasovala Senát 9. 9.; Playground od 1. 7.; DIS+ certifikáty 1. 11.; MOJE EET 1. 12.; provoz 1. 1. 2027"}, {"l": "Architektura", "p": "kasa_architektura_2026-09-23.html sekce 3"}]}},
+
+    {"id": "displej_hosta", "draha": "kasa", "nazev": "Displej hosta · spropitné", "stav": "plan", "vaha": 1, "poz": [4, 3],
+     "backend": {"pct": 0, "z": "M6a/M6b; tips v uzávěrce dnes 0"},
+     "frontend": {"pct": 40, "z": "design 2: obrazovka Displej hosta existuje (zrcadlo účtenky, Tusker hero); párování a spropitné ne"},
+     "zavisi": ["platby", "tisk"],
+     "wiki": {"co": "iPad otočený k hostovi: částka, spropitné, QR na digitální účtenku.",
+      "zamysleno": "Zrcadlo účtenky (ne párování) — nejjednodušší a nejméně chybové. Volitelné, fáze 2.",
+      "umi": [],
+      "neumi": ["Vše"],
+      "rozhodnuti": [{"d": "23. 9. (Harry dle Elišky)", "t": "Displej hosta = zrcadlo účtenky."}],
+      "kde": [{"l": "Demo", "p": "KNS_POS_Demo/public/customer.html"}]}},
+
+    {"id": "design_ux", "draha": "kasa", "nazev": "Design & UX (DS KNS)", "stav": "hotovo", "vaha": 3, "poz": [0, 0],
+     "backend": {"pct": null, "z": "netýká se"},
+     "frontend": {"pct": 85, "z": "fáze 2 hotová 23. 9.: DS knihovna 16 komponent, 37/37 ilustrací, motion vč. Reduce Motion, DM Sans static, Tusker jen hero; 40/40 testů, 0 warningů; chybí: servisní chipy, spropitné, párování displeje, běh na iOS 16 neověřen, merge s M5, Critic"},
+     "zavisi": [],
+     "wiki": {"co": "Aby kasa vypadala a chovala se jako demo v3.7 a design systém KNS: papír, terakota, pastelové stavy, ilustrace, drobný stop-motion pohyb.",
+      "zamysleno": "Čtyři chybějící vrstvy: ilustrace, horní bar s pull-down menu a LivePill, motion (press, popIn, sheet spring, alarmy), typografická hierarchie (Tusker jen hero, jinde DM Sans 800). Zvuk místo haptiky (iPad nemá Taptic Engine).",
+      "umi": ["Fáze 1: barvy, radiusy, washe, KDS semafor, sklo", "Fáze 2: DSTopBar + pull-down menu (Směna / Provoz / Správa), DSOverlay s reálným blurem, 6 variant tlačítek, numpady, StatTile, Receipt, Toast", "37 ilustrací + 15 ikon v xcassets, atmosféry espresso/merunka, paper grain", "Motion: stisk .98, popIn, stamp, shake, wiggle, pulz, ring-alarm — vše respektuje Reduce Motion", "DM Sans static 18pt, Tusker jen login / Domů / Pauza / Displej", "Zvuk místo haptiky (výchozí vypnutý), status bar skrytý, landscape lock"],
+      "neumi": ["Servisní chipy, čekačka, spropitné, HH/počty ks, Moje směna, Rezervace, Vitrína, párování displeje, tisk (poctivě nepředstírané)", "Běh na iOS 16/17 ověřen jen kompilátorem (na Macu je jen runtime 26.3)", "Merge s M5: 1 konflikt v SectionViews.swift (řešení popsané v reportu)", "Critic nad 20 dvojicemi screenshotů"],
+      "rozhodnuti": [{"d": "6. 9.", "t": "Tusker jen na hero nadpisy, jinde DM Sans."}, {"d": "23. 9. 14:36", "t": "Cíl = demo v3.7 nebo lépe: víc prvků, hezčí nabídky, pastelovější barevnost."}, {"d": "23. 9. 15:48", "t": "Spec je moc obsáhlá na komentáře → stavět podle dema, Swift smí být lepší."}],
+      "kde": [{"l": "Report fáze 2", "p": "AI Tým/Týmový Inbox/tomas_kasa_design_faze2_2026-09-23.md"}, {"l": "Srovnání demo | Swift (20 dvojic)", "p": ".scratch/kns_pos_design2_impl_2026-09-23/compare/*.jpg"}, {"l": "Spec fáze 2", "p": "AI Tým/Výzkum/KNS_POS_Design_Audit/swift_design_faze2_spec_2026-09-23.html"}, {"l": "Design systém", "p": "~/Claude/Projects/KNS_DesignSystem/"}, {"l": "Branch", "p": "feat/pos-swift-design2 @ 282e32b (worktree kns-pos-swift-design2)"}]}},
+
+    {"id": "distribuce", "draha": "kasa", "nazev": "Distribuce: Apple účet · TestFlight · Unlisted", "stav": "ceka", "vaha": 2, "poz": [0, 4],
+     "backend": {"pct": 10, "z": "repo na GitHubu (private), target iOS 16; Apple Developer účet nezaložen (0 %), žádný build na reálném iPadu"},
+     "frontend": {"pct": null, "z": "netýká se"},
+     "zavisi": [],
+     "wiki": {"co": "Jak se appka dostane na iPady v kavárně a jak se bude aktualizovat.",
+      "zamysleno": "Apple Developer Individual na tvoje jméno (OSVČ do Organization nesmí) → TestFlight/Ad Hoc hned na 3 iPady → Unlisted App (auto-update, nevyprší) před 1. 2. 2027. Single App Mode na Kase.",
+      "umi": ["Kód není jen na Desktopu: github.com/formanjakub-dot/kns-pos-swift, 3 větve"],
+      "neumi": ["Apple účet (30 min, 99 USD, schválení 24–48 h) — blokuje TestFlight a tím M5 test v kavárně", "Merge feat/pos-swift-m4 → main (main = M1 kostra)"],
+      "rozhodnuti": [{"d": "6. 9.", "t": "Účet pod kavárnou (tehdy jsme mysleli s.r.o.)."}, {"d": "23. 9. 10:55 (Petr)", "t": "Provozovatelka kavárny je OSVČ, ne s.r.o. → Apple připouští jen Individual; nejjednodušší Jakub na vlastní jméno."}],
+      "kde": [{"l": "Návod", "p": "AI Tým/Týmový Inbox/Petr_apple_developer_osvc_kns_2026-09-23.md"}, {"l": "Repo", "u": "https://github.com/formanjakub-dot/kns-pos-swift"}]}},
+
+    {"id": "uzaverka_hub", "draha": "spoj", "nazev": "Uzávěrka → hub", "stav": "plan", "vaha": 2, "poz": [5, 4],
+     "backend": {"pct": 30, "z": "JSON uzávěrky 1:1 s hub-inbox (test hlídá klíče); RPC save_day_data v hubu existuje; hub účet Kasa nezaložen; odeslání z iPadu = M7"},
+     "frontend": {"pct": null, "z": "netýká se (den se objeví v evidenci hubu)"},
+     "zavisi": ["uzaverka", "evidence"],
+     "wiki": {"co": "Zavřený den z kasy se sám objeví v evidenci tržeb v hubu — bez přepisování čísel.",
+      "zamysleno": "Hub účet „Kasa“ s jedinou permission (edit_daily_evidence), uzávěrka volá save_day_data přímo z Kasa iPadu, když je internet; jinak fronta.",
+      "umi": ["Tvar dat sedí už dnes (test)"],
+      "neumi": ["Odeslání (M7, 30. 11.–23. 12.)", "Hub účet Kasa (Harry založí v M7)"],
+      "rozhodnuti": [{"d": "23. 9. (Viktor v2)", "t": "Přímo z Kasy do hub RPC, bez mezičlánku (Edge Function pryč)."}],
+      "kde": [{"l": "Hub RPC", "p": "save_day_data (kavarna-kalkulator-plus)"}]}},
+
+    {"id": "smeny_kasa", "draha": "spoj", "nazev": "Směny → kasa (docházka)", "stav": "plan", "vaha": 1, "poz": [5, 3],
+     "backend": {"pct": 5, "z": "hub má list_shifts (mcp); kasa dnes bere docházku jen z PIN přihlášení; pull = M7"},
+     "frontend": {"pct": null, "z": "netýká se"},
+     "zavisi": ["smeny", "pin_role"],
+     "wiki": {"co": "Kasa ví, kdo má dnes směnu, a uzávěrka porovná docházku z PINů s rozpisem z hubu.",
+      "zamysleno": "Denní pull list_shifts z hubu do Kasy (M7). Docházka zůstává vodítko, potvrzuje vedoucí v uzávěrce.",
+      "umi": [],
+      "neumi": ["Vše — M7"],
+      "rozhodnuti": [],
+      "kde": [{"l": "Hub", "p": "edge fn mcp / list_shifts"}]}},
+
+    {"id": "cloud_hukot", "draha": "spoj", "nazev": "Cloud záloha (Hukot)", "stav": "ceka", "vaha": 1, "poz": [5, 2],
+     "backend": {"pct": 10, "z": "tarif MH-02 potvrzen (150 Kč/měs, cron 1×/60 min, 2 DB); SSH/cron neověřeno (Harry do 2. 10.); ingest + denní dump = M5 26.–30. 10."},
+     "frontend": {"pct": null, "z": "netýká se (Harryho denní report do #my_ai)"},
+     "zavisi": ["lan_sync"],
+     "wiki": {"co": "Když je internet, Kasa pošle událost i denní dump na hosting, který už platíš. Slouží k záloze, obnově kasy na nový iPad a Harryho přehledům.",
+      "zamysleno": "Hukot MH-02 (PHP ingest + MySQL, cron 1×/h), fallback Supabase Free. Nic z toho kasa nepotřebuje k provozu. Slabina: Hukot zálohuje 1× týdně → denní dump k Harrymu.",
+      "umi": [],
+      "neumi": ["Ověřit SSH/cron v panelu Hukotu (Harry, 2. 10.)", "Ingest + dump (M5)"],
+      "rozhodnuti": [{"d": "23. 9. 11:21", "t": "Supabase Pro je moc; použít, co je v tarifu u Hukotu."}, {"d": "23. 9. 11:29", "t": "Hukot MH-02: 150 Kč/měs bez DPH, 20 GB, 2 DB na doménu, zálohy 1× týdně."}],
+      "kde": [{"l": "Architektura", "p": "kasa_architektura_2026-09-23.html sekce 2"}]}},
+
+    {"id": "evidence", "draha": "hub", "nazev": "Evidence tržeb", "stav": "hotovo", "vaha": 3, "poz": [6, 4],
+     "backend": {"pct": 100, "z": "živě od cutoveru 11. 8.; days od 12. 8. = 23 záznamů (6. 9.), tým používá denně"},
+     "frontend": {"pct": 100, "z": "/evidence v top 4 navštěvovaných (Lovable analytics 6. 9.)"},
+     "zavisi": [],
+     "wiki": {"co": "Denní zápis tržeb (hotovost, karta, spropitné, docházka) — to, co tým dnes reálně používá.",
+      "zamysleno": "Od M7 ho plní kasa sama (uzávěrka → save_day_data), tým jen kontroluje.",
+      "umi": ["Vše, co tým potřebuje dnes"],
+      "neumi": ["Automatické plnění z kasy (M7)"],
+      "rozhodnuti": [{"d": "6. 9.", "t": "Tým používá jen evidenci + výplaty; ostatní pouštět postupně: faktury → sklad → směny."}],
+      "kde": [{"l": "Živě", "u": "https://hub.novysvet.net"}, {"l": "Repo", "p": "GitHub kavarna-kalkulator-plus main = 1.7.6"}]}},
+
+    {"id": "vyplaty", "draha": "hub", "nazev": "Výplaty", "stav": "hotovo", "vaha": 2, "poz": [7, 4],
+     "backend": {"pct": 100, "z": "živě, používané (/ekonomika/vyplaty v top 4); potvrzení výplaty dle Terezy (14. 7.)"},
+     "frontend": {"pct": 100, "z": "živě"},
+     "zavisi": ["evidence", "tym_role"],
+     "wiki": {"co": "Výplatnice brigádníků z evidence a směn, potvrzení výplaty.",
+      "zamysleno": "Beze změny; jen 1.7.5 přidalo více pozic u zaměstnance.",
+      "umi": ["Vše"],
+      "neumi": [],
+      "rozhodnuti": [{"d": "14. 7.", "t": "Brigádníci — narovnání úvazků (Tereza)."}],
+      "kde": [{"l": "Živě", "u": "https://hub.novysvet.net/ekonomika/vyplaty"}]}},
+
+    {"id": "faktury", "draha": "hub", "nazev": "Faktury + AI párování", "stav": "ceka", "vaha": 2, "poz": [7, 3],
+     "backend": {"pct": 95, "z": "1.7.6 nasazeno 6. 9.: migrace ai_parovani (3 běhy ověřeny), edge fn ai-match-items + extract-invoice + invoice-inbound; inbound faktury@ funguje; 26 faktur / 244 položek v DB"},
+     "frontend": {"pct": 90, "z": "„Napárovat přes AI“ v živém bundle index-CHNTSBUy.js; smoke test Jakubem čeká"},
+     "zavisi": [],
+     "wiki": {"co": "Faktury dodavatelů přijdou e-mailem na faktury@hub.novysvet.net, hub je přečte a napáruje položky na sklad — AI navrhne, člověk potvrdí.",
+      "zamysleno": "První modul, který tým dostane naostro (do 4. 10.). Účetní má do hubu přístup (rozhodnuto 6. 9.).",
+      "umi": ["Příjem e-mailem s auto-odpovědí, extrakce, AI přepárování položek (1.7.6)"],
+      "neumi": ["Reálný provoz týmem — čeká na smoke test a návod", "Ověřit z DB: old_prod schéma s hashi hesel smazat"],
+      "rozhodnuti": [{"d": "14. 7.", "t": "Automatický příjem faktur — rozhodnuto."}, {"d": "6. 9. 15:24", "t": "Účetní přístup do hubu ANO; GO na nasazení 1.7.6."}],
+      "kde": [{"l": "Migrace", "p": "supabase/migrations/20260812120000_ai_parovani.sql"}, {"l": "Ověření", "p": ".scratch deploy176/verify.sql (6/6 true)"}]}},
+
+    {"id": "sklad", "draha": "hub", "nazev": "Sklad a objednávání", "stav": "plan", "vaha": 2, "poz": [8, 3],
+     "backend": {"pct": 85, "z": "modul existuje od cutoveru (18 modulů, 707 testů); napojení na faktury přes AI párování; tým nepoužívá"},
+     "frontend": {"pct": 80, "z": "obrazovky existují; rollout říjen = návod + první inventura"},
+     "zavisi": ["faktury"],
+     "wiki": {"co": "Stav zásob, objednávky dodavatelům, spotřeba z prodejů.",
+      "zamysleno": "Druhý modul v pořadí rollout (říjen), navazuje na faktury — položky z faktur plní sklad.",
+      "umi": ["Modul v hubu funkční (neověřeno provozem)"],
+      "neumi": ["Reálné použití týmem", "Spotřeba z prodejů kasy (až po M7)"],
+      "rozhodnuti": [{"d": "6. 9.", "t": "Pořadí rollout faktury → sklad → směny."}],
+      "kde": [{"l": "Roadmapa 6. 9.", "u": "‹soukromý artefakt claude.ai›"}]}},
+
+    {"id": "rezervace", "draha": "hub", "nazev": "Rezervace", "stav": "hotovo", "vaha": 1, "poz": [8, 1],
+     "backend": {"pct": 85, "z": "migrace rezervačního iPadu (12. 8.) běží v živé DB (enum, reminder, created_by_employee_id ověřeno 6. 9.); účet s rolí rezervace = 0 (nezaložen); create-user whitelist past"},
+     "frontend": {"pct": 80, "z": "modul živě; iPad pro rezervace nezaložen"},
+     "zavisi": ["tym_role"],
+     "wiki": {"co": "Rezervace stolů, připomínky, účet pro rezervační iPad.",
+      "zamysleno": "Rezervační iPad s vlastním účtem (role rezervace).",
+      "umi": ["Modul + DB připravené"],
+      "neumi": ["Účet s rolí rezervace založit (create-user whitelist → redeploy)"],
+      "rozhodnuti": [],
+      "kde": [{"l": "Migrace", "p": "20260812090000 / 090100"}]}},
+
+    {"id": "tym_role", "draha": "hub", "nazev": "Tým + role", "stav": "ceka", "vaha": 2, "poz": [6, 1],
+     "backend": {"pct": 85, "z": "6 rolí (i účetní); 1.7.5 multi-pozice; kuchařka 1.7.7 branch hotový (13 práv, testy 922/59) nenasazený; create-user whitelist ASSIGNABLE_ROLES past"},
+     "frontend": {"pct": 85, "z": "Tým → zaškrtávátka pozic živě (1.7.5); role kuchařka čeká"},
+     "zavisi": [],
+     "wiki": {"co": "Kdo je v týmu, jaké má pozice (barista / kuchyň / plac) a co smí v hubu.",
+      "zamysleno": "Kuchařka jako vlastní role (bez rezervací?), provozní vidí Nastavení → Směny, závazky (všední / víkend) nastavené u každého před etapou 1 směn.",
+      "umi": ["6 rolí, více pozic u člověka, účetní přístup"],
+      "neumi": ["Role kuchařka nasadit (SQL 1of2/2of2 + redeploy create-user)", "31 lidí / 8 účtů — účty pro všechny kvůli dostupnosti"],
+      "rozhodnuti": [{"d": "6. 9. 15:24", "t": "Kuchařka = vlastní role ANO; Aneta admin vidí finance = správně."}],
+      "kde": [{"l": "SQL", "p": "AI Tým/Výzkum/KNS_Hub_Cutover/role_kucharka_{1of2,2of2}_2026-09-06.sql"}, {"l": "Report", "p": "AI Tým/Týmový Inbox/tomas_kns_role_kucharka_2026-09-06.md"}]}},
+
+    {"id": "smeny", "draha": "hub", "nazev": "Směny / Tabulka směn", "stav": "ceka", "vaha": 3, "poz": [7, 2],
+     "backend": {"pct": 20, "z": "produkce: dnešní matice (get_month_matrix jen APPROVED, žádné sloty); nová RPC get_shift_table a migrace 0110–0190 jen jako draft v demu; port odhad 55–75 h"},
+     "frontend": {"pct": 25, "z": "demo = reálné hub komponenty ShiftTable* nad mockem (Playwright 100/100), produkce nedotčena; koncept v4.8 kompletní podle všech rozhodnutí z noci 6./7. 9."},
+     "zavisi": ["tym_role"],
+     "wiki": {"co": "Tabulka jako starý list kavárny: řádek = člověk, sloupec = den. Brigádník naklikává, kdy může (žlutá) nebo nemůže (červená), Aneta z toho složí rozpis a potvrdí (zelená). Řádek Chybí ukazuje díry.",
+      "zamysleno": "Tři etapy podle toho, co člověk uvidí: 1) tabulka říká pravdu (do 24. 10.), 2) tabulka, kde říkám, kdy můžu (do 7. 11., prosinec první měsíc v hubu), 2b) Navrhnout rozpis (leden), 3) úklid. Fáze měsíce: sbíráme → Aneta skládá → hotový. Po hotovém: Vyměnit · Nemůžu · Nemocný s důvodem.",
+      "umi": ["V demu vše (7 kol): kruh ťukání, podržení = rozšíření, celé týdny, celý měsíc na jednu obrazovku, fullscreen, fáze, žádosti, onboarding per role", "V produkci: dnešní matice + Můžu ten den + kalendář"],
+      "neumi": ["Nic z konceptu není v produkci — čeká GO na etapu 1", "31 lidí / 8 účtů: dostupnost si naklikne jen kdo má účet", "send-push bez permission gate (HIGH z auditu 28. 7.) — opravit v etapě 1"],
+      "rozhodnuti": [{"d": "6. 9. 22:30", "t": "Základní pohled = tabulka, přejmenovat na Tabulka směn, směny přímo zaklikat, barvy volné × obsazené."}, {"d": "6. 9. 23:19", "t": "Dostupnost, ne přihláška na slot: brigádník říká jen kdy může, Aneta přiděluje."}, {"d": "7. 9. 0:50", "t": "Ťukání: prázdno → můžu → nemůžu → prázdno; podržení = rozšíření."}, {"d": "7. 9. 15:05", "t": "Celý měsíc na jednu obrazovku, fullscreen tlačítko."}, {"d": "7. 9. 14:43", "t": "Dokument = návod pro Anetu."}],
+      "kde": [{"l": "Demo", "u": "https://projekty.jakubforman.cz/kns-smeny-a3k7p2/"}, {"l": "Koncept / návod", "u": "‹soukromý artefakt claude.ai›"}, {"l": "Kód dema", "p": "~/Claude/Projects/KNS_Smeny_Demo/hub-src/components/shifts/ShiftTable*.tsx"}, {"l": "Produkce", "p": "src/pages/ShiftsPage.tsx, src/components/shifts/* (21 komponent)"}]}},
+
+    {"id": "onboarding", "draha": "hub", "nazev": "Onboarding (v appce, per role)", "stav": "ceka", "vaha": 1, "poz": [7, 0],
+     "backend": {"pct": 60, "z": "route /onboarding + /onboarding/slides v hubu existuje (reuse)"},
+     "frontend": {"pct": 40, "z": "v demu 6 + 2 slidy per role (brigádník / provozní / admin), texty v shiftsOnboarding.ts, zakázaná slova hlídá test; v produkci jen původní onboarding"},
+     "zavisi": ["smeny"],
+     "wiki": {"co": "Pár hezkých, drobně animovaných slidů, které se ukážou každému, kdo poprvé otevře Směny — a jdou vyvolat znovu.",
+      "zamysleno": "Per role vidí jen svoje funkce. Copy: „Klikni dny, kdy můžeš. A když víš, že některý den opravdu nemůžeš, ťukni ho do červena, ať s tím Aneta počítá.“",
+      "umi": ["V demu kompletní"],
+      "neumi": ["V produkci (etapa 2)"],
+      "rozhodnuti": [{"d": "6. 9. 23:28", "t": "Onboarding per role, znovu vyvolatelný, drobně animovaný."}],
+      "kde": [{"l": "Texty", "p": "KNS_Smeny_Demo/hub-src/lib/shiftsOnboarding.ts"}]}}
+  ],
+
+  "hrany": [
+    ["db_eventlog", "markovani"], ["db_eventlog", "pin_role"], ["db_eventlog", "lan_sync"], ["db_eventlog", "pokladna"],
+    ["markovani", "platby"], ["markovani", "kds_nativni"], ["platby", "split"], ["platby", "sumup"], ["platby", "uzaverka"], ["platby", "eet"], ["platby", "tisk"], ["platby", "displej_hosta"],
+    ["pin_role", "pokladna"], ["pokladna", "uzaverka"], ["lan_sync", "kds_web"], ["lan_sync", "obsluha"], ["lan_sync", "kds_nativni"], ["kds_nativni", "stav_jidla"],
+    ["design_ux", "markovani"], ["distribuce", "eet"],
+    ["evidence", "vyplaty"], ["faktury", "sklad"], ["tym_role", "smeny"], ["tym_role", "rezervace"], ["tym_role", "vyplaty"], ["smeny", "onboarding"]
+  ],
+  "propojeni": [
+    ["uzaverka", "uzaverka_hub"], ["uzaverka_hub", "evidence"], ["smeny", "smeny_kasa"], ["smeny_kasa", "pin_role"], ["lan_sync", "cloud_hukot"]
+  ]
+}
+</script>
+
+<script>
+(function(){
+  'use strict';
+  const DATA = JSON.parse(document.getElementById('data').textContent);
+  const STAVY = {hotovo:'hotovo', bezi:'běží', ceka:'čeká', plan:'plán'};
+  const PRIO = {blokuje:'blokuje', brzy:'brzy', pozdeji:'později'};
+  const MESICE = ['led','úno','bře','dub','kvě','čer','čvc','srp','zář','říj','lis','pro'];
+  const MESICE_L = ['Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec'];
+  const byId = {}; DATA.moduly.forEach(m=>byId[m.id]=m);
+  const msById = {}; DATA.milniky.forEach(m=>msById[m.id]=m);
+  let otazky = [];       // z db
+  let dbRef = null;      // db namespace nebo null
+  let dbStav = 'init';   // init | ok | none | error
+  let selNode = null;
+  let currentWiki = null; // {kind,id}
+
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const d = s => { const [y,m,dd] = s.split('-').map(Number); return new Date(y, m-1, dd); };
+  const fmt = s => { const x = d(s); return x.getDate()+'. '+(x.getMonth()+1)+'.'; };
+  const fmtL = s => { const x = d(s); return x.getDate()+'. '+(x.getMonth()+1)+'. '+x.getFullYear(); };
+
+  /* ---------- souhrn ---------- */
+  function vazenyPrumer(draha){
+    let s=0, w=0, sb=0, wb=0, sf=0, wf=0;
+    DATA.moduly.filter(m=>m.draha===draha).forEach(m=>{
+      const b=m.backend.pct, f=m.frontend.pct;
+      const parts=[b,f].filter(v=>v!=null);
+      if(!parts.length) return;
+      const avg=parts.reduce((a,c)=>a+c,0)/parts.length;
+      s+=avg*m.vaha; w+=m.vaha;
+      if(b!=null){sb+=b*m.vaha; wb+=m.vaha}
+      if(f!=null){sf+=f*m.vaha; wf+=m.vaha}
+    });
+    return {celkem: w?Math.round(s/w):0, be: wb?Math.round(sb/wb):0, fe: wf?Math.round(sf/wf):0};
+  }
+  function renderSouhrn(){
+    $('#m-dnes').textContent = 'Dnes '+fmtL(DATA.meta.dnes);
+    $('#m-verze').textContent = DATA.meta.verze;
+    const k = vazenyPrumer('kasa'), h = vazenyPrumer('hub');
+    $('#k-pct').textContent = k.celkem; $('#h-pct').textContent = h.celkem;
+    const nK = DATA.moduly.filter(m=>m.draha==='kasa'), nH = DATA.moduly.filter(m=>m.draha==='hub');
+    const cnt = arr => { const c={hotovo:0,bezi:0,ceka:0,plan:0}; arr.forEach(m=>c[m.stav]++); return c; };
+    const ck=cnt(nK), ch=cnt(nH);
+    $('#k-sub').innerHTML = `${nK.length} modulů · <span class="pill hotovo">${ck.hotovo} hotovo</span> <span class="pill bezi">${ck.bezi} běží</span> <span class="pill ceka">${ck.ceka} čeká</span> <span class="pill plan">${ck.plan} plán</span>`;
+    $('#h-sub').innerHTML = `${nH.length} modulů · <span class="pill hotovo">${ch.hotovo} hotovo</span> <span class="pill bezi">${ch.bezi} běží</span> <span class="pill ceka">${ch.ceka} čeká</span> <span class="pill plan">${ch.plan} plán</span>`;
+    const bars = (o) => `<div class="bar be"><span>Backend</span><div class="track"><div class="fill" style="width:${o.be}%"></div></div><span class="v num">${o.be} %</span></div><div class="bar fe"><span>Frontend</span><div class="track"><div class="fill" style="width:${o.fe}%"></div></div><span class="v num">${o.fe} %</span></div>`;
+    $('#k-bars').innerHTML = bars(k); $('#h-bars').innerHTML = bars(h);
+    $('#tyden').innerHTML = DATA.souhrn.tento_tyden.map(t=>`<li><span class="dot ${t.stav==='ceka'?'ceka':''}" style="${t.stav==='ceka'?'background:var(--st-ceka)':''}"></span><span><b>${esc(t.kdo)}</b> · ${esc(t.co)} ${t.ref?`<a href="#" data-ref="${esc(t.ref)}" class="who">→ wiki</a>`:''}</span></li>`).join('');
+    $('#ceka').innerHTML = DATA.souhrn.ceka_na_jakuba.map(t=>`<li><span class="dot jakub"></span><span>${esc(t.co)} ${t.ref?`<a href="#" data-ref="${esc(t.ref)}" class="who">→ wiki</a>`:''}</span><span class="term">${esc(t.termin)}</span></li>`).join('');
+    renderQCount();
+  }
+  function renderQCount(){
+    const b = $('#q-count');
+    if(dbStav==='ok'){ const n = otazky.filter(q=>q.stav==='otevrena').length; b.textContent = n? `otázky: ${n} otevřených` : 'otázky: 0 otevřených'; b.classList.toggle('zero', n===0); }
+    else if(dbStav==='static'){ const n = otazky.filter(q=>q.stav==='otevrena').length; b.textContent = `otázky: ${n} otevřených (ke čtení)`; b.classList.toggle('zero', n===0); }
+    else if(dbStav==='none'){ b.textContent = 'otázky: po publikování'; b.classList.add('zero'); }
+    else if(dbStav==='error'){ b.textContent = 'otázky: chyba db'; }
+    else { b.textContent = 'otázky: načítám…'; b.classList.add('zero'); }
+  }
+
+  /* ---------- časová osa ---------- */
+  function renderOsa(){
+    const od = d(DATA.meta.od), doD = d(DATA.meta.do);
+    const L = 170, R = 24, W = 1180, innerW = W - L - R;
+    const span = doD - od;
+    const x = date => L + ((date - od)/span)*innerW;
+    const ROW = 42, BAR = 30;
+    const topH = 96; // osa + deadliny
+    const lanes = [
+      {id:'kasa', nazev:'Kasa', rows: 2},
+      {id:'hub', nazev:'Hub', rows: 3}
+    ];
+    let y = topH; const laneY = {};
+    lanes.forEach(l=>{ laneY[l.id] = y; y += 20 + l.rows*ROW + 10; });
+    const H = y + 8;
+    let s = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" style="min-width:${W}px" role="img" aria-label="Časová osa kasy a hubu">`;
+    // měsíce
+    let m = new Date(od.getFullYear(), od.getMonth(), 1);
+    while(m < doD){
+      const nx = new Date(m.getFullYear(), m.getMonth()+1, 1);
+      const x0 = x(m), x1 = x(Math.min(nx, doD));
+      const even = m.getMonth()%2===0;
+      if(even) s += `<rect x="${x0}" y="${topH-24}" width="${x1-x0}" height="${H-topH+24}" fill="var(--bg-2)" opacity=".55"/>`;
+      s += `<line class="ax-month" x1="${x0}" y1="${topH-24}" x2="${x0}" y2="${H}"/>`;
+      s += `<text class="ax-txt" x="${x0+6}" y="${topH-8}">${MESICE_L[m.getMonth()]}${m.getMonth()===0?' '+m.getFullYear():''}</text>`;
+      m = nx;
+    }
+    // dráhy
+    lanes.forEach(l=>{
+      const y0 = laneY[l.id];
+      s += `<rect class="lane-bg" x="0" y="${y0}" width="${L-14}" height="${20+l.rows*ROW}" rx="12" opacity=".7"/>`;
+      s += `<text class="lane-txt" x="16" y="${y0+24}">${l.nazev}</text>`;
+      s += `<text class="ax-txt" x="16" y="${y0+42}" style="font-weight:500">${l.id==='kasa'?'Swift · 3 iPady':'Lovable · živě 1.7.6'}</text>`;
+      s += `<line class="ax-line" x1="${L}" y1="${y0}" x2="${W-R}" y2="${y0}"/>`;
+    });
+    // milníky
+    DATA.milniky.forEach(ms=>{
+      const y0 = laneY[ms.draha] + 14 + ms.radek*ROW;
+      let x0 = x(d(ms.od)), x1 = x(d(ms.do));
+      if(x1 - x0 < 14) x1 = x0 + 14;
+      const w = x1-x0;
+      const label = ms.nazev;
+      const inside = w > label.length*6.6 + 16;
+      s += `<g class="ms ${ms.stav}" data-ms="${ms.id}" tabindex="0" role="button" aria-label="${esc(label)}, ${STAVY[ms.stav]}"><title>${esc(label)} · ${fmt(ms.od)}–${fmt(ms.do)} · ${STAVY[ms.stav]}</title>`;
+      s += `<rect x="${x0}" y="${y0}" width="${w}" height="${BAR}"/>`;
+      if(inside){
+        s += `<text x="${x0+10}" y="${y0+13}">${esc(label)}</text><text class="st" x="${x0+10}" y="${y0+25}">${STAVY[ms.stav]} · ${fmt(ms.od)}–${fmt(ms.do)}</text>`;
+      } else {
+        const short = label.length>34 ? label.slice(0,32)+'…' : label;
+        const tx = x1 + 6, anchor = (tx + short.length*6.4 > W-R) ? 'end' : 'start';
+        const txx = anchor==='end' ? x0 - 6 : tx;
+        s += `<text x="${txx}" y="${y0+13}" text-anchor="${anchor}">${esc(short)}</text><text class="st" x="${txx}" y="${y0+25}" text-anchor="${anchor}">${STAVY[ms.stav]} · ${fmt(ms.od)}–${fmt(ms.do)}</text>`;
+      }
+      s += `</g>`;
+    });
+    // deadliny
+    const sorted = DATA.deadliny.slice().sort((a,b)=>d(a.datum)-d(b.datum));
+    let lastX = -999, level = 0;
+    sorted.forEach(dl=>{
+      const xx = x(d(dl.datum));
+      level = (xx - lastX < 150) ? (level+1)%3 : 0; lastX = xx;
+      const ty = 14 + level*18;
+      s += `<g class="dl ${dl.typ}"><title>${esc(dl.nazev)} · ${fmtL(dl.datum)}</title><line x1="${xx}" y1="${ty+8}" x2="${xx}" y2="${H}"/><path d="M${xx} ${ty-2} l6 6 l-6 6 l-6 -6 z"/><text x="${xx+10}" y="${ty+6}">${fmt(dl.datum)} ${esc(dl.nazev)}</text></g>`;
+    });
+    // dnes
+    const tx = x(d(DATA.meta.dnes));
+    s += `<g class="today"><line x1="${tx}" y1="${topH-30}" x2="${tx}" y2="${H}"/><rect x="${tx-30}" y="${topH-46}" width="60" height="18" rx="9" fill="var(--terakota)"/><text x="${tx}" y="${topH-33}" text-anchor="middle" style="fill:#FFFCF6">dnes ${fmt(DATA.meta.dnes)}</text></g>`;
+    s += `</svg>`;
+    $('#osa-wrap').innerHTML = s;
+    $('#osa-wrap').querySelectorAll('.ms').forEach(g=>{
+      g.addEventListener('click', ()=>openWiki('ms', g.dataset.ms));
+      g.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openWiki('ms', g.dataset.ms);} });
+    });
+  }
+
+  /* ---------- mapa modulů ---------- */
+  const CELL_W = 140, CELL_H = 108, NW = 126, NH = 78, PAD_X = 22, PAD_Y = 44;
+  function nodeXY(m){ return {x: PAD_X + m.poz[0]*CELL_W, y: PAD_Y + m.poz[1]*CELL_H}; }
+  function renderMapa(){
+    const cols = 9, rows = 5;
+    const W = PAD_X*2 + (cols-1)*CELL_W + NW, H = PAD_Y + (rows-1)*CELL_H + NH + 24;
+    let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:1040px" role="img" aria-label="Mapa modulů kasy a hubu">`;
+    s += `<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--ink-20)"/></marker><marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--terakota)"/></marker></defs>`;
+    // skupiny
+    const grp = (c0,c1,t)=>{ const x0 = PAD_X + c0*CELL_W - 10, x1 = PAD_X + c1*CELL_W + NW + 10; s += `<rect class="grp" x="${x0}" y="${PAD_Y-30}" width="${x1-x0}" height="${H-PAD_Y+14}"/><text class="grp-t" x="${x0+14}" y="${PAD_Y-12}">${t}</text>`; };
+    grp(0,4,'KASA'); grp(5,5,'SPOJ'); grp(6,8,'HUB');
+    // hrany
+    const path = (a,b,cls,marker)=>{
+      const A=nodeXY(byId[a]), B=nodeXY(byId[b]);
+      const ax=A.x+NW/2, ay=A.y+NH/2, bx=B.x+NW/2, by=B.y+NH/2;
+      // start/end na hraně boxu
+      const dx=bx-ax, dy=by-ay;
+      let sx=ax, sy=ay, ex=bx, ey=by;
+      if(Math.abs(dx)>Math.abs(dy)){ sx = ax + Math.sign(dx)*NW/2; ex = bx - Math.sign(dx)*NW/2; }
+      else { sy = ay + Math.sign(dy)*NH/2; ey = by - Math.sign(dy)*NH/2; }
+      const c1x = sx + (ex-sx)*0.5, c1y = sy, c2x = sx + (ex-sx)*0.5, c2y = ey;
+      s += `<path class="edge ${cls}" d="M${sx} ${sy} C${c1x} ${c1y} ${c2x} ${c2y} ${ex} ${ey}" marker-end="url(#${marker})"/>`;
+    };
+    DATA.hrany.forEach(h=>path(h[0],h[1],'','arr'));
+    DATA.propojeni.forEach(h=>path(h[0],h[1],'link','arr2'));
+    // uzly
+    DATA.moduly.forEach(m=>{
+      const p = nodeXY(m);
+      const be = m.backend.pct, fe = m.frontend.pct;
+      const barW = NW - 24, bx = p.x + 12;
+      const lines = wrap(m.nazev, 17);
+      s += `<g class="node ${m.stav}" data-mod="${m.id}" tabindex="0" role="button" aria-label="${esc(m.nazev)}, ${STAVY[m.stav]}, backend ${be==null?'—':be+' %'}, frontend ${fe==null?'—':fe+' %'}"><title>${esc(m.nazev)} · ${STAVY[m.stav]}</title>`;
+      s += `<rect class="box" x="${p.x}" y="${p.y}" width="${NW}" height="${NH}"/>`;
+      s += `<circle class="stdot" cx="${p.x+12}" cy="${p.y+14}" r="4"/>`;
+      s += `<text class="ttl" x="${p.x+21}" y="${p.y+18}">${esc(lines[0])}</text>`;
+      let yy = p.y + 18;
+      if(lines[1]){ yy += 14; s += `<text class="ttl" x="${p.x+12}" y="${yy}">${esc(lines[1])}</text>`; }
+      const by0 = p.y + NH - 30, by1 = p.y + NH - 16;
+      const bar = (y, cls, v) => {
+        s += `<text class="lb" x="${bx}" y="${y+6}">${cls==='be'?'BE':'FE'}</text>`;
+        s += `<rect class="trk" x="${bx+18}" y="${y}" width="${barW-46}" height="7" rx="3.5"/>`;
+        if(v!=null) s += `<rect class="${cls}" x="${bx+18}" y="${y}" width="${Math.max(0,(barW-46)*v/100)}" height="7" rx="3.5"/>`;
+        s += `<text class="pv" x="${bx+barW}" y="${y+7}" text-anchor="end">${v==null?'—':v+' %'}</text>`;
+      };
+      bar(by0,'be',be); bar(by1,'fe',fe);
+      // badge otázek
+      const n = otazky.filter(q=>q.modul===m.id && q.stav==='otevrena').length;
+      if(n){ s += `<circle class="qb" cx="${p.x+NW-2}" cy="${p.y+2}" r="10"/><text class="qt" x="${p.x+NW-2}" y="${p.y+5.5}" text-anchor="middle">${n}</text>`; }
+      s += `</g>`;
+    });
+    s += `</svg>`;
+    $('#mapa-wrap').innerHTML = s;
+    $('#mapa-wrap').querySelectorAll('.node').forEach(g=>{
+      g.addEventListener('click', ()=>openWiki('mod', g.dataset.mod));
+      g.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openWiki('mod', g.dataset.mod);} });
+    });
+    if(selNode){ const g = $('#mapa-wrap').querySelector(`[data-mod="${selNode}"]`); if(g) g.classList.add('sel'); }
+  }
+  function wrap(t, n){
+    if(t.length<=n) return [t];
+    const words=t.split(' '); let a='', b='';
+    for(const w of words){ if(!b && (a+' '+w).trim().length<=n) a=(a+' '+w).trim(); else b=(b+' '+w).trim(); }
+    if(b.length>n+2) b=b.slice(0,n)+'…';
+    return [a,b];
+  }
+
+  /* ---------- wiki ---------- */
+  function openWiki(kind, id){
+    currentWiki = {kind,id};
+    const w = $('#wiki'), body = $('#w-body');
+    if(kind==='mod'){
+      const m = byId[id]; selNode = id;
+      $('#mapa-wrap').querySelectorAll('.node.sel').forEach(n=>n.classList.remove('sel'));
+      const g = $('#mapa-wrap').querySelector(`[data-mod="${id}"]`); if(g) g.classList.add('sel');
+      $('#w-kicker').innerHTML = `${m.draha==='kasa'?'Kasa':m.draha==='hub'?'Hub':'Propojení kasa ↔ hub'} · <span class="pill ${m.stav}">${STAVY[m.stav]}</span>`;
+      $('#w-title').textContent = m.nazev;
+      const wk = m.wiki;
+      const be=m.backend.pct, fe=m.frontend.pct;
+      let h = `<section><div class="pbars">
+        <div class="bar be"><span>Backend</span><div class="track"><div class="fill" style="width:${be==null?0:be}%"></div></div><span class="v num">${be==null?'—':be+' %'}</span><div class="src">Odkud: ${esc(m.backend.z)}</div></div>
+        <div class="bar fe"><span>Frontend</span><div class="track"><div class="fill" style="width:${fe==null?0:fe}%"></div></div><span class="v num">${fe==null?'—':fe+' %'}</span><div class="src">Odkud: ${esc(m.frontend.z)}</div></div>
+      </div></section>`;
+      h += `<section><h4>Co to je</h4><p>${esc(wk.co)}</p></section>`;
+      h += `<section><h4>Jak je to zamýšlené</h4><p>${esc(wk.zamysleno)}</p></section>`;
+      h += `<section><h4>Co už umí</h4>${wk.umi.length?`<ul>${wk.umi.map(u=>`<li>${esc(u)}</li>`).join('')}</ul>`:'<p class="note">Zatím nic — viz níže.</p>'}</section>`;
+      h += `<section><h4>Co ještě ne</h4>${wk.neumi.length?`<ul>${wk.neumi.map(u=>`<li class="no">${esc(u)}</li>`).join('')}</ul>`:'<p class="note">Nic zásadního.</p>'}</section>`;
+      if(wk.rozhodnuti.length) h += `<section><h4>Rozhodnutí (tvoje, s datem)</h4><div class="roz">${wk.rozhodnuti.map(r=>`<div><b>${esc(r.d)}</b><span>${esc(r.t)}</span></div>`).join('')}</div></section>`;
+      if(wk.kde && wk.kde.length) h += `<section><h4>Kde v kódu / dokumentu</h4><div class="kde">${wk.kde.map(k=>`<div><b>${esc(k.l)}:</b> ${k.u?`<a href="${esc(k.u)}" target="_blank" rel="noopener">${esc(k.u)}</a>`:`<code>${esc(k.p)}</code>`}</div>`).join('')}</div></section>`;
+      const zav = m.zavisi.filter(z=>byId[z]);
+      const zavNa = DATA.moduly.filter(o=>o.zavisi.includes(m.id));
+      if(zav.length||zavNa.length){
+        h += `<section><h4>Stojí na / stojí na něm</h4><div class="chips">${zav.map(z=>chip(byId[z])).join('')}${zavNa.map(z=>chip(z,true)).join('')}</div></section>`;
+      }
+      const ms = DATA.milniky.filter(x=>x.moduly.includes(m.id));
+      if(ms.length) h += `<section><h4>Milníky</h4><div class="chips">${ms.map(x=>`<button class="chip" data-ms="${x.id}"><i class="d ${x.stav}"></i>${esc(x.nazev.length>40?x.nazev.slice(0,38)+'…':x.nazev)} · ${fmt(x.od)}–${fmt(x.do)}</button>`).join('')}</div></section>`;
+      h += `<section id="w-otazky"><h4>Otázky k tomuto modulu</h4>${renderOtazkyHTML(q=>q.modul===m.id)}</section>`;
+      body.innerHTML = h;
+    } else if(kind==='ms'){
+      const ms = msById[id];
+      $('#w-kicker').innerHTML = `Milník · ${ms.draha==='kasa'?'Kasa':'Hub'} · <span class="pill ${ms.stav}">${STAVY[ms.stav]}</span> · ${fmt(ms.od)}–${fmtL(ms.do)}`;
+      $('#w-title').textContent = ms.nazev;
+      let h = `<section><h4>Co se v něm děje</h4><p>${esc(ms.popis)}</p></section>`;
+      if(ms.brana) h += `<section><h4>Brána (jak poznáme, že je hotovo)</h4><p>${esc(ms.brana)}</p></section>`;
+      if(ms.moduly.length) h += `<section><h4>Moduly</h4><div class="chips">${ms.moduly.filter(x=>byId[x]).map(x=>chip(byId[x])).join('')}</div></section>`;
+      h += `<section><h4>Zdroj</h4><p class="note">${esc(ms.zdroj)}</p></section>`;
+      const modIds = ms.moduly;
+      h += `<section id="w-otazky"><h4>Otázky k modulům milníku</h4>${renderOtazkyHTML(q=>modIds.includes(q.modul))}</section>`;
+      body.innerHTML = h;
+    } else if(kind==='otazky'){
+      $('#w-kicker').innerHTML = 'Všechny otázky pro tebe';
+      $('#w-title').textContent = 'Co potřebuju upřesnit';
+      body.innerHTML = `<section><p class="note">Odpověz přímo tady — po odeslání se otázka přepne do stavu „Harry zapracuje“. Seřazeno: blokuje → brzy → později.</p></section><section id="w-otazky">${renderOtazkyHTML(()=>true, true)}</section>`;
+    }
+    bindWiki(body);
+    w.classList.add('on'); w.setAttribute('aria-hidden','false'); $('#scrim').classList.add('on');
+    body.scrollTop = 0;
+    const fc = body.querySelector('button, textarea, a'); // klávesnice
+    $('#w-close').focus();
+  }
+  function chip(m, rev){ return `<button class="chip" data-mod="${m.id}" title="${rev?'stojí na tomto modulu':'tento modul na tom stojí'}"><i class="d ${m.stav}"></i>${rev?'← ':''}${esc(m.nazev)}${rev?'':' →'}</button>`; }
+  function closeWiki(){ $('#wiki').classList.remove('on'); $('#wiki').setAttribute('aria-hidden','true'); $('#scrim').classList.remove('on'); currentWiki=null; }
+  function bindWiki(root){
+    root.querySelectorAll('[data-mod]').forEach(b=>b.addEventListener('click', ()=>openWiki('mod', b.dataset.mod)));
+    root.querySelectorAll('[data-ms]').forEach(b=>b.addEventListener('click', ()=>openWiki('ms', b.dataset.ms)));
+    root.querySelectorAll('[data-send]').forEach(b=>b.addEventListener('click', ()=>sendAnswer(b.dataset.send, b)));
+    root.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click', ()=>{ const q = otazky.find(x=>x.id===b.dataset.edit); if(q){ q._edit = true; refreshOtazky(); } }));
+  }
+
+  /* ---------- otázky (db) ---------- */
+  const prioOrder = {blokuje:0, brzy:1, pozdeji:2};
+  function renderOtazkyHTML(filter, grouped){
+    if(dbStav==='none') return `<p class="note">Otázky se načítají z databáze stránky — ta je dostupná až v publikované verzi (claude.ai). Tady je stránka jen ke čtení.</p>`;
+    if(dbStav==='error') return `<p class="note err">Databázi otázek se nepodařilo načíst. Zkus stránku znovu otevřít.</p>`;
+    if(dbStav==='init') return `<p class="note">Načítám otázky…</p>`;
+    const ro = dbStav==='static';
+    const list = otazky.filter(filter).sort((a,b)=>{
+      const sa = a.stav==='otevrena'?0:1, sb = b.stav==='otevrena'?0:1;
+      if(sa!==sb) return sa-sb;
+      return (prioOrder[a.priorita]??9)-(prioOrder[b.priorita]??9);
+    });
+    if(!list.length) return `<p class="note">Žádná otevřená otázka. Když něco vyvstane, Harry ji sem přidá.</p>`;
+    return (ro?`<p class="note">Tohle je verze ke čtení — odpovědi Jakub zadává v interní verzi.</p>`:'') + list.map(q=>{
+      const m = byId[q.modul];
+      const open = q.stav==='otevrena' || q._edit;
+      const badge = q.stav==='otevrena' ? `<span class="pill ${q.priorita}">${PRIO[q.priorita]||esc(q.priorita)}</span>` : q.stav==='zapracovano' ? `<span class="pill zapracovano">zapracováno</span>` : `<span class="pill zapracuje">Harry zapracuje</span>`;
+      return `<div class="qcard" data-q="${esc(q.id)}">
+        <div class="qh">${badge}<span class="qm">${m?esc(m.nazev):esc(q.modul)}${grouped&&m?` · <a href="#" data-mod="${m.id}">wiki</a>`:''}</span></div>
+        <p class="qq">${esc(q.otazka)}</p>
+        ${q.kontext?`<p class="qc">${esc(q.kontext)}</p>`:''}
+        ${q.doporuceni?`<div class="qd"><b>Harry doporučuje:</b> ${esc(q.doporuceni)}</div>`:''}
+        ${ro ? (q.odpoved?`<div class="ans">${esc(q.odpoved)}</div><div class="ans-meta">odpověděl${q.odpovezeno_at?' '+casL(q.odpovezeno_at):''}</div>`:'') : open ? `<textarea placeholder="Tvoje odpověď (stačí věta — „ano“, „ne, protože…“, „udělej X“)…" aria-label="Odpověď">${esc(q.odpoved||'')}</textarea><div class="qa"><button class="btn sm" data-send="${esc(q.id)}">Odeslat Harrymu</button>${q._edit?`<button class="btn sm ghost" data-edit-cancel="${esc(q.id)}">Zrušit</button>`:''}</div>`
+             : `<div class="ans">${esc(q.odpoved||'')}</div><div class="ans-meta">odpověděl${q.odpovezeno_at?' '+casL(q.odpovezeno_at):''}${q.stav==='zapracovano'?'':` · <a href="#" data-edit="${esc(q.id)}">upravit odpověď</a>`}</div>`}
+        ${q.zdroj?`<div class="src">Zdroj: ${esc(q.zdroj)}</div>`:''}
+      </div>`;
+    }).join('');
+  }
+  function casL(iso){ const t = new Date(iso); if(isNaN(t)) return ''; return t.getDate()+'. '+(t.getMonth()+1)+'. '+t.getFullYear()+' '+String(t.getHours()).padStart(2,'0')+':'+String(t.getMinutes()).padStart(2,'0'); }
+  function refreshOtazky(){
+    if(!currentWiki) { renderQCount(); return; }
+    const sec = $('#w-otazky'); if(!sec) return;
+    const h4 = sec.querySelector('h4');
+    let filter = ()=>true, grouped=false;
+    if(currentWiki.kind==='mod') filter = q=>q.modul===currentWiki.id;
+    else if(currentWiki.kind==='ms') { const ids = msById[currentWiki.id].moduly; filter = q=>ids.includes(q.modul); }
+    else grouped = true;
+    sec.innerHTML = (h4?h4.outerHTML:'') + renderOtazkyHTML(filter, grouped);
+    bindWiki(sec);
+    sec.querySelectorAll('[data-edit-cancel]').forEach(b=>b.addEventListener('click', ()=>{ const q = otazky.find(x=>x.id===b.dataset.editCancel); if(q){ delete q._edit; refreshOtazky(); } }));
+    renderQCount();
+  }
+  async function sendAnswer(id, btn){
+    const card = btn.closest('.qcard'); const ta = card.querySelector('textarea');
+    const text = (ta.value||'').trim();
+    if(!text){ ta.focus(); toast('Napiš aspoň větu.'); return; }
+    if(!dbRef){ toast('Databáze není dostupná.'); return; }
+    btn.disabled = true; btn.textContent = 'Odesílám…';
+    try{
+      await dbRef.doc('otazky/'+id).update({odpoved: text, odpovezeno_at: new Date().toISOString(), stav: 'zodpovezeno'});
+      const q = otazky.find(x=>x.id===id); if(q){ q.odpoved=text; q.stav='zodpovezeno'; q.odpovezeno_at=new Date().toISOString(); delete q._edit; }
+      toast('Odesláno. Harry zapracuje.');
+      refreshOtazky(); renderMapa();
+    }catch(e){
+      btn.disabled = false; btn.textContent = 'Odeslat Harrymu';
+      toast('Nepodařilo se odeslat ('+(e&&e.code?e.code:'chyba')+'). Zkus to znovu.');
+    }
+  }
+  let toastT; function toast(t){ const el=$('#toast'); el.textContent=t; el.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove('on'), 2600); }
+
+  // Statická verze (veřejný web bez db): otázky z otazky.json vedle HTML, jen ke čtení.
+  async function loadStatic(){
+    try{
+      const r = await fetch('otazky.json', {cache:'no-store'});
+      if(!r.ok) throw new Error('http '+r.status);
+      const arr = await r.json();
+      if(!Array.isArray(arr)) throw new Error('shape');
+      otazky = arr.map(q=>Object.assign({}, q));
+      dbStav = 'static';
+    }catch(e){ dbStav = 'none'; }
+  }
+  async function initDb(){
+    let db = null;
+    try{
+      if(window.claude && typeof window.claude.use==='function') db = await window.claude.use('db');
+      else if(window.__fakeDb) db = window.__fakeDb;
+    }catch(e){ db = null; }
+    if(!db){ await loadStatic(); renderQCount(); refreshOtazky(); renderMapa(); return; }
+    dbRef = db;
+    try{
+      db.collection('otazky').onSnapshot(snap=>{
+        const edits = {}; otazky.forEach(q=>{ if(q._edit) edits[q.id]=true; });
+        otazky = snap.docs.filter(x=>x.exists).map(x=>Object.assign({id:x.id}, x.data(), edits[x.id]?{_edit:true}:{}));
+        dbStav='ok'; renderQCount(); refreshOtazky(); renderMapa();
+      }, err=>{ dbStav='error'; renderQCount(); refreshOtazky(); });
+    }catch(e){ dbStav='error'; renderQCount(); refreshOtazky(); }
+  }
+
+  /* ---------- UI ---------- */
+  function initTabs(){
+    document.querySelectorAll('.tabs [role=tab]').forEach(b=>b.addEventListener('click', ()=>{
+      document.querySelectorAll('.tabs [role=tab]').forEach(x=>x.setAttribute('aria-selected', x===b?'true':'false'));
+      document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on', v.id==='view-'+b.dataset.view));
+      try{ localStorage.setItem('kns-mapa-view', b.dataset.view); }catch(e){}
+    }));
+    try{ const v = localStorage.getItem('kns-mapa-view'); if(v){ const b = document.querySelector(`.tabs [data-view="${v}"]`); if(b) b.click(); } }catch(e){}
+  }
+  document.addEventListener('click', e=>{
+    const a = e.target.closest('[data-ref]'); if(a){ e.preventDefault(); const [k,id] = a.dataset.ref.split(':'); if(k==='m' && byId[id]) { openWiki('mod', id); } if(k==='ms' && msById[id]) openWiki('ms', id); }
+  });
+  $('#q-count').addEventListener('click', ()=>openWiki('otazky'));
+  $('#w-close').addEventListener('click', closeWiki);
+  $('#scrim').addEventListener('click', closeWiki);
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape' && $('#wiki').classList.contains('on')) closeWiki(); });
+
+  renderSouhrn(); renderOsa(); renderMapa(); initTabs(); initDb();
+  window.__knsMapa = { data: DATA, get otazky(){ return otazky; }, openWiki };
+})();
+</script>
+<style id="kns-back-css">.kns-back{position:fixed;left:12px;bottom:12px;z-index:99999;font:600 13px/1 "DM Sans",-apple-system,sans-serif;color:#FBF6EC;background:#3B2F2A;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.25);opacity:.92}.kns-back:hover{opacity:1;background:#E76F51}@media print{.kns-back{display:none}}</style><a class="kns-back" href="index.html">← Program Kasa + Hub</a>

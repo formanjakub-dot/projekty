@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>KNS Hub & Kasa — stav a roadmapa 6. 9. 2026 (historické)</title>
+<!-- Kopie soukromého artefaktu 4f948489 (Harry, 6. 9. 2026 16:40). Uloženo 23. 9. 2026 pro web programu. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap">
+<style>
+  :root{
+    --paper:#FAF6EF; --paper-2:#F1EADF; --card:#FFFDF9;
+    --ink:#2C241E; --ink-2:#6B5F55; --ink-3:#9A8E83;
+    --line:#E6DCCF; --line-2:#D6C9B8;
+    --terra:#B25B41; --terra-soft:#F4E3DB;
+    --sage:#3E7154; --sage-soft:#E2EDE5;
+    --saffron:#B8801F; --saffron-soft:#F7ECD3;
+    --coral:#B4433A; --coral-soft:#F8E0DC;
+    --glass:rgba(255,253,249,.72);
+    --r:12px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme:dark;
+      --paper:#1F1915; --paper-2:#2A231D; --card:#27201A;
+      --ink:#F1E9DE; --ink-2:#B5A797; --ink-3:#847768;
+      --line:#3A3129; --line-2:#4A3F35;
+      --terra:#D98A6E; --terra-soft:#3C2A22;
+      --sage:#8ABF9C; --sage-soft:#24352A;
+      --saffron:#D9A64C; --saffron-soft:#3A2F19;
+      --coral:#E07A6F; --coral-soft:#3E2521;
+      --glass:rgba(39,32,26,.72);
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme:dark;
+    --paper:#1F1915; --paper-2:#2A231D; --card:#27201A;
+    --ink:#F1E9DE; --ink-2:#B5A797; --ink-3:#847768;
+    --line:#3A3129; --line-2:#4A3F35;
+    --terra:#D98A6E; --terra-soft:#3C2A22;
+    --sage:#8ABF9C; --sage-soft:#24352A;
+    --saffron:#D9A64C; --saffron-soft:#3A2F19;
+    --coral:#E07A6F; --coral-soft:#3E2521;
+    --glass:rgba(39,32,26,.72);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"DM Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:15.5px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  }
+  main{max-width:62rem; margin:0 auto; padding:2.6rem 1.4rem 5rem}
+  .display{font-family:"Big Shoulders Display","Arial Narrow",Impact,sans-serif; text-transform:uppercase; letter-spacing:.01em; line-height:.95}
+  .eyebrow{font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:var(--terra); margin:0 0 .5rem}
+  h1{font-size:clamp(2.6rem,7vw,4.6rem); font-weight:800; margin:0 0 .8rem; text-wrap:balance}
+  .lede{font-size:1.08rem; color:var(--ink-2); max-width:44rem; margin:0}
+  .lede b{color:var(--ink)}
+  h2{font-size:1.9rem; font-weight:800; margin:3.2rem 0 .3rem}
+  h2 + .sub{margin:0 0 1.2rem; color:var(--ink-2)}
+  h3{font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; color:var(--terra); font-weight:700; margin:1.6rem 0 .5rem}
+  p{margin:0 0 .9rem}
+  ul{margin:.3rem 0 .9rem; padding-left:1.15rem}
+  li{margin:.3rem 0}
+  li::marker{color:var(--terra)}
+  strong{font-weight:700}
+  a{color:var(--terra); text-decoration:none; border-bottom:1px solid var(--line-2)}
+  a:hover{border-color:var(--terra)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.86em; background:var(--paper-2); padding:.08rem .38rem; border-radius:5px}
+  .strip{display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:.9rem; margin:1.8rem 0 0}
+  .tile{background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:1.05rem 1.2rem 1.1rem; position:relative; overflow:hidden}
+  .tile::before{content:""; position:absolute; inset:auto -30% -45% auto; width:70%; height:110%; border-radius:50%; opacity:.55; filter:blur(18px)}
+  .tile.hub::before{background:var(--sage-soft)}
+  .tile.pos::before{background:var(--saffron-soft)}
+  .tile .k{font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3); font-weight:700}
+  .tile .v{font-size:2.2rem; font-weight:800; margin:.15rem 0 .2rem; position:relative}
+  .tile .n{font-size:.9rem; color:var(--ink-2); position:relative}
+  .pill{display:inline-block; font-size:.68rem; letter-spacing:.09em; text-transform:uppercase; font-weight:700; padding:.2rem .6rem; border-radius:99px; white-space:nowrap; vertical-align:middle}
+  .p-ok{background:var(--sage-soft); color:var(--sage)}
+  .p-warn{background:var(--saffron-soft); color:var(--saffron)}
+  .p-bad{background:var(--coral-soft); color:var(--coral)}
+  .p-mute{background:var(--paper-2); color:var(--ink-2)}
+  .p-terra{background:var(--terra-soft); color:var(--terra)}
+  .tw{overflow-x:auto; border:1px solid var(--line); border-radius:var(--r); background:var(--card); margin:.6rem 0 1rem}
+  table{border-collapse:collapse; width:100%; min-width:40rem; font-size:.93rem}
+  th{text-align:left; font-size:.68rem; letter-spacing:.11em; text-transform:uppercase; color:var(--ink-3); font-weight:700; padding:.65rem .9rem; border-bottom:1px solid var(--line-2); background:var(--paper-2)}
+  td{padding:.6rem .9rem; border-bottom:1px solid var(--line); vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.num{font-variant-numeric:tabular-nums; white-space:nowrap}
+  .cols{display:grid; grid-template-columns:1fr 1fr; gap:1.2rem}
+  @media (max-width:760px){.cols{grid-template-columns:1fr}}
+  .box{background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:1.1rem 1.25rem}
+  .box h3{margin-top:0}
+  .tl{border-left:2px solid var(--line-2); margin:1rem 0 0 .6rem; padding-left:0}
+  .ph{position:relative; padding:0 0 1.5rem 1.6rem}
+  .ph::before{content:""; position:absolute; left:-.5rem; top:.45rem; width:.85rem; height:.85rem; border-radius:50%; background:var(--paper); border:2px solid var(--terra)}
+  .ph.now::before{background:var(--terra)}
+  .ph.pos::before{border-color:var(--saffron)}
+  .ph.pos.now::before{background:var(--saffron)}
+  .ph .when{font-size:.72rem; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-3); font-weight:700}
+  .ph h4{font-size:1.15rem; margin:.1rem 0 .3rem; font-weight:700}
+  .ph p{color:var(--ink-2); margin:0 0 .4rem}
+  .ph ul{margin:.2rem 0 .3rem}
+  .ph .gate{display:inline-block; margin-top:.3rem; font-size:.85rem; padding:.35rem .7rem; border-radius:8px; background:var(--sage-soft); color:var(--sage)}
+  .ph .gate b{font-weight:700}
+  .lanes{display:grid; grid-template-columns:1fr 1fr; gap:1.5rem}
+  @media (max-width:860px){.lanes{grid-template-columns:1fr}}
+  .lane-h{font-size:1.4rem; font-weight:800; margin:0 0 .2rem}
+  .lane-s{color:var(--ink-2); margin:0 0 .5rem; font-size:.95rem}
+  .callout{border-left:3px solid var(--saffron); background:var(--saffron-soft); border-radius:0 10px 10px 0; padding:.85rem 1.05rem; margin:1rem 0; font-size:.95rem}
+  .callout.red{border-color:var(--coral); background:var(--coral-soft)}
+  .callout.green{border-color:var(--sage); background:var(--sage-soft)}
+  .dec{counter-reset:d; padding:0; margin:.6rem 0 0; list-style:none}
+  .dec li{position:relative; padding:.75rem 0 .75rem 2.6rem; border-bottom:1px solid var(--line); margin:0}
+  .dec li:last-child{border-bottom:none}
+  .dec li::before{counter-increment:d; content:counter(d); position:absolute; left:0; top:.7rem; width:1.75rem; height:1.75rem; border-radius:50%; background:var(--terra); color:#fff; font-weight:800; font-size:.85rem; display:flex; align-items:center; justify-content:center; font-family:"Big Shoulders Display",sans-serif}
+  .dec .rec{display:block; color:var(--sage); font-size:.9rem; margin-top:.15rem}
+  footer{margin-top:3rem; padding-top:1rem; border-top:1px solid var(--line); color:var(--ink-3); font-size:.85rem}
+</style>
+</head>
+<body>
+<div style="position:sticky;top:0;z-index:9999;background:#F2B24A;color:#3B2F2A;font:600 14px/1.4 'DM Sans',-apple-system,sans-serif;padding:10px 16px;text-align:center">Historický dokument z 6. 9. 2026 — od té doby se změnilo: Apple účet je Individual na Jakuba, architektura je LAN-first (bez PowerSync a placené Supabase), hardware kavárna má. Aktuální stav je na <a href="../index.html" style="color:#3B2F2A;font-weight:800">úvodní stránce</a>.</div>
+<main>
+  <p class="eyebrow">Kavárna Nový Svět · neděle 6. 9. 2026 (aktualizace 16:40) · stav a roadmapa</p>
+  <h1 class="display">Hub běží,<br>kasa čeká na účet u Applu</h1>
+  <p class="lede">Hub je od 11. 8. na nové adrese, od dnešního večera na v1.7.6, a tým v něm dělá <b>evidenci tržeb a výplaty</b>. Všechno ostatní (faktury, sklad, směny, rezervace, wiki) je <b>postavené, ale nepuštěné do provozu</b>. Nativní kasa pro iPad má hotové markování a platby jako prototyp, ale <b>stojí od 12. 8.</b> a nemá založený Apple Developer účet, což je jediná věc, která má dlouhou lhůtu. Tenhle dokument říká, co přesně kde je, a v jakém pořadí to pouštět.</p>
+
+  <div class="strip">
+    <div class="tile hub">
+      <div class="k">Online hub · hub.novysvet.net</div>
+      <div class="v display">v1.7.6 živě</div>
+      <div class="n">Nasazeno 6. 9. 16:35 (multi-pozice, AI párování faktur, eskalace modelu). 97 migrací, 21 edge funkcí, ~890 testů.</div>
+    </div>
+    <div class="tile pos">
+      <div class="k">iPad kasa · Swift / SwiftUI</div>
+      <div class="v display">M3 + design 1</div>
+      <div class="n">14 souborů, 3 687 řádků, Xcode 26.3. Dnes ověřeno: <span class="pill p-ok">build succeeded</span> na simulátoru iPad Pro 13". Poslední commit 12. 8.</div>
+    </div>
+    <div class="tile">
+      <div class="k">Pevný termín</div>
+      <div class="v display">1. 2. 2027</div>
+      <div class="n">Povinnost EET 2.0. MobiPOS ji neumí. Pilot státu od 1. 1. 2027. Zbývá <b>21 týdnů</b>.</div>
+    </div>
+  </div>
+
+  <h2 class="display">1 · Online hub — co je a co není</h2>
+  <p class="sub">Ověřeno dnes z živého bundlu, z GitHubu (repo <code>kavarna-kalkulator-plus</code>) a z tvého Gmailu.</p>
+
+  <div class="tw"><table>
+    <tr><th>Modul</th><th>Postaveno</th><th>Nasazeno</th><th>Tým používá</th><th>Co brání provozu</th></tr>
+    <tr><td><strong>Evidence tržeb + uzávěrky</strong></td><td><span class="pill p-ok">ano</span></td><td><span class="pill p-ok">ano</span></td><td><span class="pill p-ok">denně</span></td><td>Nic. Otevřená drobnost: vedoucí směny nemůže editovat jiný den než dnešek (patch připravený, nenasazený).</td></tr>
+    <tr><td><strong>Výplaty + výplatnice</strong></td><td><span class="pill p-ok">ano</span></td><td><span class="pill p-ok">ano (v2 ve 1.7.4)</span></td><td><span class="pill p-ok">měsíčně</span></td><td>Nic. Elektronické potvrzení výplaty (F2) je v appce, ale nikdo ho zatím nepoužil.</td></tr>
+    <tr><td><strong>Faktury (Ekonomika)</strong></td><td><span class="pill p-ok">ano</span></td><td><span class="pill p-ok">ano (1.7.6)</span></td><td><span class="pill p-warn">26 faktur</span></td><td>Inbound <code>faktury@hub.novysvet.net</code> <strong>funguje</strong> (12. 8. auto-odpovědi na 5 přeposlaných faktur). AI přepárování nasazeno 6. 9. Zbývá rozhodnout, kdo faktury nahrává, a zvyk.</td></tr>
+    <tr><td><strong>Sklad + nákupní seznam</strong></td><td><span class="pill p-ok">ano (F1–F4)</span></td><td><span class="pill p-ok">ano</span></td><td><span class="pill p-bad">ne</span></td><td>Prognóza „kdy dojde" potřebuje 3 nákupy na položku, takže bez faktur je sklad slepý. Pořadí je tedy faktury → sklad.</td></tr>
+    <tr><td><strong>Směny v2</strong> (plán, beru/záloha, záskoky, absence, závazky)</td><td><span class="pill p-ok">ano</span></td><td><span class="pill p-ok">ano</span></td><td><span class="pill p-bad">ne</span></td><td>Nikdo z týmu to neviděl. <strong>Demo pro Anetu je živé</strong> (reálné komponenty hubu nad falešnými daty, dvě role, poznámky na jedno tlačítko) — aktuální adresa je v sekci Dema. Tomáš při stavbě našel 8 děr v reálném modulu (mrtvý panel hořících směn, zálohy bez manažerské obrazovky, zavřené pondělí v matici). Před ostrým startem: 2 bezpečnostní opravy.</td></tr>
+    <tr><td><strong>Rezervace v2</strong> + iPad za barem</td><td><span class="pill p-ok">ano</span></td><td><span class="pill p-ok">FE i DB ano</span></td><td><span class="pill p-bad">ne</span></td><td>Migrace z 12. 8. v DB jsou (ověřeno 6. 9.), ale <strong>účet Rezervace pro iPad neexistuje</strong>. Inbound <code>rezervace@</code> stále bez webhook secretu.</td></tr>
+    <tr><td><strong>Wiki, HACCP, checklisty, úkoly, onboarding</strong></td><td><span class="pill p-ok">ano</span></td><td><span class="pill p-ok">ano</span></td><td><span class="pill p-bad">ne</span></td><td>Jen obsah a zvyk. Kuchařka nemá vlastní roli (dnes vedoucí směny = moc práv).</td></tr>
+    <tr><td><strong>Tým · multi-pozice</strong></td><td><span class="pill p-ok">ano (1.7.5)</span></td><td><span class="pill p-ok">ano (6. 9.)</span></td><td>—</td><td>Potřebné pro směny (kdo smí kde sloužit). Role „kuchařka" připravena na branchi 1.7.7, čeká na další nasazení.</td></tr>
+    <tr><td><strong>Telegram notifikace</strong></td><td><span class="pill p-warn">branch</span></td><td><span class="pill p-bad">ne</span></td><td>—</td><td>Připraveno v mrtvém klonu (<code>feat/telegram-notifikace</code>), nepushnuto. Vytáhnout až u směn.</td></tr>
+  </table></div>
+
+  <div class="cols">
+    <div class="box">
+      <h3>Co je v pořádku</h3>
+      <ul>
+        <li>Cutover 11. 8. proběhl beze ztráty: 144 dnů, 703 směn, 15 výplat, sumy sedí na haléř. Stará appka zmražená rozlučkou, nikdy nemazat.</li>
+        <li>Denní zálohy DB s jednoklikovou obnovou. RLS drží (F0.5 nasazená, ověřeno z živé DB 29. 7.).</li>
+        <li>Odesílání mailů z <code>vyplatnice@</code>, <code>oznameni@</code> a příjem na <code>faktury@</code> fungují (doloženo v tvém Gmailu).</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>Co je rozbité nebo nejisté</h3>
+      <ul>
+        <li><strong>Lokální klony:</strong> jediný živý klon (<code>kns-pwa-fix</code>) je po migraci z iCloudu bez použitelného <code>.git</code>. Dalších 75 složek <code>kns-*</code> je mrtvých. Zdroj pravdy je GitHub; první kódový task si udělá čerstvý klon.</li>
+        <li><strong>Nasazení ze 12. 8. bez auditu:</strong> v audit trailu chybí záznam, kdo nasadil 1.7.4 a proč zůstaly 1.7.5–1.7.6 jen na GitHubu. Beru to jako nedokončené kolečko.</li>
+        <li><strong>Schéma <code>old_prod</code></strong> v nové DB pořád drží hashe hesel, mělo se smazat po týdnu stability.</li>
+        <li>Rozbitý iPad Air (objednávky, MobiPOS): oprava ~5 500 Kč vs. nový základní iPad 9 990 Kč (Petrova rešerše z 5. 9.). Volba je na tobě v pondělí.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="display">2 · iPad kasa — co je a co není</h2>
+  <p class="sub">Xcode projekt leží na <code>~/Desktop/KNS POS &amp; HUB/</code>, branch <code>feat/pos-swift-milnik2</code>, bez vzdáleného repa. Nic z toho není na GitHubu.</p>
+
+  <div class="tw"><table>
+    <tr><th>Vrstva</th><th>Stav</th><th>Detail</th></tr>
+    <tr><td><strong>Markování</strong> (plánek, hosté, jazyk CZ/EN/DE, dvoupanel, modifikátory, s sebou)</td><td><span class="pill p-ok">hotovo · M1–M3</span></td><td>Reálný plánek kavárny z <code>tables.json</code>, 193 položek s DPH z <code>menu.json</code>. Data se do appky nahrávají skriptem, ne z hubu.</td></tr>
+    <tr><td><strong>Platba</strong> (hotovost/karta, DPH rozpad 21/12/osvobozeno, split rovný i po položkách)</td><td><span class="pill p-ok">hotovo · M2–M3</span></td><td>FIK/BKP jsou mock. Karta = jen tlačítko, žádný terminál.</td></tr>
+    <tr><td><strong>KDS</strong> (bony kuchyň/bar, semafor stáří)</td><td><span class="pill p-ok">hotovo</span></td><td>Jen na stejném iPadu. Chybí panel „hotové / výdej" a chody.</td></tr>
+    <tr><td><strong>Domů, Přehledy, Nastavení, Zákazník</strong></td><td><span class="pill p-warn">základ</span></td><td>Zákazník zrcadlí účtenku, není to párovaný displej jako v demu.</td></tr>
+    <tr><td><strong>Design systém</strong> (terakota/papír, Tusker kapitálky, sklo, washe)</td><td><span class="pill p-warn">36 % tokenů</span></td><td>Fáze 1 (hloubka) hotová 12. 8. Fáze 2 s Eliškou čeká na 4 rozhodnutí: Tusker vs. DM Sans, přebarvení scrimu, mono font účtenky, obrazovka Zákazník.</td></tr>
+    <tr><td><strong>Persistence</strong></td><td><span class="pill p-warn">state.json</span></td><td>Účty a bony přežijí restart. Žádná databáze, žádný sync mezi zařízeními.</td></tr>
+    <tr><td><strong>Sync (PowerSync), vlastní Supabase, tisk (Epson), platby (SumUp SDK), EET 2.0, uzávěrka → hub</strong></td><td><span class="pill p-bad">0 %</span></td><td>Nezačato. Tohle je těžká polovina projektu.</td></tr>
+    <tr><td><strong>Apple Developer účet, TestFlight, iPad v kavárně</strong></td><td><span class="pill p-bad">nezaloženo</span></td><td>Podle plánu z 25. 7. mělo být první srpnový týden. Organization účet = D-U-N-S + ověření firmy, 1–2 týdny.</td></tr>
+  </table></div>
+
+  <div class="callout">
+    <strong>Poctivě k harmonogramu:</strong> plán z července počítal se startem v srpnu a měl tenhle sled: účty → markování (září) → sync (říjen) → platby a tisk (listopad) → paralelní provoz (prosinec) → EET pilot (leden). Markování máme napřed, ale <strong>účty a sync jsou 5 týdnů pozadu</strong>. Termín 1. 2. 2027 se dá stihnout, pokud Apple účet vznikne tento týden a sync se rozjede v říjnu. Když do konce října neběží sync na dvou iPadech, otvírá se plán B (níže).
+  </div>
+
+  <h2 class="display">3 · Roadmapa — dvě tratě vedle sebe</h2>
+  <p class="sub">Hub pouštíme do provozu v pořadí, které jsi řekl: <strong>faktury → sklad a objednávání → směny</strong>. Kasa jede paralelně proti EET. Každá fáze má bránu, bez které se nejde dál.</p>
+
+  <div class="lanes">
+    <div>
+      <p class="lane-h display">Hub · rollout</p>
+      <p class="lane-s">Nic se nestaví nového. Pouští se hotové, po jednom modulu, vždy s jedním člověkem v kavárně, který za něj ručí.</p>
+      <div class="tl">
+        <div class="ph now">
+          <div class="when">Týden 37 · 7.–13. 9.</div>
+          <h4>Dorovnat a otestovat</h4>
+          <ul>
+            <li><s>Nasadit 1.7.6</s> — hotovo 6. 9. 16:35, živě.</li>
+            <li>Založit účet Rezervace pro iPad, nasadit roli kuchařka (1.7.7), smazat <code>old_prod</code>.</li>
+            <li>Aneta: demo směn (Tomáš dodá v pondělí ráno) + její poznámky do pátku.</li>
+            <li>iPad Air si řešíš sám; kuchařka = vlastní role (rozhodnuto).</li>
+          </ul>
+          <span class="gate"><b>Brána:</b> živě je 1.7.6, patička to ukazuje, Aneta má odkaz.</span>
+        </div>
+        <div class="ph">
+          <div class="when">Týdny 38–40 · do 4. 10.</div>
+          <h4>Faktury naostro</h4>
+          <ul>
+            <li>Kdo nahrává: dodavatelské maily přeposílat na <code>faktury@hub</code>, papírové fotit v appce. Jedno pravidlo: dodavatele vybírat ze seznamu.</li>
+            <li>Dva týdny paralelně s dnešním postupem (účetní dostává totéž jako dřív).</li>
+            <li>Harry každé pondělí: kolik faktur prošlo, kolik položek se napárovalo, co selhalo.</li>
+          </ul>
+          <span class="gate"><b>Brána:</b> 100 % zářijových faktur je v hubu a párování běží nad 80 % automaticky.</span>
+        </div>
+        <div class="ph">
+          <div class="when">Říjen</div>
+          <h4>Sklad a objednávání</h4>
+          <ul>
+            <li>Faktury už krmí sklad, prognóza naskočí po 3 nákupech položky. Nákupní seznam s +/− místo papíru.</li>
+            <li>Makro aliasy a jednotky doladit podle prvních dvou nákupů. Sklad F5 (predikce) až když se ukáže potřeba.</li>
+            <li>Zapojit kuchyň: „došlo" z KDS je až s kasou, do té doby ruční hlášení v appce.</li>
+          </ul>
+          <span class="gate"><b>Brána:</b> nákupní seznam z hubu se používá 2× týdně místo papíru.</span>
+        </div>
+        <div class="ph">
+          <div class="when">Říjen–listopad</div>
+          <h4>Směny</h4>
+          <ul>
+            <li>Anetiny připomínky z dema → úpravy (Tomáš) → nasadit multi-pozice (1.7.5) + 2 bezpečnostní opravy.</li>
+            <li>Import listopadového rozpisu průvodcem, jeden měsíc souběh s papírem, tým si zkouší „beru" a záskoky.</li>
+            <li>Telegram/push notifikace pro hořící směny zapnout až když se rozpis drží v hubu.</li>
+          </ul>
+          <span class="gate"><b>Brána:</b> prosincový rozpis vzniká jen v hubu. Pak zbytek (wiki, HACCP, checklisty) přirozeně za ním.</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="lane-h display">Kasa · proti EET 2.0</p>
+      <p class="lane-s">Tohle se staví. Kritická cesta jde přes Apple účet a přes sync, ne přes vzhled.</p>
+      <div class="tl">
+        <div class="ph pos now">
+          <div class="when">Týden 37 · hned</div>
+          <h4>Založit účty, dostat kód do bezpečí</h4>
+          <ul>
+            <li><strong>Apple Developer Organization</strong> pod tvou s.r.o. (D-U-N-S zdarma, 1–5 dní, pak ověření Applem). Jediný krok s dlouhou lhůtou, který nejde obejít.</li>
+            <li>Přesunout Xcode projekt z Desktopu do <code>~/Claude/Projects/KNS_POS_iOS/</code> + privátní GitHub repo. Dnes je celá kasa v jedné lokální branchi bez zálohy.</li>
+            <li>Zamknout landscape, přidat odezvu na dotyk (dnes žádná).</li>
+          </ul>
+          <span class="gate"><b>Brána:</b> účet schválený, repo na GitHubu, appka v TestFlightu na tvém iPadu.</span>
+        </div>
+        <div class="ph pos">
+          <div class="when">Říjen</div>
+          <h4>Sync a dvě zařízení</h4>
+          <ul>
+            <li>Vlastní Supabase projekt (prod + staging, ~580 Kč/měs) + PowerSync free tier. Schéma s <code>tenant_id</code> od začátku.</li>
+            <li>Kasa → KDS na druhém iPadu, test „vypnu wifi, markuju dál, zapnu, srovná se".</li>
+            <li>Design fáze 2 s Eliškou souběžně (ilustrace, animace, 4 rozhodnutí), aby nebrzdila kód.</li>
+          </ul>
+          <span class="gate"><b>Brána do 31. 10.:</b> dva iPady v kavárně sdílí účty offline. Když ne → plán B.</span>
+        </div>
+        <div class="ph pos">
+          <div class="when">Listopad</div>
+          <h4>Platby a tisk</h4>
+          <ul>
+            <li>SumUp iOS SDK + terminál Solo, abstrakce PaymentProvider (KB SmartPay později).</li>
+            <li>Tiskárna Epson TM-m30 přes LAN. Nákup HW až teď (~6–11 tis. Kč celkem).</li>
+            <li>Rozhodnout tarif SumUp Payments Plus podle reálného karetního obratu z MobiPOS.</li>
+          </ul>
+          <span class="gate"><b>Brána:</b> zaplatíš si kafe vlastní kartou na vlastní kase a vypadne účtenka.</span>
+        </div>
+        <div class="ph pos">
+          <div class="when">Prosinec → 1. 2. 2027</div>
+          <h4>Souběh, EET pilot, ostrý provoz</h4>
+          <ul>
+            <li>Uzávěrka z kasy → evidence v hubu (nahradí ruční večerní zápis).</li>
+            <li>Unlisted App Distribution (žádost Applu s rezervou), kasa vedle MobiPOS na část provozu.</li>
+            <li>Leden: certifikát z MOJE daně, fiskalizace na serveru, FIK na účtence v pilotu. 1. 2. ostrý, MobiPOS ještě 1–2 měsíce jako záchrana.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout red">
+    <strong>Plán B (rozhodnout 31. 10.):</strong> když sync nebo Apple účet do konce října nestojí, přepnout kavárnu na 1. 2. 2027 na hotové české řešení s EET 2.0 (Dotykačka / Storyous, 500–1 500 Kč/měs) a vlastní kasu dostavět bez tlaku termínu. Hub tím nic neztrácí, jen se uzávěrka zapisuje ručně o pár měsíců déle. Neříkám to jako doporučení, ale jako pojistku, kterou chci mít pojmenovanou dřív, než bude prosinec.
+  </div>
+
+  <h2 class="display">4 · Co potřebuju od tebe</h2>
+  <p class="sub">Stav po neděli 6. 9. večer: čtyři z šesti rozhodnuto, GO na 1.7.6 provedeno.</p>
+  <ol class="dec">
+    <li><strong>Apple Developer účet</strong> — rozhodnuto: pod kavárnou. Návod krok za krokem je hotový (Petr). <strong>Otevřené: přesný název s.r.o. dle OR, IČO, sídlo a jméno jednatele</strong> — bez toho nejde vyplnit D-U-N-S ani enrollment.<span class="rec">Kritická cesta: D-U-N-S až 7 pracovních dní, pak ověření Applem 1–2 týdny.</span></li>
+    <li><strong>GO na nasazení 1.7.6</strong> — dáno a provedeno 6. 9. 16:35.<span class="rec">Zbývá tvůj smoke test: patička 1.7.6, Tým → zaškrtávátka pozic, faktura → „Napárovat přes AI".</span></li>
+    <li><strong>iPad Air</strong> — řešíš sám (Petrova rešerše: oprava ~5 500 Kč vs. nový 9 990 Kč).</li>
+    <li><strong>Kdo ručí za faktury</strong> v kavárně (Aneta, nebo ty) a jestli má účetní dostat přístup do hubu.</li>
+    <li><strong>Role</strong> — rozhodnuto: kuchařka vlastní role (připravena, 13 práv, branch 1.7.7), Aneta admin správně, účetní dostane přístup. Otevřené: má kuchařka vidět rezervace?</li>
+    <li><strong>Tusker × DM Sans</strong> — rozhodnuto: Tusker jen hero nadpisy. Kasa se přepne v design fázi 2.</li>
+  </ol>
+
+  <footer>Harry · zdroje: živý bundle hub.novysvet.net (verze 1.7.4), GitHub main @ c6f4617 (1.7.6), Xcode build log z 6. 9. 14:58, Gmail (auto-odpovědi faktury@ 12. 8.), Notion „KNS Roadmapa" (34 položek, stav z 28. 7.), iOS roadmapa z 25. 7. · Demo směn pro Anetu: Tomáš, hotovo do pondělí 7. 9. 8:30.</footer>
+</main>
+<style id="kns-back-css">.kns-back{position:fixed;left:12px;bottom:12px;z-index:99999;font:600 13px/1 "DM Sans",-apple-system,sans-serif;color:#FBF6EC;background:#3B2F2A;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.25);opacity:.92}.kns-back:hover{opacity:1;background:#E76F51}@media print{.kns-back{display:none}}</style><a class="kns-back" href="index.html">← Program Kasa + Hub</a>
+</body>
+</html>

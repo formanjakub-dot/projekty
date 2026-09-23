@@ -1,0 +1,679 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kasa KNS — architektura a milníky M5–M8 (v3, LAN-first, stávající HW)</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #faf7f1; --bg-soft: #f1ece2; --card: #fffdf9;
+    --ink: #2b2118; --ink-soft: #6a5b4c; --ink-faint: #9b8c7b;
+    --accent: #b4471e; --accent-soft: #f6e0d3;
+    --green: #3f7a3a; --green-soft: #e3efdc;
+    --amber: #a8731a; --amber-soft: #f6ead0;
+    --red: #a63a2c; --red-soft: #f7e1dc;
+    --blue: #2f5f8a; --blue-soft: #dde9f4;
+    --line: #e4dccd;
+    --shadow: 0 1px 2px rgba(43,33,24,.06), 0 6px 20px rgba(43,33,24,.05);
+    --r: 12px;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c1713; --bg-soft: #26201a; --card: #241e18;
+      --ink: #ece3d6; --ink-soft: #b7a793; --ink-faint: #85765f;
+      --accent: #e2803f; --accent-soft: #3a2416;
+      --green: #8fbd78; --green-soft: #24301d;
+      --amber: #dcae42; --amber-soft: #362a14;
+      --red: #e0705b; --red-soft: #3a201b;
+      --blue: #7fb0dc; --blue-soft: #1e2d3b;
+      --line: #3a3128;
+      --shadow: 0 1px 2px rgba(0,0,0,.35), 0 6px 20px rgba(0,0,0,.25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1c1713; --bg-soft: #26201a; --card: #241e18;
+    --ink: #ece3d6; --ink-soft: #b7a793; --ink-faint: #85765f;
+    --accent: #e2803f; --accent-soft: #3a2416;
+    --green: #8fbd78; --green-soft: #24301d;
+    --amber: #dcae42; --amber-soft: #362a14;
+    --red: #e0705b; --red-soft: #3a201b;
+    --blue: #7fb0dc; --blue-soft: #1e2d3b;
+    --line: #3a3128;
+    --shadow: 0 1px 2px rgba(0,0,0,.35), 0 6px 20px rgba(0,0,0,.25);
+  }
+  html { background: var(--bg); }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 44px 24px 80px; }
+  header { margin-bottom: 36px; }
+  .kicker { font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 10px; }
+  h1 { font-size: clamp(30px, 4.6vw, 46px); line-height: 1.08; letter-spacing: -.02em; margin: 0 0 14px; font-weight: 800; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lede { font-size: 18px; color: var(--ink-soft); max-width: 62ch; margin: 0 0 12px; }
+  .meta { font-size: 13.5px; color: var(--ink-faint); }
+  h2 { font-size: 24px; margin: 56px 0 8px; letter-spacing: -.01em; font-weight: 800; display: flex; align-items: baseline; gap: 12px; }
+  h2 .num { font-family: var(--mono); font-size: 13px; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 6px; }
+  h3 { font-size: 17.5px; margin: 26px 0 8px; font-weight: 800; }
+  .sub { color: var(--ink-soft); margin: 0 0 18px; font-size: 15.5px; }
+  p { margin: 0 0 14px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 18px 22px; box-shadow: var(--shadow); margin: 16px 0; }
+  .card.verdict { border-left: 4px solid var(--accent); }
+  .card.warn { border-left: 4px solid var(--amber); }
+  .card.change { border-left: 4px solid var(--blue); }
+  .tablewrap { overflow-x: auto; margin: 16px 0; border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); }
+  table { border-collapse: collapse; width: 100%; min-width: 640px; background: var(--card); font-size: 14.5px; }
+  th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-faint); padding: 11px 14px; border-bottom: 2px solid var(--line); background: var(--bg-soft); }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.total td { font-weight: 800; background: var(--amber-soft); }
+  .pill { display: inline-block; font-size: 11.5px; font-weight: 700; padding: 1px 9px; border-radius: 999px; white-space: nowrap; }
+  .pill.green { background: var(--green-soft); color: var(--green); }
+  .pill.amber { background: var(--amber-soft); color: var(--amber); }
+  .pill.red { background: var(--red-soft); color: var(--red); }
+  .pill.blue { background: var(--blue-soft); color: var(--blue); }
+  .pill.neutral { background: var(--bg-soft); color: var(--ink-soft); }
+  code { font-family: var(--mono); font-size: .86em; background: var(--bg-soft); border-radius: 5px; padding: 1px 5px; }
+  .src { font-size: 11px; vertical-align: super; color: var(--ink-faint); margin-left: 1px; }
+  ul.clean { padding-left: 0; list-style: none; margin: 0 0 14px; }
+  ul.clean li { padding-left: 22px; position: relative; margin-bottom: 8px; }
+  ul.clean li::before { content: "—"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  details { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--blue); border-radius: var(--r); box-shadow: var(--shadow); margin: 18px 0; padding: 0 22px; }
+  details summary { cursor: pointer; padding: 16px 0; font-weight: 800; font-size: 16px; list-style: none; display: flex; align-items: center; gap: 10px; }
+  details summary::before { content: "▸"; color: var(--blue); font-size: 14px; transition: transform .15s; }
+  details[open] summary::before { transform: rotate(90deg); }
+  details summary .pill { margin-left: auto; }
+  details .body { padding: 0 0 18px; }
+  /* Rozhodni */
+  .decide { counter-reset: d; }
+  .decide .item { counter-increment: d; display: grid; grid-template-columns: 34px 1fr 150px; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); align-items: start; }
+  .decide .item:last-child { border-bottom: 1px solid var(--line); }
+  .decide .item::before { content: counter(d); width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .decide .what b { display: block; font-size: 15.5px; }
+  .decide .what span { font-size: 14px; color: var(--ink-soft); }
+  .decide .when { font-size: 13px; font-weight: 700; text-align: right; color: var(--ink-soft); }
+  .decide .when b { display: block; color: var(--ink); font-size: 14px; }
+  @media (max-width: 600px) { .decide .item { grid-template-columns: 34px 1fr; } .decide .when { grid-column: 2; text-align: left; } }
+  /* Diagram */
+  .diagram { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--r); padding: 22px 18px; margin: 18px 0; overflow-x: auto; }
+  .diagram-inner { min-width: 620px; }
+  .drow { display: flex; gap: 12px; justify-content: center; align-items: stretch; }
+  .dbox { background: var(--card); border: 1.5px solid var(--line); border-radius: 10px; padding: 11px 14px; text-align: center; flex: 1; max-width: 260px; box-shadow: var(--shadow); }
+  .dbox .t { font-weight: 800; font-size: 14.5px; }
+  .dbox .d { font-size: 12.5px; color: var(--ink-soft); line-height: 1.4; margin-top: 2px; }
+  .dbox.hl { border-color: var(--accent); background: var(--accent-soft); }
+  .dbox.cloud { border-style: dashed; }
+  .dbox.wide { max-width: none; }
+  .darrow { text-align: center; color: var(--ink-faint); font-size: 12.5px; padding: 6px 0; line-height: 1.3; }
+  .darrow b { color: var(--accent); font-size: 15px; display: block; }
+  .dside { display: flex; gap: 12px; justify-content: center; margin-top: 12px; flex-wrap: wrap; }
+  .lanbox { border: 2px dashed var(--accent); border-radius: 14px; padding: 14px 12px 6px; margin: 4px 0 10px; position: relative; }
+  .lanbox .lbl { position: absolute; top: -11px; left: 16px; background: var(--bg-soft); padding: 0 8px; font-size: 12px; font-weight: 800; color: var(--accent); letter-spacing: .08em; text-transform: uppercase; }
+  /* Gantt */
+  .ganttwrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--card); box-shadow: var(--shadow); margin: 18px 0; }
+  .gantt { display: grid; grid-template-columns: 210px repeat(23, minmax(30px, 1fr)); min-width: 1120px; font-size: 12.5px; }
+  .gantt > div { border-bottom: 1px solid var(--line); padding: 6px 6px; min-height: 30px; box-sizing: border-box; }
+  .gantt .lab { position: sticky; left: 0; background: var(--card); font-weight: 700; border-right: 1px solid var(--line); z-index: 2; font-size: 13px; }
+  .gantt .lab small { display: block; font-weight: 500; color: var(--ink-faint); font-size: 11.5px; }
+  .gantt .mon { background: var(--bg-soft); font-weight: 800; text-transform: uppercase; letter-spacing: .06em; font-size: 11px; color: var(--ink-faint); text-align: center; border-right: 1px solid var(--line); }
+  .gantt .wk { background: var(--bg-soft); font-size: 10.5px; color: var(--ink-faint); text-align: center; padding: 4px 2px; }
+  .gantt .cell { border-right: 1px dashed color-mix(in srgb, var(--line) 60%, transparent); }
+  .bar { border-radius: 6px; padding: 3px 7px; font-weight: 700; color: #fff; font-size: 11px; line-height: 1.25; white-space: normal; align-self: center; margin: 3px 2px; }
+  .bar.m4 { background: #7a6a5a; } .bar.m5 { background: var(--blue); } .bar.m6 { background: var(--accent); } .bar.m7 { background: var(--amber); } .bar.m8 { background: var(--green); } .bar.buf { background: var(--ink-faint); } .bar.std { background: var(--red); }
+  .mark { align-self: start; margin: 2px 1px; font-size: 10.5px; line-height: 1.2; font-weight: 800; color: var(--red); border-left: 2px solid var(--red); padding-left: 4px; white-space: normal; }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--ink-soft); margin: 8px 0 0; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 5px; }
+  /* Milestone cards */
+  .ms { display: grid; grid-template-columns: 130px 1fr; gap: 18px; padding: 20px 0; border-top: 1px solid var(--line); }
+  .ms:last-of-type { border-bottom: 1px solid var(--line); }
+  .ms .when { font-weight: 800; font-size: 15px; color: var(--accent); }
+  .ms .when small { display: block; font-weight: 600; color: var(--ink-faint); font-size: 12px; margin-top: 2px; }
+  .ms h4 { margin: 0 0 6px; font-size: 16.5px; font-weight: 800; }
+  .ms p { font-size: 14.5px; color: var(--ink-soft); margin-bottom: 6px; }
+  .ms .gate { font-size: 13.5px; background: var(--green-soft); color: var(--green); border-radius: 8px; padding: 7px 11px; margin: 8px 0; }
+  .ms .gate b { font-weight: 800; }
+  .ms .dep { font-size: 13px; color: var(--ink-faint); }
+  .ms .dep b { color: var(--red); font-weight: 700; }
+  @media (max-width: 560px) { .ms { grid-template-columns: 1fr; gap: 6px; } }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 16px 0; }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; box-shadow: var(--shadow); }
+  .stat .label { font-size: 11.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-faint); font-weight: 700; margin-bottom: 4px; }
+  .stat .value { font-size: 20px; font-weight: 800; margin-bottom: 2px; }
+  .stat .note { font-size: 13px; color: var(--ink-soft); line-height: 1.45; }
+  footer { margin-top: 70px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--ink-faint); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">Kavárna Nový Svět · Swift kasa · rozhodovací dokument · v3</div>
+  <h1>Kasa KNS: jak to bude reálně poskládané <em>a kdy</em></h1>
+  <p class="lede">Architektura po milníku M4, milníky M5–M8 zpět od 1. 2. 2027 (EET 2.0), rizika s cestami, a nahoře seznam toho, co musíš rozhodnout nebo založit — s daty. Hardware se nekupuje: tři iPady, SumUp terminál i Epson už v kavárně stojí.</p>
+  <div class="meta">Viktor (architektura) pro Jakuba · <strong>v3 po tvé korekci 23. 9. 11:46</strong> (hardware máme — iPad Pro 2018 jako Kasa, Air 4 jako Obsluha, Air s home buttonem jako KDS, SumUp se SIM, Epson s IP; deployment target iOS 16.0; náklady proti MobiPOS) · v2 11:21 (LAN-first, Kasa iPad = hlavní, cloud jen záloha, Supabase Pro pryč) · fakta ověřená 23. 9. 2026 (Petr: HW kompatibilita + náklady 11:50) · navazuje na iOS roadmapu z 25. 7., Petrův research plateb a Apple účtu, demo KNS_POS_Demo v3.7 a Swift M1–M3 + M4 (běží). Předchozí verze: <code>kasa_architektura_2026-09-23_v2.html</code>, <code>_v1.html</code>.</div>
+</header>
+
+<details>
+  <summary>Co se změnilo: v3 (hardware, target, náklady) a v2 (LAN-first) <span class="pill blue">tvoje důvody z 11:46 a 11:21</span></summary>
+  <div class="body">
+  <h3 style="margin-top:6px">v3 (11:46) — hardware máme, target iOS 16, náklady vs. MobiPOS</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Bod</th><th>v2 (11:38)</th><th>v3 (teď)</th><th>Tvůj důvod / zdroj</th></tr>
+    <tr><td>Hardware</td><td>Nákup: SumUp Solo, Epson TM-m30III, nový iPad (~10–20 tis. Kč, 🔴 nad 5 000)</td><td><strong>Nekupuje se nic.</strong> Kasa = iPad Pro 2018 (Face ID, A12X) na baru, vedle SumUp terminál se SIM; Obsluha = iPad Air 4 (opravený) na magnetu; KDS = starší iPad Air s home buttonem napevno v kuchyni; Epson s IP adresou (model zjistíme).</td><td>„Hardware máme, do nákladů nepočítat.“ (11:46)</td></tr>
+    <tr><td>Deployment target</td><td>iPadOS 17/18 (projekt dnes 26.2)</td><td><strong>iOS 16.0.</strong> Podlaha = SumUp iOS SDK (16.0+); GRDB chce jen iOS 13; v kódu není žádné iOS 17+/26 API; Network.framework je od iOS 12. Snížení targetu jde do M4 dodatku (Tomáš).</td><td>Petr 11:50: target 26.2 nemá oporu v kódu, jen default Xcode 26</td></tr>
+    <tr><td>Kompatibilita iPadů</td><td>„Ověřit model iPadu kasy“</td><td>Pro 2018 (A12X), Air 4 (A14), Air 3 (A12) jedou i na iPadOS 26 → iOS 16 target bez problému. <strong>Jediné riziko: KDS iPad je Air 2 (A8X, max iPadOS 15.8)</strong> → ověřit model do 2. 10.</td><td>Petr 11:50 (everymac, Apple)</td></tr>
+    <tr><td>Topologie</td><td>2 zařízení (Kasa + KDS/Obsluha)</td><td><strong>3 zařízení + tiskárna:</strong> Kasa (napájená, hlavní, tisk) · Obsluha (mobilní, baterie → ostrovní režim častější) · KDS (napevno, jen zobrazení bonů + „Došlo“). SumUp přes BLE k Kase; ve fázi 2 i k Obsluze u stolu.</td><td>Reálné rozmístění v kavárně (11:46)</td></tr>
+    <tr><td>Tisk</td><td>Koupit TM-m30III, ePOS-Print XML</td><td>Stávající Epson přes LAN: ePOS-Print XML, pokud je to TM-m30/m30II/III nebo T88IV–VI (zapnout v EpsonNet Config); jinak raw ESC/POS na TCP 9100. Model: Feed při zapnutí → status list s IP → web UI.</td><td>Petr 11:50</td></tr>
+    <tr><td>Náklady</td><td>~190 Kč/měs + HW 10–20 tis. jednorázově</td><td><strong>HW 0 Kč · jednorázově jen Apple 99 USD (≈ 2 100 Kč/rok) · měsíčně navíc ~0 Kč</strong> (Hukot MH-02 už platíš, SumUp % platíš už dnes). Rok 1 i rok 2+ ≈ 2 100 Kč vs. MobiPOS ≈ 2 760 Kč/rok v nejlevnějším plánu z agregátorů, reálně „nižší stovky $“ → <strong>náš je levnější, cíl splněn</strong>.</td><td>„MobiPOS stojí nižší stovky dolarů ročně → náš má být levnější.“ (11:46) + Petr 11:50</td></tr>
+    <tr><td>Rozhodni</td><td>10 položek vč. nákupu HW a modelu iPadu kasy</td><td>10 položek: nákup HW a „model iPadu kasy“ pryč; nově „ověřit model KDS iPadu (Air 3 vs Air 2)“, „zjistit model Epsonu“, foto routeru zůstává.</td><td>—</td></tr>
+  </table></div>
+  <h3>v2 (11:21) — LAN-first</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Bod</th><th>v1 (ráno)</th><th>v2 (teď)</th><th>Tvůj důvod</th></tr>
+    <tr><td>Topologie</td><td>Žádný master, každý iPad sám, sync přes cloud (PowerSync ↔ Supabase)</td><td><strong>Kasa iPad = hlavní</strong> (LAN server přes Bonjour + WebSocket), KDS/Obsluha = klienti; při výpadku Kasy jede klient sám a po návratu se dosyncne. Přesně model MobiPOS.</td><td>„Bojím se, aby to bylo skrze internet dostatečně rychlé.“ + „Vše podstatné na lokální síti, ne někde v cloudu.“ (= tvoje rozhodnutí už 14. 7., v1 ho nedodržela)</td></tr>
+    <tr><td>Sync engine</td><td>PowerSync Cloud free</td><td><strong>Vlastní LAN replikace nad M4 event logem</strong> (Tomáš už staví: id, ts, device, type, payload). PowerSync pryč — potřebuje Postgres s logickou replikací nebo MySQL s binlogem, což sdílený hosting nedá<a class="src" href="https://docs.powersync.com/installation/database-setup">docs</a>; a jako druhý sync kanál vedle LAN by jen zdvojil konfliktní logiku.</td><td>LAN je primár; cloud nesmí být v kritické cestě</td></tr>
+    <tr><td>Cloud</td><td>Supabase Free → Pro 580 Kč/měs od 1. 12.</td><td><strong>Levná záloha + přehledy:</strong> denní push event logu z Kasy na <strong>Hukot</strong> (co už platíš), záložně Supabase Free. Supabase Pro vyškrtnuto.</td><td>„Supabase za 25 $ je dost vysoké měsíční fee. Nestačilo by to, co máme v tarifu u Hukotu?“</td></tr>
+    <tr><td>Harryho přístup</td><td>Přes Supabase MCP</td><td>Hukot: SSH + <code>mysqldump</code> nebo HTTPS export s tokenem; Supabase Free: MCP, které už mám. Obojí umím ovládat bez tvé asistence.</td><td>„Abys na to mohl být napojený ty a dobře to ovládat.“</td></tr>
+    <tr><td>Hub napojení</td><td>Edge Function v projektu kns-kasa</td><td>Přímo z Kasa iPadu do hub RPC <code>save_day_data</code> (účet „Kasa“ s jedinou permission), směny přímo z hub <code>mcp/list_shifts</code>. Žádný mezičlánek.</td><td>Bez vlastního Supabase projektu mezičlánek nedává smysl</td></tr>
+    <tr><td>M5</td><td>Supabase + PowerSync + TestFlight</td><td>LAN sync + failover + cloud záloha v0 + TestFlight; termíny drží (souběh 1. 12., kasa primární 18. 1., povinnost 1. 2.)</td><td>—</td></tr>
+    <tr><td>Náklady</td><td>~190 → ~770 Kč/měs</td><td><strong>~190 Kč/měs</strong> (jen Apple účet) + SumUp % · žádná nová platba</td><td>Zero extra costs</td></tr>
+  </table></div>
+  <p style="font-size:14px;color:var(--ink-soft)">Nezměněno ve v3: LAN vrstva a failover (1), cloud = Hukot MH-02 / Supabase Free (2), fiskalizace EET na Kasa iPadu (3), SumUp přes Bluetooth SDK (4), Individual Apple účet + TestFlight → Unlisted (6), milníky a termíny (7), testovací plán souběhu (8), body bez návratu 18. 1. a 28. 2. 2027.</p>
+  </div>
+</details>
+
+<!-- 0. Rozhodni -->
+<h2 id="rozhodni"><span class="num">0</span>Rozhodni, ověř, založ — v pořadí, jak to tlačí termíny</h2>
+<p class="sub">Deset věcí, žádný nákup. Kód píšou agenti; kritická cesta k 1. 2. 2027 vede přes tvoje účty, Wi-Fi v kavárně, dvě ověření stávajícího hardwaru, certifikát a testování na place — ne přes Swift.</p>
+
+<div class="decide">
+  <div class="item">
+    <div class="what"><b>Apple Developer Program — Individual, na tvoje jméno (99 USD/rok)</b><span>OSVČ (Hana, IČO 61382523) do Organization nesmí, Individual není vázaný na IČO → nejjednodušší je Jakub sám. Schválení 24–48 h, bez D-U-N-S, bez telefonátu. Unlisted i TestFlight dostupné. Zdroj: Petr 23. 9. + <a href="https://developer.apple.com/help/account/membership/program-enrollment/">developer.apple.com</a>.</span></div>
+    <div class="when"><b>do pá 25. 9.</b>30 min, karta</div>
+  </div>
+  <div class="item">
+    <div class="what"><b>GO na architekturu v3</b><span>Kasa = iPad Pro 2018 na baru (LAN server, platby, EET podpis, tisk); Obsluha = iPad Air 4 na magnetu (klient, ostrovní režim); KDS = iPad Air v kuchyni (klient, jen bony + „Došlo“); cloud = denní záloha na Hukot MH-02 + Harryho přehledy; fiskalizace EET na Kase; stávající SumUp terminál přes Bluetooth SDK; stávající Epson přes LAN; deployment target iOS 16.0. Detail v sekcích 1–6.</span></div>
+    <div class="when"><b>do pá 25. 9.</b>odklepnout</div>
+  </div>
+  <div class="item">
+    <div class="what"><b>Hukot: Harry ověří tarif v panelu, ty nic</b><span>Veřejný ceník: WH-01 15 Kč/měs (1 DB 100 MB, bez cronu, bez SSH — nestačí), <strong>WH-03 30 Kč/měs</strong> (10 GB DB, 5 cronů/15 min, SSH, denní zálohy — stačí), MH-01 60 Kč (bez cronu), MH-02 150 Kč (1 cron/60 min)<a class="src" href="https://www.hukot.net/cs/webhosting/">hukot</a><a class="src" href="https://www.hukot.net/cs/multihosting/">hukot</a>. Nevíme, co máš — možná jen doménu s DNS bez hostingu. Harry se podívá do <code>admin.hukot.net</code> (přístup má z DNS hubu) a napíše: tarif, DB, cron, SSH. <strong>Pokud hosting není nebo je WH-01 → jedeme Supabase Free (0 Kč), ne upgrade za 30 Kč</strong> — pravidlo zero extra costs.</span></div>
+    <div class="when"><b>do pá 2. 10.</b>Harry, 15 min</div>
+  </div>
+  <div class="item">
+    <div class="what"><b>Wi-Fi v kavárně: jedna síť pro kasu, bez izolace klientů</b><span>LAN sync stojí na tom, že se iPady a tiskárna navzájem vidí. Hostovské sítě mívají „client isolation“ (AP izoluje zařízení od sebe) — pak Bonjour nic nenajde. Potřebujeme: Kasa, Obsluha, KDS i Epson na <strong>stejném SSID / VLAN bez izolace</strong>, ideálně 5 GHz, hosté na jiném SSID; Obsluha na magnetu chodí po place, takže signál musí pokrýt i zahrádku/zadní stoly. Pošli Harrymu <strong>foto routeru</strong> (model) nebo přístup do administrace; Tomáš to prověří s prvním TestFlight buildem. Volitelně UPS na router (~1 500 Kč), aby výpadek proudu na 10 min neshodil LAN.</span></div>
+    <div class="when"><b>do pá 2. 10.</b>foto routeru</div>
+  </div>
+  <div class="item">
+    <div class="what"><b>Ověřit model KDS iPadu v kuchyni: Air 3, nebo Air 2?</b><span>Jediné hardwarové riziko projektu. Nastavení → Obecné → Informace → řádek „Model“: <strong>A2152 / A2123 / A2153 = Air 3</strong> (A12, jede iPadOS 26 → v pořádku); <strong>A1566 / A1567 = Air 2</strong> (A8X, končí na iPadOS 15.8 → appku s targetem iOS 16 nenainstaluje). Poznávací znak bez nastavení: Air 3 má na zádech Smart Connector (3 tečky) a je o ~1 mm tenčí. Kasa (Pro 2018, A12X) a Obsluha (Air 4, A14) jsou v pořádku bez ověřování. Zdroj: Petr 23. 9. (everymac, <a href="https://support.apple.com/guide/ipad/ipad-models-compatible-with-ipados-26-ipad213a25b2/26/ipados/26">support.apple.com</a>).</span></div>
+    <div class="when"><b>do pá 2. 10.</b>2 min</div>
+  </div>
+  <div class="item">
+    <div class="what"><b>Zjistit model Epsonu (štítek zespodu, nebo web UI tiskárny)</b><span>Nejrychleji štítek na spodku tiskárny. Bez fyzického přístupu: podržet <strong>Feed</strong> při zapnutí → vytiskne se status list s IP a QR → IP do prohlížeče v síti kavárny → <strong>EpsonNet Config</strong> (heslo bývá sériové číslo) ukáže model a přepínač ePOS-Print. TM-m30 / m30II / m30III a TM-T88IV–VI umí ePOS-Print XML přes LAN (stačí zapnout); starší model bez něj = raw ESC/POS na portu 9100, funguje také, jen bez XML pohodlí. Pošli Harrymu model + IP; Tomáš podle toho zvolí tiskový modul v M6a. Zdroj: Petr 23. 9.</span></div>
+    <div class="when"><b>do pá 2. 10.</b>5 min</div>
+  </div>
+  <div class="item">
+    <div class="what"><b>SumUp: účet na provozovatele (Hana OSVČ) + affiliate key + tarif — terminál už máš</b><span>Peníze musí téct na účet provozovatele. Developer affiliate key se váže na bundle ID appky (<a href="https://developer.sumup.com/terminal-payments/sdks/ios-sdk">developer.sumup.com</a>). Terminál se SIM u baru SDK umí (Solo / Air / 3G / PIN+ přes Bluetooth; SIM slouží terminálu k autorizaci, appka s ním mluví jen BT) — nic se nekupuje. Tarif: Payments Plus 19 €/měs (~470 Kč) sníží 1,95 % na 0,99 % jen u EU spotřebitelských karet → vyplatí se nad ~50 000 Kč takových karet/měs (Petr 25. 7. + 23. 9.) → vytáhni měsíční karetní obrat z MobiPOS reportu.</span></div>
+    <div class="when"><b>účet do 30. 10. · obrat do 15. 11.</b></div>
+  </div>
+  <div class="item">
+    <div class="what"><b>Certifikát EET 2.0: Hana v DIS+ (od 1. 11.), registrace vývojáře teď</b><span>Certifikát vydává Daňová informační schránka plus od 1. 11. 2026, poplatník = Hana (přihlášení Identitou občana / datovkou) — 30 min s tebou u počítače. Registraci vývojáře (e-mail <code>epodpora@fs.gov.cz</code>, předmět „Registrace vývojáře EET“) pošle Harry hned kvůli newsletteru o změnách specifikace. Zdroje: <a href="https://financnisprava.gov.cz/cs/financni-sprava/novinky/novinky-2026/financni-sprava-zpristupnila-testovaci-prostredi-eet2-playground">financnisprava.gov.cz</a>, <a href="https://www.podnikatel.cz/clanky/financni-sprava-zverejnila-technicke-informace-a-dokumentaci-k-eet-2-0/">podnikatel.cz</a>.</span></div>
+    <div class="when"><b>1.–20. 11.</b>Hana + ty</div>
+  </div>
+  <div class="item">
+    <div class="what"><b>Subdoména <code>uctenka.novysvet.net</code> pro digitální účtenku</b><span>Host naskenuje QR a otevře účtenku s FIK/BKP v telefonu — bez appky, bez mailu. Hosting: stejný Hukot (PHP stránka čte z tabulky účtenek, kterou Kasa pushuje) nebo Netlify (0 Kč). Ty jen CNAME/subdoména v Hukotu — Harry to udělá sám, má přístup.</span></div>
+    <div class="when"><b>do 15. 11.</b>Harry, 5 min</div>
+  </div>
+  <div class="item">
+    <div class="what"><b>Body bez návratu: 18. 1. 2027 kasa primární, 28. 2. 2027 MobiPOS zrušit · Plán B checkpoint 31. 10.</b><span>Do 18. 1. souběh s denním rozdílovým porovnáním tržeb (sekce 8). MobiPOS zůstává zaplacený a nainstalovaný jako záchrana do konce února. Když M5 nedodá stabilní LAN sync 2 iPadů s failoverem do 30. 10., přepínáme na hotové CZ řešení s EET 2.0 (Dotykačka/Storyous) a Swift kasa jede dál bez tlaku termínu (memory 6. 9.).</span></div>
+    <div class="when"><b>potvrdit teď</b>31. 10. jedna věta v #my_ai</div>
+  </div>
+</div>
+
+<!-- 1. Topologie -->
+<h2 id="topologie"><span class="num">1</span>Topologie: Kasa iPad je hlavní, Obsluha a KDS klienti — a každý přežije sám</h2>
+<p class="sub">Model MobiPOS na hardwaru, který v kavárně už stojí: tři iPady a jedna tiskárna. Klient bez hlavního iPadu nezamrzne, jede ze své vlastní DB a po návratu se dosyncne. Cloud není v žádné kritické cestě.</p>
+
+<div class="diagram"><div class="diagram-inner">
+  <div class="lanbox"><span class="lbl">Lokální síť kavárny (Wi-Fi / peer-to-peer)</span>
+  <div class="drow">
+    <div class="dbox hl"><div class="t">Kasa = iPad Pro 2018 (bar) · HLAVNÍ</div><div class="d">A12X, Face ID, napevno na baru, v nabíječce. Markování, platby, EET podpis, tisk účtenek. Běží LAN server (Bonjour <code>_knskasa._tcp</code> + WebSocket). Rozhoduje pořadí událostí.</div></div>
+    <div class="dbox hl"><div class="t">Obsluha = iPad Air 4 (magnet) · KLIENT</div><div class="d">A14, mobilní, na baterii — objednávka u stolu, bere se na plac. Plná kopie DB; ostrovní režim bude častější (roaming, uspání), po návratu dosync.</div></div>
+    <div class="dbox hl"><div class="t">KDS = iPad Air (kuchyň) · KLIENT</div><div class="d">Home button, napevno, v nabíječce. Jen zobrazení bonů + „Došlo“. Air 3 (A12) = OK; Air 2 (A8X) = neutáhne → ověřit do 2. 10.</div></div>
+  </div>
+  <div class="darrow"><b>⇅</b>události (M4 event log) po LAN: typicky pod 50 ms; bez routeru přes peer-to-peer Wi-Fi<a class="src" href="https://developer.apple.com/documentation/network/nwparameters/includepeertopeer">apple</a></div>
+  <div class="drow">
+    <div class="dbox"><div class="t">Epson s IP (LAN) — stávající</div><div class="d">u baru, účtenky na vyžádání + zásuvka; bony do kuchyně jako záložní kanál za KDS. Model zjistit → ePOS-Print XML, nebo raw ESC/POS :9100</div></div>
+    <div class="dbox"><div class="t">SumUp terminál se SIM (Bluetooth) — stávající</div><div class="d">vedle Kasy; částka z Kasy do terminálu přes SDK/BLE. Fáze 2: párování i k Obsluze pro platbu u stolu (nebo Cloud API, sekce 4)</div></div>
+    <div class="dbox"><div class="t">iPhone obsluhy / displej hosta</div><div class="d">volitelné, fáze 2 — stejný klientský kód</div></div>
+  </div>
+  </div>
+  <div class="darrow"><b>⇣ jen ven, jen když je internet</b>denní dump + průběžný push event logu (retry fronta); nic z toho kasa nepotřebuje k provozu</div>
+  <div class="dside">
+    <div class="dbox cloud"><div class="t">Hukot (MySQL + PHP)</div><div class="d">záloha event logu, denní dump, účtenka QR, Harryho přehledy (SSH / HTTPS export)</div></div>
+    <div class="dbox cloud"><div class="t">Finanční správa EET 2.0</div><div class="d">SOAP/XML z Kasa iPadu, cert v Keychain, fronta 48 h</div></div>
+    <div class="dbox cloud"><div class="t">KNS Hub (Lovable)</div><div class="d">uzávěrka → <code>save_day_data</code>, směny ← <code>list_shifts</code>; přímo z Kasy</div></div>
+  </div>
+</div></div>
+
+<div class="tablewrap"><table>
+  <tr><th>Varianta</th><th>Objev v síti / transport</th><th>Výpadek Kasy</th><th>Výpadek Wi-Fi routeru</th><th>Práce / riziko</th><th>Verdikt</th></tr>
+  <tr>
+    <td><strong>(a) Kasa iPad = LAN server</strong>, ostatní klienti (Network.framework)</td>
+    <td>Kasa ohlašuje Bonjour službu přes <code>NWListener</code>, klienti ji najdou <code>NWBrowser</code>em (iOS 12+/13+), spojení WebSocket <code>NWProtocolWebSocket</code> s TLS-PSK<a class="src" href="https://developer.apple.com/documentation/network">apple</a><a class="src" href="https://developer.apple.com/documentation/network/nwprotocolwebsocket">apple</a>. Žádný pevný IP, žádná konfigurace na place.</td>
+    <td>Klient přejde do <strong>ostrovního režimu</strong>: píše do vlastní GRDB + fronty, po návratu Kasy pošle nevyřízené eventy, Kasa je zařadí. Kasu jde „povýšit“ na jiném iPadu pod PINem vedoucího.</td>
+    <td>Stejný kód s <code>includePeerToPeer = true</code> najde druhý iPad i bez routeru (peer-to-peer Wi-Fi)<a class="src" href="https://developer.apple.com/documentation/network/nwparameters/includepeertopeer">apple</a>. Tiskárna na LAN je pak nedostupná — bony jdou na KDS iPad.</td>
+    <td>~4–5 agentních dnů Tomáš + Viktor review; protokol je malý (4 typy zpráv), konflikty řeší pevná autorita Kasy. Riziko: iOS pozastaví appku na pozadí → Kasa musí být v popředí (Guided Access / Single App Mode, viz níže).</td>
+    <td><span class="pill green">DOPORUČENO</span></td>
+  </tr>
+  <tr>
+    <td><strong>(b) MultipeerConnectivity</strong> peer-to-peer bez serveru</td>
+    <td>Automatický objev + Wi-Fi/peer-to-peer/Bluetooth, max 8 zařízení v session<a class="src" href="https://developer.apple.com/documentation/multipeerconnectivity">apple</a></td>
+    <td>Nikdo není autorita → každý pár zařízení si musí sám dohodnout pořadí; to je přesně ten „conflict engine“, který nechceme psát.</td>
+    <td>Dobře (má peer-to-peer v sobě).</td>
+    <td>Session se v pozadí rozpadá a hůř se ladí; Apple od iOS 12 vede vývojáře k Network.framework. Přínos proti (a) žádný, složitost vyšší.</td>
+    <td><span class="pill red">NE</span></td>
+  </tr>
+  <tr>
+    <td><strong>(c) Mac mini / Raspberry</strong> jako LAN server</td>
+    <td>Pevný box, klasický server.</td>
+    <td>Dobře.</td>
+    <td>Box visí na routeru taky.</td>
+    <td>+ HW, správa, UPS. <strong>Nechceš vlastní box (14. 7.)</strong> — uvádím jen pro úplnost, dál se s ním nepočítá.</td>
+    <td><span class="pill red">ZAMÍTNUTO</span></td>
+  </tr>
+  <tr>
+    <td><strong>Každý iPad sám + cloud sync</strong> (v1: PowerSync)</td>
+    <td>Přes internet, žádný objev v síti.</td>
+    <td>Dobře.</td>
+    <td>Špatně — bez internetu se iPady nevidí vůbec.</td>
+    <td>Latence bon → kuchyň závisí na internetu; PowerSync potřebuje Postgres/MySQL s replikací (ne Hukot).</td>
+    <td><span class="pill red">v1, opuštěno</span></td>
+  </tr>
+</table></div>
+
+<h3>Jak přesně LAN vrstva funguje (co Tomáš postaví v M5)</h3>
+<div class="tablewrap"><table>
+  <tr><th>Téma</th><th>Řešení</th></tr>
+  <tr><td><strong>Role a zařízení</strong></td><td>V Admin → Zařízení: <code>Kasa</code> (jen jedna na provozovnu) = iPad Pro 2018 na baru; <code>Obsluha</code> = iPad Air 4 na magnetu; <code>KDS</code> = iPad Air v kuchyni. Role je nastavení, ne volba za běhu — žádná automatická „volba mastera“, která by se rozbila. KDS je nejtenčí klient: jen odebírá eventy bonů a posílá zpět <code>bon_done</code> („Došlo“); nemarkuje, neplatí. Párování nového zařízení QR kódem z Kasy (v QR: tenant, PSK, epocha).</td></tr>
+  <tr><td><strong>Objev</strong></td><td>Kasa: <code>NWListener</code> se službou <code>_knskasa._tcp</code>, TXT záznam = tenant, verze schématu, <code>kasa_epoch</code>. Klient: <code>NWBrowser</code> průběžně, při ztrátě spojení hledá dál. Info.plist: <code>NSLocalNetworkUsageDescription</code> + <code>NSBonjourServices</code> (iOS 14+ se ptá na povolení lokální sítě)<a class="src" href="https://developer.apple.com/documentation/bundleresources/information-property-list/nslocalnetworkusagedescription">apple</a>.</td></tr>
+  <tr><td><strong>Zprávy</strong> (JSON přes WebSocket)</td><td><code>hello{device_id, last_seq_per_device}</code> → Kasa odpoví <code>catchup{events…}</code> · <code>event{id, ts, device_id, seq, type, payload}</code> oběma směry · Kasa každý přijatý event opatří <code>order</code> (globální pořadí) a rozešle všem · <code>ack{device_id, seq}</code>. Heartbeat 2 s, 3 ztracené = Kasa nedostupná.</td></tr>
+  <tr><td><strong>Idempotence a autorita</strong></td><td>Identita eventu = <code>(device_id, seq)</code>, zápis <code>INSERT OR IGNORE</code> — duplicita nikdy nic nerozbije. Stav (účty, položky, platby) = fold event logu v pořadí <code>order</code>, které určuje jen Kasa. Klient v ostrovním režimu aplikuje své eventy lokálně hned; po návratu je Kasa zařadí <em>za</em> vše, co má, a pošle konečné pořadí zpět.</td></tr>
+  <tr><td><strong>Konflikty</strong> (jen v ostrovním režimu, vzácné)</td><td>Účet zavřený na Kase + položka přidaná na klientovi → položka na nový účet „Dosync — zkontroluj“ s LivePill výstrahou · dvě platby na stejný účet → obě zůstanou, den se nezavře bez potvrzení vedoucího · stav bonu na KDS → poslední podle <code>ts</code>. Storno nikdy nemizí (event log = audit).</td></tr>
+  <tr><td><strong>Výpadek Kasy</strong></td><td>Klient ukazuje „Ostrovní režim“ a jede. Když je Kasa mrtvá déle (rozbitá, vybitá): vedoucí na KDS/Obsluze → Admin → „Povýšit na Kasu“ (PIN) → <code>kasa_epoch + 1</code>; po návratu starý iPad vidí vyšší epochu a stane se klientem. EET podpis ale umí jen zařízení s certifikátem → účtenky mezitím bez FIK do fronty (48 h, sekce 3); cert lze importovat i na druhý iPad jako záložní (rozhodnutí na tobě, riziko klíče ×2).</td></tr>
+  <tr><td><strong>Výpadek celé Wi-Fi</strong></td><td>Router dole: iPady se najdou přes peer-to-peer Wi-Fi (<code>includePeerToPeer</code>), bony na KDS jdou dál; Epson nedostupná → účtenka QR/na přání po obnově; karty přes Solo (SIM); EET fronta. Internet dole, LAN ok: nic se nemění, jen cloud push a EET čekají.</td></tr>
+  <tr><td><strong>Appka na pozadí</strong> (hlavní riziko iOS)</td><td>iOS pozastaví appku krátce po odchodu na pozadí a lokální server přestane odpovídat<a class="src" href="https://developer.apple.com/documentation/uikit/extending-your-app-s-background-execution-time">apple</a>. Řešení není v kódu, ale v provozu: <strong>Kasa i KDS běží v Guided Access</strong> (Nastavení → Zpřístupnění, zdarma) nebo v <strong>Single App Mode</strong> (supervised iPad přes Apple Configurator, zdarma — appka se vrátí do popředí i po restartu), + <code>isIdleTimerDisabled</code>, + na nabíječce. Když někdo přesto Kasu shodí, klienti spadnou do ostrovního režimu a nic se neztratí — to je celý smysl failoveru.</td></tr>
+  <tr><td><strong>Wi-Fi roaming, uspání</strong> (hlavně Obsluha)</td><td>Kasa a KDS jsou napevno v nabíječce — pro ně je to okrajové. Obsluha (Air 4) chodí po place na baterii: uspání displeje, slabší signál na zahrádce, návrat na magnet. Klient proto bere ostrovní režim jako běžný stav, ne poruchu: po probuzení znovu naváže spojení (browser běží dál, backoff 1→8 s) a pošle, co má ve frontě; LivePill ukazuje „× nevyřízených“. Jeden AP = žádný roaming; druhý AP do kuchyně jen když to souběh ukáže. Latence: cíl A→B do 300 ms, měříme v bráně M5 — v LAN jsou reálná čísla o řád níž.</td></tr>
+</table></div>
+
+<div class="card verdict">
+  <p><strong>Proč přesně tahle 3 zařízení:</strong> kopírují dnešní provoz s MobiPOS — iPad Pro 2018 na baru dělá platby a zápis, iPad Air 4 (opravený) na magnetu bere obsluha na plac, starší iPad Air s home buttonem visí napevno v kuchyni jako KDS. Nic se nekupuje, nic nepřibývá; mění se jen appka. Displej hosta a iPhone obsluhy jsou v demu hotové jako koncept, ale do 1. 2. 2027 nic nepřinášejí pro EET ani pro tržby — jdou do fáze 2 se stejným klientským kódem. Rezervační iPad zůstává hubu, kasa z něj jen čte.</p>
+</div>
+
+<!-- 2. Sync a cloud -->
+<h2 id="sync"><span class="num">2</span>Cloud vrstva: levná záloha + přehledy + můj přístup, nikdy runtime kasy</h2>
+<p class="sub">Kasa pushuje event log ven, když má internet. Cloud slouží třem věcem: záloha tržeb mimo kavárnu, digitální účtenka a Harryho reporting. Když cloud spadne, na place se nic nestane.</p>
+
+<div class="tablewrap"><table>
+  <tr><th>Varianta</th><th class="num">Cena / měs</th><th>Práce</th><th>Můj (Harryho) přístup</th><th>Spolehlivost, limity</th><th>GDPR / EU</th><th>Verdikt</th></tr>
+  <tr>
+    <td><strong>Hukot webhosting</strong> (to, co už platíš — tarif ověřím)<br><span style="font-size:12.5px;color:var(--ink-soft)">MySQL tabulka <code>events</code> + PHP <code>ingest.php</code> (HMAC token) + denní dump na disk + <code>export.php</code></span></td>
+    <td class="num">0 Kč navíc<br><small>(WH-03 = 30 Kč, kdyby chyběl)</small></td>
+    <td>~1 agentní den: PHP ~150 řádků, tabulka, cron dump; Swift uploader s retry frontou</td>
+    <td>SSH (omezený shell) + <code>mysqldump</code>, nebo HTTPS export s tokenem; SFTP na dumpy. Bez MCP, ale skript je triviální a běží z mého Macu.</td>
+    <td>Sdílený hosting, denní zálohy od WH-03/MH-03 (WH-01 a MH-01 týdenní, bez cronu — nestačí); DB přístup jen z web serveru<a class="src" href="https://www.hukot.net/cs/webhosting/">hukot</a><a class="src" href="https://www.hukot.net/cs/multihosting/">hukot</a>. Objem: kavárna = pár tisíc eventů/den, roky v desítkách MB.</td>
+    <td>CZ firma (SecurityNet.cz s.r.o.), data v ČR — nejjednodušší pro data zaměstnanců.</td>
+    <td><span class="pill green">DOPORUČENO</span><br><small>pokud tarif ≥ WH-03 / MH-02</small></td>
+  </tr>
+  <tr>
+    <td><strong>Supabase Free</strong> (vlastní projekt, region Frankfurt)</td>
+    <td class="num">0 Kč</td>
+    <td>~0,5 dne: tabulka + RLS + push přes REST</td>
+    <td><strong>MCP mám hotové</strong> (SQL, logy, funkce) — nejpohodlnější přístup ze všech.</td>
+    <td>500 MB, bez záloh, max 2 aktivní projekty, <strong>pauza po týdnu bez aktivity</strong> — denní push kasy ji drží živou; 2 týdny zavřeno = pauza, ruční Resume, data zůstávají 1 rok<a class="src" href="https://supabase.com/pricing">pricing</a><a class="src" href="https://supabase.com/docs/guides/platform/free-project-pausing">docs</a>.</td>
+    <td>EU region volitelný při založení.</td>
+    <td><span class="pill amber">ZÁLOŽNÍ</span><br><small>primár, když Hukot hosting není</small></td>
+  </tr>
+  <tr>
+    <td><strong>Turso / libSQL</strong> (SQLite v cloudu, embedded replicas)</td>
+    <td class="num">0 Kč<br><small>Free: 5 GB, 100 DB, 3 GB sync/měs</small></td>
+    <td>~1 den; jako HTTP cíl</td>
+    <td>CLI + HTTP API, žádný MCP.</td>
+    <td>Lákavé „SQLite na iPadu se syncne samo“, ale <strong>Swift SDK je „technical preview“ (0.1.x)</strong> — na kasu s tržbami ne<a class="src" href="https://github.com/tursodatabase/libsql-swift">github</a><a class="src" href="https://turso.tech/pricing">pricing</a>. Jako pouhá záloha nepřináší nic navíc proti Hukotu.</td>
+    <td>Region <code>fra</code>/<code>ams</code> volitelný<a class="src" href="https://docs.turso.tech/api-reference/locations/list">docs</a>.</td>
+    <td><span class="pill red">NE</span> teď<br><small>sledovat SDK 1.0</small></td>
+  </tr>
+  <tr>
+    <td><strong>Cloudflare D1 + Workers</strong> Free</td>
+    <td class="num">0 Kč</td>
+    <td>~1 den: Worker (TS) + D1 schéma</td>
+    <td><code>wrangler</code> / REST API s tokenem.</td>
+    <td>100 000 zápisů/den, 5 GB, denní reset limitů<a class="src" href="https://developers.cloudflare.com/d1/platform/pricing/">cf</a>; pro kavárnu s rezervou.</td>
+    <td>Jurisdikce <code>eu</code> při založení DB (vynucená, ne jen hint)<a class="src" href="https://developers.cloudflare.com/changelog/post/2025-11-05-d1-jurisdiction/">cf</a>.</td>
+    <td><span class="pill neutral">2. ZÁLOHA</span><br><small>kdyby Supabase Free zpřísnil limity</small></td>
+  </tr>
+  <tr>
+    <td><strong>Malý VPS</strong> (Hetzner CAX11 + IPv4, vlastní Postgres/SQLite + Litestream)</td>
+    <td class="num">≈ 6,49 €<br><small>≈ 160 Kč</small></td>
+    <td>~2 dny + trvalá údržba (aktualizace, zálohy, monitoring)</td>
+    <td>Plný SSH, cokoli.</td>
+    <td>Nejflexibilnější, ale platba + údržba za nic, co Hukot nedá<a class="src" href="https://www.hetzner.com/pressroom/new-cx-plans/">hetzner</a>.</td>
+    <td>Německo / Finsko.</td>
+    <td><span class="pill red">NE</span><br><small>zero extra costs</small></td>
+  </tr>
+  <tr>
+    <td><strong>Supabase Pro</strong> (v1)</td>
+    <td class="num"><s>580 Kč</s></td>
+    <td>—</td>
+    <td>—</td>
+    <td>Zálohy 7 dní a „nikdy nepauzuje“ jsou k ničemu, když zdroj pravdy leží na iPadech a denní dump mám na Hukotu i u sebe.</td>
+    <td>—</td>
+    <td><span class="pill red">VYŠKRTNUTO</span></td>
+  </tr>
+  <tr>
+    <td><strong>PowerSync</strong> (v1)</td>
+    <td class="num">0 Kč</td>
+    <td>—</td>
+    <td>—</td>
+    <td>Vyžaduje Postgres s logickou replikací nebo MySQL s binlogem + GTID a replikačními právy — sdílený hosting to nedá<a class="src" href="https://docs.powersync.com/installation/database-setup">docs</a>. A druhý sync engine vedle LAN = dvojí konfliktní logika.</td>
+    <td>—</td>
+    <td><span class="pill red">PRYČ</span></td>
+  </tr>
+</table></div>
+
+<div class="card verdict">
+  <p><strong>Doporučení:</strong> <strong>Hukot</strong> jako primární cloud vrstva (0 Kč navíc, CZ, jednoduché PHP, které Tomáš napíše za den a já ovládám přes SSH/HTTPS) — <strong>tarif potvrzen: MH-02</strong> (Jakub 23. 9., 150 Kč/měs bez DPH: 20 GB, až 10 webhostingů, 2 databáze na doménu, 1 cron/60 min, zálohy 1× týdně — proto denní dump k Harrymu; SSH ověřím v panelu do 2. 10.). Když hosting není nebo je nejnižší WH-01, jedeme <strong>Supabase Free</strong> ve Frankfurtu — nula korun, MCP mám, a denní push kasy projekt nikdy nenechá usnout. Neupgradujeme Hukot „za 30 Kč“, když je stejně dobrá nula.</p>
+  <p><strong>Co se stane při výpadku cloudu:</strong> nic. Kasa markuje, tiskne, platí, podepisuje EET; push se řadí do fronty a dojede později. Ráno mi jen chybí report — to je celý dopad.</p>
+  <p><strong>Druhá kopie zálohy:</strong> můj denní cron stáhne dump z Hukotu na Mac a do GDrive (kavárna má složku) — záloha zálohy za 0 Kč, žádný nový účet.</p>
+</div>
+
+<h3>Co v cloudu leží (Hukot MySQL / Supabase — stejné schéma, vše s <code>tenant_id</code>, KNS = 1)</h3>
+<div class="tablewrap"><table>
+  <tr><th>Tabulka</th><th>Odkud</th><th>Směr</th><th>K čemu</th></tr>
+  <tr><td><code>events</code> (append-only: id, ts, device, seq, order, type, payload)</td><td>Kasa iPad (jen ona pushuje; má konečné pořadí)</td><td>jen ven, průběžně s retry</td><td>Záloha všeho; z ní jde kdykoli zrekonstruovat kasu na novém iPadu (restore = stáhnout + fold)</td></tr>
+  <tr><td><code>closings</code> (uzávěrky: den, hotovost, karty, DPH rozpad, kdo)</td><td>Kasa</td><td>ven</td><td>Harryho denní report do #my_ai; rozdíl vs. MobiPOS v souběhu; zdroj pro hub handoff, když by přímé volání selhalo</td></tr>
+  <tr><td><code>fiscal_status</code> (fronta EET: pending/done, stáří)</td><td>Kasa</td><td>ven, každých 15 min</td><td>Můj alarm „pending &gt; 2 h“ → #my_ai / Telegram (nahrazuje Edge Function <code>fiscal-watch</code> z v1)</td></tr>
+  <tr><td><code>receipts_public</code> (id, položky, FIK/BKP)</td><td>Kasa</td><td>ven</td><td><code>uctenka.novysvet.net/{id}</code> — PHP stránka na Hukotu</td></tr>
+  <tr><td><code>menu</code>, <code>settings</code>, <code>devices</code></td><td>Kasa (Admin)</td><td>ven (kopie)</td><td>Jen záloha a přehled — zdroj pravdy zůstává na Kase a šíří se po LAN</td></tr>
+  <tr><td>Lidé, směny, PINy</td><td>—</td><td>—</td><td><strong>V cloudu kasy nejsou.</strong> Hub je vlastní; kasa si drží jen id + jméno + roli + PIN hash lokálně (GDPR: méně kopií dat zaměstnanců)</td></tr>
+</table></div>
+
+<h3>Napojení na hub (Supabase <code>‹id Supabase projektu›</code>, Lovable Cloud) — nejlevnější spolehlivá cesta</h3>
+<div class="tablewrap"><table>
+  <tr><th>Tok</th><th>Jak</th><th>Proč takhle</th></tr>
+  <tr><td><strong>Uzávěrka → hub evidence</strong></td><td>Kasa iPad při uzávěrce zavolá přímo hub RPC <code>save_day_data</code> (migrace <code>20260714000000_save_day_data_rpc.sql</code>, atomická) pod hub účtem „Kasa“ s jedinou permission <code>edit_daily_evidence</code>; token v Keychain Kasy pod PINem vedoucího. Vyplní <code>pos_cash_revenue</code> a <code>pos_card_revenue</code> v <code>days</code>; <code>real_*</code> dál počítá vedoucí. Selhání → retry fronta (stejný mechanismus jako EET), a já vidím uzávěrku i v cloudové <code>closings</code>.</td><td>Žádný mezičlánek = nejmíň co se může rozbít. Účet s jednou permission na iPadu, který už stejně drží EET certifikát, je přijatelné riziko; při ztrátě iPadu se token zneplatní v hubu. Alternativa (Hukot cron přeposílá <code>closings</code> do hubu, aby na iPadu nebyl hub token vůbec) je hotová za půl dne, kdybys ji chtěl.</td></tr>
+  <tr><td><strong>Směny ← hub</strong></td><td>Kasa denně ráno stáhne <code>mcp/list_shifts</code> (hub edge fn, stejný účet) do lokální <code>shift_plan_cache</code> a rozešle po LAN → uzávěrka nabízí „kdo dnes pracoval“.</td><td>Read-only, jednou denně, bez cloudu kasy.</td></tr>
+  <tr><td><strong>Lidé a PINy</strong></td><td>Hub vlastní <code>employees</code>; kasa zrcadlí id + jméno + roli, PIN vzniká v kase (hash) a šíří se po LAN. Docházka z kasy = „pomocník, ne povinnost“ (21. 7.).</td><td>Beze změny proti v1.</td></tr>
+  <tr><td><strong>Menu a ceny</strong></td><td>Zdroj pravdy Kasa (POS Admin) → LAN → klienti; kopie v cloudu jen pro přehled. Hub menu nevlastní; sklad hubu čte prodeje z cloudové <code>events</code> později (fáze 2).</td><td>Menu se edituje na place, nemá čekat na internet.</td></tr>
+  <tr><td><strong>Co se NEdělá</strong></td><td>Žádná migrace hub dat do cloudu kasy před 1. 2. 2027. Cutover mapa hubu zůstává samostatná kapitola.</td><td>—</td></tr>
+</table></div>
+
+<!-- 3. EET -->
+<h2 id="eet"><span class="num">3</span>EET 2.0: stav k 23. 9. a proč fiskalizace běží na Kasa iPadu</h2>
+<p class="sub">Zákon je hotový, hřiště existuje, certifikát od 1. 11. Jedna změna proti červenci: podpis účtenky musí umět zařízení, které ji vydává offline. Beze změny proti v1 — sedí to s LAN-first ještě líp.</p>
+
+<div class="grid2">
+  <div class="stat"><div class="label">Legislativa</div><div class="value">Schváleno 9. 9. 2026</div><div class="note">Sněmovna přehlasovala Senát (Senát 19. 8. vrátil s návrhy vyjmout bezhotovostní platby — zamítnuto). Čeká podpis prezidenta a Sbírku; MF už 17. 9. rozjelo roadshow. <a href="https://mf.gov.cz/cs/ministerstvo/media/tiskove-zpravy/2026/snemovna-prehlasovala-senat-a-stvrdila-zavedeni-ee-65151">mf.gov.cz</a>, <a href="https://www.finmag.cz/ekonomika/496173-eet-2-0-definitivne-schvalena-k-evidenci-pujdou-i-platby-kartou">finmag.cz</a></div></div>
+  <div class="stat"><div class="label">Termíny</div><div class="value">1. 1. / 1. 2. 2027</div><div class="note">Playground pro vývojáře od 1. 7. 2026 · funkce v DIS+ (certifikát) od 1. 11. 2026 · aplikace MOJE EET od 1. 12. 2026 · běžný provoz 1. 1. 2027 (leden = pilotní měsíc) · povinnost 1. 2. 2027. <a href="https://www.podnikatel.cz/clanky/financni-sprava-zverejnila-technicke-informace-a-dokumentaci-k-eet-2-0/">podnikatel.cz</a>, <a href="https://financnisprava.gov.cz/cs/financni-sprava/novinky/novinky-2026/financni-sprava-zpristupnila-testovaci-prostredi-eet2-playground">financnisprava.gov.cz</a></div></div>
+  <div class="stat"><div class="label">Rozsah</div><div class="value">Hotovost i karty</div><div class="note">Vše při osobním kontaktu: hotovost, karta, QR, poukazy. Posílá se částka/čas/místo, ne položky. Účtenka jen na vyžádání, i elektronicky; tisk nepovinný. „EET OFF“ jen pro paušální režim — KNS (zaměstnanci, DPH) se netýká. <a href="https://mf.gov.cz/cs/ministerstvo/media/tiskove-zpravy/2026/eet-2-0-ministerstvo-financi-predstavuje-moderni-a-62878">mf.gov.cz</a></div></div>
+  <div class="stat"><div class="label">Rozhraní</div><div class="value">XML / WSDL, cert z MOJE daně</div><div class="note">Dokumentace + testovací certifikáty v „Dokumenty ke stažení“ na <a href="https://eet.gov.cz/cs/pro-vyvojare">eet.gov.cz</a>; žádná certifikace výrobce (Petr 14. 7.). Kódy FIK (potvrzení), BKP (bezpečnostní), PKP (podpisový) jako ve starém EET.</div></div>
+</div>
+
+<div class="card warn">
+  <p><strong>Změna proti 14. 7. („fiskalizace na serveru“):</strong> při výpadku spojení musí účtenka nést BKP (kód spočítaný pokladnou z podpisu tržby) a data se doešlou dodatečně — lhůta 48 h<a class="src" href="https://eet-2-0.cz/blog/offline-rezim-vypadek-internetu">eet-2-0.cz</a>. BKP i PKP vznikají z <em>privátního klíče certifikátu</em>. Kdyby klíč ležel jen na serveru, kasa bez internetu nemá jak účtenku podepsat → nekompliantní účtenka přesně ve chvíli, kdy jde o offline režim. Proto: <strong>klíč na Kasa iPadu, cloud jen sleduje frontu.</strong> Appka se aktualizuje přes TestFlight bez review, takže argument „změna spec = jen deploy serveru“ nemá váhu.</p>
+</div>
+
+<div class="tablewrap"><table>
+  <tr><th>Vrstva</th><th>Kde</th><th>Jak</th></tr>
+  <tr><td>Certifikát (.p12)</td><td>iOS Keychain Kasa iPadu, <code>WhenUnlockedThisDeviceOnly</code>; import v Nastavení pod PINem vedoucího</td><td>Hana vygeneruje v DIS+ (od 1. 11.), záložní kopie v Jakubově správci hesel; revokace v DIS+ při ztrátě zařízení. Testovací cert z eet.gov.cz už teď proti Playgroundu.</td></tr>
+  <tr><td>Podpis + odeslání</td><td>Swift modul <code>Fiscal/</code> (izolovaný, 1 závislost: Security.framework)</td><td>Z každé platby vznikne <code>fiscal_receipts</code> řádek: PKP (RSA-SHA256 nad daty tržby), BKP (SHA1 z PKP), SOAP/XML přes <code>URLSession</code>, FIK zpět. Timeout 3 s → účtenka s BKP, řádek <code>pending</code>.</td></tr>
+  <tr><td>Fronta a retry</td><td>GRDB tabulka <code>fiscal_receipts</code> (M4 model: <code>payments</code> → 1:N <code>fiscal_receipts</code>; split platba = 2 tržby)</td><td>Retry každou minutu při online; alarm v LivePill při <code>pending</code> &gt; 30 min; tvrdý limit 48 h hlídá uzávěrka (nezavře den s nevyřízenou frontou bez potvrzení vedoucího). Platba v ostrovním režimu na klientovi → tržba čeká na Kasu (jen ona má klíč), účtenka se vydá s BKP po dosyncu.</td></tr>
+  <tr><td>Monitoring</td><td>Kasa pushuje <code>fiscal_status</code> do cloudu (Hukot) každých 15 min; můj cron čte</td><td>Když je něco <code>pending</code> &gt; 2 h → zpráva do #my_ai / Telegram. Cert v cloudu NENÍ (menší útočná plocha).</td></tr>
+  <tr><td>Účtenka</td><td>Default QR → <code>uctenka.novysvet.net/{id}</code> (PHP na Hukotu čte <code>receipts_public</code>); tisk Epson na přání</td><td>Obsah: datum, položky, DPH rozpad, IČO 61382523, FIK nebo BKP+PKP, id provozovny a pokladny. Papír na výslovnou žádost (zákon o ochraně spotřebitele § 16). Tereza ověří finální dikci po vyhlášení ve Sbírce.</td></tr>
+</table></div>
+
+<!-- 4. Platby -->
+<h2 id="platby"><span class="num">4</span>Platby: SumUp Solo přes Bluetooth SDK, Cloud API až s druhým zařízením</h2>
+<p class="sub">Obojí za jedním rozhraním <code>PaymentProvider</code>. Vždy existuje ruční fallback. Beze změny proti v1.</p>
+
+<div class="tablewrap"><table>
+  <tr><th>Cesta</th><th>Fakta (ověřeno 23. 9.)</th><th>Pro KNS</th><th>Verdikt</th></tr>
+  <tr>
+    <td><strong>SumUp iOS SDK (Bluetooth)</strong></td>
+    <td>Solo, Solo Lite, Air; iOS 16+; SPM (CocoaPods končí 31. 10. 2026); v7.1.2; affiliate key vázaný na bundle ID; SDK vede platbu vlastními obrazovkami; má dokumentované offline transakce<a class="src" href="https://developer.sumup.com/terminal-payments/sdks/ios-sdk">docs</a></td>
+    <td>Kasa iPad stojí vedle čtečky. Žádný náš server v cestě, žádný veřejný webhook. Funguje i bez internetu a bez cloudu.</td>
+    <td><span class="pill green">PRIMÁR M6</span></td>
+  </tr>
+  <tr>
+    <td><strong>SumUp Cloud API + Solo</strong></td>
+    <td>Kasa pošle checkout HTTPS, výsledek webhookem na veřejnou URL; jen Solo; platba musí začít do 60 s; vše musí být online<a class="src" href="https://developer.sumup.com/terminal-payments/cloud-api">docs</a></td>
+    <td>Dává smysl, až bude chtít platit obsluha z druhého iPadu na jednu čtečku. Webhook = PHP na Hukotu (nebo Netlify function).</td>
+    <td><span class="pill amber">FÁZE 2</span></td>
+  </tr>
+  <tr>
+    <td><strong>Ruční terminál</strong></td>
+    <td>Kasa zapíše „karta“, obsluha částku naťuká na Solo</td>
+    <td>Dnešní MobiPOS realita; zůstává jako fallback i po integraci.</td>
+    <td><span class="pill blue">VŽDY</span></td>
+  </tr>
+  <tr>
+    <td><strong>Tap to Pay on iPhone</strong></td>
+    <td>Jen iPhone, SumUp v ČR 1,95 %, 0 Kč fix (Petr 25. 7.)</td>
+    <td>Špička/zahrádka, 0 Kč HW — experiment ve fázi 2.</td>
+    <td><span class="pill amber">FÁZE 2</span></td>
+  </tr>
+  <tr>
+    <td><strong>Payby / KB SmartPay / Comgate</strong></td>
+    <td>Bez veřejných docs, integrace individuálně; Comgate cenově nejlepší nad ~150 tis. Kč karet/měs (Petr 25. 7.)</td>
+    <td>Druhý <code>PaymentProvider</code> až podle obratu; Comgate poptávka z Petrova draftu kdykoli.</td>
+    <td><span class="pill neutral">2027</span></td>
+  </tr>
+</table></div>
+<p><strong>Terminál máš, nic se nekupuje:</strong> SumUp se SIM u baru je Solo (nebo Air / 3G) — SDK umí Solo, Solo Lite, Air, 3G i PIN+, vždy přes Bluetooth; SIM slouží terminálu k autorizaci vůči SumUp, appka s ním mluví jen BT (Petr 23. 9.). Cloud API (platba z Obsluhy u stolu na jednu čtečku) má smysl jen se Solo — ověříme typ při párování v M6a.</p>
+
+<!-- 5. Tisk -->
+<h2 id="tisk"><span class="num">5</span>Tisk: stávající Epson u baru, přes LAN, bez binárního SDK</h2>
+<p class="sub">Tiskárna s IP adresou už v kavárně je; model zjistíš do 2. 10. (sekce 0). Podle modelu jedna ze dvou cest, obě bez nákupu.</p>
+<div class="tablewrap"><table>
+  <tr><th>Varianta</th><th>Fakta</th><th>Verdikt</th></tr>
+  <tr><td><strong>Stávající Epson, ePOS-Print XML přes HTTP</strong> (TM-m30 / m30II / m30III, TM-T88IV–VI, TM-T20)</td><td>Tiskárna má vlastní web server, přijímá XML na <code>/cgi-bin/epos/service.cgi</code> — z nativní appky stačí <code>URLSession</code>, žádný xcframework. Zapíná se v EpsonNet Config (web UI na IP tiskárny), nastaví se device ID. Zásuvka přes DK port (<code>&lt;pulse&gt;</code>). Stejná LAN jako iPady<a class="src" href="https://download4.epson.biz/sec_pubs/pos/reference_en/epos_ios/">epson</a>. Zdroj: Petr 23. 9.</td><td><span class="pill green">DOPORUČENO</span><br><small>pokud model umí ePOS-Print</small></td></tr>
+  <tr><td><strong>Stávající Epson, raw ESC/POS přes TCP port 9100</strong></td><td>Funguje na prakticky každé síťové Epson bez ohledu na stáří (starší TM-T20 revize, TM-U220…): appka otevře socket na <code>IP:9100</code> a posílá ESC/POS bajty; formátování účtenky se skládá ručně (~1 den navíc v M6a), zásuvka přes ESC <code>p</code>. Bez XML pohodlí, bez stavu papíru.</td><td><span class="pill amber">ZÁLOŽNÍ</span><br><small>pokud model ePOS-Print neumí</small></td></tr>
+  <tr><td><strong>Epson ePOS SDK for iOS (xcframework 2.29.x)</strong></td><td>Oficiální SDK s discovery a stavem tiskárny, Swift ukázky<a class="src" href="https://download4.epson.biz/sec_pubs/pos/reference_en/epos_ios/">epson</a></td><td><span class="pill amber">JEN KDYŽ</span> potřebujeme discovery/stav papíru; IP je stejně pevná v Admin → devices</td></tr>
+  <tr><td><strong>Bez tiskárny (jen QR účtenka)</strong></td><td>Právně jde (účtenka na vyžádání, i elektronicky), ale host má nárok na doklad a formu mu nevnutíme (Petr 25. 7., § 16); zásuvka potřebuje impuls</td><td><span class="pill red">NE</span></td></tr>
+  <tr><td><strong>Druhá tiskárna v kuchyni</strong></td><td>Jen pokud KDS iPad v souběhu selhává nebo kuchyň chce papír</td><td><span class="pill amber">FÁZE 2</span></td></tr>
+</table></div>
+
+<!-- 6. Distribuce -->
+<h2 id="distribuce"><span class="num">6</span>Distribuce a účet: Individual na Jakuba, TestFlight → Unlisted</h2>
+<div class="tablewrap"><table>
+  <tr><th>Fáze</th><th>Kanál</th><th>Fakta</th><th>Kdy</th></tr>
+  <tr><td>Vývoj na 3 iPadech (Pro 2018, Air 4, Air kuchyň)</td><td>Xcode přímo přes kabel (Ad Hoc / personal team) nebo TestFlight; deployment target iOS 16.0</td><td>TestFlight interní testeři bez review, build platí 90 dní; Ad Hoc 100 zařízení, profil 1 rok (Petr 23. 9.)</td><td>M5, od ~12. 10.</td></tr>
+  <tr><td>Souběh s MobiPOS</td><td>TestFlight</td><td>Aneta + tým jako interní testeři; nový build týdně</td><td>od 1. 12.</td></tr>
+  <tr><td>Ostrý provoz</td><td><strong>Unlisted App Distribution</strong></td><td>Individual účet plně způsobilý; appka musí být hotová a podaná k App Review (ne beta) + poznámka v Review Notes; žádost podává Account Holder; schválení 6–48 h; bez 90denní expirace, auto-update<a class="src" href="https://developer.apple.com/support/unlisted-app-distribution/">apple</a></td><td>podat po 7. 12., review s demo režimem (ukázkové menu, PIN ····)</td></tr>
+  <tr><td>Kdyby review zdržel</td><td>TestFlight dál / Ad Hoc</td><td>Provoz na TestFlight buildu není zakázaný; expirace 90 dní stačí na leden i únor</td><td>záloha</td></tr>
+  <tr><td>Až vznikne s.r.o.</td><td>Convert to Organization</td><td>Podává zakladatel účtu (Jakub), appky zůstávají; D-U-N-S nové firmy (Petr 23. 9.)</td><td>2027+</td></tr>
+</table></div>
+<p><strong>Vydavatel v App Storu = „Jakub Forman“.</strong> Pro interní neveřejnou appku bez dopadu; brand „Kavárna Nový Svět“ jde jen přes s.r.o. Individual účet přidá až 50 uživatelů do App Store Connect (Tomáš/Harry jako Admin pro buildy nemusí — buildy nahrává Xcode pod tvým Apple ID, agenti jen připraví archiv). <strong>Kiosk:</strong> Guided Access jde zapnout hned na každém iPadu; Single App Mode vyžaduje supervised iPad přes Apple Configurator (Mac + kabel, nutné smazání iPadu při nastavení) — nejdřív na KDS iPadu v kuchyni (napevno, nic jiného na něm neběží), u Kasy až v M7 po souběhu; Obsluha zůstává na Guided Access.</p>
+
+<!-- 7. Milníky -->
+<h2 id="milniky"><span class="num">7</span>Milníky M4–M8 zpět od 1. 2. 2027</h2>
+<p class="sub">Tempo Tomáše z M1–M3: M1 27. 7. (jeden večer), M2 + M3 11. 8. (jeden den), design 12. 8. — ~3 500 řádků za 3 agentní dny. Kalendář ale určuje tvoje smyčka (účty, Wi-Fi, HW, test na place), ne kód. Proto 4 týdny na milník s 3–6 agentními sessions + Viktor review + 2 tvoje testy na iPadu. Termíny proti v1 drží.</p>
+
+<div class="ganttwrap"><div class="gantt">
+  <div class="lab"></div>
+  <div class="mon" style="grid-column: span 2">Září</div><div class="mon" style="grid-column: span 4">Říjen</div><div class="mon" style="grid-column: span 4">Listopad</div><div class="mon" style="grid-column: span 5">Prosinec</div><div class="mon" style="grid-column: span 4">Leden 27</div><div class="mon" style="grid-column: span 4">Únor 27</div>
+  <div class="lab"><small>týden od</small></div>
+  <div class="wk">21.9</div><div class="wk">28.9</div><div class="wk">5.10</div><div class="wk">12.10</div><div class="wk">19.10</div><div class="wk">26.10</div><div class="wk">2.11</div><div class="wk">9.11</div><div class="wk">16.11</div><div class="wk">23.11</div><div class="wk">30.11</div><div class="wk">7.12</div><div class="wk">14.12</div><div class="wk">21.12</div><div class="wk">28.12</div><div class="wk">4.1</div><div class="wk">11.1</div><div class="wk">18.1</div><div class="wk">25.1</div><div class="wk">1.2</div><div class="wk">8.2</div><div class="wk">15.2</div><div class="wk">22.2</div>
+
+  <div class="lab">M4 Lokální jádro<small>Tomáš, běží</small></div>
+  <div class="bar m4" style="grid-column: 2 / span 2">GRDB + event log + PIN + pokladna + uzávěrka</div>
+  <div class="cell" style="grid-column: span 21"></div>
+
+  <div class="lab">M5 LAN sync + failover<small>Kasa server, ostrovní režim, cloud v0</small></div>
+  <div class="cell" style="grid-column: span 2"></div>
+  <div class="bar m5" style="grid-column: 4 / span 3">Bonjour + WebSocket + catch-up + ostrovní režim + TestFlight 3 iPady</div>
+  <div class="bar m5" style="grid-column: 7 / span 1">cloud v0</div>
+  <div class="cell" style="grid-column: span 17"></div>
+
+  <div class="lab">M6a Platby + tisk + účtenka<small>SumUp SDK, Epson, QR</small></div>
+  <div class="cell" style="grid-column: span 6"></div>
+  <div class="bar m6" style="grid-column: 8 / span 4">SumUp BLE + Epson ePOS + uctenka.novysvet.net</div>
+  <div class="cell" style="grid-column: span 13"></div>
+
+  <div class="lab">M6b EET klient<small>paralelně, Playground</small></div>
+  <div class="cell" style="grid-column: span 6"></div>
+  <div class="bar m6" style="grid-column: 8 / span 4">PKP/BKP/FIK + fronta 48 h + test cert</div>
+  <div class="cell" style="grid-column: span 13"></div>
+
+  <div class="lab">M7 Hub + souběh<small>uzávěrka→hub, směny, reporty, Unlisted</small></div>
+  <div class="cell" style="grid-column: span 10"></div>
+  <div class="bar m7" style="grid-column: 12 / span 4">hub RPC z Kasy + ostrý cert + souběh od 1. 12. + Unlisted 7. 12. + Harry reporty</div>
+  <div class="bar buf" style="grid-column: 16 / span 1">Vánoce</div>
+  <div class="cell" style="grid-column: span 8"></div>
+
+  <div class="lab">M8 Pilot EET + cutover<small>leden = pilotní měsíc</small></div>
+  <div class="cell" style="grid-column: span 15"></div>
+  <div class="bar m8" style="grid-column: 17 / span 4">EET produkce od 1. 1. · 18. 1. kasa primární · 1. 2. povinnost</div>
+  <div class="bar std" style="grid-column: 21 / span 4">MobiPOS standby → 28. 2. zrušit</div>
+
+  <div class="lab">Tvoje termíny A<small>účty, Wi-Fi, SumUp</small></div>
+  <div class="mark" style="grid-column: 2">25.9 Apple účet</div>
+  <div class="mark" style="grid-column: 3">2.10 Hukot + Wi-Fi</div>
+  <div class="cell" style="grid-column: span 3"></div>
+  <div class="mark" style="grid-column: 7">30.10 SumUp účet + Plán B</div>
+  <div class="cell" style="grid-column: span 8"></div>
+  <div class="mark" style="grid-column: 16">1.1 EET produkce</div>
+  <div class="cell" style="grid-column: span 4"></div>
+  <div class="mark" style="grid-column: 21">1.2 povinnost</div>
+  <div class="cell" style="grid-column: span 3"></div>
+
+  <div class="lab">Tvoje termíny B<small>HW ověření, cert, provoz</small></div>
+  <div class="cell" style="grid-column: 2"></div>
+  <div class="mark" style="grid-column: 3">2.10 KDS iPad + Epson</div>
+  <div class="cell" style="grid-column: span 4"></div>
+  <div class="mark" style="grid-column: 8 / span 3">1.–20.11 cert Hana v DIS+</div>
+  <div class="cell" style="grid-column: 11"></div>
+  <div class="mark" style="grid-column: 12">1.12 souběh</div>
+  <div class="cell" style="grid-column: span 6"></div>
+  <div class="mark" style="grid-column: 19">18.1 kasa primární</div>
+  <div class="cell" style="grid-column: span 4"></div>
+  <div class="mark" style="grid-column: 24">28.2 MobiPOS off</div>
+</div></div>
+<div class="legend"><span><i style="background:#7a6a5a"></i>M4</span><span><i style="background:var(--blue)"></i>M5</span><span><i style="background:var(--accent)"></i>M6a/b (paralelně)</span><span><i style="background:var(--amber)"></i>M7</span><span><i style="background:var(--green)"></i>M8</span><span><i style="background:var(--red)"></i>MobiPOS záchrana</span></div>
+
+<div class="ms">
+  <div class="when">M4<small>23. 9. – 2. 10.</small></div>
+  <div>
+    <h4>Lokální jádro (běží, Tomáš)</h4>
+    <p>GRDB SQLite místo <code>state.json</code>, append-only event log (id, ts, device, type, payload), PIN + role vynucené v modelu, pokladna (float, vklad/výběr, počítání, předání), uzávěrka s DPH rozpadem. Bez sítě — architektonicky neutrální základ.</p>
+    <div class="gate"><b>Brána 5. 10.:</b> ty na simulátoru/iPadu proklikáš celou směnu v letadlovém režimu; účty přežijí zabití appky; storno chce důvod a je v event logu.</div>
+    <div class="dep">Závisí na: nic. <b>Požadavek pro M5:</b> každý event má <code>device_id</code> + lokální <code>seq</code> (monotónní per zařízení), ID = UUID, stav = fold event logu (žádný stav mimo eventy) — bez toho LAN replikace nepůjde. <b>Dodatek v3:</b> snížit <code>IPHONEOS_DEPLOYMENT_TARGET</code> z 26.2 na <strong>16.0</strong> (podlaha SumUp SDK; GRDB od 13; v kódu žádné iOS 17+/26 API — Petr 23. 9.) a ověřit build na iPadu Pro 2018. Tomáš zapracuje hned.</div>
+  </div>
+</div>
+<div class="ms">
+  <div class="when">M5<small>5. 10. – 30. 10.</small></div>
+  <div>
+    <h4>LAN sync + failover + cloud záloha v0 + první iPady v kavárně</h4>
+    <p><strong>5.–23. 10. LAN vrstva</strong> (Tomáš, Viktor review protokolu předem): role zařízení v Admin + párování QR (PSK); Kasa <code>NWListener</code> + Bonjour; klient <code>NWBrowser</code> + WebSocket; <code>hello/catchup/event/ack</code>; <code>order</code> od Kasy; ostrovní režim s LivePill stavem; „Povýšit na Kasu“ s epochou; <code>includePeerToPeer</code>; Info.plist lokální síť; runbook Guided Access; role KDS jako tenký klient (bony + „Došlo“). Deployment target už 16.0 z M4 dodatku. TestFlight build na 3 iPady v kavárně (od ~12. 10.). <strong>26.–30. 10. cloud v0:</strong> Hukot <code>ingest.php</code> + tabulky + denní dump (nebo Supabase Free podle ověření 2. 10.), Swift uploader s retry, můj pull skript + denní report do #my_ai. PaymentProvider a Fiscal jako protokoly (prázdné implementace).</p>
+    <div class="gate"><b>Brána 30. 10.:</b> markuješ na A, na B to vidíš do 300 ms · zabiješ appku Kasy → B jede dál v ostrovním režimu, po startu Kasy dosync bez ztráty a bez duplicit (event log obou shodný) · vypneš router → iPady se najdou peer-to-peer a bon dojde · 30 min letadlový režim na obou, pak replay · ráno je dump v cloudu a já ho přečtu a pošlu report.</div>
+    <div class="dep">Závisí na: Apple účet (25. 9.), Hukot SSH + Wi-Fi ověření (2. 10.), model KDS iPadu (2. 10.). <b>Plán B checkpoint 31. 10.</b> Nejvyšší riziko projektu — Viktor review protokolu před kódem a každé změny merge pravidel.</div>
+  </div>
+</div>
+<div class="ms">
+  <div class="when">M6a + M6b<small>2. 11. – 27. 11.<br>paralelně</small></div>
+  <div>
+    <h4>M6a: platby, tisk, digitální účtenka · M6b: EET klient proti Playgroundu</h4>
+    <p><strong>M6a</strong> SumUp SDK přes SPM, <code>SumUpBLEProvider</code> + <code>ManualTerminalProvider</code>, tip; Epson ePOS-Print XML + zásuvka + bony do kuchyně jako záložní kanál; PHP účtenka na Hukotu + QR. <strong>M6b</strong> modul <code>Fiscal/</code>: PKP/BKP, SOAP klient, fronta v GRDB, retry, LivePill stavy, testovací certifikát z eet.gov.cz, Playground round-trip, push <code>fiscal_status</code> do cloudu. Dva Tomášové (opus) vedle sebe, Viktor Critic na oba.</p>
+    <div class="gate"><b>Brána 27. 11.:</b> zaplatíš si kafe vlastní kartou přes vlastní kasu, vypadne účtenka s BKP a QR · Playground vrátí FIK na 20/20 testovacích tržeb včetně splitu a storna · vypnutí wifi během platby = účtenka s BKP, po obnově FIK doplněn · platba na klientovi v ostrovním režimu dostane FIK po dosyncu.</div>
+    <div class="dep">Závisí na: model Epsonu (2. 10. → volba ePOS-Print XML vs. ESC/POS), SumUp účet + affiliate key do 30. 10., subdoména do 15. 11. Žádný nákup HW. <b>Souběh 1. 12. potřebuje M6a hotové.</b></div>
+  </div>
+</div>
+<div class="ms">
+  <div class="when">M7<small>30. 11. – 23. 12.</small></div>
+  <div>
+    <h4>Hub napojení + ostrý certifikát + souběh + Unlisted + moje reporty</h4>
+    <p>Hub účet „Kasa“ (<code>edit_daily_evidence</code>, založím) → uzávěrka volá <code>save_day_data</code> přímo z Kasy; denní pull <code>list_shifts</code>; import ostrého certifikátu do Kasa iPadu (Hana DIS+); rozdílový report kasa vs. MobiPOS vs. hub <code>days</code> (denně, z cloudové <code>closings</code>, automaticky do #my_ai); Single App Mode na Kase (Apple Configurator). Kasa v souběhu od 1. 12. (TestFlight). Podání k App Review + žádost Unlisted po 7. 12. 24.–26. 12. a 31. 12.–3. 1. bez vývoje, 28.–30. 12. rezerva.</p>
+    <div class="gate"><b>Brána 23. 12.:</b> 10 dní souběhu s rozdílem tržeb 0 Kč po opravě lidských chyb · uzávěrka se sama objeví v hubu · alespoň 1 vyvolaný výpadek Kasy v provozu bez ztráty · Unlisted schválený nebo TestFlight build platný do března.</div>
+    <div class="dep">Závisí na: cert od Hany do 20. 11., hub účet „Kasa“ (Harry), cloud v0 z M5. Supabase Pro už není podmínkou.</div>
+  </div>
+</div>
+<div class="ms">
+  <div class="when">M8<small>4. 1. – 1. 2. 2027</small></div>
+  <div>
+    <h4>Pilot EET na produkci + cutover</h4>
+    <p>1. 1. přepnutí <code>Fiscal/</code> na produkční endpoint (leden = státní pilotní měsíc, chyby nic nestojí). Každý večer: fronta 0, FIK na 100 % tržeb, rozdíl vs. MobiPOS 0. Od 18. 1. kasa primární, MobiPOS jen záložní na pultu. 1. 2. povinnost — už běžíme. 28. 2. MobiPOS zrušit (bod bez návratu #2).</p>
+    <div class="gate"><b>Brána 18. 1. (bod bez návratu #1):</b> 5 po sobě jdoucích dní bez incidentu, fronta EET každý večer 0, tým markuje bez dotazů.</div>
+    <div class="dep">Závisí na: M7 brána. Rollback = MobiPOS do 28. 2. + Ad Hoc/TestFlight předchozí build (minuty). Restore kasy na nový iPad = stáhnout event log z cloudu + fold (postup otestovat v lednu).</div>
+  </div>
+</div>
+
+<h3>Co se mění proti roadmapě z 25. 7.</h3>
+<div class="tablewrap"><table>
+  <tr><th>Bod</th><th>25. 7.</th><th>Teď (v3)</th><th>Proč</th></tr>
+  <tr><td>Hardware</td><td>Nový iPad + nová tiskárna + nová čtečka</td><td>Stávající: iPad Pro 2018, Air 4, Air (kuchyň), SumUp se SIM, Epson s IP — 0 Kč</td><td>Kavárna to všechno už má (11:46); deployment target 16.0 to pokryje (Petr 23. 9.)</td></tr>
+  <tr><td>Apple účet</td><td>Organization na s.r.o.</td><td>Individual na Jakuba</td><td>Provozovatel je OSVČ (ARES 23. 9.), Organization nepřipadá v úvahu (Petr 23. 9.)</td></tr>
+  <tr><td>Fiskalizace</td><td>Na serveru</td><td>Na Kasa iPadu, cloud monitoruje</td><td>Offline účtenka musí nést BKP → klíč na zařízení (sekce 3)</td></tr>
+  <tr><td>Sync</td><td>Cloud (Supabase) jako páteř</td><td>LAN-first: Kasa hlavní + failover, cloud jen záloha</td><td>Tvoje rozhodnutí 14. 7. a 11:21 dnes: rychlost a nezávislost na internetu</td></tr>
+  <tr><td>Platby</td><td>SDK Bluetooth (25. 7.) → Cloud API primár (Petr platby)</td><td>SDK Bluetooth primár, Cloud API fáze 2</td><td>Jedno zařízení u čtečky, žádný webhook a server v kritické cestě</td></tr>
+  <tr><td>Supabase Pro</td><td>Od srpna</td><td>Nikdy; Hukot (co platíš) nebo Supabase Free</td><td>Zero extra costs; zdroj pravdy je na place, cloud je jen záloha</td></tr>
+  <tr><td>Harmonogram</td><td>Sync říjen, platby listopad, hub prosinec</td><td>Stejné měsíce; M6a/M6b paralelně, EET klient o měsíc dřív</td><td>Skluz absorbuje paralelizace, ne zkrácení testů</td></tr>
+</table></div>
+
+<!-- 8. Testovací plán -->
+<h2 id="testy"><span class="num">8</span>Testovací plán souběhu (jak poznáme, že kasa je bezpečná)</h2>
+<div class="tablewrap"><table>
+  <tr><th>Fáze</th><th>Kdo a jak</th><th>Metrika / důkaz</th></tr>
+  <tr><td><strong>30. 10.</strong> LAN failover (brána M5)</td><td>Ty + Tomáš v kavárně mimo špičku: zabít Kasu, vypnout router, uspat KDS, přesunout iPad do kuchyně</td><td>Event logy obou iPadů po dosyncu bajtově shodné; 0 duplicit; bon dorazí bez routeru; latence A→B pod 300 ms (log v appce)</td></tr>
+  <tr><td><strong>1.–14. 12.</strong> stín</td><td>Kasa na baru vedle MobiPOS; klidné hodiny + 2 celé dny v týdnu (út, st) markuje tým do nové kasy, MobiPOS zůstává primár pro platby a EET-nezávislou evidenci</td><td>Denní rozdíl tržeb kasa vs. MobiPOS po vysvětlení lidských chyb = 0 Kč; počet incidentů (pád, ztracený účet, tiskárna, ostrovní režim) zapsaný v hubu</td></tr>
+  <tr><td><strong>15.–23. 12.</strong> obráceně</td><td>Kasa primár pro markování, tisk i platby; MobiPOS jen pokud kasa selže; jeden vyvolaný výpadek Kasy v provozu</td><td>3 po sobě jdoucí dny s rozdílem 0 Kč a 0 incidenty; uzávěrka do hubu bez ručního zásahu; dump v cloudu každé ráno</td></tr>
+  <tr><td><strong>4.–17. 1.</strong> pilot EET</td><td>Produkce EET; každý večer report fronty + FIK pokrytí do #my_ai (z cloudové <code>fiscal_status</code>)</td><td>FIK na 100 % tržeb do 24 h; fronta 0 každý večer; 0 zásahů Viktora/Tomáše do <code>Fiscal/</code> bez review</td></tr>
+  <tr><td><strong>18. 1.</strong> bod bez návratu #1</td><td>Kasa primár; MobiPOS vypnutý na pultu, ale předplacený</td><td>5 dní bez incidentu; Aneta potvrdí, že tým nepotřebuje MobiPOS</td></tr>
+  <tr><td><strong>28. 2.</strong> bod bez návratu #2</td><td>Zrušit MobiPOS předplatné</td><td>Únor bez záložního použití</td></tr>
+</table></div>
+
+<!-- 9. Rizika -->
+<h2 id="rizika"><span class="num">9</span>Rizika → cesty</h2>
+<div class="tablewrap"><table>
+  <tr><th>Riziko</th><th>Dopad</th><th>Cesta, kudy to jde</th></tr>
+  <tr><td><strong>Vlastní LAN replikace má chybu</strong> (pořadí, duplicity, ztracený event)</td><td>Špatná data na kase = nejhorší kategorie chyby</td><td>Protokol malý a pevný (Kasa = jediná autorita pořadí, idempotence přes <code>(device_id, seq)</code>, stav = fold logu); Viktor review protokolu <em>před</em> kódem; automatické testy replay/merge v CI; test „zabít Kasu uprostřed účtu“ v bráně M5; event log obou iPadů se porovnává bajtově; Plán B 31. 10.</td></tr>
+  <tr><td><strong>Kasa appka na pozadí / iPad uspaný</strong></td><td>Klienti Kasu nevidí</td><td>Guided Access hned, Single App Mode v M7; na nabíječce; <code>isIdleTimerDisabled</code>; a hlavně: ostrovní režim klientů = nic se neztratí, jen se to dosyncne</td></tr>
+  <tr><td><strong>Wi-Fi v kavárně izoluje klienty / slabý signál v kuchyni</strong></td><td>Bonjour nic nenajde, bony chodí pozdě</td><td>Ověřit router do 2. 10. (foto/model); samostatné SSID pro kasu bez izolace; 5 GHz; případně levný AP do kuchyně (~800 Kč); peer-to-peer jako záchrana</td></tr>
+  <tr><td><strong>EET spec se dohne</strong> (prováděcí předpis, lhůta 48 h, dikce účtenky)</td><td>Změna formátu zprávy nebo obsahu účtenky</td><td>Modul <code>Fiscal/</code> izolovaný; newsletter FS přes registraci vývojáře; Playground od listopadu; TestFlight hotfix bez review; Tereza čte finální znění ve Sbírce</td></tr>
+  <tr><td><strong>Klíč certifikátu na iPadu</strong> (ztráta, krádež)</td><td>Zneužití podpisu tržeb</td><td>Keychain ThisDeviceOnly, import jen pod PINem vedoucího, revokace v DIS+, záložní .p12 u Jakuba; Find My na iPadu; hub token „Kasa“ zneplatnit v hubu</td></tr>
+  <tr><td><strong>Výpadek internetu v kavárně</strong></td><td>Cloud push a EET čekají</td><td>Nic na place se nemění (LAN-first); Solo má SIM; EET fronta 48 h; cloud fronta bez limitu; levný LTE router nebo hotspot jako záloha</td></tr>
+  <tr><td><strong>Hukot: tarif nestačí nebo hosting není</strong></td><td>Cloud v0 nemá kam</td><td>Ověřím do 2. 10.; fallback Supabase Free (0 Kč, MCP hotové, EU) — rozhodnutí do M5 týdne 4 nezdržuje</td></tr>
+  <tr><td><strong>Supabase Free pauza po týdnu bez aktivity</strong> (jen ve fallbacku)</td><td>Ráno se nenahraje dump</td><td>Denní push kasy = žádná pauza; při zavření kavárny na 2+ týdny keep-alive ping z mého cronu; data zůstávají 1 rok</td></tr>
+  <tr><td><strong>App Review / Unlisted zdržení</strong></td><td>Ostrý provoz bez „normální“ instalace</td><td>TestFlight build platí 90 dní → pokryje leden i únor; podat 7. 12. s demo režimem; Ad Hoc profil rok jako druhá záloha</td></tr>
+  <tr><td><strong>KDS iPad v kuchyni je Air 2</strong> (A8X, max iPadOS 15.8; target appky 16.0)</td><td>Appka na KDS nejde nainstalovat</td><td>Ověřit model do 2. 10. (A1566/A1567 = Air 2). Kasa a Obsluha nejsou ohrožené (Pro 2018 A12X, Air 4 A14 jedou i iPadOS 26). Když je to Air 2: bony jdou do kuchyně na Epson jako záložní kanál (v návrhu už je) a KDS role počká; náhrada je pak jediný možný nákup projektu — rozhodnutí až po ověření, ne dopředu</td></tr>
+  <tr><td><strong>Obsluha (Air 4) na baterii a na place</strong></td><td>Častější ostrovní režim, uspání, slabý signál na zahrádce</td><td>Ostrovní režim je běžný stav klienta: fronta + dosync po návratu, LivePill „× nevyřízených“; magnet na baru = nabíjení mezi objednávkami; Wi-Fi pokrytí ověřit s foto routeru do 2. 10.; platba u stolu až fáze 2 (do té doby platí Kasa)</td></tr>
+  <tr><td><strong>Prosinec = tým nemá čas na souběh</strong></td><td>Souběh se odsune, leden bez rezervy</td><td>Aneta jako pilotní uživatel už od M5 (říjen) na druhém iPadu; stínový režim jen klidné hodiny; checklist na 1 A4; Vánoce bez vývoje, rezerva 28.–30. 12.</td></tr>
+  <tr><td><strong>SumUp SDK vs. Xcode 26</strong></td><td>Build nejde</td><td>v7.1.2 z 9/2026, SPM (CocoaPods končí 31. 10.); ruční terminál je vždy k dispozici</td></tr>
+  <tr><td><strong>Vlastnictví: kód/účty na Jakuba, tržby a cert na Hanu OSVČ</strong></td><td>Nejasnost při daňové kontrole nebo prodeji produktu</td><td>Tereza: jednostránková dohoda o poskytnutí software OSVČ + kdo je správce dat zaměstnanců (PINy, docházka) — commitment marker, spawn Critic v M7</td></tr>
+</table></div>
+
+<!-- 10. Náklady -->
+<h2 id="naklady"><span class="num">10</span>Náklady: hardware 0 Kč, ročně ≈ 2 100 Kč — levnější než MobiPOS</h2>
+<p class="sub">Tvoje laťka z 11:46: MobiPOS stojí „nižší stovky dolarů ročně“, náš systém má být levnější. Je — jediná nová položka je Apple Developer Program.</p>
+<div class="tablewrap"><table>
+  <tr><th>Položka</th><th>Poznámka</th><th class="num">Jednorázově</th><th class="num">Rok 1</th><th class="num">Rok 2+</th><th class="num">Měsíčně navíc</th></tr>
+  <tr><td>Hardware: 3 iPady, SumUp terminál, Epson</td><td><strong>Máme.</strong> iPad Pro 2018, Air 4, Air (kuchyň), SumUp se SIM, Epson s IP — nic se nekupuje (11:46)</td><td class="num">0 Kč</td><td class="num">0 Kč</td><td class="num">0 Kč</td><td class="num">0 Kč</td></tr>
+  <tr><td>Apple Developer Program (Individual)</td><td>99 USD/rok ≈ 2 100 Kč (Petr 23. 9.); jediný nový výdaj projektu</td><td class="num">—</td><td class="num">≈ 2 100 Kč</td><td class="num">≈ 2 100 Kč</td><td class="num">0 Kč (platí se ročně)</td></tr>
+  <tr><td>Cloud vrstva: Hukot MH-02</td><td>Už platíš (150 Kč/měs bez DPH za hosting, který existuje bez ohledu na kasu); fallback Supabase Free 0 Kč. Supabase Pro vyškrtnuto</td><td class="num">—</td><td class="num">0 Kč navíc</td><td class="num">0 Kč navíc</td><td class="num">0 Kč</td></tr>
+  <tr><td>SumUp transakční %</td><td>1,95 % PAYG (0,99 % s Payments Plus 19 €/měs jen u EU spotřebitelských karet) — <strong>platíš už dnes</strong>, nezávisle na kase; SDK zdarma</td><td class="num">—</td><td class="num">jako dnes</td><td class="num">jako dnes</td><td class="num">0 Kč navíc</td></tr>
+  <tr><td>EET 2.0, doména, hosting účtenky, kiosk</td><td>Certifikát zdarma; subdoména novysvet.net; PHP na Hukotu; Guided Access / Apple Configurator zdarma</td><td class="num">0 Kč</td><td class="num">0 Kč</td><td class="num">0 Kč</td><td class="num">0 Kč</td></tr>
+  <tr><td>Síť (volitelně, až podle souběhu)</td><td>UPS na router ~1 500 Kč; AP do kuchyně ~800 Kč; LTE router ~1 000 Kč + SIM — jen když to souběh ukáže, dnes nepočítáno</td><td class="num">0 Kč</td><td class="num">0 Kč</td><td class="num">0 Kč</td><td class="num">0 Kč</td></tr>
+  <tr class="total"><td colspan="2">Náš stack celkem</td><td class="num">0 Kč</td><td class="num">≈ 2 100 Kč</td><td class="num">≈ 2 100 Kč</td><td class="num">~0 Kč (+ SumUp % jako dnes)</td></tr>
+  <tr><td colspan="2"><strong>MobiPOS pro srovnání</strong></td><td class="num">—</td><td class="num">≈ 2 760 Kč</td><td class="num">≈ 2 760 Kč</td><td class="num">~230 Kč</td></tr>
+  <tr><td colspan="6" style="font-size:13px;color:var(--ink-soft)">MobiPOS: nejnižší uváděný plán 10 $/měs = 120 $/rok ≈ 2 760 Kč (agregátory Capterra/TrustRadius; oficiální ceník mobi-pos.com vrací 403). U víc zařízení a KDS účtují per terminál/měsíc → reálně „nižší stovky $“ ročně, jak platíš dnes. Po 28. 2. 2027 tahle licence odpadá — přesnou částku doplň z faktury. <strong>Závěr: náš stack je levnější už v nejpřísnějším srovnání (2 100 vs. 2 760 Kč), reálně několikanásobně.</strong> Zdroj: Petr 23. 9.</td></tr>
+</table></div>
+
+<footer>
+  <p><strong>Zdroje:</strong> Apple — <a href="https://developer.apple.com/documentation/network">Network.framework</a> (NWListener/NWBrowser/Bonjour, iOS 12+), <a href="https://developer.apple.com/documentation/network/nwprotocolwebsocket">NWProtocolWebSocket</a> (iOS 13+), <a href="https://developer.apple.com/documentation/network/nwparameters/includepeertopeer">includePeerToPeer</a>, <a href="https://developer.apple.com/documentation/network/building_a_custom_peer-to-peer_protocol">ukázka peer-to-peer protokolu</a>, <a href="https://developer.apple.com/documentation/multipeerconnectivity">MultipeerConnectivity</a>, <a href="https://developer.apple.com/documentation/bundleresources/information-property-list/nslocalnetworkusagedescription">NSLocalNetworkUsageDescription</a>, <a href="https://developer.apple.com/documentation/uikit/extending-your-app-s-background-execution-time">background execution</a>, <a href="https://developer.apple.com/support/unlisted-app-distribution/">Unlisted App Distribution</a>, <a href="https://developer.apple.com/help/account/membership/program-enrollment/">enrollment</a>, <a href="https://support.apple.com/guide/ipad/ipad-models-compatible-with-ipados-26-ipad213a25b2/26/ipados/26">iPadOS 26 kompatibilita</a> · Hukot — <a href="https://www.hukot.net/cs/webhosting/">webhosting ceník</a>, <a href="https://www.hukot.net/cs/multihosting/">multihosting ceník</a> · Supabase — <a href="https://supabase.com/pricing">pricing</a>, <a href="https://supabase.com/docs/guides/platform/free-project-pausing">project pausing</a> · Turso — <a href="https://turso.tech/pricing">pricing</a>, <a href="https://github.com/tursodatabase/libsql-swift">libsql-swift (technical preview)</a>, <a href="https://docs.turso.tech/api-reference/locations/list">locations</a> · Cloudflare — <a href="https://developers.cloudflare.com/d1/platform/pricing/">D1 pricing</a>, <a href="https://developers.cloudflare.com/changelog/post/2025-11-05-d1-jurisdiction/">D1 jurisdictions</a> · Hetzner — <a href="https://www.hetzner.com/pressroom/new-cx-plans/">CX/CAX plány</a> · PowerSync — <a href="https://docs.powersync.com/installation/database-setup">source DB requirements</a> · MF ČR — <a href="https://mf.gov.cz/cs/ministerstvo/media/tiskove-zpravy/2026/snemovna-prehlasovala-senat-a-stvrdila-zavedeni-ee-65151">Sněmovna přehlasovala Senát (9. 9. 2026)</a> · Finanční správa — <a href="https://financnisprava.gov.cz/cs/financni-sprava/novinky/novinky-2026/financni-sprava-zpristupnila-testovaci-prostredi-eet2-playground">Playground (1. 7. 2026)</a>, <a href="https://eet.gov.cz/cs/pro-vyvojare">eet.gov.cz pro vývojáře</a> · <a href="https://www.podnikatel.cz/clanky/financni-sprava-zverejnila-technicke-informace-a-dokumentaci-k-eet-2-0/">podnikatel.cz harmonogram</a> · <a href="https://eet-2-0.cz/blog/offline-rezim-vypadek-internetu">eet-2-0.cz offline režim</a> · SumUp — <a href="https://developer.sumup.com/terminal-payments/sdks/ios-sdk">iOS SDK</a>, <a href="https://developer.sumup.com/terminal-payments/cloud-api">Cloud API</a> · Epson — <a href="https://download4.epson.biz/sec_pubs/pos/reference_en/epos_ios/">ePOS SDK iOS</a>, <a href="https://www.epson.cz/cs_CZ/produkty/retail/pos-tisk%C3%A1rny/mpos-&-tablet-pos-tisk%C3%A1rny/epson-tm-m30iii-(152):-wi-fi-+-bluetooth-model,-black,-eu/p/34466">TM-m30III CZ</a>.</p>
+  <p><strong>Interní podklady:</strong> memory <code>project_kns_hub.md</code> (14. 7. „jako MobiPOS“, 23. 9. 11:21 korekce LAN-first, 11:46 hardware kavárny) · <code>AI Tým/Týmový Inbox/Petr_kasa_hw_kompatibilita_naklady_2026-09-23.md</code> (iPady, Epson, SumUp, MobiPOS ceny) · <code>AI Tým/Týmový Inbox/Petr_apple_developer_osvc_kns_2026-09-23.md</code> · <code>Výzkum/KNS_POS_Platby/platby_research.md</code> · <code>Výzkum/KNS_POS_Nastaveni_IA/nastaveni_ia.md</code> · <code>Výzkum/KNS_POS_Coverage/coverage_2026-07-27.md</code> · <code>~/Claude/Projects/KNS_POS_Demo/README.md</code> · hub <code>supabase/migrations/20260714000000_save_day_data_rpc.sql</code>, <code>functions/mcp/index.ts</code> · kasa <code>~/Desktop/KNS POS &amp; HUB/</code>. Viktor · 23. 9. 2026, v3.</p>
+</footer>
+
+</div>
+<style id="kns-back-css">.kns-back{position:fixed;left:12px;bottom:12px;z-index:99999;font:600 13px/1 "DM Sans",-apple-system,sans-serif;color:#FBF6EC;background:#3B2F2A;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.25);opacity:.92}.kns-back:hover{opacity:1;background:#E76F51}@media print{.kns-back{display:none}}</style><a class="kns-back" href="index.html">← Program Kasa + Hub</a>
+</body>
+</html>
