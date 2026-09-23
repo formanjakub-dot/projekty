@@ -1,4 +1,5 @@
 <title>Kasa a Hub Nový Svět</title>
+<meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
@@ -89,7 +90,7 @@ h1{font-size:clamp(26px,3.4vw,40px);line-height:1.05;letter-spacing:-.02em;font-
 .bar.fe .fill{background:var(--fe)}
 .bar .v{text-align:right;font-weight:700;color:var(--ink-h)}
 .card.list{grid-column:span 3}
-.card.list h3{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-70);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.card.list h3{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-70);margin-bottom:10px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 8px}
 .card.list ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
 .card.list li{display:flex;gap:9px;font-size:13.5px;line-height:1.35;align-items:flex-start}
 .card.list li .dot{width:8px;height:8px;border-radius:50%;flex:none;margin-top:6px;background:var(--st-bezi)}
@@ -102,7 +103,7 @@ h1{font-size:clamp(26px,3.4vw,40px);line-height:1.05;letter-spacing:-.02em;font-
 .pill.bezi{background:var(--st-bezi-bg);color:var(--st-bezi-fg)}
 .pill.ceka{background:var(--st-ceka-bg);color:var(--st-ceka-fg)}
 .pill.plan{background:var(--st-plan-bg);color:var(--st-plan-fg)}
-.pill.q{background:rgba(231,111,81,.16);color:var(--terakota)}
+.pill.q{background:rgba(231,111,81,.16);color:var(--terakota);white-space:normal;text-transform:none;letter-spacing:0;text-align:left;cursor:pointer}
 .pill.q.zero{background:var(--st-plan-bg);color:var(--st-plan-fg)}
 .pill.blokuje{background:var(--danger-bg);color:var(--danger-fg)}
 .pill.brzy{background:var(--st-bezi-bg);color:var(--st-bezi-fg)}
@@ -146,6 +147,7 @@ svg text{fill:var(--ink)}
 .ms.plan rect{fill:var(--st-plan-bg);stroke:var(--st-plan);stroke-dasharray:3 3}
 .ms text{font-size:12.5px;font-weight:700;fill:var(--ink-h);pointer-events:none}
 .ms text.st{font-size:10.5px;font-weight:600;fill:var(--ink-70);text-transform:uppercase;letter-spacing:.06em}
+.ms text.above{font-size:10.5px;font-weight:700;fill:var(--ink-70)}
 .ms:hover rect{filter:brightness(.96)}
 .ms.hotovo text.st{fill:var(--st-hotovo-fg)}.ms.bezi text.st{fill:var(--st-bezi-fg)}.ms.ceka text.st{fill:var(--st-ceka-fg)}
 .today line{stroke:var(--terakota);stroke-width:2;stroke-dasharray:5 4}
@@ -178,8 +180,8 @@ svg text{fill:var(--ink)}
 /* ---------- wiki panel ---------- */
 .scrim{position:fixed;inset:0;background:var(--scrim);opacity:0;pointer-events:none;transition:opacity .2s;z-index:30}
 .scrim.on{opacity:1;pointer-events:auto}
-.wiki{position:fixed;top:env(safe-area-inset-top,0px);right:0;bottom:0;width:min(520px,100vw);background:var(--card);box-shadow:var(--shadow-sheet);transform:translateX(105%);transition:transform .24s cubic-bezier(.3,1.2,.4,1);z-index:40;display:flex;flex-direction:column;border-left:1px solid var(--line)}
-.wiki.on{transform:none}
+.wiki{position:fixed;top:env(safe-area-inset-top,0px);right:0;bottom:0;width:min(520px,100vw);background:var(--card);box-shadow:var(--shadow-sheet);transform:translateX(105%);visibility:hidden;transition:transform .24s cubic-bezier(.3,1.2,.4,1),visibility 0s .24s;z-index:40;display:flex;flex-direction:column;border-left:1px solid var(--line)}
+.wiki.on{transform:none;visibility:visible;transition:transform .24s cubic-bezier(.3,1.2,.4,1),visibility 0s}
 .wiki-hd{padding:18px 20px 12px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:flex-start;position:sticky;top:0;background:var(--card)}
 .wiki-hd .t{flex:1;min-width:0}
 .wiki-hd .kicker{margin-bottom:4px}
@@ -192,8 +194,8 @@ svg text{fill:var(--ink)}
 .wiki-bd ul{margin:0;padding-left:18px;font-size:14px;display:grid;gap:4px}
 .wiki-bd li.no{color:var(--ink-70)}
 .wiki-bd .roz{display:grid;gap:6px}
-.wiki-bd .roz div{display:grid;grid-template-columns:64px 1fr;gap:8px;font-size:13.5px}
-.wiki-bd .roz b{color:var(--terakota);font-weight:700;white-space:nowrap}
+.wiki-bd .roz div{display:grid;grid-template-columns:96px 1fr;gap:8px;font-size:13.5px}
+.wiki-bd .roz b{color:var(--terakota);font-weight:700}
 .wiki-bd .kde{display:grid;gap:5px;font-size:13px}
 .wiki-bd .kde code{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12px;background:var(--bg-2);padding:2px 6px;border-radius:6px;word-break:break-all}
 .pbars{display:grid;gap:8px;margin:8px 0 4px}
@@ -304,7 +306,7 @@ svg text{fill:var(--ink)}
       {"co": "GO na architekturu kasy v3 (LAN-first, iPad Pro 2018 hlavní, iOS 16)", "termin": "pá 25. 9.", "ref": "m:lan_sync"},
       {"co": "GO na etapu 1 směn „tabulka říká pravdu“ (20–25 h, do 24. 10.)", "termin": "teď", "ref": "m:smeny"},
       {"co": "Smoke test hubu 1.7.6 → faktury naostro pro tým", "termin": "do 4. 10.", "ref": "m:faktury"},
-      {"co": "iPad do kuchyně místo Air 1. gen (nákup ~10 tis. Kč, 🔴 schválení)", "termin": "do 2. 10.", "ref": "m:kds_nativni"},
+      {"co": "iPad do kuchyně místo Air 1. gen (nákup ~10 tis. Kč, tvoje schválení)", "termin": "do 2. 10.", "ref": "m:kds_nativni"},
       {"co": "Proklik M4 na simulátoru/iPadu (brána 5. 10.) + merge m4 → main", "termin": "do 5. 10.", "ref": "m:db_eventlog"},
       {"co": "Model Epsonu (štítek zespodu) + potvrzení Wi-Fi bez izolace", "termin": "pá 2. 10.", "ref": "m:tisk"},
       {"co": "SumUp účet na provozovatelku + affiliate key + karetní obrat z MobiPOS", "termin": "30. 10.", "ref": "m:sumup"},
@@ -318,41 +320,41 @@ svg text{fill:var(--ink)}
     {"datum": "2026-09-25", "nazev": "Apple účet + GO v3", "typ": "jakub"},
     {"datum": "2026-10-02", "nazev": "Hukot · Wi-Fi · KDS iPad · Epson", "typ": "jakub"},
     {"datum": "2026-10-30", "nazev": "SumUp účet", "typ": "jakub"},
-    {"datum": "2026-10-31", "nazev": "Plán B checkpoint (LAN sync ok?)", "typ": "planb"},
-    {"datum": "2026-11-01", "nazev": "DIS+ vydává certifikáty EET", "typ": "eet"},
-    {"datum": "2026-12-01", "nazev": "Souběh kasy v provozu · MOJE EET", "typ": "eet"},
-    {"datum": "2027-01-01", "nazev": "EET 2.0 provoz (pilotní měsíc)", "typ": "eet"},
-    {"datum": "2027-01-18", "nazev": "Kasa primární — bod bez návratu 1", "typ": "bbn"},
+    {"datum": "2026-10-31", "nazev": "Plán B (LAN sync drží?)", "typ": "planb"},
+    {"datum": "2026-11-01", "nazev": "DIS+ certifikáty EET", "typ": "eet"},
+    {"datum": "2026-12-01", "nazev": "Souběh kasy v provozu", "typ": "eet"},
+    {"datum": "2027-01-01", "nazev": "EET 2.0 provoz (pilot)", "typ": "eet"},
+    {"datum": "2027-01-18", "nazev": "Kasa primární", "typ": "bbn"},
     {"datum": "2027-02-01", "nazev": "Povinnost EET 2.0", "typ": "eet"},
-    {"datum": "2027-02-28", "nazev": "MobiPOS zrušit — bod bez návratu 2", "typ": "bbn"}
+    {"datum": "2027-02-28", "nazev": "MobiPOS zrušit", "typ": "bbn"}
   ],
 
   "milniky": [
-    {"id": "k_m1", "draha": "kasa", "radek": 0, "nazev": "M1 Kostra appky", "od": "2026-07-25", "do": "2026-07-28", "stav": "hotovo", "popis": "SwiftUI kostra kasy, DS tokeny, první obrazovky. Jeden večer Tomáše (27. 7.).", "brana": "", "moduly": ["design_ux", "markovani"], "zdroj": "architektura v3, sekce 7 (tempo M1–M3)"},
-    {"id": "k_m23", "draha": "kasa", "radek": 0, "nazev": "M2 + M3 Markování · platba s DPH · split · KDS · Domů", "od": "2026-08-01", "do": "2026-08-12", "stav": "hotovo", "popis": "Účet, položky, platba s rozpadem DPH, dělení účtu, kuchyňský displej, persistence do state.json. Ověřeno na simulátoru přes DEBUG argumenty (dotyk tehdy nešel simulovat).", "brana": "Build SUCCEEDED, flow split ověřen (report 11. 8.)", "moduly": ["markovani", "platby", "split", "kds_nativni"], "zdroj": "tomas_pos_swift_m3_2026-08-11.md"},
-    {"id": "k_df1", "draha": "kasa", "radek": 1, "nazev": "Design fáze 1", "od": "2026-08-12", "do": "2026-08-14", "stav": "hotovo", "popis": "DS tokeny v kódu 25 % → 36 %: washe, KDS semafor, elevation, glass přes systémový materiál. Motion 0 %, typografie beze změny.", "brana": "", "moduly": ["design_ux"], "zdroj": "tomas_pos_design_faze1_2026-08-12.md"},
-    {"id": "k_m4", "draha": "kasa", "radek": 0, "nazev": "M4 Lokální jádro: DB · event log · PIN · pokladna · uzávěrka", "od": "2026-09-23", "do": "2026-10-02", "stav": "hotovo", "popis": "SQLite (GRDB) místo state.json, append-only event log jako zdroj pravdy, PIN s rolemi, pokladna, uzávěrka s JSON pro hub. M4.1: target iOS 16, identita eventu (deviceId, seq), DPH u splitu, repo na GitHubu. Kód hotový 23. 9. ve 13:48 — 38 testů zelených.", "brana": "5. 10.: ty proklikáš celou směnu v letadlovém režimu, účty přežijí zabití appky, storno chce důvod a je v logu.", "moduly": ["db_eventlog", "pin_role", "pokladna", "uzaverka"], "zdroj": "tomas_pos_swift_m4 + m41 (23. 9.)"},
-    {"id": "k_df2", "draha": "kasa", "radek": 1, "nazev": "Design fáze 2 (podle dema v3.7) — hotová v jednom dni", "od": "2026-09-23", "do": "2026-09-24", "stav": "hotovo", "popis": "Plán byl do 2. 10., Tomáš to zvládl v jednom běhu: DS knihovna ~16 komponent (DSTopBar + pull-down menu, DSOverlay s reálným blurem, motion s Reduce Motion), 37 ilustrací + 15 ikon, DM Sans static 18pt, PIN jen kódem (třes u neznámého, auto-zámek 1 min), plánek 22 stolů 1:1 z MobiPOSu se zónami, uzávěrka 6 kroků, KDS světlý přes fullScreenCover, čip stavu položky. 40/40 testů, 0 warningů, 20 dvojic screenshotů demo | Swift. Zbývá merge s M5 (1 konflikt v SectionViews.swift) a Critic.", "brana": "Critic nad 20 dvojicemi screenshotů; merge s M5 bez regrese testů.", "moduly": ["design_ux", "pin_role", "platby", "kds_nativni", "stav_jidla"], "zdroj": "eliska_kasa_design_faze2_spec (15:18) + Jakub 14:36, 15:48"},
-    {"id": "k_m5", "draha": "kasa", "radek": 0, "nazev": "M5 LAN sync + failover + cloud v0 + TestFlight na 3 iPady", "od": "2026-09-23", "do": "2026-10-30", "stav": "bezi", "popis": "Kasa iPad Pro 2018 = server (Bonjour + WebSocket), Obsluha Air 4 a KDS = klienti s plnou kopií DB; ostrovní režim; povýšení na Kasu pod PINem. Cloud v0 = denní dump na Hukot. Začalo dřív než plán (5. 10.): branch feat/pos-swift-m5 má 3 commity (sync vrstva, testy, latence).", "brana": "30. 10.: markuješ na A, na B vidíš do 300 ms · zabiješ Kasu → B jede dál, po návratu dosync bez duplicit · bez routeru se iPady najdou · ráno je dump v cloudu.", "moduly": ["lan_sync", "kds_web", "obsluha", "cloud_hukot", "distribuce"], "zdroj": "architektura v3 sekce 7 + git log feat/pos-swift-m5 (23. 9.)"},
-    {"id": "k_m6a", "draha": "kasa", "radek": 0, "nazev": "M6a Platby SumUp · tisk Epson · digitální účtenka", "od": "2026-11-02", "do": "2026-11-27", "stav": "plan", "popis": "SumUp SDK přes Bluetooth k terminálu, který na baru už je; stávající Epson na baru po LAN — raw ESC/POS (40 sloupců) nebo ePOS XML podle modelu; účtenka s QR na uctenka.novysvet.net.", "brana": "27. 11.: zaplatíš si kafe vlastní kartou přes vlastní kasu a vypadne účtenka s BKP a QR.", "moduly": ["sumup", "tisk", "displej_hosta"], "zdroj": "architektura v3 sekce 7"},
-    {"id": "k_m6b", "draha": "kasa", "radek": 1, "nazev": "M6b EET 2.0 klient (Playground)", "od": "2026-11-02", "do": "2026-11-27", "stav": "plan", "popis": "PKP/BKP/FIK přímo na Kasa iPadu, fronta 48 h v DB, testovací certifikát, Playground round-trip. Paralelně s M6a, druhý Tomáš.", "brana": "27. 11.: Playground vrátí FIK na 20/20 testovacích tržeb včetně splitu a storna.", "moduly": ["eet"], "zdroj": "architektura v3 sekce 3 a 7"},
-    {"id": "k_m7", "draha": "kasa", "radek": 0, "nazev": "M7 Hub napojení · ostrý certifikát · souběh · Unlisted", "od": "2026-11-30", "do": "2026-12-23", "stav": "plan", "popis": "Uzávěrka volá hub RPC save_day_data přímo z Kasy, směny se tahají z hubu; import ostrého certifikátu (provozovatelka v DIS+); rozdílový report kasa vs. MobiPOS denně do #my_ai; kasa v souběhu od 1. 12.; podání Unlisted po 7. 12.", "brana": "23. 12.: 10 dní souběhu s rozdílem tržeb 0 Kč, uzávěrka se sama objeví v hubu, 1 vyvolaný výpadek Kasy bez ztráty.", "moduly": ["uzaverka_hub", "smeny_kasa", "eet", "distribuce"], "zdroj": "architektura v3 sekce 7 a 8"},
-    {"id": "k_m8", "draha": "kasa", "radek": 0, "nazev": "M8 Pilot EET na produkci + cutover", "od": "2027-01-04", "do": "2027-02-01", "stav": "plan", "popis": "1. 1. přepnutí na produkční EET (leden = státní pilotní měsíc). Každý večer: fronta 0, FIK na 100 % tržeb, rozdíl vs. MobiPOS 0. Od 18. 1. kasa primární. 1. 2. povinnost.", "brana": "18. 1.: 5 dní po sobě bez incidentu, tým markuje bez dotazů, Aneta potvrdí, že MobiPOS nepotřebuje.", "moduly": ["eet", "distribuce"], "zdroj": "architektura v3 sekce 7 a 8"},
-    {"id": "k_mobipos", "draha": "kasa", "radek": 1, "nazev": "MobiPOS jen jako záchrana → 28. 2. zrušit", "od": "2027-01-18", "do": "2027-02-28", "stav": "plan", "popis": "MobiPOS zůstává zaplacený a nainstalovaný na pultu do konce února. Únor bez záložního použití = zrušit předplatné.", "brana": "", "moduly": [], "zdroj": "architektura v3 sekce 0"},
+    {"id": "k_m1", "zk": "M1", "draha": "kasa", "radek": 0, "nazev": "M1 Kostra appky", "od": "2026-07-25", "do": "2026-07-28", "stav": "hotovo", "popis": "SwiftUI kostra kasy, DS tokeny, první obrazovky. Jeden večer Tomáše (27. 7.).", "brana": "", "moduly": ["design_ux", "markovani"], "zdroj": "architektura v3, sekce 7 (tempo M1–M3)"},
+    {"id": "k_m23", "zk": "M2+M3", "draha": "kasa", "radek": 0, "nazev": "M2 + M3 Markování · platba s DPH · split · KDS · Domů", "od": "2026-08-01", "do": "2026-08-12", "stav": "hotovo", "popis": "Účet, položky, platba s rozpadem DPH, dělení účtu, kuchyňský displej, persistence do state.json. Ověřeno na simulátoru přes DEBUG argumenty (dotyk tehdy nešel simulovat).", "brana": "Build SUCCEEDED, flow split ověřen (report 11. 8.)", "moduly": ["markovani", "platby", "split", "kds_nativni"], "zdroj": "tomas_pos_swift_m3_2026-08-11.md"},
+    {"id": "k_df1", "zk": "Design 1", "draha": "kasa", "radek": 1, "nazev": "Design fáze 1", "od": "2026-08-12", "do": "2026-08-14", "stav": "hotovo", "popis": "DS tokeny v kódu 25 % → 36 %: washe, KDS semafor, elevation, glass přes systémový materiál. Motion 0 %, typografie beze změny.", "brana": "", "moduly": ["design_ux"], "zdroj": "tomas_pos_design_faze1_2026-08-12.md"},
+    {"id": "k_m4", "zk": "M4", "draha": "kasa", "radek": 0, "nazev": "M4 Lokální jádro: DB · event log · PIN · pokladna · uzávěrka", "od": "2026-09-23", "do": "2026-10-02", "stav": "hotovo", "popis": "SQLite (GRDB) místo state.json, append-only event log jako zdroj pravdy, PIN s rolemi, pokladna, uzávěrka s JSON pro hub. M4.1: target iOS 16, identita eventu (deviceId, seq), DPH u splitu, repo na GitHubu. Kód hotový 23. 9. ve 13:48 — 38 testů zelených.", "brana": "5. 10.: ty proklikáš celou směnu v letadlovém režimu, účty přežijí zabití appky, storno chce důvod a je v logu.", "moduly": ["db_eventlog", "pin_role", "pokladna", "uzaverka"], "zdroj": "tomas_pos_swift_m4 + m41 (23. 9.)"},
+    {"id": "k_df2", "zk": "Design 2", "draha": "kasa", "radek": 2, "nazev": "Design fáze 2 (podle dema v3.7) — hotová v jednom dni", "od": "2026-09-23", "do": "2026-09-24", "stav": "hotovo", "popis": "Plán byl do 2. 10., Tomáš to zvládl v jednom běhu: DS knihovna ~16 komponent (DSTopBar + pull-down menu, DSOverlay s reálným blurem, motion s Reduce Motion), 37 ilustrací + 15 ikon, DM Sans static 18pt, PIN jen kódem (třes u neznámého, auto-zámek 1 min), plánek 22 stolů 1:1 z MobiPOSu se zónami, uzávěrka 6 kroků, KDS světlý přes fullScreenCover, čip stavu položky. 40/40 testů, 0 warningů, 20 dvojic screenshotů demo | Swift. Zbývá merge s M5 (1 konflikt v SectionViews.swift) a Critic.", "brana": "Critic nad 20 dvojicemi screenshotů; merge s M5 bez regrese testů.", "moduly": ["design_ux", "pin_role", "platby", "kds_nativni", "stav_jidla"], "zdroj": "eliska_kasa_design_faze2_spec (15:18) + Jakub 14:36, 15:48"},
+    {"id": "k_m5", "zk": "M5 LAN sync", "draha": "kasa", "radek": 1, "nazev": "M5 LAN sync + failover + cloud v0 + TestFlight na 3 iPady", "od": "2026-09-23", "do": "2026-10-30", "stav": "bezi", "popis": "Kasa iPad Pro 2018 = server (Bonjour + WebSocket), Obsluha Air 4 a KDS = klienti s plnou kopií DB; ostrovní režim; povýšení na Kasu pod PINem. Cloud v0 = denní dump na Hukot. Začalo dřív než plán (5. 10.): branch feat/pos-swift-m5 má 3 commity (sync vrstva, testy, latence).", "brana": "30. 10.: markuješ na A, na B vidíš do 300 ms · zabiješ Kasu → B jede dál, po návratu dosync bez duplicit · bez routeru se iPady najdou · ráno je dump v cloudu.", "moduly": ["lan_sync", "kds_web", "obsluha", "cloud_hukot", "distribuce"], "zdroj": "architektura v3 sekce 7 + git log feat/pos-swift-m5 (23. 9.)"},
+    {"id": "k_m6a", "zk": "M6a platby + tisk", "draha": "kasa", "radek": 0, "nazev": "M6a Platby SumUp · tisk Epson · digitální účtenka", "od": "2026-11-02", "do": "2026-11-27", "stav": "plan", "popis": "SumUp SDK přes Bluetooth k terminálu, který na baru už je; stávající Epson na baru po LAN — raw ESC/POS (40 sloupců) nebo ePOS XML podle modelu; účtenka s QR na uctenka.novysvet.net.", "brana": "27. 11.: zaplatíš si kafe vlastní kartou přes vlastní kasu a vypadne účtenka s BKP a QR.", "moduly": ["sumup", "tisk", "displej_hosta"], "zdroj": "architektura v3 sekce 7"},
+    {"id": "k_m6b", "zk": "M6b EET klient", "draha": "kasa", "radek": 1, "nazev": "M6b EET 2.0 klient (Playground)", "od": "2026-11-02", "do": "2026-11-27", "stav": "plan", "popis": "PKP/BKP/FIK přímo na Kasa iPadu, fronta 48 h v DB, testovací certifikát, Playground round-trip. Paralelně s M6a, druhý Tomáš.", "brana": "27. 11.: Playground vrátí FIK na 20/20 testovacích tržeb včetně splitu a storna.", "moduly": ["eet"], "zdroj": "architektura v3 sekce 3 a 7"},
+    {"id": "k_m7", "zk": "M7 hub + souběh", "draha": "kasa", "radek": 0, "nazev": "M7 Hub napojení · ostrý certifikát · souběh · Unlisted", "od": "2026-11-30", "do": "2026-12-23", "stav": "plan", "popis": "Uzávěrka volá hub RPC save_day_data přímo z Kasy, směny se tahají z hubu; import ostrého certifikátu (provozovatelka v DIS+); rozdílový report kasa vs. MobiPOS denně do #my_ai; kasa v souběhu od 1. 12.; podání Unlisted po 7. 12.", "brana": "23. 12.: 10 dní souběhu s rozdílem tržeb 0 Kč, uzávěrka se sama objeví v hubu, 1 vyvolaný výpadek Kasy bez ztráty.", "moduly": ["uzaverka_hub", "smeny_kasa", "eet", "distribuce"], "zdroj": "architektura v3 sekce 7 a 8"},
+    {"id": "k_m8", "zk": "M8 pilot EET", "draha": "kasa", "radek": 0, "nazev": "M8 Pilot EET na produkci + cutover", "od": "2027-01-04", "do": "2027-02-01", "stav": "plan", "popis": "1. 1. přepnutí na produkční EET (leden = státní pilotní měsíc). Každý večer: fronta 0, FIK na 100 % tržeb, rozdíl vs. MobiPOS 0. Od 18. 1. kasa primární. 1. 2. povinnost.", "brana": "18. 1.: 5 dní po sobě bez incidentu, tým markuje bez dotazů, Aneta potvrdí, že MobiPOS nepotřebuje.", "moduly": ["eet", "distribuce"], "zdroj": "architektura v3 sekce 7 a 8"},
+    {"id": "k_mobipos", "zk": "MobiPOS záchrana", "draha": "kasa", "radek": 2, "nazev": "MobiPOS jen jako záchrana → 28. 2. zrušit", "od": "2027-01-18", "do": "2027-02-28", "stav": "plan", "popis": "MobiPOS zůstává zaplacený a nainstalovaný na pultu do konce února. Únor bez záložního použití = zrušit předplatné.", "brana": "", "moduly": [], "zdroj": "architektura v3 sekce 0"},
 
-    {"id": "h_cutover", "draha": "hub", "radek": 0, "nazev": "Cutover: stará appka → nový hub", "od": "2026-07-29", "do": "2026-08-11", "stav": "hotovo", "popis": "Data převedena 11. 8. 19:17, stará appka zmrazena 22:49. 18 modulů, 707 testů. Tým od té doby jede na hub.novysvet.net.", "brana": "", "moduly": ["evidence", "vyplaty"], "zdroj": "memory project_kns_hub.md (11. 8.)"},
-    {"id": "h_176", "draha": "hub", "radek": 0, "nazev": "1.7.5 + 1.7.6 (multi-pozice, AI párování faktur) — nasazeno 6. 9.", "od": "2026-08-12", "do": "2026-09-06", "stav": "hotovo", "popis": "Napsané 12. 8., živě až 6. 9. 16:35 (Harry přes Lovable SQL editor + Publish). Migrace ai_parovani ve 3 bězích ověřena, 20 edge funkcí nasazeno. Zbývá tvůj smoke test.", "brana": "Smoke test: patička 1.7.6, Tým → zaškrtávátka pozic, faktura → „Napárovat přes AI“.", "moduly": ["faktury", "tym_role"], "zdroj": "memory (6. 9. 15:30–16:35)"},
-    {"id": "h_demo", "draha": "hub", "radek": 1, "nazev": "Demo Tabulky směn pro Anetu (7 kol, noc 6./7. 9.)", "od": "2026-09-06", "do": "2026-09-08", "stav": "hotovo", "popis": "Reálné hub komponenty nad mock Supabase: kruh ťukání (můžu / pryč), celé týdny, celý měsíc, fáze měsíce, žádosti po hotovém, onboarding per role, fullscreen. Playwright 100/100 živě. Koncept = návod pro Anetu v4.8.", "brana": "", "moduly": ["smeny", "onboarding"], "zdroj": "tomas_kns_smeny_demo_v7 + koncept v4.8"},
-    {"id": "h_aneta", "draha": "hub", "radek": 1, "nazev": "Čeká na Anetu — připomínky k demu", "od": "2026-09-08", "do": "2026-10-02", "stav": "ceka", "popis": "Odesláno 7. 9. 15:02 jako Harry (iMessage), 16 dní bez reakce, urgence 23. 9. 10:53. Bez jejího průchodu se etapa 1 může stavět (DB + RPC), ale etapa 2 (ťukání) ne.", "brana": "", "moduly": ["smeny"], "zdroj": "memory (7. 9. 15:02, 23. 9. restart)"},
-    {"id": "h_faktury", "draha": "hub", "radek": 0, "nazev": "Faktury naostro pro tým", "od": "2026-09-28", "do": "2026-10-04", "stav": "ceka", "popis": "První modul z pořadí faktury → sklad → směny. Inbound faktury@hub.novysvet.net už funguje, AI párování nasazené. Čeká: tvůj smoke test 1.7.6, pak návod týmu a kdo ručí za faktury (účetní má přístup — rozhodnuto 6. 9.).", "brana": "Aneta a účetní zpracují reálný týden faktur jen v hubu.", "moduly": ["faktury"], "zdroj": "roadmapa 6. 9. (artefakt 4f948489) + Jakub 6. 9."},
-    {"id": "h_kucharka", "draha": "hub", "radek": 2, "nazev": "Role kuchařka 1.7.7 — nasazení", "od": "2026-09-28", "do": "2026-10-02", "stav": "ceka", "popis": "Branch feat/role-kucharka hotový (13 práv, testy 922/59). Past: edge fn create-user má whitelist rolí → bez redeploye UI hlásí „Neplatná role“ (týká se i role rezervace). Otázka: má kuchařka vidět rezervace?", "brana": "", "moduly": ["tym_role"], "zdroj": "tomas_kns_role_kucharka_2026-09-06.md"},
-    {"id": "h_sklad", "draha": "hub", "radek": 0, "nazev": "Sklad a objednávání naostro", "od": "2026-10-05", "do": "2026-10-31", "stav": "plan", "popis": "Druhý modul v pořadí. Modul v hubu existuje od cutoveru, tým ho nepoužívá. Rollout = návod + první inventura v hubu.", "brana": "", "moduly": ["sklad"], "zdroj": "roadmapa 6. 9. + Jakub 6. 9."},
-    {"id": "h_sm1", "draha": "hub", "radek": 1, "nazev": "Směny etapa 1 „tabulka říká pravdu“", "od": "2026-10-05", "do": "2026-10-24", "stav": "ceka", "popis": "20–25 h. Tab „Tabulka směn“ výchozí, celý tým vidí celou tabulku (nová RPC get_shift_table, 2 RLS blokátory pryč), řádek Chybí, řádek Ty, pondělí zavřeno, nové barvy a ikony, závazky nad tabulkou. Běží vedle papíru, hlášení na listopad ještě postaru. Opravit i send-push bez permission gate (HIGH z auditu 28. 7.).", "brana": "Aneta: „tohle je můj Excel, jen živý — a vidím, kde chybí lidi.“", "moduly": ["smeny"], "zdroj": "koncept v4.8 sekce 11 + feasibility v3"},
-    {"id": "h_sm2", "draha": "hub", "radek": 1, "nazev": "Směny etapa 2 „kde říkám, kdy můžu“", "od": "2026-10-26", "do": "2026-11-07", "stav": "plan", "popis": "32–40 h (port z dema 55–75 h celkem). Kruh ťukání, celé týdny, fáze měsíce (sbíráme → Aneta skládá → hotový), Potvrdit, Rozpis hotový + soupis, Beru na hořící díru, žádosti po hotovém, Nastavení → Směny, onboarding per role. Hlášení na prosinec do 10. 11.", "brana": "Brigádník: „naklikám půl měsíce za půl minuty a pak mi přijde, kdy jdu.“", "moduly": ["smeny", "onboarding"], "zdroj": "koncept v4.8 sekce 11 + demo v5 odhad"},
-    {"id": "h_prosinec", "draha": "hub", "radek": 2, "nazev": "Prosinec = první měsíc složený v hubu", "od": "2026-11-10", "do": "2026-12-01", "stav": "plan", "popis": "Tým hlásí dostupnost do 10. 11. (jen pravidlo v pruhu, žádný zámek), Aneta skládá ručně, „Rozpis hotový“ obvykle do týdne. Papír vedle toho naposledy.", "brana": "", "moduly": ["smeny"], "zdroj": "koncept v4.8 sekce 6b + Jakub 7. 9. 0:15"},
-    {"id": "h_sm3", "draha": "hub", "radek": 1, "nazev": "Směny etapa 3 úklid (kalendář pryč)", "od": "2026-11-23", "do": "2026-12-04", "stav": "plan", "popis": "9–12 h po 2 týdnech souběhu tabulka + kalendář. Smazat BurningShifts, ShiftPlanner*, záložku Čekající; Moje dostupnost splývá s tabulkou.", "brana": "", "moduly": ["smeny"], "zdroj": "koncept v4.8 sekce 11"},
-    {"id": "h_kasa_hub", "draha": "hub", "radek": 2, "nazev": "Uzávěrka z kasy rovnou do hubu (M7)", "od": "2026-11-30", "do": "2026-12-23", "stav": "plan", "popis": "Hub účet „Kasa“ s jedinou permission edit_daily_evidence; uzávěrka volá save_day_data; směny se tahají do kasy přes list_shifts (docházka jako vodítko).", "brana": "", "moduly": ["uzaverka_hub", "smeny_kasa", "evidence"], "zdroj": "architektura v3 sekce 5 a 7"},
-    {"id": "h_sm2b", "draha": "hub", "radek": 1, "nazev": "Směny etapa 2b „Navrhnout rozpis“", "od": "2027-01-05", "do": "2027-01-30", "stav": "plan", "popis": "20–25 h, až po jednom měsíci, který Aneta složí ručně (prosinec). Čtyři viditelná pravidla + rozhodčí, návrh v oddělené tabulce, „Potvrdit návrh (N)“. Bez preference „koho raději“.", "brana": "", "moduly": ["smeny"], "zdroj": "koncept v4.8 sekce 11 + Jakub 6. 9. 23:32"}
+    {"id": "h_cutover", "zk": "Cutover", "draha": "hub", "radek": 0, "nazev": "Cutover: stará appka → nový hub", "od": "2026-07-29", "do": "2026-08-11", "stav": "hotovo", "popis": "Data převedena 11. 8. 19:17, stará appka zmrazena 22:49. 18 modulů, 707 testů. Tým od té doby jede na hub.novysvet.net.", "brana": "", "moduly": ["evidence", "vyplaty"], "zdroj": "memory project_kns_hub.md (11. 8.)"},
+    {"id": "h_176", "zk": "1.7.5 + 1.7.6", "draha": "hub", "radek": 0, "nazev": "1.7.5 + 1.7.6 (multi-pozice, AI párování faktur) — nasazeno 6. 9.", "od": "2026-08-12", "do": "2026-09-06", "stav": "hotovo", "popis": "Napsané 12. 8., živě až 6. 9. 16:35 (Harry přes Lovable SQL editor + Publish). Migrace ai_parovani ve 3 bězích ověřena, 20 edge funkcí nasazeno. Zbývá tvůj smoke test.", "brana": "Smoke test: patička 1.7.6, Tým → zaškrtávátka pozic, faktura → „Napárovat přes AI“.", "moduly": ["faktury", "tym_role"], "zdroj": "memory (6. 9. 15:30–16:35)"},
+    {"id": "h_demo", "zk": "Demo", "draha": "hub", "radek": 1, "nazev": "Demo Tabulky směn pro Anetu (7 kol, noc 6./7. 9.)", "od": "2026-09-06", "do": "2026-09-08", "stav": "hotovo", "popis": "Reálné hub komponenty nad mock Supabase: kruh ťukání (můžu / pryč), celé týdny, celý měsíc, fáze měsíce, žádosti po hotovém, onboarding per role, fullscreen. Playwright 100/100 živě. Koncept = návod pro Anetu v4.8.", "brana": "", "moduly": ["smeny", "onboarding"], "zdroj": "tomas_kns_smeny_demo_v7 + koncept v4.8"},
+    {"id": "h_aneta", "zk": "Čeká na Anetu", "draha": "hub", "radek": 1, "nazev": "Čeká na Anetu — připomínky k demu", "od": "2026-09-08", "do": "2026-10-02", "stav": "ceka", "popis": "Odesláno 7. 9. 15:02 jako Harry (iMessage), 16 dní bez reakce, urgence 23. 9. 10:53. Bez jejího průchodu se etapa 1 může stavět (DB + RPC), ale etapa 2 (ťukání) ne.", "brana": "", "moduly": ["smeny"], "zdroj": "memory (7. 9. 15:02, 23. 9. restart)"},
+    {"id": "h_faktury", "zk": "Faktury", "draha": "hub", "radek": 0, "nazev": "Faktury naostro pro tým", "od": "2026-09-28", "do": "2026-10-04", "stav": "ceka", "popis": "První modul z pořadí faktury → sklad → směny. Inbound faktury@hub.novysvet.net už funguje, AI párování nasazené. Čeká: tvůj smoke test 1.7.6, pak návod týmu a kdo ručí za faktury (účetní má přístup — rozhodnuto 6. 9.).", "brana": "Aneta a účetní zpracují reálný týden faktur jen v hubu.", "moduly": ["faktury"], "zdroj": "roadmapa 6. 9. (artefakt 4f948489) + Jakub 6. 9."},
+    {"id": "h_kucharka", "zk": "Kuchařka", "draha": "hub", "radek": 2, "nazev": "Role kuchařka 1.7.7 — nasazení", "od": "2026-09-28", "do": "2026-10-02", "stav": "ceka", "popis": "Branch feat/role-kucharka hotový (13 práv, testy 922/59). Past: edge fn create-user má whitelist rolí → bez redeploye UI hlásí „Neplatná role“ (týká se i role rezervace). Otázka: má kuchařka vidět rezervace?", "brana": "", "moduly": ["tym_role"], "zdroj": "tomas_kns_role_kucharka_2026-09-06.md"},
+    {"id": "h_sklad", "zk": "Sklad", "draha": "hub", "radek": 0, "nazev": "Sklad a objednávání naostro", "od": "2026-10-05", "do": "2026-10-31", "stav": "plan", "popis": "Druhý modul v pořadí. Modul v hubu existuje od cutoveru, tým ho nepoužívá. Rollout = návod + první inventura v hubu.", "brana": "", "moduly": ["sklad"], "zdroj": "roadmapa 6. 9. + Jakub 6. 9."},
+    {"id": "h_sm1", "zk": "Směny 1", "draha": "hub", "radek": 1, "nazev": "Směny etapa 1 „tabulka říká pravdu“", "od": "2026-10-05", "do": "2026-10-24", "stav": "ceka", "popis": "20–25 h. Tab „Tabulka směn“ výchozí, celý tým vidí celou tabulku (nová RPC get_shift_table, 2 RLS blokátory pryč), řádek Chybí, řádek Ty, pondělí zavřeno, nové barvy a ikony, závazky nad tabulkou. Běží vedle papíru, hlášení na listopad ještě postaru. Opravit i send-push bez permission gate (HIGH z auditu 28. 7.).", "brana": "Aneta: „tohle je můj Excel, jen živý — a vidím, kde chybí lidi.“", "moduly": ["smeny"], "zdroj": "koncept v4.8 sekce 11 + feasibility v3"},
+    {"id": "h_sm2", "zk": "Směny 2", "draha": "hub", "radek": 1, "nazev": "Směny etapa 2 „kde říkám, kdy můžu“", "od": "2026-10-26", "do": "2026-11-07", "stav": "plan", "popis": "32–40 h (port z dema 55–75 h celkem). Kruh ťukání, celé týdny, fáze měsíce (sbíráme → Aneta skládá → hotový), Potvrdit, Rozpis hotový + soupis, Beru na hořící díru, žádosti po hotovém, Nastavení → Směny, onboarding per role. Hlášení na prosinec do 10. 11.", "brana": "Brigádník: „naklikám půl měsíce za půl minuty a pak mi přijde, kdy jdu.“", "moduly": ["smeny", "onboarding"], "zdroj": "koncept v4.8 sekce 11 + demo v5 odhad"},
+    {"id": "h_prosinec", "zk": "Prosinec v hubu", "draha": "hub", "radek": 2, "nazev": "Prosinec = první měsíc složený v hubu", "od": "2026-11-10", "do": "2026-12-01", "stav": "plan", "popis": "Tým hlásí dostupnost do 10. 11. (jen pravidlo v pruhu, žádný zámek), Aneta skládá ručně, „Rozpis hotový“ obvykle do týdne. Papír vedle toho naposledy.", "brana": "", "moduly": ["smeny"], "zdroj": "koncept v4.8 sekce 6b + Jakub 7. 9. 0:15"},
+    {"id": "h_sm3", "zk": "Směny 3", "draha": "hub", "radek": 1, "nazev": "Směny etapa 3 úklid (kalendář pryč)", "od": "2026-11-23", "do": "2026-12-04", "stav": "plan", "popis": "9–12 h po 2 týdnech souběhu tabulka + kalendář. Smazat BurningShifts, ShiftPlanner*, záložku Čekající; Moje dostupnost splývá s tabulkou.", "brana": "", "moduly": ["smeny"], "zdroj": "koncept v4.8 sekce 11"},
+    {"id": "h_kasa_hub", "zk": "Uzávěrka → hub", "draha": "hub", "radek": 2, "nazev": "Uzávěrka z kasy rovnou do hubu (M7)", "od": "2026-11-30", "do": "2026-12-23", "stav": "plan", "popis": "Hub účet „Kasa“ s jedinou permission edit_daily_evidence; uzávěrka volá save_day_data; směny se tahají do kasy přes list_shifts (docházka jako vodítko).", "brana": "", "moduly": ["uzaverka_hub", "smeny_kasa", "evidence"], "zdroj": "architektura v3 sekce 5 a 7"},
+    {"id": "h_sm2b", "zk": "Směny 2b", "draha": "hub", "radek": 1, "nazev": "Směny etapa 2b „Navrhnout rozpis“", "od": "2027-01-05", "do": "2027-01-30", "stav": "plan", "popis": "20–25 h, až po jednom měsíci, který Aneta složí ručně (prosinec). Čtyři viditelná pravidla + rozhodčí, návrh v oddělené tabulce, „Potvrdit návrh (N)“. Bez preference „koho raději“.", "brana": "", "moduly": ["smeny"], "zdroj": "koncept v4.8 sekce 11 + Jakub 6. 9. 23:32"}
   ],
 
   "moduly": [
@@ -400,7 +402,7 @@ svg text{fill:var(--ink)}
       "rozhodnuti": [],
       "kde": [{"l": "Report", "p": "AI Tým/Týmový Inbox/tomas_pos_swift_m3_2026-08-11.md"}]}},
 
-    {"id": "pin_role", "draha": "kasa", "nazev": "PIN · role · zámek · předání", "stav": "hotovo", "vaha": 2, "poz": [1, 3],
+    {"id": "pin_role", "draha": "kasa", "nazev": "PIN, role, zámek", "stav": "hotovo", "vaha": 2, "poz": [1, 3],
      "backend": {"pct": 80, "z": "M4: 3 role (admin / vedoucí / obsluha), isManager gate, zámek po N min, předání kasy, AuthTests 7; chybí správa lidí a PINů v Nastavení (M5, 1 den)"},
      "frontend": {"pct": 90, "z": "design 2: PIN jen kódem (neznámý kód = třes), Pauza přijme kód kohokoli (vlastní odemkne, kolegův převezme), zámek 30 s–10 min / nikdy, výchozí 1 min; 2 nové testy na unikátní PIN"},
      "zavisi": ["db_eventlog"],
@@ -449,10 +451,10 @@ svg text{fill:var(--ink)}
      "frontend": {"pct": 80, "z": "design 2: KDS světlý (stáří bonu, checkbox 44, Zavřít bon s pulzem, Hotové · Výdej, statistiky v baru), otevírá se přes fullScreenCover (funguje i na iOS 16/17); kliknutí na položky zatím nepersistuje"},
      "zavisi": ["markovani", "lan_sync"],
      "wiki": {"co": "Obrazovka v kuchyni: bony podle stáří, „Došlo“, statistiky. Hlavní varianta KDS (Jakub 16:16).",
-      "zamysleno": "iPad napevno v kuchyni jako tenký klient Kasy — jen bony a jejich stav. Protože iPad Air 1. gen (iOS 12) appku neutáhne, buď nový iPad (nákup 🔴), nebo webový KDS z Kasy jako záloha.",
+      "zamysleno": "iPad napevno v kuchyni jako tenký klient Kasy — jen bony a jejich stav. Protože iPad Air 1. gen (iOS 12) appku neutáhne, buď nový iPad (nákup se schválením), nebo webový KDS z Kasy jako záloha.",
       "umi": ["Bony s barvou podle stáří (0–5 / 5–15 / 15–25 / 25+ min), Hotovo/Výdej"],
       "neumi": ["Běh na kuchyňském iPadu (Air 1. gen, iOS 12 = strop) — potřebuje jiný HW", "Tenký klient po LAN (M5)", "Stav položek per kus persistovaný (M5)"],
-      "rozhodnuti": [{"d": "23. 9. 16:16", "t": "Obě varianty: nativní KDS = hlavní, webový KDS z Kasy = záloha; raději vyměnit kuchyňský iPad za novější (nákup = 🔴)."}],
+      "rozhodnuti": [{"d": "23. 9. 16:16", "t": "Obě varianty: nativní KDS = hlavní, webový KDS z Kasy = záloha; raději vyměnit kuchyňský iPad za novější (nákup = tvoje schválení)."}],
       "kde": [{"l": "HW ověření", "p": "memory 23. 9. 16:08 — kuchyňský iPad = iPad Air 1. gen (iOS 12 = strop)"}, {"l": "Kandidáti nákupu", "p": "Petr 5. 9.: iPad A16 128 GB ~9 990 Kč, repas Air 4/5 8,4–10 tis."}]}},
 
     {"id": "kds_web", "draha": "kasa", "nazev": "KDS webový (záloha z Kasy)", "stav": "bezi", "vaha": 1, "poz": [4, 0],
@@ -511,7 +513,7 @@ svg text{fill:var(--ink)}
       "kde": [{"l": "Research", "p": "AI Tým/Týmový Inbox/Petr_kasa_hw_kompatibilita_naklady_2026-09-23.md"}]}},
 
     {"id": "eet", "draha": "kasa", "nazev": "EET 2.0 (fiskalizace)", "stav": "plan", "vaha": 3, "poz": [4, 4],
-     "backend": {"pct": 0, "z": "M6b (2.–27. 11.) Playground → M8 produkce 1. 1.; Harry: registrace vývojáře (epodpora) 🟡; certifikáty DIS+ od 1. 11."},
+     "backend": {"pct": 0, "z": "M6b (2.–27. 11.) Playground → M8 produkce 1. 1.; Harry: registrace vývojáře (epodpora) v běhu; certifikáty DIS+ od 1. 11."},
      "frontend": {"pct": 0, "z": "LivePill stavů fronty — M6b"},
      "zavisi": ["platby", "distribuce"],
      "wiki": {"co": "Zákonná evidence tržeb od 1. 2. 2027: každá účtenka nese kódy (BKP/PKP), a když je internet, dostane od Finanční správy FIK. Offline účtenka platí, kódy se dopošlou do 48 h.",
@@ -543,7 +545,7 @@ svg text{fill:var(--ink)}
       "rozhodnuti": [{"d": "6. 9.", "t": "Tusker jen na hero nadpisy, jinde DM Sans."}, {"d": "23. 9. 14:36", "t": "Cíl = demo v3.7 nebo lépe: víc prvků, hezčí nabídky, pastelovější barevnost."}, {"d": "23. 9. 15:48", "t": "Spec je moc obsáhlá na komentáře → stavět podle dema, Swift smí být lepší."}],
       "kde": [{"l": "Report fáze 2", "p": "AI Tým/Týmový Inbox/tomas_kasa_design_faze2_2026-09-23.md"}, {"l": "Srovnání demo | Swift (20 dvojic)", "p": ".scratch/kns_pos_design2_impl_2026-09-23/compare/*.jpg"}, {"l": "Spec fáze 2", "p": "AI Tým/Výzkum/KNS_POS_Design_Audit/swift_design_faze2_spec_2026-09-23.html"}, {"l": "Design systém", "p": "~/Claude/Projects/KNS_DesignSystem/"}, {"l": "Branch", "p": "feat/pos-swift-design2 @ 282e32b (worktree kns-pos-swift-design2)"}]}},
 
-    {"id": "distribuce", "draha": "kasa", "nazev": "Distribuce: Apple účet · TestFlight · Unlisted", "stav": "ceka", "vaha": 2, "poz": [0, 4],
+    {"id": "distribuce", "draha": "kasa", "nazev": "Distribuce (Apple, TestFlight)", "stav": "ceka", "vaha": 2, "poz": [0, 4],
      "backend": {"pct": 10, "z": "repo na GitHubu (private), target iOS 16; Apple Developer účet nezaložen (0 %), žádný build na reálném iPadu"},
      "frontend": {"pct": null, "z": "netýká se"},
      "zavisi": [],
@@ -753,70 +755,94 @@ svg text{fill:var(--ink)}
   /* ---------- časová osa ---------- */
   function renderOsa(){
     const od = d(DATA.meta.od), doD = d(DATA.meta.do);
-    const L = 170, R = 24, W = 1180, innerW = W - L - R;
+    const L = 150, R = 24, W = 1180, innerW = W - L - R;
     const span = doD - od;
     const x = date => L + ((date - od)/span)*innerW;
-    const ROW = 42, BAR = 30;
-    const topH = 96; // osa + deadliny
+    const ROW = 44, BAR = 30, CH = 6.3;
+    const topH = 132; // osa + termíny
     const lanes = [
-      {id:'kasa', nazev:'Kasa', rows: 2},
-      {id:'hub', nazev:'Hub', rows: 3}
+      {id:'kasa', nazev:'Kasa', sub:'Swift · 3 iPady', rows: 3},
+      {id:'hub', nazev:'Hub', sub:'Lovable · živě 1.7.6', rows: 3}
     ];
     let y = topH; const laneY = {};
-    lanes.forEach(l=>{ laneY[l.id] = y; y += 20 + l.rows*ROW + 10; });
-    const H = y + 8;
+    lanes.forEach(l=>{ laneY[l.id] = y; y += 22 + l.rows*ROW + 10; });
+    const H = y + 30;
     let s = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" style="min-width:${W}px" role="img" aria-label="Časová osa kasy a hubu">`;
     // měsíce
     let m = new Date(od.getFullYear(), od.getMonth(), 1);
     while(m < doD){
       const nx = new Date(m.getFullYear(), m.getMonth()+1, 1);
       const x0 = x(m), x1 = x(Math.min(nx, doD));
-      const even = m.getMonth()%2===0;
-      if(even) s += `<rect x="${x0}" y="${topH-24}" width="${x1-x0}" height="${H-topH+24}" fill="var(--bg-2)" opacity=".55"/>`;
-      s += `<line class="ax-month" x1="${x0}" y1="${topH-24}" x2="${x0}" y2="${H}"/>`;
+      if(m.getMonth()%2===0) s += `<rect x="${x0}" y="${topH-24}" width="${x1-x0}" height="${H-topH+24-26}" fill="var(--bg-2)" opacity=".55"/>`;
+      s += `<line class="ax-month" x1="${x0}" y1="${topH-24}" x2="${x0}" y2="${H-26}"/>`;
       s += `<text class="ax-txt" x="${x0+6}" y="${topH-8}">${MESICE_L[m.getMonth()]}${m.getMonth()===0?' '+m.getFullYear():''}</text>`;
       m = nx;
     }
     // dráhy
     lanes.forEach(l=>{
       const y0 = laneY[l.id];
-      s += `<rect class="lane-bg" x="0" y="${y0}" width="${L-14}" height="${20+l.rows*ROW}" rx="12" opacity=".7"/>`;
+      s += `<rect class="lane-bg" x="0" y="${y0}" width="${L-14}" height="${22+l.rows*ROW}" rx="12" opacity=".7"/>`;
       s += `<text class="lane-txt" x="16" y="${y0+24}">${l.nazev}</text>`;
-      s += `<text class="ax-txt" x="16" y="${y0+42}" style="font-weight:500">${l.id==='kasa'?'Swift · 3 iPady':'Lovable · živě 1.7.6'}</text>`;
+      s += `<text class="ax-txt" x="16" y="${y0+42}" style="font-weight:500">${l.sub}</text>`;
       s += `<line class="ax-line" x1="${L}" y1="${y0}" x2="${W-R}" y2="${y0}"/>`;
     });
-    // milníky
-    DATA.milniky.forEach(ms=>{
-      const y0 = laneY[ms.draha] + 14 + ms.radek*ROW;
-      let x0 = x(d(ms.od)), x1 = x(d(ms.do));
-      if(x1 - x0 < 14) x1 = x0 + 14;
-      const w = x1-x0;
-      const label = ms.nazev;
-      const inside = w > label.length*6.6 + 16;
-      s += `<g class="ms ${ms.stav}" data-ms="${ms.id}" tabindex="0" role="button" aria-label="${esc(label)}, ${STAVY[ms.stav]}"><title>${esc(label)} · ${fmt(ms.od)}–${fmt(ms.do)} · ${STAVY[ms.stav]}</title>`;
-      s += `<rect x="${x0}" y="${y0}" width="${w}" height="${BAR}"/>`;
-      if(inside){
-        s += `<text x="${x0+10}" y="${y0+13}">${esc(label)}</text><text class="st" x="${x0+10}" y="${y0+25}">${STAVY[ms.stav]} · ${fmt(ms.od)}–${fmt(ms.do)}</text>`;
-      } else {
-        const short = label.length>34 ? label.slice(0,32)+'…' : label;
-        const tx = x1 + 6, anchor = (tx + short.length*6.4 > W-R) ? 'end' : 'start';
-        const txx = anchor==='end' ? x0 - 6 : tx;
-        s += `<text x="${txx}" y="${y0+13}" text-anchor="${anchor}">${esc(short)}</text><text class="st" x="${txx}" y="${y0+25}" text-anchor="${anchor}">${STAVY[ms.stav]} · ${fmt(ms.od)}–${fmt(ms.do)}</text>`;
-      }
-      s += `</g>`;
+    // milníky — popisek uvnitř pruhu, když se nevejde, tak vpravo jen pokud je místo do dalšího pruhu v řádku, jinak zkratka
+    const rows = {};
+    DATA.milniky.forEach(ms=>{ const k = ms.draha+'/'+ms.radek; (rows[k]=rows[k]||[]).push(ms); });
+    Object.values(rows).forEach(list=>list.sort((a,b)=>d(a.od)-d(b.od)));
+    Object.values(rows).forEach(list=>{
+      let aboveEnd = -1e9;
+      list.forEach((ms,i)=>{
+        const y0 = laneY[ms.draha] + 16 + ms.radek*ROW;
+        let x0 = x(d(ms.od)), x1 = x(d(ms.do));
+        if(x1 - x0 < 14) x1 = x0 + 14;
+        const w = x1-x0;
+        const nextX = list[i+1] ? x(d(list[i+1].od)) : (W-R);
+        const full = ms.nazev, zk = ms.zk || full;
+        const sub = `${STAVY[ms.stav]} · ${fmt(ms.od)}–${fmt(ms.do)}`;
+        const fits = t => t.length*CH + 14 <= w;
+        const fitsOut = t => nextX - x1 > t.length*CH + 14;
+        const fw = zk.split(' ')[0];
+        let label = '', outside = false, above = false;
+        if(fits(full)) label = full;
+        else if(fitsOut(full) && fitsOut(sub)) { label = full; outside = true; }
+        else if(fits(zk)) label = zk;
+        else if(fitsOut(zk)) { label = zk; outside = true; }
+        else if(fits(fw)) label = fw;
+        else if(fitsOut(fw)) { label = fw; outside = true; }
+        else if(x0 >= aboveEnd && x0 + zk.length*6 + 6 < W - R) { label = zk; above = true; aboveEnd = x0 + zk.length*6 + 10; }
+        else if(x0 >= aboveEnd) { label = fw; above = true; aboveEnd = x0 + fw.length*6 + 10; }
+        s += `<g class="ms ${ms.stav}" data-ms="${ms.id}" tabindex="0" role="button" aria-label="${esc(full)}, ${STAVY[ms.stav]}"><title>${esc(full)} · ${fmt(ms.od)}–${fmt(ms.do)} · ${STAVY[ms.stav]}</title>`;
+        s += `<rect x="${x0}" y="${y0}" width="${w}" height="${BAR}"/>`;
+        if(above){
+          s += `<text class="above" x="${x0}" y="${y0-3}">${esc(label)}</text>`;
+        } else if(label){
+          const tx = outside ? x1 + 6 : x0 + 8;
+          s += `<text x="${tx}" y="${y0+13}">${esc(label)}</text>`;
+          const subOk = outside ? fitsOut(sub) : fits(sub);
+          if(subOk) s += `<text class="st" x="${tx}" y="${y0+25}">${esc(sub)}</text>`;
+          else if(!outside && w >= 44) s += `<text class="st" x="${tx}" y="${y0+25}">${STAVY[ms.stav]}</text>`;
+        }
+        s += `</g>`;
+      });
     });
-    // deadliny
+    // termíny nahoře — 4 úrovně, aby se popisky nepřekrývaly
     const sorted = DATA.deadliny.slice().sort((a,b)=>d(a.datum)-d(b.datum));
-    let lastX = -999, level = 0;
+    const lastEnd = [-1e9,-1e9,-1e9,-1e9,-1e9];
     sorted.forEach(dl=>{
       const xx = x(d(dl.datum));
-      level = (xx - lastX < 150) ? (level+1)%3 : 0; lastX = xx;
-      const ty = 14 + level*18;
-      s += `<g class="dl ${dl.typ}"><title>${esc(dl.nazev)} · ${fmtL(dl.datum)}</title><line x1="${xx}" y1="${ty+8}" x2="${xx}" y2="${H}"/><path d="M${xx} ${ty-2} l6 6 l-6 6 l-6 -6 z"/><text x="${xx+10}" y="${ty+6}">${fmt(dl.datum)} ${esc(dl.nazev)}</text></g>`;
+      const txt = `${fmt(dl.datum)} ${dl.nazev}`;
+      const tw = txt.length*6.2 + 14;
+      const end = xx + tw > W - R;
+      const a = end ? xx - tw : xx, b = end ? xx : xx + tw;
+      let level = lastEnd.findIndex(e => a - 6 > e); if(level<0) level = 4;
+      lastEnd[level] = b;
+      const ty = 12 + level*18;
+      s += `<g class="dl ${dl.typ}"><title>${esc(dl.nazev)} · ${fmtL(dl.datum)}</title><line x1="${xx}" y1="${ty+8}" x2="${xx}" y2="${H-26}"/><path d="M${xx} ${ty-2} l6 6 l-6 6 l-6 -6 z"/><text x="${end ? xx-10 : xx+10}" y="${ty+6}" text-anchor="${end?'end':'start'}">${esc(txt)}</text></g>`;
     });
-    // dnes
+    // dnes — čára přes celé, štítek dole
     const tx = x(d(DATA.meta.dnes));
-    s += `<g class="today"><line x1="${tx}" y1="${topH-30}" x2="${tx}" y2="${H}"/><rect x="${tx-30}" y="${topH-46}" width="60" height="18" rx="9" fill="var(--terakota)"/><text x="${tx}" y="${topH-33}" text-anchor="middle" style="fill:#FFFCF6">dnes ${fmt(DATA.meta.dnes)}</text></g>`;
+    s += `<g class="today"><line x1="${tx}" y1="${topH-24}" x2="${tx}" y2="${H-24}"/><rect x="${tx-34}" y="${H-22}" width="68" height="18" rx="9" fill="var(--terakota)"/><text x="${tx}" y="${H-9}" text-anchor="middle" style="fill:#FFFCF6">dnes ${fmt(DATA.meta.dnes)}</text></g>`;
     s += `</svg>`;
     $('#osa-wrap').innerHTML = s;
     $('#osa-wrap').querySelectorAll('.ms').forEach(g=>{
@@ -826,7 +852,7 @@ svg text{fill:var(--ink)}
   }
 
   /* ---------- mapa modulů ---------- */
-  const CELL_W = 140, CELL_H = 108, NW = 126, NH = 78, PAD_X = 22, PAD_Y = 44;
+  const CELL_W = 140, CELL_H = 108, NW = 126, NH = 78, PAD_X = 22, PAD_Y = 58;
   function nodeXY(m){ return {x: PAD_X + m.poz[0]*CELL_W, y: PAD_Y + m.poz[1]*CELL_H}; }
   function renderMapa(){
     const cols = 9, rows = 5;
@@ -855,7 +881,7 @@ svg text{fill:var(--ink)}
       const p = nodeXY(m);
       const be = m.backend.pct, fe = m.frontend.pct;
       const barW = NW - 24, bx = p.x + 12;
-      const lines = wrap(m.nazev, 17);
+      const lines = wrap(m.nazev, 18);
       s += `<g class="node ${m.stav}" data-mod="${m.id}" tabindex="0" role="button" aria-label="${esc(m.nazev)}, ${STAVY[m.stav]}, backend ${be==null?'—':be+' %'}, frontend ${fe==null?'—':fe+' %'}"><title>${esc(m.nazev)} · ${STAVY[m.stav]}</title>`;
       s += `<rect class="box" x="${p.x}" y="${p.y}" width="${NW}" height="${NH}"/>`;
       s += `<circle class="stdot" cx="${p.x+12}" cy="${p.y+14}" r="4"/>`;
