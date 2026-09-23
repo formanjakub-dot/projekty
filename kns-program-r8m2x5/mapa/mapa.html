@@ -289,7 +289,7 @@ svg text{fill:var(--ink)}
 
 <script type="application/json" id="data">
 {
-  "meta": {"dnes": "2026-09-23", "od": "2026-07-01", "do": "2027-03-01", "verze": "23. 9. 2026 17:00", "poznamka": "Harry aktualizuje: meta.dnes, meta.verze, souhrn.*, milniky[].stav/od/do, moduly[].backend/frontend/stav/wiki. Otázky jsou v db (kolekce otazky), ne tady."},
+  "meta": {"dnes": "2026-09-23", "od": "2026-07-01", "do": "2027-03-01", "verze": "24. 9. 2026 (Viktor: EET 2.0 oprava + posun na 1. 1.)", "poznamka": "Harry aktualizuje: meta.dnes, meta.verze, souhrn.*, milniky[].stav/od/do, moduly[].backend/frontend/stav/wiki. Otázky jsou v db (kolekce otazky), ne tady."},
 
   "souhrn": {
     "tento_tyden": [
@@ -303,30 +303,29 @@ svg text{fill:var(--ink)}
     ],
     "ceka_na_jakuba": [
       {"co": "Apple Developer účet — Individual, na tvoje jméno (30 min, 99 USD)", "termin": "pá 25. 9.", "ref": "m:distribuce"},
-      {"co": "GO na architekturu kasy v3 (LAN-first, iPad Pro 2018 hlavní, iOS 16)", "termin": "pá 25. 9.", "ref": "m:lan_sync"},
+      {"co": "GO na architekturu kasy v4 (LAN-first, iPad Pro 2018 hlavní, iOS 16, EET 2.0 bez BKP/PKP)", "termin": "pá 25. 9.", "ref": "m:lan_sync"},
       {"co": "GO na etapu 1 směn „tabulka říká pravdu“ (20–25 h, do 24. 10.)", "termin": "teď", "ref": "m:smeny"},
       {"co": "Smoke test hubu 1.7.6 → faktury naostro pro tým", "termin": "do 4. 10.", "ref": "m:faktury"},
       {"co": "iPad do kuchyně místo Air 1. gen (nákup ~10 tis. Kč, tvoje schválení)", "termin": "do 2. 10.", "ref": "m:kds_nativni"},
       {"co": "Proklik M4 na simulátoru/iPadu (brána 5. 10.) + merge m4 → main", "termin": "do 5. 10.", "ref": "m:db_eventlog"},
       {"co": "Model Epsonu (štítek zespodu) + potvrzení Wi-Fi bez izolace", "termin": "pá 2. 10.", "ref": "m:tisk"},
       {"co": "SumUp účet na provozovatelku + affiliate key + karetní obrat z MobiPOS", "termin": "30. 10.", "ref": "m:sumup"},
-      {"co": "Certifikát EET 2.0 — s provozovatelkou v DIS+", "termin": "1.–20. 11.", "ref": "m:eet"},
-      {"co": "EET při výpadku Kasy: certifikát i na Obsluha iPadu, nebo platby čekají? (díra z TLDR)", "termin": "před M6b", "ref": "m:eet"},
+      {"co": "2 certifikáty EET 2.0 (Kasa + záloha Air 4) + oznámení FÚ o dokladech v iCloudu — s provozovatelkou v DIS+", "termin": "st 4. 11.", "ref": "m:eet"},
+      {"co": "Apple ID kavárny na všech iPadech (archiv dokladů 10 let v iCloud Drivu) + GO na 2 certifikáty EET", "termin": "pá 2. 10.", "ref": "m:eet"},
       {"co": "Počty míst u stolů Ulice / Příborník / Židle (v kase je Tomášův odhad)", "termin": "brzy", "ref": "m:markovani"}
     ]
   },
 
   "deadliny": [
-    {"datum": "2026-09-25", "nazev": "Apple účet + GO v3", "typ": "jakub"},
+    {"datum": "2026-09-25", "nazev": "Apple účet + GO v4", "typ": "jakub"},
     {"datum": "2026-10-02", "nazev": "Hukot · Wi-Fi · KDS iPad · Epson", "typ": "jakub"},
     {"datum": "2026-10-30", "nazev": "SumUp účet", "typ": "jakub"},
-    {"datum": "2026-10-31", "nazev": "Plán B (LAN sync drží?)", "typ": "planb"},
-    {"datum": "2026-11-01", "nazev": "DIS+ certifikáty EET", "typ": "eet"},
-    {"datum": "2026-12-01", "nazev": "Souběh kasy v provozu", "typ": "eet"},
-    {"datum": "2027-01-01", "nazev": "EET 2.0 provoz (pilot)", "typ": "eet"},
-    {"datum": "2027-01-18", "nazev": "Kasa primární", "typ": "bbn"},
-    {"datum": "2027-02-01", "nazev": "Povinnost EET 2.0", "typ": "eet"},
-    {"datum": "2027-02-28", "nazev": "MobiPOS zrušit", "typ": "bbn"}
+    {"datum": "2026-10-31", "nazev": "Plán B: LAN sync drží?", "typ": "planb"},
+    {"datum": "2026-11-04", "nazev": "DIS+ certy + oznámení FÚ", "typ": "eet"},
+    {"datum": "2026-12-01", "nazev": "Souběh + MOJE eet", "typ": "eet"},
+    {"datum": "2026-12-21", "nazev": "Go/no-go", "typ": "planb"},
+    {"datum": "2027-01-01", "nazev": "EET povinná · jen kasa", "typ": "bbn"},
+    {"datum": "2027-01-31", "nazev": "MobiPOS zrušit", "typ": "bbn"}
   ],
 
   "milniky": [
@@ -336,11 +335,11 @@ svg text{fill:var(--ink)}
     {"id": "k_m4", "zk": "M4", "draha": "kasa", "radek": 0, "nazev": "M4 Lokální jádro: DB · event log · PIN · pokladna · uzávěrka", "od": "2026-09-23", "do": "2026-10-02", "stav": "hotovo", "popis": "SQLite (GRDB) místo state.json, append-only event log jako zdroj pravdy, PIN s rolemi, pokladna, uzávěrka s JSON pro hub. M4.1: target iOS 16, identita eventu (deviceId, seq), DPH u splitu, repo na GitHubu. Kód hotový 23. 9. ve 13:48 — 38 testů zelených.", "brana": "5. 10.: ty proklikáš celou směnu v letadlovém režimu, účty přežijí zabití appky, storno chce důvod a je v logu.", "moduly": ["db_eventlog", "pin_role", "pokladna", "uzaverka"], "zdroj": "tomas_pos_swift_m4 + m41 (23. 9.)"},
     {"id": "k_df2", "zk": "Design 2", "draha": "kasa", "radek": 2, "nazev": "Design fáze 2 (podle dema v3.7) — hotová v jednom dni", "od": "2026-09-23", "do": "2026-09-24", "stav": "hotovo", "popis": "Plán byl do 2. 10., Tomáš to zvládl v jednom běhu: DS knihovna ~16 komponent (DSTopBar + pull-down menu, DSOverlay s reálným blurem, motion s Reduce Motion), 37 ilustrací + 15 ikon, DM Sans static 18pt, PIN jen kódem (třes u neznámého, auto-zámek 1 min), plánek 22 stolů 1:1 z MobiPOSu se zónami, uzávěrka 6 kroků, KDS světlý přes fullScreenCover, čip stavu položky. 40/40 testů, 0 warningů, 20 dvojic screenshotů demo | Swift. Zbývá merge s M5 (1 konflikt v SectionViews.swift) a Critic.", "brana": "Critic nad 20 dvojicemi screenshotů; merge s M5 bez regrese testů.", "moduly": ["design_ux", "pin_role", "platby", "kds_nativni", "stav_jidla"], "zdroj": "eliska_kasa_design_faze2_spec (15:18) + Jakub 14:36, 15:48"},
     {"id": "k_m5", "zk": "M5 LAN sync", "draha": "kasa", "radek": 1, "nazev": "M5 LAN sync + failover + cloud v0 + TestFlight na 3 iPady", "od": "2026-09-23", "do": "2026-10-30", "stav": "bezi", "popis": "Kasa iPad Pro 2018 = server (Bonjour + WebSocket), Obsluha Air 4 a KDS = klienti s plnou kopií DB; ostrovní režim; povýšení na Kasu pod PINem. Cloud v0 = denní dump na Hukot. Začalo dřív než plán (5. 10.): branch feat/pos-swift-m5 má 3 commity (sync vrstva, testy, latence).", "brana": "30. 10.: markuješ na A, na B vidíš do 300 ms · zabiješ Kasu → B jede dál, po návratu dosync bez duplicit · bez routeru se iPady najdou · ráno je dump v cloudu.", "moduly": ["lan_sync", "kds_web", "obsluha", "cloud_hukot", "distribuce"], "zdroj": "architektura v3 sekce 7 + git log feat/pos-swift-m5 (23. 9.)"},
-    {"id": "k_m6a", "zk": "M6a platby + tisk", "draha": "kasa", "radek": 0, "nazev": "M6a Platby SumUp · tisk Epson · digitální účtenka", "od": "2026-11-02", "do": "2026-11-27", "stav": "plan", "popis": "SumUp SDK přes Bluetooth k terminálu, který na baru už je; stávající Epson na baru po LAN — raw ESC/POS (40 sloupců) nebo ePOS XML podle modelu; účtenka s QR na uctenka.novysvet.net.", "brana": "27. 11.: zaplatíš si kafe vlastní kartou přes vlastní kasu a vypadne účtenka s BKP a QR.", "moduly": ["sumup", "tisk", "displej_hosta"], "zdroj": "architektura v3 sekce 7"},
-    {"id": "k_m6b", "zk": "M6b EET klient", "draha": "kasa", "radek": 1, "nazev": "M6b EET 2.0 klient (Playground)", "od": "2026-11-02", "do": "2026-11-27", "stav": "plan", "popis": "PKP/BKP/FIK přímo na Kasa iPadu, fronta 48 h v DB, testovací certifikát, Playground round-trip. Paralelně s M6a, druhý Tomáš.", "brana": "27. 11.: Playground vrátí FIK na 20/20 testovacích tržeb včetně splitu a storna.", "moduly": ["eet"], "zdroj": "architektura v3 sekce 3 a 7"},
-    {"id": "k_m7", "zk": "M7 hub + souběh", "draha": "kasa", "radek": 0, "nazev": "M7 Hub napojení · ostrý certifikát · souběh · Unlisted", "od": "2026-11-30", "do": "2026-12-23", "stav": "plan", "popis": "Uzávěrka volá hub RPC save_day_data přímo z Kasy, směny se tahají z hubu; import ostrého certifikátu (provozovatelka v DIS+); rozdílový report kasa vs. MobiPOS denně do #my_ai; kasa v souběhu od 1. 12.; podání Unlisted po 7. 12.", "brana": "23. 12.: 10 dní souběhu s rozdílem tržeb 0 Kč, uzávěrka se sama objeví v hubu, 1 vyvolaný výpadek Kasy bez ztráty.", "moduly": ["uzaverka_hub", "smeny_kasa", "eet", "distribuce"], "zdroj": "architektura v3 sekce 7 a 8"},
-    {"id": "k_m8", "zk": "M8 pilot EET", "draha": "kasa", "radek": 0, "nazev": "M8 Pilot EET na produkci + cutover", "od": "2027-01-04", "do": "2027-02-01", "stav": "plan", "popis": "1. 1. přepnutí na produkční EET (leden = státní pilotní měsíc). Každý večer: fronta 0, FIK na 100 % tržeb, rozdíl vs. MobiPOS 0. Od 18. 1. kasa primární. 1. 2. povinnost.", "brana": "18. 1.: 5 dní po sobě bez incidentu, tým markuje bez dotazů, Aneta potvrdí, že MobiPOS nepotřebuje.", "moduly": ["eet", "distribuce"], "zdroj": "architektura v3 sekce 7 a 8"},
-    {"id": "k_mobipos", "zk": "MobiPOS záchrana", "draha": "kasa", "radek": 2, "nazev": "MobiPOS jen jako záchrana → 28. 2. zrušit", "od": "2027-01-18", "do": "2027-02-28", "stav": "plan", "popis": "MobiPOS zůstává zaplacený a nainstalovaný na pultu do konce února. Únor bez záložního použití = zrušit předplatné.", "brana": "", "moduly": [], "zdroj": "architektura v3 sekce 0"},
+    {"id": "k_m6a", "zk": "M6a platby + tisk", "draha": "kasa", "radek": 0, "nazev": "M6a Platby SumUp · tisk Epson · digitální účtenka", "od": "2026-11-02", "do": "2026-11-27", "stav": "plan", "popis": "SumUp SDK přes Bluetooth k terminálu, který na baru už je; stávající Epson na baru po LAN — raw ESC/POS (40 sloupců) nebo ePOS XML podle modelu; účtenka s QR na uctenka.novysvet.net.", "brana": "27. 11.: zaplatíš si kafe vlastní kartou přes vlastní kasu a hned vypadne účtenka s QR.", "moduly": ["sumup", "tisk", "displej_hosta"], "zdroj": "architektura v3 sekce 7"},
+    {"id": "k_m6b", "zk": "M6b EET klient", "draha": "kasa", "radek": 1, "nazev": "M6b EET 2.0 klient (Playground)", "od": "2026-11-02", "do": "2026-11-27", "stav": "plan", "popis": "Modul Fiscal na Kasa iPadu: podpis celé zprávy při odeslání (XML-DSig), odpověď POK, fronta 48 h v DB, 2 testovací certifikáty, automatická obnova certifikátu, self-test, Playground round-trip. Jednodušší než ve v3 (v EET 2.0 žádné BKP/PKP). Paralelně s M6a, druhý Tomáš.", "brana": "27. 11.: Playground vrátí POK na 20/20 testovacích tržeb včetně splitu a storna (i ve stejné sekundě); po povýšení Air 4 odešle tržbu vlastním testovacím certifikátem; ostré certifikáty jsou v Keychainu Kasy i Air 4 pro prosincový souběh.", "moduly": ["eet"], "zdroj": "architektura v4 sekce 3 a 7 + memo 24. 9."},
+    {"id": "k_m7", "zk": "M7 souběh + hub", "draha": "kasa", "radek": 0, "nazev": "M7 Souběh s MobiPOS celý prosinec · hub · 2 ostré certifikáty · archiv · MOJE eet · Unlisted", "od": "2026-11-30", "do": "2026-12-31", "stav": "plan", "popis": "Souběh 1.–31. 12.: 1.–14. 12. stín (MobiPOS primární), 15.–31. 12. kasa primární, MobiPOS jen kontrola. EET v prosinci posílá každou tržbu v ověřovacím módu s ostrým certifikátem (produkce, pokud ji FS před 1. 1. pustí — hypotéza, jinak Playground). Uzávěrka volá hub RPC save_day_data přímo z Kasy, směny z hubu; 2 ostré certifikáty (Kasa + záloha Air 4); archiv dokladů do iCloud Drivu kavárny + nácvik obnovy iPadu + export pro účetní; zkouška záložní appky MOJE eet; sazby DPH od 1. 1. (nealko 12 %); podání Unlisted po 7. 12.; code freeze 22. 12.; 31. 12. po uzávěrce přepnutí EET na produkci.", "brana": "Go/no-go po 21. 12. (na 1. 1.): 7 dní kasa primární s rozdílem tržeb 0 Kč, EET fronta 0, uzávěrka se sama objeví v hubu, 1 vyvolaný výpadek Kasy bez ztráty (Air 4 odešle sám), obnova Air 4 z archivu pod 60 min, MOJE eet vyzkoušená. Ne = Plán B (zúžený rozsah / MOJE eet), ne jiný systém.", "moduly": ["uzaverka_hub", "smeny_kasa", "eet", "cloud_hukot", "distribuce"], "zdroj": "architektura v4 sekce 0, 7 a 8; Tereza 25. 9."},
+    {"id": "k_m8", "zk": "M8 ostrá EET", "draha": "kasa", "radek": 0, "nazev": "M8 Ostrá EET od 1. 1. · kasa jediná evidující", "od": "2027-01-01", "do": "2027-01-31", "stav": "plan", "popis": "EET je povinná ze zákona od 1. 1. 2027 (§ 36), „pilotní leden“ je jen avízo MF. MobiPOS EET 2.0 neumí → od 1. 1. eviduje jen kasa. Každý večer: fronta 0, POK na 100 % tržeb, spropitné zapsané po lidech. Záloha: povýšený Air 4 s vlastním certifikátem → appka Finanční správy MOJE eet. V lednu export historie z MobiPOS.", "brana": "31. 1.: 4 týdny ostré evidence bez tržby po lhůtě 48 h, fronta každý večer 0, tým markuje bez dotazů, export z MobiPOS hotový → MobiPOS zrušit.", "moduly": ["eet", "distribuce"], "zdroj": "architektura v4 sekce 7 a 8; Tereza 25. 9. (§ 36, § 24)"},
+    {"id": "k_mobipos", "zk": "MobiPOS konec", "draha": "kasa", "radek": 2, "nazev": "MobiPOS: od 1. 1. bez tržeb → 31. 1. zrušit", "od": "2027-01-01", "do": "2027-01-31", "stav": "plan", "popis": "MobiPOS EET 2.0 neumí (Harry 24. 9.) → do 31. 12. běží v souběhu, od 1. 1. se v něm tržby neevidují. Použití jen v Plánu B: markování, když nejede kasa, a každá tržba ručně v MOJE eet. V lednu export historie a menu, pak zrušit / neprodloužit k 31. 1.; pokud je předplacený do 28. 2., doběhne bez použití.", "brana": "", "moduly": [], "zdroj": "architektura v4 sekce 0 a 7"},
 
     {"id": "h_cutover", "zk": "Cutover", "draha": "hub", "radek": 0, "nazev": "Cutover: stará appka → nový hub", "od": "2026-07-29", "do": "2026-08-11", "stav": "hotovo", "popis": "Data převedena 11. 8. 19:17, stará appka zmrazena 22:49. 18 modulů, 707 testů. Tým od té doby jede na hub.novysvet.net.", "brana": "", "moduly": ["evidence", "vyplaty"], "zdroj": "memory project_kns_hub.md (11. 8.)"},
     {"id": "h_176", "zk": "1.7.5 + 1.7.6", "draha": "hub", "radek": 0, "nazev": "1.7.5 + 1.7.6 (multi-pozice, AI párování faktur) — nasazeno 6. 9.", "od": "2026-08-12", "do": "2026-09-06", "stav": "hotovo", "popis": "Napsané 12. 8., živě až 6. 9. 16:35 (Harry přes Lovable SQL editor + Publish). Migrace ai_parovani ve 3 bězích ověřena, 20 edge funkcí nasazeno. Zbývá tvůj smoke test.", "brana": "Smoke test: patička 1.7.6, Tým → zaškrtávátka pozic, faktura → „Napárovat přes AI“.", "moduly": ["faktury", "tym_role"], "zdroj": "memory (6. 9. 15:30–16:35)"},
@@ -385,9 +384,9 @@ svg text{fill:var(--ink)}
      "frontend": {"pct": 85, "z": "design 2 hotový: merunková atmosféra, souhrn na skle, numpad, rychlé částky, Zbývá/Vrátit 44, účtenka; prázdné Přijato = přesně (o tap méně než demo); chybí spropitné"},
      "zavisi": ["markovani", "db_eventlog"],
      "wiki": {"co": "Zaplatit účet hotově nebo kartou, spočítat vrácení, rozpadnout DPH podle sazeb pro uzávěrku.",
-      "zamysleno": "Částka z kasy poletí do SumUp terminálu přes Bluetooth (M6a), účtenka ponese BKP/FIK (M6b). Spropitné přes displej hosta.",
+      "zamysleno": "Částka z kasy poletí do SumUp terminálu přes Bluetooth (M6a); účtenka vyjde hned — EET 2.0 na ni nic povinného nepřidává (žádné BKP/PKP, potvrzovací kód POK jen dobrovolně, M6b). Spropitné přes displej hosta.",
       "umi": ["Hotovost + karta (ruční potvrzení), dopočet vrácení", "Rozpad DPH na účtence i v uzávěrce; u dělené platby poměrně, součet sedí na korunu", "Platba je událost payment.record — nic se neztratí"],
-      "neumi": ["Spropitné (tips v uzávěrce je 0) — váže se na displej hosta", "Reálný terminál (SumUp SDK) — M6a", "Vzhled podle dema — fáze 2"],
+      "neumi": ["Spropitné (tips = 0) — od 1. 1. 2027 evidovat i hotovost po lidech (7% limit osvobození); přes kasu/terminál do částky tržby v EET (Tereza 25. 9.)", "Sazby DPH s datem platnosti — nealko ve stravování 21 → 12 % od 1. 1. 2027", "Reálný terminál (SumUp SDK) — M6a", "Vzhled podle dema — fáze 2"],
       "rozhodnuti": [{"d": "23. 9. (Viktor v3)", "t": "SumUp přes Bluetooth SDK primárně, Cloud API až fáze 2."}],
       "kde": [{"l": "Kód", "p": "Sources/PaymentView.swift, ClosingTests (kns-pos-swift)"}, {"l": "Důkaz DPH splitu", "p": ".scratch/kns_pos_swift_m41_2026-09-23/05_uzaverka_dph_ze_splitu.png"}]}},
 
@@ -442,8 +441,8 @@ svg text{fill:var(--ink)}
      "wiki": {"co": "Aby tři iPady (Kasa na baru, Obsluha na place, KDS v kuchyni) viděly totéž — přes Wi-Fi kavárny, bez internetu. Když Kasa vypadne, ostatní jedou dál a po návratu se dosyncnou.",
       "zamysleno": "Kasa iPad Pro 2018 = jediná autorita pořadí (Bonjour _knskasa._tcp + WebSocket). Klienti mají plnou kopii DB. Bez routeru se iPady najdou peer-to-peer. Mrtvou Kasu jde povýšit na jiném iPadu pod PINem vedoucího. Cloud (Hukot) jen jako záloha, mimo kritickou cestu.",
       "umi": ["V kódu (neověřeno na place): protokol hello/catchup/event/ack, server, klient, ostrovní režim, povýšení s epochou po 120 s, konfliktní značky, web KDS server, 68 testovacích funkcí"],
-      "neumi": ["Test v kavárně: 300 ms A→B, zabít Kasu, vypnout router — brána 30. 10.", "TestFlight na 3 iPady (čeká na Apple účet)", "Role zařízení v Admin + párování QR", "Plán B 31. 10.: bez stabilního syncu → Dotykačka/Storyous"],
-      "rozhodnuti": [{"d": "23. 9. 11:21", "t": "LAN-first jako MobiPOS: jeden iPad hlavní, druhý při výpadku jede sám. Supabase Pro 25 $ je moc."}, {"d": "23. 9. 16:08 (Harry)", "t": "Bonjour v síti kavárny funguje, žádná izolace klientů (ověřeno na místě)."}],
+      "neumi": ["Test v kavárně: 300 ms A→B, zabít Kasu, vypnout router — brána 30. 10.", "TestFlight na 3 iPady (čeká na Apple účet)", "Role zařízení v Admin + párování QR", "Plán B 31. 10.: bez stabilního syncu jede 1. 1. zúžená sestava (Kasa + záložní Air 4 s certifikátem, bony tiskem na Epson), sync se dodělá v lednu; poslední záloha MOJE eet — ne jiný systém", "Role fiscalSender: po povýšení odesílá EET nová Kasa, pokud má certifikát (M5b)"],
+      "rozhodnuti": [{"d": "23. 9. 11:21", "t": "LAN-first jako MobiPOS: jeden iPad hlavní, druhý při výpadku jede sám. Supabase Pro 25 $ je moc."}, {"d": "23. 9. 16:08 (Harry)", "t": "Bonjour v síti kavárny funguje, žádná izolace klientů (ověřeno na místě)."}, {"d": "24. 9. (Viktor, memo)", "t": "Při výpadku Kasy odesílá EET povýšená Obsluha (Air 4) vlastním certifikátem; bez certifikátu fronta (48 h od tržby) + nouzový import .p12."}],
       "kde": [{"l": "Branch", "p": "feat/pos-swift-m5 @ 5edbff3 (Desktop kopie + origin)"}, {"l": "Architektura", "p": "AI Tým/Výzkum/KNS_POS_Architektura/kasa_architektura_2026-09-23.html (sekce 1–2)"}, {"l": "TLDR pro Tondu (nezávislé oči)", "p": "AI Tým/Výzkum/KNS_Program_Web/tonda_tldr_2026-09-23.md"}]}},
 
     {"id": "kds_nativni", "draha": "kasa", "nazev": "KDS nativní (kuchyň)", "stav": "ceka", "vaha": 2, "poz": [2, 0],
@@ -513,15 +512,15 @@ svg text{fill:var(--ink)}
       "kde": [{"l": "Research", "p": "AI Tým/Týmový Inbox/Petr_kasa_hw_kompatibilita_naklady_2026-09-23.md"}]}},
 
     {"id": "eet", "draha": "kasa", "nazev": "EET 2.0 (fiskalizace)", "stav": "plan", "vaha": 3, "poz": [4, 4],
-     "backend": {"pct": 0, "z": "M6b (2.–27. 11.) Playground → M8 produkce 1. 1.; Harry: registrace vývojáře (epodpora) v běhu; certifikáty DIS+ od 1. 11."},
+     "backend": {"pct": 0, "z": "M6b (2.–27. 11.) Playground → M8 produkce 1. 1.; Harry: registrace vývojáře (epodpora) v běhu; 2 certifikáty DIS+ od 1. 11. (Kasa + záloha Air 4); role fiscalSender v M5b"},
      "frontend": {"pct": 0, "z": "LivePill stavů fronty — M6b"},
      "zavisi": ["platby", "distribuce"],
-     "wiki": {"co": "Zákonná evidence tržeb od 1. 2. 2027: každá účtenka nese kódy (BKP/PKP), a když je internet, dostane od Finanční správy FIK. Offline účtenka platí, kódy se dopošlou do 48 h.",
-      "zamysleno": "Podpis přímo na Kasa iPadu (klíč v Keychain), fronta v lokální DB, cloud jen sleduje stav. Leden = státní pilotní měsíc bez sankcí — proto od 1. 1.",
+     "wiki": {"co": "Zákonná evidence tržeb, povinná od 1. 1. 2027 (§ 36; „pilotní leden“ je jen avízo MF, přechodné období zákon nemá; neodeslání = přestupek do 500 000 Kč): kasa pošle Finanční správě o každé platbě krátkou zprávu (částka, čas, provozovna, pokladna, číslo dokladu), při odeslání ji celou podepíše certifikátem a dostane zpět potvrzovací kód POK. Na účtence žádný EET kód být nemusí, účtenka je podle zákona o evidenci tržeb nepovinná; kódy BKP/PKP ze starého EET v EET 2.0 nejsou. Bez internetu zprávy čekají ve frontě — poslat je stačí do 48 h od tržby (§ 20).",
+      "zamysleno": "Odesílá Kasa iPad (klíč v Keychain), fronta v lokální DB, cloud jen sleduje stav. Certifikát je na provozovatelku, ne na zařízení, a může jich být víc → 2 certifikáty: Kasa + „spící“ na Obsluze (Air 4), která po povýšení na Kasu odesílá sama. iPhony a KDS bez certifikátu. V prosinci souběh v ověřovacím módu, od 1. 1. ostře a kasa jediná evidující (MobiPOS EET neumí); poslední záloha = appka Finanční správy MOJE eet (od 1. 12.).",
       "umi": [],
-      "neumi": ["Vše — M6b + M8", "Díra z TLDR: po povýšení jiného iPadu na Kasu tam není klíč certifikátu → buď cert i na Obsluha iPadu, nebo platby čekají na původní Kasu", "Platba kartou na Obsluze v ostrovním režimu = tržba bez podpisu (Viktor navrhuje zakázat)"],
-      "rozhodnuti": [{"d": "23. 9. (Viktor)", "t": "Fiskalizace na Kasa iPadu, ne na serveru (mění rozhodnutí 14. 7.) — offline účtenka musí nést BKP."}],
-      "kde": [{"l": "Stav zákona", "p": "Sněmovna přehlasovala Senát 9. 9.; Playground od 1. 7.; DIS+ certifikáty 1. 11.; MOJE EET 1. 12.; provoz 1. 1. 2027"}, {"l": "Architektura", "p": "kasa_architektura_2026-09-23.html sekce 3"}]}},
+      "neumi": ["Vše — M6b + M8", "Role fiscalSender + nouzový import .p12 pod admin PINem (M5b)", "Automatická obnova certifikátu přes API Finanční správy (platí 366 dní) — M6b", "Storno a spropitné přidané po odeslání = nová tržba (storno záporná, § 8)", "Jedinečnost pokladna + čas na sekundy: split/storno ve stejné sekundě se srazí → pravidlo „jedna tržba na id_pokl za sekundu“, ověřit na Playgroundu", "Opakované odeslání po failoveru drží původní id_pokl a čas (hypotéza)", "MOJE eet: přístup a zkouška zápisu 1.–14. 12."],
+      "rozhodnuti": [{"d": "23. 9. (Viktor)", "t": "Fiskalizace na Kasa iPadu, ne na serveru (mění rozhodnutí 14. 7.)."}, {"d": "24. 9. (Viktor, memo)", "t": "Oprava: v EET 2.0 nejsou BKP/PKP (popis rozhraní v1.2, 25. 8. 2026) — podpis celé zprávy při odeslání, odpověď POK, účtenka nepovinná, lhůta 48 h od tržby. Fiskalizace zůstává na Kase (klíč mimo cloud); nově 2 certifikáty (Kasa + spící Air 4). Čeká GO."}, {"d": "25. 9. (Tereza)", "t": "Povinnost od 1. 1. 2027 (§ 36), leden bez právní tolerance → souběh celý prosinec, kasa jediná evidující od 1. 1., MobiPOS zrušit 31. 1. Potvrzeno: 48 h (§ 20), účtenka v zákoně není, 2 certifikáty OK (§ 14), storno = záporná tržba (§ 8)."}],
+      "kde": [{"l": "Stav zákona", "p": "Sněmovna přehlasovala Senát 9. 9.; prezident podepsal 17. 9.; ve Sbírce zatím není; Playground od 1. 7.; DIS+ certifikáty 1. 11.; MOJE EET 1. 12.; provoz 1. 1. 2027"}, {"l": "Architektura", "p": "kasa_architektura_2026-09-23.html sekce 3 (v4)"}, {"l": "Memo + zdroje", "p": "AI Tým/Výzkum/KNS_POS_Architektura/memo_archiv_a_eet_2026-09-24.md"}, {"l": "Právní posouzení (Tereza)", "p": "AI Tým/Výzkum/KNS_POS_Architektura/tereza_archiv_eet_pravni_2026-09-25.md"}, {"l": "Popis rozhraní EET 2.0", "p": "eet.gov.cz → pro vývojáře → EET_popis_rozhrani_v1.2.pdf (25. 8. 2026)"}]}},
 
     {"id": "displej_hosta", "draha": "kasa", "nazev": "Displej hosta · spropitné", "stav": "plan", "vaha": 1, "poz": [4, 3],
      "backend": {"pct": 0, "z": "M6a/M6b; tips v uzávěrce dnes 0"},
@@ -550,7 +549,7 @@ svg text{fill:var(--ink)}
      "frontend": {"pct": null, "z": "netýká se"},
      "zavisi": [],
      "wiki": {"co": "Jak se appka dostane na iPady v kavárně a jak se bude aktualizovat.",
-      "zamysleno": "Apple Developer Individual na tvoje jméno (OSVČ do Organization nesmí) → TestFlight/Ad Hoc hned na 3 iPady → Unlisted App (auto-update, nevyprší) před 1. 2. 2027. Single App Mode na Kase.",
+      "zamysleno": "Apple Developer Individual na tvoje jméno (OSVČ do Organization nesmí) → TestFlight/Ad Hoc hned na 3 iPady → Unlisted App (auto-update, nevyprší) před 1. 1. 2027. Single App Mode na Kase.",
       "umi": ["Kód není jen na Desktopu: github.com/formanjakub-dot/kns-pos-swift, 3 větve"],
       "neumi": ["Apple účet (30 min, 99 USD, schválení 24–48 h) — blokuje TestFlight a tím M5 test v kavárně", "Merge feat/pos-swift-m4 → main (main = M1 kostra)"],
       "rozhodnuti": [{"d": "6. 9.", "t": "Účet pod kavárnou (tehdy jsme mysleli s.r.o.)."}, {"d": "23. 9. 10:55 (Petr)", "t": "Provozovatelka kavárny je OSVČ, ne s.r.o. → Apple připouští jen Individual; nejjednodušší Jakub na vlastní jméno."}],
@@ -579,15 +578,15 @@ svg text{fill:var(--ink)}
       "kde": [{"l": "Hub", "p": "edge fn mcp / list_shifts"}]}},
 
     {"id": "cloud_hukot", "draha": "spoj", "nazev": "Cloud záloha (Hukot)", "stav": "ceka", "vaha": 1, "poz": [5, 2],
-     "backend": {"pct": 10, "z": "tarif MH-02 potvrzen (150 Kč/měs, cron 1×/60 min, 2 DB); SSH/cron neověřeno (Harry do 2. 10.); ingest + denní dump = M5 26.–30. 10."},
+     "backend": {"pct": 10, "z": "tarif MH-02 potvrzen (150 Kč/měs, cron 1×/60 min, 2 DB); SSH/cron neověřeno (Harry do 2. 10.); ingest + denní dump = M5 26.–30. 10.; archiv dokladů v iCloud Drivu + obnova iPadu = M7"},
      "frontend": {"pct": null, "z": "netýká se (Harryho denní report do #my_ai)"},
      "zavisi": ["lan_sync"],
-     "wiki": {"co": "Když je internet, Kasa pošle událost i denní dump na hosting, který už platíš. Slouží k záloze, obnově kasy na nový iPad a Harryho přehledům.",
-      "zamysleno": "Hukot MH-02 (PHP ingest + MySQL, cron 1×/h), fallback Supabase Free. Nic z toho kasa nepotřebuje k provozu. Slabina: Hukot zálohuje 1× týdně → denní dump k Harrymu.",
+     "wiki": {"co": "Když je internet, Kasa pošle událost i denní dump na hosting, který už platíš. Slouží jako druhá kopie zálohy i archivu dokladů, k obnově kasy na nový iPad a Harryho přehledům. Hlavní archiv dokladů na 10 let je v iCloud Drivu kavárny.",
+      "zamysleno": "Hukot MH-02 (PHP ingest + MySQL, cron 1×/h), fallback Supabase Free. Nic z toho kasa nepotřebuje k provozu. Slabina: Hukot zálohuje 1× týdně → denní dump k Harrymu. Zákonný archiv (ZDPH § 35, 10 let) = složka appky v iCloud Drivu pod Apple ID kavárny (den = události, účtenky, uzávěrka PDF, CSV pro účetní, řetězený SHA-256 manifest); Hukot je jeho druhá kopie.",
       "umi": [],
-      "neumi": ["Ověřit SSH/cron v panelu Hukotu (Harry, 2. 10.)", "Ingest + dump (M5)"],
-      "rozhodnuti": [{"d": "23. 9. 11:21", "t": "Supabase Pro je moc; použít, co je v tarifu u Hukotu."}, {"d": "23. 9. 11:29", "t": "Hukot MH-02: 150 Kč/měs bez DPH, 20 GB, 2 DB na doménu, zálohy 1× týdně."}],
-      "kde": [{"l": "Architektura", "p": "kasa_architektura_2026-09-23.html sekce 2"}]}},
+      "neumi": ["Ověřit SSH/cron v panelu Hukotu (Harry, 2. 10.)", "Ingest + dump (M5)", "Archiv v iCloud Drivu + „Obnovit z archivu“ (M7)", "Apple ID kavárny na všech iPadech — Jakub, do 2. 10.", "Oznámení FÚ o uchovávání dokladů mimo ČR (iCloud) — Hana, 4. 11., před první ostrou účtenkou"],
+      "rozhodnuti": [{"d": "23. 9. 11:21", "t": "Supabase Pro je moc; použít, co je v tarifu u Hukotu."}, {"d": "23. 9. 11:29", "t": "Hukot MH-02: 150 Kč/měs bez DPH, 20 GB, 2 DB na doménu, zálohy 1× týdně."}, {"d": "24. 9. (Viktor, memo)", "t": "Archiv dokladů 10 let: iCloud Drive složka appky pod Apple ID kavárny, druhá kopie Hukot + Harryho denní pull; CloudKit zamítnut. 0 Kč. Čeká GO."}, {"d": "25. 9. (Tereza)", "t": "Data účtenky + PDF stačí, hash chain stačí (ZDPH § 34 odst. 3) s kotvou mimo iCloud (Hukot); iCloud = mimo ČR → předem oznámit FÚ (§ 35 odst. 4)."}],
+      "kde": [{"l": "Architektura", "p": "kasa_architektura_2026-09-23.html sekce 2 a 3 (v4)"}, {"l": "Memo archiv", "p": "AI Tým/Výzkum/KNS_POS_Architektura/memo_archiv_a_eet_2026-09-24.md"}]}},
 
     {"id": "evidence", "draha": "hub", "nazev": "Evidence tržeb", "stav": "hotovo", "vaha": 3, "poz": [6, 4],
      "backend": {"pct": 100, "z": "živě od cutoveru 11. 8.; days od 12. 8. = 23 záznamů (6. 9.), tým používá denně"},
