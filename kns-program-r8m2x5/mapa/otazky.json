@@ -4,19 +4,19 @@
   "modul": "distribuce",
   "otazka": "Založíš si Apple Developer účet (Individual, na svoje jméno) do pátku 25. 9.?",
   "kontext": "Provozovatelka kavárny je OSVČ, a tu Apple do firemního účtu nepustí. Individual není vázaný na IČO — 30 minut, 99 USD, schválení do 48 hodin, bez telefonátu. Bez účtu nejde TestFlight na iPady, a tedy ani test syncu v kavárně (M5).",
-  "doporuceni": "Ano, dnes večer. Hned potom Ad Hoc/TestFlight build na tři iPady; Unlisted až před 1. 2. 2027.",
+  "doporuceni": "Ano, dnes večer. Hned potom Ad Hoc/TestFlight build na tři iPady; žádost o Unlisted od 7. 12., před souběhem kasy jako hlavní (15. 12.).",
   "priorita": "blokuje",
-  "zdroj": "Petr 23. 9. (Apple OSVČ) + architektura v3, sekce 0",
+  "zdroj": "Petr 23. 9. (Apple OSVČ) + architektura v4, sekce 0",
   "stav": "otevrena"
  },
  {
   "id": "q02_go_v3",
   "modul": "lan_sync",
-  "otazka": "Odklepneš architekturu kasy v3 — Kasa iPad Pro 2018 jako hlavní, LAN-first, cloud jen záloha, iOS 16?",
-  "kontext": "Viktor přepsal architekturu podle tvých dvou korekcí (LAN místo cloudu, žádný Supabase Pro) a podle hardwaru, který v kavárně už je. Tomáš podle ní už staví M5.",
-  "doporuceni": "GO. Jediná otevřená věc je model kuchyňského iPadu (otázka níž), zbytek je hotový a ověřený.",
+  "otazka": "Odklepneš architekturu kasy v4 — Kasa iPad Pro 2018 jako hlavní, LAN-first, cloud jen záloha, iOS 16, EET od 1. 1. 2027?",
+  "kontext": "Viktor přepsal architekturu podle tvých korekcí (LAN místo cloudu, žádný Supabase Pro), podle hardwaru v kavárně a 24. 9. podle zákona: EET je povinná už od 1. 1. 2027, nemá kódy BKP/PKP, druhý „spící“ certifikát je na Air 4 a doklady se archivují 10 let.",
+  "doporuceni": "GO do pá 25. 9. Otevřené zůstávají jen model kuchyňského iPadu a Apple ID kavárny pro archiv.",
   "priorita": "blokuje",
-  "zdroj": "architektura v3 „Rozhodni“ (23. 9. 11:59)",
+  "zdroj": "architektura v4 „Rozhodni“ (24. 9.)",
   "stav": "otevrena"
  },
  {
@@ -142,21 +142,21 @@
  {
   "id": "q15_eet_cert",
   "modul": "eet",
-  "otazka": "Sedneš si 1.–20. 11. s provozovatelkou k počítači pro certifikát EET 2.0 v DIS+ (Identita občana / datovka, 30 minut)?",
-  "kontext": "Certifikát vydává Daňová informační schránka plus od 1. 11. Bez něj M7 (ostrý souběh od 1. 12.) nemá co podepisovat. Registraci vývojáře posílá Harry teď.",
-  "doporuceni": "Dej si to do kalendáře na první listopadový týden — pak zbývá rezerva na případné potíže s Identitou občana.",
+  "otazka": "Sedneš si st 4. 11. (nejpozději do 20. 11.) s provozovatelkou k počítači pro 2 certifikáty EET 2.0 v DIS+ a oznámení finančnímu úřadu?",
+  "kontext": "Certifikáty vydává Daňová informační schránka plus od 1. 11. — jeden pro Kasu, jeden „spící“ pro Air 4. Ve stejném sezení oznámení, že doklady jsou uložené i v iCloudu (mimo ČR); musí jít předem, před první ostrou účtenkou v souběhu 1. 12.",
+  "doporuceni": "Dej si to do kalendáře na st 4. 11. — zbývá rezerva na potíže s Identitou občana.",
   "priorita": "pozdeji",
-  "zdroj": "architektura v3, sekce 0 (EET)",
+  "zdroj": "architektura v4, sekce 0 (EET) + Tereza 25. 9.",
   "stav": "otevrena"
  },
  {
   "id": "q16_plan_b",
   "modul": "lan_sync",
-  "otazka": "Potvrdíš Plán B: když do 30. 10. nebude stabilní LAN sync dvou iPadů s failoverem, přepneme na hotové české řešení s EET 2.0 (Dotykačka / Storyous)?",
-  "kontext": "Kasa ve Swiftu by pak jela dál bez tlaku termínu. Body bez návratu zůstávají: 18. 1. kasa primární, 28. 2. MobiPOS zrušit.",
-  "doporuceni": "Potvrdit jednou větou — je to pojistka, ne plán. Za měsíc se k tomu vrátíme s výsledky brány M5.",
+  "otazka": "Potvrdíš Plán B: když do 31. 10. nebude stabilní LAN sync dvou iPadů, zúžíme rozsah (Kasa + záložní Air 4, bony tiskem, sync v lednu) — jiný pokladní systém ne?",
+  "kontext": "EET je povinná od 1. 1. 2027 a MobiPOS ji neumí, takže od Nového roku eviduje jen naše kasa. Druhá kontrola je go/no-go po 21. 12.; když by nejela ani zúžená kasa, tržby se na pár dní zapisují do appky MOJE eet. MobiPOS zrušit k 31. 1.",
+  "doporuceni": "Potvrdit jednou větou v #my_ai. Za měsíc se k tomu vrátíme s výsledky brány M5.",
   "priorita": "brzy",
-  "zdroj": "architektura v3, sekce 0 (body bez návratu) + memory 6. 9.",
+  "zdroj": "architektura v4, sekce 0 a 7 (body bez návratu)",
   "stav": "otevrena"
  },
  {
@@ -252,11 +252,11 @@
  {
   "id": "q26_eet_vypadek_kasy",
   "modul": "eet",
-  "otazka": "Když hlavní iPad vypadne a Obsluha iPad se povýší na Kasu: má mít certifikát EET i on (klíč na dvou zařízeních), nebo mají platby počkat na původní Kasu?",
-  "kontext": "Podpis EET je jen na Kasa iPadu (klíč v Keychain). Povýšený iPad tedy vydá účtenku bez kódu BKP — Viktor to v TLDR označil jako díru. Zákonná fronta 48 h to kryje jen tehdy, když se Kasa vrátí. Souvisí: platba kartou na Obsluze bez Kasy = tržba bez podpisu.",
-  "doporuceni": "Certifikát na oba „Kasa-schopné“ iPady (Pro 2018 + Air 4), KDS bez něj; platby v ostrovním režimu bez Kasy zakázat, jen hotovost s „dopodepsat“. Větší útočná plocha je menší zlo než nevydaná účtenka v pátek večer.",
+  "otazka": "Když hlavní iPad vypadne a Air 4 převezme roli Kasy: souhlasíš s druhým, „spícím“ certifikátem EET na Air 4?",
+  "kontext": "V EET 2.0 nejsou BKP ani PKP — celá zpráva se podepíše až při odeslání a zákon dává na odeslání 48 hodin, při poruše „z funkčního zařízení“. Díra z první verze TLDR tedy neexistuje: host dostane účtenku hned a tržba počká ve frontě. Air 4 s vlastním certifikátem začne po povýšení odesílat sám. KDS ani iPhony certifikát nemají.",
+  "doporuceni": "Ano, 2 certifikáty (Kasa + Air 4) — je to součást GO architektury v4. Ztracený iPad týž den zneplatnit v DIS+.",
   "priorita": "blokuje",
-  "zdroj": "Viktor TLDR pro Tondu, otázka 4 a 5 + checklist 20",
+  "zdroj": "architektura v4, sekce 3 + Tereza 25. 9.",
   "stav": "otevrena"
  },
  {

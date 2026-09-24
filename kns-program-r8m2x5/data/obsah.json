@@ -1,5 +1,5 @@
 {
-  "aktualizovano": "23. 9. 2026",
+  "aktualizovano": "24. 9. 2026",
   "stavy": {
     "zive": "Živé",
     "produkce": "Produkce",
@@ -68,10 +68,10 @@
     {
       "id": "swift-kasa",
       "titul": "Kasa pro iPad — nativní appka (Swift)",
-      "popis": "To, co nakonec poběží v kavárně. Hotové milníky M1–M4.1: plánek a markování, hosté a jazyk, modifikátory, platba s rozpadem DPH a rozdělením účtu, KDS, lokální databáze s deníkem událostí (event log), přihlášení PINem a role, pokladna, uzávěrka dne do souboru pro hub. Právě se dělá design fáze 2 (podle webového dema) a LAN sync mezi iPady (M5).",
+      "popis": "To, co nakonec poběží v kavárně. Hotové milníky M1–M5: plánek a markování, hosté a jazyk, modifikátory, platba s rozpadem DPH a rozdělením účtu, KDS, lokální databáze s deníkem událostí (event log), přihlášení PINem a role, pokladna, uzávěrka dne do souboru pro hub a sync mezi iPady po místní síti (M5, 75/75 testů). Design fáze 2 je hotový; do út 29. 9. se spojuje s M5 do jedné verze.",
       "pro": "Tým kavárny (od ledna 2027), Tomáš, Tonda",
-      "verze": "M4.1 + design fáze 2 (běží)",
-      "datum": "23. 9. 2026",
+      "verze": "M5 + design fáze 2 (integrace)",
+      "datum": "24. 9. 2026",
       "stav": "lokalni",
       "odkaz": "",
       "odkazText": "",
@@ -211,11 +211,11 @@
   "materialy": [
     {
       "id": "kasa-architektura",
-      "titul": "Architektura kasy v3 — LAN-first, tři iPady, EET 2.0",
-      "popis": "Platná architektura (Viktor): Kasa iPad je hlavní (tisk, pořadí událostí), Obsluha a KDS jsou klienti s vlastní kopií dat, všechno podstatné běží po místní síti, cloud jen jako záloha a most do hubu. Fiskalizace EET 2.0 přímo v kase (offline účtenka nese kódy). Milníky M5–M8, náklady (cca 2 100 Kč/rok vs. MobiPOS), 10 rozhodnutí pro Jakuba, Plán B.",
+      "titul": "Architektura kasy v4 — LAN-first, tři iPady, EET 2.0 od 1. 1. 2027",
+      "popis": "Platná architektura (Viktor): Kasa iPad je hlavní (tisk, pořadí událostí), Obsluha a KDS jsou klienti s vlastní kopií dat, všechno podstatné běží po místní síti, cloud jen jako záloha a most do hubu. EET 2.0 odesílá kasa (záložní iPad má vlastní certifikát), povinná od 1. 1. 2027; souběh s MobiPOS celý prosinec, archiv dokladů na 10 let. Milníky M5–M8, náklady (cca 2 100 Kč/rok vs. MobiPOS), 12 kroků pro Jakuba, Plán B jako zúžení rozsahu.",
       "pro": "Jakub, Tonda, Tomáš",
-      "verze": "v3",
-      "datum": "23. 9. 2026",
+      "verze": "v4",
+      "datum": "24. 9. 2026",
       "stav": "zive",
       "odkaz": "kasa-architektura.html",
       "odkazText": "Otevřít dokument",
@@ -235,7 +235,7 @@
       "odkazText": "Otevřít spec",
       "nahled": "../assets/img/mat_design_spec.jpg",
       "stitky": ["Kasa", "Design"],
-      "poznamka": "Jakub 15:48: spec je moc obsáhlá na komentáře — cílem je demo, stavět podle něj; Swift smí být lepší."
+      "poznamka": "Jakub 15:48: spec je moc obsáhlá na komentáře — cílem je demo, stavět podle něj; Swift smí být lepší. Oprava 24. 9.: kde spec u účtenky zmiňuje FIK/BKP, platí EET 2.0 — ty kódy nemá; na účtenku patří nejvýš dobrovolný potvrzovací kód POK (architektura v4)."
     },
     {
       "id": "ikony-pozic",
@@ -263,7 +263,7 @@
       "odkazText": "Otevřít roadmapu",
       "nahled": "../assets/img/mat_roadmapa.jpg",
       "stitky": ["Hub", "Kasa", "Roadmapa"],
-      "poznamka": "Změny po 6. 9.: Apple účet Individual na Jakuba (kavárna je OSVČ), architektura LAN-first bez PowerSync/placené Supabase, HW kavárna má (0 Kč), demo směn přesunuto na projekty.jakubforman.cz, kasa primární 18. 1. 2027."
+      "poznamka": "Změny po 6. 9.: Apple účet Individual na Jakuba (kavárna je OSVČ), architektura LAN-first bez PowerSync/placené Supabase, HW kavárna má (0 Kč), demo směn přesunuto na projekty.jakubforman.cz, EET povinná už od 1. 1. 2027 a v EET 2.0 nejsou kódy BKP/PKP (architektura v4, 24. 9.), Plán B = zúžit rozsah, ne jiný systém."
     },
     {
       "id": "mobipos-screeny",
@@ -283,13 +283,16 @@
   "slovnicek": [
     ["Hub", "Online provozní appka kavárny na hub.novysvet.net (React + Supabase, postavená v Lovable). Evidence tržeb, výplaty, faktury, sklad, směny, rezervace, wiki. Používá se od 11. 8. 2026."],
     ["Kasa", "Vlastní pokladní appka pro iPad ve Swiftu. Nahradí MobiPOS. Zároveň název role hlavního iPadu za barem."],
-    ["MobiPOS", "Dnešní pokladní systém kavárny (placený, cizí). Neumí EET 2.0. Cíl: zrušit 28. 2. 2027."],
-    ["EET 2.0", "Nová elektronická evidence tržeb. Pilot od 1. 1. 2027, povinnost od 1. 2. 2027. Každá účtenka nese kódy (FIK / BKP / PKP) a kasa musí umět vydat účtenku i bez internetu."],
-    ["FIK / BKP / PKP", "Kódy na účtence v EET: FIK vrací stát online, BKP a PKP počítá kasa z certifikátu — proto musí klíč být na iPadu, ne na serveru."],
-    ["DIS+ / MOJE daně", "Portály finanční správy, kde se pro EET získává certifikát (DIS+ od 1. 11. 2026) a vede evidence (MOJE EET od 1. 12. 2026). Certifikát řeší Hana jako provozovatelka."],
+    ["MobiPOS", "Dnešní pokladní systém kavárny (placený, cizí). Neumí EET 2.0, takže od 1. 1. 2027 se v něm tržby neevidují. Cíl: zrušit k 31. 1. 2027."],
+    ["EET 2.0", "Nová elektronická evidence tržeb, povinná ze zákona od 1. 1. 2027 (§ 36); „pilotní leden“ je jen avízo ministerstva. Kasa po platbě pošle zprávu o tržbě, při odeslání ji celou podepíše a Finanční správa vrátí potvrzovací kód POK. Účtenka je podle zákona o evidenci tržeb nepovinná. Bez internetu stačí tržbu poslat do 48 hodin."],
+    ["POK", "Potvrzovací kód, který Finanční správa vrátí na každou přijatou tržbu. Na účtenku se dává dobrovolně (u nás v digitální účtence přes QR). Kódy BKP, PKP a FIK ze starého EET v EET 2.0 nejsou."],
+    ["Certifikát EET", "Vydává ho Finanční správa v DIS+ na provozovatelku, ne na zařízení; zdarma, na rok, kolik je potřeba. Kasa má dva: pro hlavní iPad a „spící“ pro záložní iPad Air 4, který odesílá jen po převzetí role Kasy."],
+    ["DIS+ / MOJE eet", "DIS+ je Daňová informační schránka plus, kde provozovatelka od 1. 11. 2026 vygeneruje certifikáty EET. MOJE eet je bezplatná webová appka Finanční správy (od 1. 12. 2026) pro ruční zápis tržeb — naše nouzová záloha, kdyby nejel žádný iPad."],
+    ["Archiv dokladů", "Zákon o DPH chce doklady 10 let. Kasa je denně ukládá do iCloud Drivu pod Apple ID kavárny, druhá kopie jde na hosting Hukot; nový iPad jde z archivu obnovit do hodiny. Protože iCloud je mimo ČR, provozovatelka to předem oznámí finančnímu úřadu."],
+    ["Souběh a go / no-go", "Celý prosinec 2026 běží kasa vedle MobiPOS: 1.–14. 12. jen souběžně, od 15. 12. je kasa hlavní. Po 21. 12. se rozhodne, jestli je připravená na 1. 1. — kdy už tržby eviduje jen ona."],
     ["KDS", "Kitchen Display System — obrazovka v kuchyni s bony (objednávkami) a semaforem, jak dlouho čekají. U nás role třetího iPadu."],
     ["Obsluha", "Role druhého iPadu: bere se na plac, markuje u stolu, při výpadku hlavního jede dál sám a po návratu se srovná (ostrovní režim)."],
-    ["Master iPad / Kasa iPad", "Hlavní iPad na baru — jediná autorita pořadí událostí, tiskne účtenky, fiskalizuje. Když spadne, lze povýšit jiný iPad PINem."],
+    ["Master iPad / Kasa iPad", "Hlavní iPad na baru — jediná autorita pořadí událostí, tiskne účtenky, odesílá tržby do EET. Když spadne, lze povýšit jiný iPad PINem."],
     ["LAN-first", "Vše podstatné běží po místní Wi-Fi kavárny, ne v cloudu. Cloud je jen záloha a most do hubu, když je internet."],
     ["Bonjour", "Způsob, jak se iPady na místní síti samy najdou (bez zadávání adres). Vyžaduje Wi-Fi bez izolace klientů — v kavárně ověřeno 23. 9."],
     ["Event log (deník událostí)", "Kasa neukládá „stav“, ale posloupnost událostí (přidán řádek, zaplaceno, storno…). Stav se z nich vždy dopočítá — díky tomu se iPady po výpadku umí bez konfliktu srovnat."],
@@ -307,7 +310,7 @@
     ["Cyklus měsíce", "Tři fáze tabulky směn: Sbíráme dostupnost (do 10.) → Aneta skládá → Hotový (rozpis rozdaný, každý dostane soupis). Přepíná se tlačítkem, ne datem."],
     ["Hořící díra / Beru", "Neobsazená směna do 2 dnů. Kdokoli z týmu ji může jedním ťuknutím vzít („Beru“) — kdo klikne dřív, ten ji má."],
     ["Design systém (DS)", "Sada barev, písem a komponent kavárny: papír, terakota, espresso, pastely nesoucí stav vždy s textem; písmo DM Sans, Tusker Grotesk jen na hero nadpisy a vždy kapitálkami."],
-    ["Plán B", "Pojistka rozhodovaná 31. 10. 2026: pokud do té doby neběží LAN sync mezi iPady, kavárna přejde 1. 2. 2027 na hotové české řešení s EET 2.0 (Dotykačka / Storyous) a kasu dostavíme bez tlaku termínu."],
-    ["Milníky M1–M8", "Etapy kasy: M1–M3 markování, platba, KDS (léto) · M4 databáze, deník událostí, PIN, pokladna, uzávěrka (23. 9.) · M5 LAN sync (říjen) · M6 platby + tisk + EET klient (listopad) · M7 most do hubu a souběh (prosinec) · M8 EET produkce, kasa primární 18. 1. 2027."]
+    ["Plán B", "Pojistka s kontrolou 31. 10. a rozhodnutím 21. 12. 2026: zúžit rozsah, ne měnit systém. Když sync mezi iPady nedrží, jede od 1. 1. kasa na hlavním iPadu se záložním Air 4, bony se tisknou a sync se dodělá v lednu. Když by nejelo ani to, tržby se na pár dní zapisují do appky MOJE eet a v MobiPOS se jen markuje."],
+    ["Milníky M1–M8", "Etapy kasy: M1–M3 markování, platba, KDS (léto) · M4 databáze, deník událostí, PIN, pokladna, uzávěrka (23. 9.) · M5 LAN sync (kód hotový 24. 9., brána v kavárně do 31. 10.) · M6 platby + tisk + EET klient (listopad) · M7 most do hubu, archiv a souběh celý prosinec · M8 ostrá EET od 1. 1. 2027, kasa jediná evidující."]
   ]
 }
