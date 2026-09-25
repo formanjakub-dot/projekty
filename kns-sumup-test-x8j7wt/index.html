@@ -41,7 +41,7 @@
 <body>
 <main>
   <h1>Test Tap to Pay přes SumUp appku</h1>
-  <p class="sub">Platba 1 Kč na firemním iPhonu. Ověřuje, jestli přepnutí z kasy do SumUp Business nabídne Tap to Pay a vrátí výsledek (q72). Asi 15 minut.</p>
+  <p class="sub">Platba 30 Kč na firemním iPhonu. Ověřuje, jestli přepnutí z kasy do SumUp Business nabídne Tap to Pay a vrátí výsledek (q72). Asi 15 minut.</p>
 
   <!-- Po návratu ze SumUp (?r=ok / ?r=fail) -->
   <section id="result" hidden>
@@ -54,7 +54,7 @@
       <tr><td>foreign-tx-id</td><td id="v-fid"></td></tr>
       <tr><td>smp-message</td><td id="v-msg"></td></tr>
     </table>
-    <p class="note">Udělej screenshot téhle karty a pošli ho Harrymu. Pak platbu 1 Kč vrať (krok 4).</p>
+    <p class="note">Udělej screenshot téhle karty a pošli ho Harrymu. Pak platbu 30 Kč vrať (krok 4).</p>
     <p class="note" id="v-other"></p>
     <button class="btn ghost" id="again" type="button">Nový test</button>
   </section>
@@ -70,11 +70,11 @@
   </section>
 
   <section>
-    <h2>2 · Platba 1 Kč</h2>
+    <h2>2 · Platba 30 Kč</h2>
     <label for="k">Affiliate key</label>
     <input id="k" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="vlož klíč">
     <p class="note">Klíč zůstává jen v tomhle poli: stránka ho nikam neposílá a nikde neukládá. Po zavření nebo návratu ze SumUp ho vložíš znovu.</p>
-    <a id="go" class="btn" aria-disabled="true" href="#">Otevřít SumUp s platbou 1 Kč</a>
+    <a id="go" class="btn" aria-disabled="true" href="#">Otevřít SumUp s platbou 30 Kč</a>
     <p class="note">Když tlačítko nic neudělá, podrž prst na odkazu níž, zkopíruj ho a vlož do adresního řádku Safari.</p>
     <span id="u" class="url"></span>
   </section>
@@ -83,7 +83,7 @@
     <h2>3 · Co sledovat</h2>
     <ol>
       <li>Nabídne SumUp <b>Tap to Pay</b>, nebo hledá čtečku? Když nabízí výběr, kolik ťuknutí to stojí?</li>
-      <li>Zaplať 1 Kč vlastní kartou, stačí ji přiložit k iPhonu.</li>
+      <li>Zaplať 30 Kč vlastní kartou, stačí ji přiložit k iPhonu.</li>
       <li>SumUp se má sám vrátit sem. Nahoře se objeví karta <b>Výsledek</b> se <code>smp-status</code>, <code>smp-tx-code</code> a <code>foreign-tx-id</code>. Udělej screenshot.</li>
       <li>Když se SumUp nevrátí, zapiš to. Je to také výsledek.</li>
       <li>Když je v SumUp spárované i Solo: zkus to ještě jednou a zapiš, co appka nabídne.</li>
@@ -94,7 +94,7 @@
   <section>
     <h2>4 · Úklid</h2>
     <ol>
-      <li>V SumUp Business → Transakce najdi platbu 1 Kč a dej <b>Vrátit</b>.</li>
+      <li>V SumUp Business → Transakce najdi platbu 30 Kč a dej <b>Vrátit</b>.</li>
       <li>Pošli Harrymu: nabídl Tap to Pay (ano/ne), počet ťuknutí a screenshot karty Výsledek.</li>
     </ol>
     <p class="note">Výsledek rozhodne, jestli iPhone obsluhy bude platit přes SumUp appku (v kase výchozí), nebo posílat platbu na Solo.</p>
@@ -144,7 +144,7 @@
     var key = k.value.trim();
     if (!key) { go.setAttribute('aria-disabled', 'true'); go.href = '#'; u.textContent = ''; return; }
     var params = [
-      ['affiliate-key', key], ['amount', '1.00'], ['currency', 'CZK'], ['title', 'Test kasy'],
+      ['affiliate-key', key], ['amount', '30.00'], ['currency', 'CZK'], ['title', 'Test kasy'],
       ['foreign-tx-id', id], ['skip-screen-success', 'true'],
       ['callbacksuccess', base + '?r=ok'], ['callbackfail', base + '?r=fail']
     ];
