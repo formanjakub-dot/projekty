@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Test Tap to Pay</title>
+<style>
+  :root { --bg:#f7f3ec; --card:#fffcf6; --ink:#2b2118; --muted:#6f6358; --line:#e3dacd; --accent:#b4532a;
+          --ok:#2e7a4b; --okbg:#e3f1e7; --bad:#c4483c; --badbg:#fbe4e1; color-scheme: light; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#1d1814; --card:#28211b; --ink:#f3ece2; --muted:#b5a898;
+          --line:#3b3129; --accent:#e07a4b; --ok:#6fc18b; --okbg:#1f3326; --bad:#ff8a7d; --badbg:#3a211e; color-scheme: dark; } }
+  body { background:var(--bg); color:var(--ink); font:16px/1.5 -apple-system, system-ui, sans-serif; margin:0; }
+  main { max-width:560px; margin:0 auto; padding-block:calc(24px + env(safe-area-inset-top, 0px)) 48px; padding-inline:16px; }
+  h1 { font-size:24px; margin:0 0 4px; }
+  .sub { color:var(--muted); margin:0 0 20px; }
+  section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin-bottom:14px; }
+  h2 { font-size:15px; margin:0 0 8px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); }
+  ol { margin:0; padding-left:20px; } li { margin-bottom:6px; }
+  label { display:block; font-weight:600; margin-bottom:6px; }
+  input { width:100%; box-sizing:border-box; font:inherit; padding:12px; border-radius:10px; border:1px solid var(--line); background:var(--bg); color:var(--ink); }
+  .btn { display:block; text-align:center; margin-top:12px; padding:14px; border-radius:12px; background:var(--accent); color:#fff; font-weight:700; text-decoration:none; border:0; width:100%; font:inherit; font-weight:700; }
+  .btn[aria-disabled="true"] { opacity:.4; pointer-events:none; }
+  .ghost { background:transparent; color:var(--accent); border:1px solid var(--line); }
+  code, .url { font:13px/1.4 ui-monospace, Menlo, monospace; word-break:break-all; }
+  .url { display:block; margin-top:10px; padding:10px; border-radius:10px; background:var(--bg); border:1px dashed var(--line); }
+  .url:empty { display:none; }
+  .note { color:var(--muted); font-size:14px; }
+  #result.ok { border-color:var(--ok); background:var(--okbg); }
+  #result.bad { border-color:var(--bad); background:var(--badbg); }
+  .verdict { font-size:22px; font-weight:800; margin:0 0 10px; }
+  #result.ok .verdict { color:var(--ok); } #result.bad .verdict { color:var(--bad); }
+  table { width:100%; border-collapse:collapse; }
+  td { padding:8px 0; border-top:1px solid var(--line); vertical-align:top; }
+  td:first-child { color:var(--muted); width:40%; padding-right:8px; }
+  td:last-child { font:15px/1.4 ui-monospace, Menlo, monospace; word-break:break-all; font-weight:700; }
+  .miss { color:var(--bad); font-family:-apple-system, system-ui, sans-serif; font-weight:600; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Test Tap to Pay přes SumUp appku</h1>
+  <p class="sub">Platba 1 Kč na firemním iPhonu. Ověřuje, jestli přepnutí z kasy do SumUp Business nabídne Tap to Pay a vrátí výsledek (q72). Asi 15 minut.</p>
+
+  <!-- Po návratu ze SumUp (?r=ok / ?r=fail) -->
+  <section id="result" hidden>
+    <h2>Výsledek návratu ze SumUp</h2>
+    <p class="verdict" id="verdict"></p>
+    <table>
+      <tr><td>Návrat přes</td><td id="v-r"></td></tr>
+      <tr><td>smp-status</td><td id="v-status"></td></tr>
+      <tr><td>smp-tx-code</td><td id="v-tx"></td></tr>
+      <tr><td>foreign-tx-id</td><td id="v-fid"></td></tr>
+      <tr><td>smp-message</td><td id="v-msg"></td></tr>
+    </table>
+    <p class="note">Udělej screenshot téhle karty a pošli ho Harrymu. Pak platbu 1 Kč vrať (krok 4).</p>
+    <p class="note" id="v-other"></p>
+    <button class="btn ghost" id="again" type="button">Nový test</button>
+  </section>
+
+  <section>
+    <h2>1 · Příprava v SumUp Business (5 min)</h2>
+    <ol>
+      <li>Na iPhonu (XS nebo novější, aktuální iOS) aktualizuj appku <b>SumUp Business</b> na verzi 3.78 nebo novější.</li>
+      <li>Přihlas se jako <b>majitel účtu</b> a aktivuj <b>Tap to Pay on iPhone</b>. Appka tě provede, jde to jen jednou a jen jako majitel.</li>
+      <li>V nastavení appky SumUp <b>vypni spropitné</b>. Kasa ho posílá rovnou v částce, jinak by ho host zaplatil dvakrát.</li>
+      <li>Na <code>me.sumup.com</code> otevři Profil → <b>Settings</b> → <b>For Developers</b> → <b>Toolkit</b> → <b>Affiliate Keys</b>. Když tam klíč není, zadej Application identifier <code>net.novysvet.kasa</code> a dej <b>Add</b>. Klíč zkopíruj.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>2 · Platba 1 Kč</h2>
+    <label for="k">Affiliate key</label>
+    <input id="k" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="vlož klíč">
+    <p class="note">Klíč zůstává jen v tomhle poli: stránka ho nikam neposílá a nikde neukládá. Po zavření nebo návratu ze SumUp ho vložíš znovu.</p>
+    <a id="go" class="btn" aria-disabled="true" href="#">Otevřít SumUp s platbou 1 Kč</a>
+    <p class="note">Když tlačítko nic neudělá, podrž prst na odkazu níž, zkopíruj ho a vlož do adresního řádku Safari.</p>
+    <span id="u" class="url"></span>
+  </section>
+
+  <section>
+    <h2>3 · Co sledovat</h2>
+    <ol>
+      <li>Nabídne SumUp <b>Tap to Pay</b>, nebo hledá čtečku? Když nabízí výběr, kolik ťuknutí to stojí?</li>
+      <li>Zaplať 1 Kč vlastní kartou, stačí ji přiložit k iPhonu.</li>
+      <li>SumUp se má sám vrátit sem. Nahoře se objeví karta <b>Výsledek</b> se <code>smp-status</code>, <code>smp-tx-code</code> a <code>foreign-tx-id</code>. Udělej screenshot.</li>
+      <li>Když se SumUp nevrátí, zapiš to. Je to také výsledek.</li>
+      <li>Když je v SumUp spárované i Solo: zkus to ještě jednou a zapiš, co appka nabídne.</li>
+      <li>Když SumUp hlásí neplatný affiliate key: přidej ke klíči na me.sumup.com druhý Application identifier <code>com.apple.mobilesafari</code> (test běží ze Safari, ne z kasy) a zkus to znovu.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>4 · Úklid</h2>
+    <ol>
+      <li>V SumUp Business → Transakce najdi platbu 1 Kč a dej <b>Vrátit</b>.</li>
+      <li>Pošli Harrymu: nabídl Tap to Pay (ano/ne), počet ťuknutí a screenshot karty Výsledek.</li>
+    </ol>
+    <p class="note">Výsledek rozhodne, jestli iPhone obsluhy bude platit přes SumUp appku (v kase výchozí), nebo posílat platbu na Solo.</p>
+  </section>
+</main>
+
+<script>
+(function () {
+  // Adresa téhle stránky bez query a hashe = návrat ze SumUp (musí být https).
+  var base = location.origin + location.pathname;
+  // SumUp může k naší adrese s „?r=ok“ přilepit svoje parametry s dalším „?“
+  // (nebo za #) — proto sjednotit oddělovače, než se čtou.
+  var raw = (location.search.slice(1) + '&' + location.hash.slice(1)).replace(/\?/g, '&');
+  var q = new URLSearchParams(raw);
+
+  // --- výsledek návratu ---
+  if (q.has('r') || q.has('smp-status')) {
+    var box = document.getElementById('result');
+    var st = q.get('smp-status');
+    var ok = st === 'success';
+    box.hidden = false;
+    box.className = ok ? 'ok' : 'bad';
+    document.getElementById('verdict').textContent =
+      ok ? 'Zaplaceno, SumUp se vrátil' : (st ? 'SumUp vrátil: ' + st : 'Návrat bez smp-status');
+    function put(id, v, optional) {
+      var el = document.getElementById(id);
+      if (v) { el.textContent = v; }
+      else if (optional) { el.textContent = '—'; }
+      else { el.innerHTML = '<span class="miss">chybí</span>'; }
+    }
+    put('v-r', q.get('r') === 'ok' ? 'callbacksuccess' : q.get('r') === 'fail' ? 'callbackfail' : q.get('r'));
+    put('v-status', st);
+    put('v-tx', q.get('smp-tx-code'));
+    put('v-fid', q.get('foreign-tx-id'));
+    put('v-msg', q.get('smp-message'), true);   // nepovinné
+    var known = ['r', 'smp-status', 'smp-tx-code', 'foreign-tx-id', 'smp-message'];
+    var other = [];
+    q.forEach(function (v, k) { if (known.indexOf(k) < 0) other.push(k + '=' + v); });
+    if (other.length) document.getElementById('v-other').textContent = 'Další parametry: ' + other.join(' · ');
+    document.getElementById('again').addEventListener('click', function () { location.replace(base); });
+  }
+
+  // --- odkaz na platbu ---
+  var k = document.getElementById('k'), go = document.getElementById('go'), u = document.getElementById('u');
+  var id = 'kasa-test-' + Math.random().toString(36).slice(2, 10);
+  function build() {
+    var key = k.value.trim();
+    if (!key) { go.setAttribute('aria-disabled', 'true'); go.href = '#'; u.textContent = ''; return; }
+    var params = [
+      ['affiliate-key', key], ['amount', '1.00'], ['currency', 'CZK'], ['title', 'Test kasy'],
+      ['foreign-tx-id', id], ['skip-screen-success', 'true'],
+      ['callbacksuccess', base + '?r=ok'], ['callbackfail', base + '?r=fail']
+    ];
+    // %20 místo „+“ (SumUp by mezeru ukázal jako plus)
+    var url = 'sumupmerchant://pay/1.0?' + params.map(function (p) {
+      return p[0] + '=' + encodeURIComponent(p[1]);
+    }).join('&');
+    go.href = url; go.setAttribute('aria-disabled', 'false'); u.textContent = url;
+  }
+  k.addEventListener('input', build);
+})();
+</script>
+</body>
+</html>
