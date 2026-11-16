@@ -1,0 +1,54 @@
+{
+  "dotaznik": "cet-podzim-2026",
+  "termin": "2026-11-21T23:59:59+01:00",
+  "termin_poznamka": "Jen záloha pro výpadek serveru a pro ukázku bez serveru. Platný ročník i termín jsou na serveru (famu.nastaveni), stránka si je načte sama a mění se jen v administraci → Správa.",
+  "projekty": [
+    {
+      "id": "jitterbug",
+      "skupina": "G1",
+      "nazev": "Jitterbug"
+    },
+    {
+      "id": "swinging-solo",
+      "skupina": "G2",
+      "nazev": "Swinging Solo"
+    },
+    {
+      "id": "flora",
+      "skupina": "G3",
+      "nazev": "Flora"
+    },
+    {
+      "id": "drift",
+      "skupina": "G4",
+      "nazev": "Drift"
+    },
+    {
+      "id": "the-second-shelf",
+      "skupina": "G5",
+      "nazev": "The Second Shelf"
+    },
+    {
+      "id": "i-know-youre-there",
+      "skupina": "G6",
+      "nazev": "I Know You're There"
+    },
+    {
+      "id": "amalia-on-digital",
+      "skupina": "G7",
+      "nazev": "Amalia on Digital"
+    }
+  ],
+  "role": [
+    {
+      "id": "PM",
+      "nazev": "PM",
+      "popis": "Production manager"
+    },
+    {
+      "id": "PA",
+      "nazev": "PA",
+      "popis": "Production assistant"
+    }
+  ]
+}

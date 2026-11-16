@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta name="theme-color" content="#E50000">
+  <link rel="icon" href="data:,">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; font-src 'self'; script-src 'self'; connect-src 'self' https://vpxnwpfkcurggdyobdbt.supabase.co; base-uri 'none'; form-action 'none'">
+  <title></title>
+  <link rel="preload" href="fonts/league-gothic-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/league-gothic-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#obsah" data-t="preskocitNaObsah"></a>
+
+  <header class="pruh" role="banner">
+    <span class="pruh__vlevo" data-t="pruh.vlevo"></span>
+    <span class="pruh__vpravo" data-t="pruh.vpravo"></span>
+    <button type="button" class="pruh__odkaz" data-t="odkaz.otevrit" hidden></button>
+  </header>
+
+  <dialog id="odkaz-dialog" class="odkaz-dialog" aria-labelledby="odkaz-dialog-nadpis">
+    <div class="odkaz-dialog__hlava">
+      <h2 id="odkaz-dialog-nadpis" data-t="odkaz.nadpis"></h2>
+      <button type="button" class="odkaz-dialog__zavrit tl tl--tiche" data-t="odkaz.zavrit"></button>
+    </div>
+    <div class="odkaz-dialog__obsah"></div>
+  </dialog>
+
+  <div class="ram">
+    <nav class="bloky" hidden>
+      <span class="bloky__projekt"></span>
+      <span class="bloky__jmeno"></span>
+      <ol class="bloky__seznam"></ol>
+    </nav>
+
+    <main id="obsah" class="scena" tabindex="-1">
+      <section class="klapka" aria-hidden="true" hidden>
+        <div class="klapka__lata klapka__lata--horni"></div>
+        <div class="klapka__lata klapka__lata--dolni"></div>
+        <div class="klapka__telo">
+          <div class="klapka__pole klapka__pole--obraz">
+            <span class="klapka__popis" data-t="klapka.obraz"></span>
+            <span class="klapka__hodnota klapka__cislo">0</span>
+          </div>
+          <div class="klapka__pole klapka__pole--nazev">
+            <span class="klapka__popis klapka__produkce-popis" data-t="klapka.produkce"></span>
+            <span class="klapka__hodnota klapka__blok"></span>
+            <span class="klapka__produkce"></span>
+          </div>
+          <div class="klapka__pole klapka__pole--zaber">
+            <span class="klapka__popis" data-t="klapka.zaber"></span>
+            <span class="klapka__hodnota klapka__zaber">1</span>
+          </div>
+          <ol class="klapka__postup"></ol>
+          <div class="klapka__razitko">
+            <span class="klapka__razitko-hlavni" data-t="klapka.mameTo"></span>
+            <span class="klapka__razitko-pod"></span>
+          </div>
+        </div>
+      </section>
+      <p class="sr-only" aria-live="polite" id="hlaseni"></p>
+      <div class="panel" id="panel"></div>
+    </main>
+  </div>
+
+  <footer class="paticka" role="contentinfo">
+    <span class="paticka__kdo" data-t="paticka.kdo"></span>
+    <span class="paticka__neoficialni" data-t="paticka.neoficialni"></span>
+    <details class="paticka__udaje">
+      <summary data-t="udaje.nazev"></summary>
+      <p data-t="udaje.text"></p>
+    </details>
+  </footer>
+
+  <section id="tisk" aria-hidden="true"></section>
+
+  <svg class="ikony" width="0" height="0" aria-hidden="true" focusable="false">
+    <symbol id="i-sipka" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="square"/></symbol>
+    <symbol id="i-zpet" viewBox="0 0 24 24"><path d="M20 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="square"/></symbol>
+    <symbol id="i-fajfka" viewBox="0 0 24 24"><path d="M4.5 12.5l5 5L19.5 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/></symbol>
+    <symbol id="i-stahnout" viewBox="0 0 24 24"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="square"/></symbol>
+    <symbol id="i-kopie" viewBox="0 0 24 24"><path d="M8 8h11v12H8zM5 16V4h11" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="miter"/></symbol>
+    <symbol id="i-sdilet" viewBox="0 0 24 24"><path d="M12 15V3M7 8l5-5 5 5M5 12v8h14v-8" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="square"/></symbol>
+    <symbol id="i-tisk" viewBox="0 0 24 24"><path d="M7 9V4h10v5M7 17H4v-7h16v7h-3M7 14h10v6H7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="miter"/></symbol>
+  </svg>
+
+  <script src="config.js"></script>
+  <script src="api.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

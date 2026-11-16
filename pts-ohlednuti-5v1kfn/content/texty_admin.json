@@ -1,0 +1,91 @@
+{
+  "titulek": "Administrace · Ohlédnutí za natáčením",
+  "pruh": { "vlevo": "Dílny PTS · administrace", "odhlasit": "Odhlásit" },
+  "prihlaseni": {
+    "nadpis": "Administrace",
+    "text": "Odpovědi studentů se jmény. Jen pro Jakuba a Tamaru.",
+    "heslo": "Heslo",
+    "tlacitko": "Přihlásit",
+    "chyba": "Heslo nesedí.",
+    "limit": "Moc pokusů, zkus to za chvíli."
+  },
+  "zalozky": { "prehled": "Přehled", "otazky": "Po otázkách", "studenti": "Po studentech", "sprava": "Správa" },
+  "stahnout": {
+    "vse": "Stáhnout vše",
+    "vsePopis": "Tabulka pro Excel nebo Numbers, jeden řádek = jedna odpověď.",
+    "trideni": "Stáhnout pro třídění",
+    "trideniPopis": "Stejná tabulka s kódy S01… místo jmen. Klíč ke kódům se stáhne jako zvláštní soubor.",
+    "studenti": "Stáhnout po studentech",
+    "studentiPopis": "Přehledný dokument k tisku nebo uložení do PDF.",
+    "sloupce": ["jméno", "příjmení", "projekt", "role", "id otázky", "otázka", "odpověď", "čas"],
+    "sloupceTrideni": ["kód", "projekt", "role", "id otázky", "otázka", "odpověď", "čas"],
+    "sloupceKlic": ["kód", "jméno", "příjmení", "projekt", "role"],
+    "soubory": { "vse": "odpovedi_vse.csv", "trideni": "odpovedi_pro_trideni.csv", "klic": "klic_ke_kodum.csv" },
+    "tiskNadpis": "Odpovědi po studentech"
+  },
+  "prehled": {
+    "zacalo": "začalo",
+    "odeslalo": "odeslalo",
+    "rozepsano": "rozepsáno",
+    "matice": "Podle projektů a rolí (odesláno / začalo)",
+    "projekt": "Projekt",
+    "vsechnyProjekty": "Všechny projekty",
+    "vsechnyRole": "Všechny role",
+    "vsechnyStavy": "Všechny stavy",
+    "zobrazitSkryte": "Ukázat skryté",
+    "sloupce": { "jmeno": "Jméno", "projekty": "Projekt", "role": "Role", "stav": "Stav", "odpovedi": "Odpovědi", "aktivita": "Naposledy" },
+    "stav": { "odeslano": "Odesláno", "rozpracovano": "Rozepsáno" },
+    "duplicita": "Stejné jméno dvakrát",
+    "sloucit": "Sloučit",
+    "skryt": "Skrýt",
+    "odkryt": "Ukázat",
+    "skryty": "skrytý",
+    "prazdne": "Filtru nic neodpovídá.",
+    "zadnaData": "Zatím nikdo nezačal."
+  },
+  "slouceni": {
+    "nadpis": "Sloučit dva záznamy",
+    "text": "Vyber záznam, který zůstane. Z druhého se doplní odpovědi na otázky, které v ponechaném chybí, a druhý se skryje (nesmaže).",
+    "ponechat": "Ponechat tento",
+    "zrusit": "Zrušit",
+    "hotovo": "Sloučeno."
+  },
+  "otazky": {
+    "vyber": "Otázka",
+    "bezJmen": "Bez jmen (na promítání)",
+    "pocet": "{n} odpovědí",
+    "zadna": "Na tuhle otázku zatím nikdo neodpověděl."
+  },
+  "studenti": {
+    "vyber": "Student",
+    "obnovitOdkaz": "Obnovit osobní odkaz",
+    "obnovitText": "Starý odkaz přestane fungovat. Nový pošli studentovi sám.",
+    "novyOdkaz": "Nový odkaz",
+    "zkopirovat": "Zkopírovat",
+    "zkopirovano": "Zkopírováno",
+    "smazat": "Smazat studenta i s odpověďmi",
+    "smazatPotvrzeni": "Opravdu smazat? Klikni znovu.",
+    "smazano": "Smazáno.",
+    "bezOdpovedi": "Bez odpovědi"
+  },
+  "sprava": {
+    "termin": "Termín vyplnění",
+    "terminText": "Do termínu jde odpovídat a upravovat přes osobní odkaz, potom jen číst.",
+    "ulozit": "Uložit termín",
+    "ulozeno": "Uloženo.",
+    "smazatVse": "Smazat všechny odpovědi",
+    "smazatVseText": "Smaže všechny studenty i odpovědi tohoto dotazníku. Nejde to vrátit. Napiš SMAZAT a potvrď.",
+    "smazatVseSlovo": "SMAZAT",
+    "smazatVseTlacitko": "Smazat vše",
+    "smazanoVse": "Všechno smazáno.",
+    "prihlaseni": "Přístup",
+    "prihlaseniText": "Každý z vás má vlastní heslo. Přihlášení vyprší po 12 hodinách."
+  },
+  "chyby": {
+    "obecna": "Nepovedlo se to. Zkus to znovu.",
+    "sloucit": "Tyhle dva záznamy nejde sloučit.",
+    "server": "Server teď neodpovídá.",
+    "vyprselo": "Přihlášení vypršelo, přihlas se znovu."
+  },
+  "paticka": "Dílny PTS · Jakub Forman · administrace"
+}

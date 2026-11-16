@@ -1,0 +1,287 @@
+[
+  {
+    "blok": "Na úvod",
+    "uvod": "Ať víme, k čemu odpovědi patří.",
+    "otazky": [
+      {
+        "id": "zarazeni_jmeno",
+        "text": "Jak se jmenuješ?",
+        "napoveda": "",
+        "jadro": false,
+        "role": "vsichni",
+        "typ": "kratky",
+        "blok": "Na úvod"
+      },
+      {
+        "id": "zarazeni_projekt",
+        "text": "Na kterém projektu jsi byl(a) ve štábu?",
+        "napoveda": "Kdo byl ve dvou skupinách, může odpovídat za obě, nebo je porovnat. [sedm názvů doplnit]",
+        "jadro": false,
+        "role": "vsichni",
+        "typ": "kratky",
+        "blok": "Na úvod"
+      },
+      {
+        "id": "zarazeni_role",
+        "text": "Byl jsi PM, nebo PA?",
+        "napoveda": "Podle toho se ti později ukážou dvě otázky navíc.",
+        "jadro": false,
+        "role": "vsichni",
+        "typ": "volba",
+        "moznosti": [
+          "PM",
+          "PA"
+        ],
+        "blok": "Na úvod"
+      }
+    ]
+  },
+  {
+    "blok": "Na rozjezd",
+    "uvod": "Dvě rychlé otázky, ať se rozepíšeš.",
+    "otazky": [
+      {
+        "id": "R1",
+        "text": "Zítra tě čeká příprava stejného projektu od nuly. Jak moc si v tom věříš?",
+        "napoveda": "1 = vůbec, 10 = naprosto. Na konci workshopu se zeptáme znovu.",
+        "jadro": false,
+        "role": "vsichni",
+        "typ": "skala",
+        "blok": "Na rozjezd"
+      },
+      {
+        "id": "R2",
+        "text": "Jaké to natáčení pro tebe bylo? Stačí jedno slovo nebo věta.",
+        "napoveda": "Co tě napadne jako první.",
+        "jadro": false,
+        "role": "vsichni",
+        "typ": "text",
+        "blok": "Na rozjezd"
+      }
+    ]
+  },
+  {
+    "blok": "Příprava a plán",
+    "uvod": "Vrať se na začátek, k prvním schůzkám a PPM.",
+    "otazky": [
+      {
+        "id": "Q1",
+        "text": "O čem je tvůj film a jaký byl tvůj úkol?",
+        "napoveda": "Řekni to někomu, kdo u toho nebyl. A co tě na tom bavilo?",
+        "jadro": false,
+        "role": "vsichni",
+        "typ": "text",
+        "blok": "Příprava a plán"
+      },
+      {
+        "id": "Q2",
+        "text": "Který krok nebo rozhodnutí v přípravě se vyplatilo nejvíc?",
+        "napoveda": "Od prvních schůzek s režisérem po PPM. A proč zrovna ono?",
+        "jadro": true,
+        "role": "vsichni",
+        "typ": "text",
+        "blok": "Příprava a plán"
+      },
+      {
+        "id": "Q3",
+        "text": "Kde se natáčení rozešlo s plánem, rozpočtem nebo call sheetem?",
+        "napoveda": "Co ti to řeklo o tom, jak plánovat příště?",
+        "jadro": false,
+        "role": "vsichni",
+        "typ": "text",
+        "blok": "Příprava a plán"
+      }
+    ]
+  },
+  {
+    "blok": "Natáčení",
+    "uvod": "Teď samotné natáčecí dny.",
+    "otazky": [
+      {
+        "id": "Q4",
+        "text": "Která chvíle z natáčení ti udělala největší radost / co se ti povedlo tak, že jsi na to pyšný?",
+        "napoveda": "Vyber si, co tě napadne dřív. Co v tom konkrétně byl tvůj podíl?",
+        "jadro": true,
+        "role": "vsichni",
+        "typ": "text",
+        "blok": "Natáčení"
+      },
+      {
+        "id": "Q5",
+        "text": "Kdy se něco nečekaně zadrhlo? Čas, lokace, technika, počasí, cokoli.",
+        "napoveda": "Jak jste to vyřešili? Co by příště zůstalo stejně a co by šlo jinak?",
+        "jadro": false,
+        "role": "vsichni",
+        "typ": "text",
+        "blok": "Natáčení"
+      }
+    ]
+  },
+  {
+    "blok": "Lidé kolem filmu",
+    "uvod": "Štáb, režie, herci, externisti a škola.",
+    "otazky": [
+      {
+        "id": "Q6",
+        "text": "Jak ti fungovala komunikace se štábem a s režií, i v angličtině?",
+        "napoveda": "Kde vznikal šum a co pomohlo ho vyjasnit?",
+        "jadro": true,
+        "role": "vsichni",
+        "typ": "text",
+        "blok": "Lidé kolem filmu"
+      },
+      {
+        "id": "Q7",
+        "text": "Jak vypadala péče o herce a komparz, od castingu po poděkování?",
+        "napoveda": "Co z toho by mělo být pokaždé stejně?",
+        "jadro": false,
+        "role": "vsichni",
+        "typ": "text",
+        "blok": "Lidé kolem filmu"
+      },
+      {
+        "id": "Q8",
+        "text": "Která spolupráce s externisty nebo se školou fungovala nejlíp?",
+        "napoveda": "Lokace, půjčovny, catering, zvuk, technika, FAMU. V čem byl tvůj podíl?",
+        "jadro": false,
+        "role": "vsichni",
+        "typ": "text",
+        "blok": "Lidé kolem filmu"
+      },
+      {
+        "id": "Q8b",
+        "text": "Co ještě zbývá dotáhnout po natáčení?",
+        "napoveda": "A co by ti s tím pomohlo?",
+        "jadro": false,
+        "role": "vsichni",
+        "typ": "text",
+        "blok": "Lidé kolem filmu"
+      }
+    ]
+  },
+  {
+    "blok": "Co zůstává",
+    "uvod": "Co sis z toho odnášíš a co můžeš dát dál.",
+    "otazky": [
+      {
+        "id": "Q9",
+        "text": "Co víš o produkci, nebo o sobě v ní, jinak než na začátku semestru?",
+        "napoveda": "Cokoli, co tě překvapilo nebo co ti došlo.",
+        "jadro": true,
+        "role": "vsichni",
+        "typ": "text",
+        "blok": "Co zůstává"
+      },
+      {
+        "id": "Q10",
+        "text": "Jaký postup, šablona nebo trik ti fungoval a ušetřil by práci ostatním?",
+        "napoveda": "A co u jiné skupiny nebo na dílnách stálo za okopírování?",
+        "jadro": true,
+        "role": "vsichni",
+        "typ": "text",
+        "blok": "Co zůstává"
+      }
+    ]
+  },
+  {
+    "blok": "Příště",
+    "uvod": "Kde ti chyběla ruka a kam chceš dál.",
+    "otazky": [
+      {
+        "id": "Q11",
+        "text": "Kde by ti během semestru pomohlo víc vedení?",
+        "napoveda": "Od nás dvou, od školy nebo od zkušenějších. Co konkrétně a v jaké chvíli?",
+        "jadro": false,
+        "role": "vsichni",
+        "typ": "text",
+        "blok": "Příště"
+      },
+      {
+        "id": "Q12",
+        "text": "Na čem chceš na dalším cvičení pracovat?",
+        "napoveda": "Podle čeho poznáš posun a s čím ti pomůže někdo další? Můžeš přidat i motto.",
+        "jadro": true,
+        "role": "vsichni",
+        "typ": "text",
+        "blok": "Příště"
+      }
+    ]
+  },
+  {
+    "blok": "Jen pro PM",
+    "uvod": "Pár otázek k tomu, jak jsi držel(a) celek.",
+    "otazky": [
+      {
+        "id": "PM1",
+        "text": "Které rozhodnutí o penězích, čase, lokaci nebo lidech bylo zpětně dobré?",
+        "napoveda": "Rozhodnutí, které leželo jen na tobě. Co ti pomohlo se rozhodnout?",
+        "jadro": false,
+        "role": "PM",
+        "typ": "text",
+        "blok": "Jen pro PM"
+      },
+      {
+        "id": "PM2",
+        "text": "Jak ti fungovalo rozdělení práce s PA a přehled o tom, kdo co dělá?",
+        "napoveda": "Co by zůstalo a co by šlo domluvit hned první den?",
+        "jadro": false,
+        "role": "PM",
+        "typ": "text",
+        "blok": "Jen pro PM"
+      }
+    ]
+  },
+  {
+    "blok": "Jen pro PA",
+    "uvod": "Pár otázek k tvé části práce.",
+    "otazky": [
+      {
+        "id": "PA1",
+        "text": "Která část práce ti připadla a seděla ti nejvíc?",
+        "napoveda": "Co z toho by sis příště vzal/a víc za své?",
+        "jadro": false,
+        "role": "PA",
+        "typ": "text",
+        "blok": "Jen pro PA"
+      },
+      {
+        "id": "PA2",
+        "text": "Co ti pomáhalo vědět, co máš dělat a kdy?",
+        "napoveda": "A co by ti pomohlo, abys mohl/a převzít víc?",
+        "jadro": false,
+        "role": "PA",
+        "typ": "text",
+        "blok": "Jen pro PA"
+      }
+    ]
+  },
+  {
+    "blok": "Na závěr",
+    "uvod": "Poslední věc a můžeš odeslat.",
+    "otazky": [
+      {
+        "id": "Z1",
+        "text": "Můžeme tvoje odpovědi na workshopu citovat?",
+        "napoveda": "Bez jména, nebo i se jménem. Rozhodni sám/sama.",
+        "jadro": false,
+        "role": "vsichni",
+        "typ": "volba",
+        "moznosti": [
+          "anonymně ano",
+          "klidně i se jménem",
+          "raději ne"
+        ],
+        "blok": "Na závěr"
+      },
+      {
+        "id": "Z2",
+        "text": "Je ještě něco, co se nikam jinam nehodilo?",
+        "napoveda": "Nepovinné.",
+        "jadro": false,
+        "role": "vsichni",
+        "typ": "text",
+        "blok": "Na závěr"
+      }
+    ]
+  }
+]

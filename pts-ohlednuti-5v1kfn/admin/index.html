@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#E50000">
+  <link rel="icon" href="data:,">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; font-src 'self'; script-src 'self'; connect-src 'self' https://vpxnwpfkcurggdyobdbt.supabase.co; base-uri 'none'; form-action 'none'">
+  <title></title>
+  <link rel="preload" href="../fonts/league-gothic-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin">
+  <header class="pruh" role="banner">
+    <span class="pruh__vlevo" data-t="pruh.vlevo"></span>
+    <button type="button" class="pruh__odkaz a-odhlasit" data-t="pruh.odhlasit" hidden></button>
+  </header>
+
+  <div class="a-ram">
+    <p class="a-chyba" id="chyba" role="alert"></p>
+    <main id="obsah" class="a-obsah" tabindex="-1"></main>
+  </div>
+
+  <footer class="paticka" role="contentinfo"><span class="paticka__kdo" data-t="paticka"></span></footer>
+
+  <p class="sr-only" aria-live="polite" id="hlaseni"></p>
+  <section id="tisk" aria-hidden="true"></section>
+
+  <svg class="ikony" width="0" height="0" aria-hidden="true" focusable="false">
+    <symbol id="i-stahnout" viewBox="0 0 24 24"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="square"/></symbol>
+    <symbol id="i-tisk" viewBox="0 0 24 24"><path d="M7 9V4h10v5M7 17H4v-7h16v7h-3M7 14h10v6H7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="miter"/></symbol>
+    <symbol id="i-razeni" viewBox="0 0 24 24"><path d="M8 10l4-4 4 4M8 14l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></symbol>
+    <symbol id="i-sipka" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="square"/></symbol>
+  </svg>
+
+  <script src="../config.js"></script>
+  <script src="admin-api.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

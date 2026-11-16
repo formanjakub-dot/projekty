@@ -1,0 +1,152 @@
+{
+  "dotaznik": "cet-podzim-2026",
+  "verze": "2026-11-16",
+  "jazyk": "cs",
+  "titulekStranky": "Ohlédnutí za natáčením · Dílny PTS",
+  "pruh": {
+    "vlevo": "Dílny PTS",
+    "vpravo": "CET · podzim 2026"
+  },
+  "uvod": {
+    "nadpis": [
+      "Ohlédnutí",
+      "za natáčením"
+    ],
+    "odstavce": [
+      "Natáčení máš za sebou. Díky za všechnu tvoji práci na filmu.",
+      "Než se sejdeme na závěrečném workshopu s Tamarou, projdi si prosím celý projekt ještě jednou, od prvních schůzek po vrácení techniky. Špatné odpovědi tu nejsou."
+    ],
+    "fakta": [
+      {
+        "co": "Jak dlouho",
+        "text": "Zhruba půl hodiny."
+      },
+      {
+        "co": "Na víckrát",
+        "text": "Odpovědi se průběžně ukládají, takže můžeš kdykoli přestat a vrátit se."
+      },
+      {
+        "co": "Do kdy",
+        "text": "Nejpozději {termin} Do té doby jdou odpovědi i upravovat."
+      }
+    ],
+    "tlacitko": "Jdeme na to",
+    "rozepsano": "Máš rozepsáno jako {jmeno}.",
+    "pokracovat": "Pokračovat, kde jsem skončil/a",
+    "znovu": "Začít jako někdo jiný",
+    "odeslano": "Odpovědi jsou odeslané pod jménem {jmeno}. Do {termin} je můžeš upravit.",
+    "zobrazitOdeslane": "Zobrazit moje odpovědi",
+    "poTerminu": "Odpovědi jsou odeslané pod jménem {jmeno}. Termín na úpravy skončil, můžeš si je už jen prohlédnout.",
+    "upravit": "Upravit odpovědi",
+    "spatnyOdkaz": "Tenhle odkaz nefunguje. Zkontroluj, že je zkopírovaný celý, nebo napiš Jakubovi. Můžeš taky začít znovu."
+  },
+  "kdo": {
+    "obraz": "0",
+    "nadpis": "Kdo jsi",
+    "jmenoLabel": "Jméno",
+    "prijmeniLabel": "Příjmení",
+    "projektyLabel": "Na čem jsi dělal/a",
+    "projektyNapoveda": "Kdo byl ve dvou skupinách, zaškrtne oba projekty. Odpovídat můžeš za oba, nebo je klidně porovnat.",
+    "roleLabel": "Tvoje role",
+    "roleNapoveda": "Podle role se ti ukážou dvě otázky navíc.",
+    "tlacitko": "Pokračovat",
+    "ukladam": "Chvilku…",
+    "chybaJmeno": "Vyplň jméno i příjmení.",
+    "chybaProjekt": "Zaškrtni aspoň jeden projekt.",
+    "chybaRole": "Vyber, jestli jsi byl/a PM, nebo PA.",
+    "chybaSit": "Teď se to nepovedlo uložit. Zkontroluj připojení a zkus to znovu."
+  },
+  "klapka": {
+    "produkce": "Produkce",
+    "obraz": "Obraz",
+    "zaber": "Záběr",
+    "datum": "Datum",
+    "mameTo": "Máme to",
+    "mameToPodtitul": "Obraz {n} hotový"
+  },
+  "otazka": {
+    "dal": "Dál",
+    "preskocit": "Přeskočit",
+    "zpet": "Zpět",
+    "ulozeno": "Uloženo v tomhle zařízení · {cas}",
+    "skalaMin": "vůbec",
+    "skalaMax": "naprosto",
+    "skalaLabel": "Vyber číslo od 1 do 10",
+    "dvaProjekty": "Byl/a jsi ve dvou skupinách. Klidně odpověz za každou zvlášť.",
+    "pocetBloku": "Bloky dotazníku",
+    "napovedaBloku": "Piš konkrétně, klidně s příkladem z natáčení.",
+    "jenCteni": "Termín na úpravy skončil, tahle odpověď už jde jen číst."
+  },
+  "kontrola": {
+    "nadpis": "Než to odešleš",
+    "perex": "Projdi si, co jsi napsal/a. Cokoli ještě můžeš upravit.",
+    "bezOdpovedi": "Bez odpovědi",
+    "upravit": "Upravit",
+    "odeslat": "Odeslat",
+    "odesilam": "Odesílám…",
+    "chybaOdeslani": "Odeslání se nepovedlo. Odpovědi máš pořád uložené v telefonu, zkus to za chvíli znovu.",
+    "workshop": "Z odpovědí budeme na workshopu vycházet, tak počítej s tím, že se o nich budeme bavit nahlas.",
+    "odeslatZnovu": "Uložit změny",
+    "jenCteni": "Termín na úpravy skončil. Odpovědi si můžeš prohlédnout a stáhnout."
+  },
+  "konflikt": {
+    "zprava": "Tuhle odpověď máš na jiném zařízení napsanou jinak.",
+    "jinaVerze": "Verze z jiného zařízení:",
+    "pouzitJinou": "Použít tuhle verzi",
+    "nechatSvou": "Nechat, co je v poli",
+    "predOdeslanim": "Některé odpovědi máš na jiném zařízení napsané jinak. Než odešleš, vyber u nich, kterou verzi nechat."
+  },
+  "hotovo": {
+    "nadpis": [
+      "Stop.",
+      "Máme to."
+    ],
+    "text": "Díky. Uvidíme se na workshopu.",
+    "kopie": "Vezmi si kopii s sebou:",
+    "stahnoutText": "Stáhnout jako text",
+    "ulozitPdf": "Uložit jako PDF",
+    "smazat": "Vymazat odpovědi z tohoto zařízení",
+    "smazatPotvrzeni": "Opravdu vymazat? Klikni znovu. Odeslané odpovědi zůstanou Jakubovi a vrátíš se k nim přes svůj odkaz.",
+    "smazano": "Vymazáno. Na tomhle zařízení po tobě nic nezůstalo.",
+    "prototyp": "Prototyp: odpovědi se zatím nikam neposílají, zůstaly jen v tomhle prohlížeči.",
+    "upravit": "Upravit odpovědi"
+  },
+  "tisk": {
+    "nadpis": "Moje ohlédnutí za natáčením",
+    "odeslano": "Odesláno {datum}"
+  },
+  "paticka": {
+    "kdo": "Dílny PTS · Jakub Forman",
+    "neoficialni": "Neoficiální stránka k dílnám. Není to web FAMU."
+  },
+  "chyby": {
+    "nacteni": "Nepovedlo se načíst otázky. Obnov stránku, a když to nepomůže, napiš Jakubovi."
+  },
+  "zdrojeTextu": "Úvod podle Danina textu, upravený podle Jakuba 16. 11. 11:55 (bez vysvětlování, kdo co uvidí, bez zmínky o AI).",
+  "preskocitNaObsah": "Přeskočit na obsah",
+  "popisStranky": "Reflexe po natáčení CET projektů. Dílny PTS, Jakub Forman.",
+  "udaje": {
+    "nazev": "Co se děje s odpověďmi",
+    "zastupny": true,
+    "text": "[ZÁSTUPNÝ TEXT — krátké znění dodá Jakub.] Odpovědi se ukládají se jménem a projektem a slouží k přípravě workshopu. Kdykoli je můžeš vidět, opravit nebo smazat, stačí napsat Jakubovi.",
+    "zavrit": "Zavřít"
+  },
+  "vynechatOtazky": [
+    "zarazeni_jmeno",
+    "zarazeni_projekt",
+    "zarazeni_role",
+    "Z1"
+  ],
+  "odkaz": {
+    "vyzva": "Chceš pokračovat později nebo na počítači? Ulož si svůj odkaz.",
+    "nadpis": "Tvůj osobní odkaz",
+    "text": "S tímhle odkazem se k odpovědím vrátíš z jakéhokoli zařízení a do {termin} je můžeš upravit. Patří jen tobě, nikomu ho neposílej.",
+    "zkopirovat": "Zkopírovat odkaz",
+    "zkopirovano": "Zkopírováno",
+    "poslat": "Poslat si ho",
+    "sdileniTitulek": "Můj odkaz k ohlédnutí za natáčením",
+    "otevrit": "Můj odkaz",
+    "zavrit": "Zavřít",
+    "rucne": "Kopírování se nepovedlo. Podrž prst na odkazu a zkopíruj ho ručně."
+  }
+}
